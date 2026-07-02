@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 4: Aplicación en Sistemas y Casos Graves</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cuc-red': '#A3161A',
+                        'cuc-dark': '#1a1a1a',
+                        'cuc-gray': '#f4f4f4',
+                        'soft-red': '#ffebeb',
+                        'alert-color': '#d32f2f',
+                        'success-color': '#2e7d32',
+                    },
+                    fontFamily: {
+                        'sans': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar and animations */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .clinic-acc-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Chat Scrollbar */
+        .chat-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-scroll::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05); 
+        }
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2); 
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-white text-cuc-dark font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER / BANNER -->
+    <header class="bg-white border-b-4 border-cuc-red py-6 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-center items-center gap-6 text-center">
+            
+            <!-- QR Navegación -->
+            <div class="order-3 md:order-1 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/int-crisis/u1clase04.html" 
+                     alt="QR Clase" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Ir a esta Clase</span>
+            </div>
+
+            <!-- Logo & Info -->
+            <div class="order-1 md:order-2 flex flex-col items-center max-w-2xl">
+                <img src="logocuc.png" alt="Logo Universidad de la Costa" class="h-20 mb-2">
+                <h1 class="text-cuc-red text-2xl md:text-3xl font-black uppercase leading-tight mb-1">
+                    Intervención en Crisis
+                </h1>
+                <div class="text-sm md:text-base text-gray-800">
+                    <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                    Mg. Dirección de Proyectos - Certificado en PNL<br>
+                    <small class="block mt-1">
+                        <span class="text-cuc-red font-black">WhatsApp:</span> 3233796547 | 
+                        <span class="text-cuc-red font-black">IG:</span> caminosdelser85 | 
+                        <span class="text-cuc-red font-black">Web:</span> www.caminosdelser.co
+                    </small>
+                </div>
+            </div>
+
+            <!-- QR Contacto -->
+            <div class="order-3 md:order-3 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" 
+                     alt="QR Contacto" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Guardar Contacto</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="bg-gray-100 border-b border-gray-300 py-3 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <a href="u1clase01.html" class="inline-flex items-center gap-2 font-bold text-cuc-dark hover:text-cuc-red transition-colors">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container mx-auto px-4 py-10 flex-grow max-w-7xl">
+        
+        <div class="text-center mb-16 max-w-4xl mx-auto">
+            <h2 class="text-4xl font-black text-cuc-red mb-4">Clase 4: Aplicación en Sistemas y Casos Graves</h2>
+            <p class="text-xl text-gray-600">
+                La crisis no ocurre en el vacío. Impacta a la comunidad, requiere adaptación del canal de comunicación (como el teléfono) y exige protocolos estrictos cuando hay patología mental subyacente.
+            </p>
+        </div>
+
+        <!-- SECCIÓN 1: INTERVENCIÓN TELEFÓNICA -->
+        <section class="bg-cuc-dark text-white p-8 md:p-12 rounded-2xl mb-16 shadow-2xl relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 text-9xl text-white opacity-5">
+                <i class="fas fa-headset"></i>
+            </div>
+            
+            <h2 class="text-3xl font-bold text-cuc-red mb-6 flex items-center gap-3 relative z-10">
+                <i class="fas fa-phone-volume"></i> Primeros Auxilios Telefónicos
+            </h2>
+            <p class="text-lg text-gray-300 mb-10 border-l-4 border-cuc-red pl-4 relative z-10">
+                La intervención telefónica elimina el lenguaje corporal (70% de la comunicación). El interventor debe compensar esta "ceguera visual" agudizando su audición clínica y controlando estrictamente la estructura de la llamada.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                <!-- Card 1 -->
+                <div class="bg-white/10 p-6 rounded-xl border-t-4 border-cuc-red hover:bg-white/20 transition-colors">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-white">
+                        <i class="fas fa-microphone-alt text-cuc-red"></i> Control de la Voz
+                    </h3>
+                    <ul class="space-y-3 text-gray-300 text-sm">
+                        <li class="flex items-start gap-2"><span class="text-cuc-red font-bold">•</span> <strong>Modulación:</strong> Usar un tono calmado, pausado y ligeramente grave para inducir co-regulación fisiológica.</li>
+                        <li class="flex items-start gap-2"><span class="text-cuc-red font-bold">•</span> <strong>Retroalimentación:</strong> Usar "ajá", "te escucho", "entiendo" continuamente para evitar que sienta que habla solo.</li>
+                        <li class="flex items-start gap-2"><span class="text-cuc-red font-bold">•</span> <strong>Silencios:</strong> No apresurarse a llenarlos. Preguntar suavemente: <em>"¿Sigues ahí? Tómate tu tiempo"</em>.</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white/10 p-6 rounded-xl border-t-4 border-cuc-red hover:bg-white/20 transition-colors">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-white">
+                        <i class="fas fa-search-location text-cuc-red"></i> Evaluación a Ciegas
+                    </h3>
+                    <ul class="space-y-3 text-gray-300 text-sm">
+                        <li class="flex items-start gap-2"><span class="text-cuc-red font-bold">•</span> <strong>Rastreo de fondo:</strong> Escuchar ruidos de ambiente (tráfico, sirenas, voces, llanto, sonido de envases).</li>
+                        <li class="flex items-start gap-2"><span class="text-cuc-red font-bold">•</span> <strong>Ubicación inmediata:</strong> <em>"Para poder ayudarte mejor, ¿puedes decirme dónde te encuentras ahora mismo?"</em>.</li>
+                        <li class="flex items-start gap-2"><span class="text-cuc-red font-bold">•</span> <strong>Evaluación de estado:</strong> Identificar hiperventilación, habla pastosa (intoxicación) o desorganización.</li>
+                    </ul>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white/10 p-6 rounded-xl border-t-4 border-cuc-red hover:bg-white/20 transition-colors">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-white">
+                        <i class="fas fa-siren-on text-cuc-red"></i> Riesgo Inminente
+                    </h3>
+                    <ul class="space-y-3 text-gray-300 text-sm">
+                        <li class="flex items-start gap-2"><span class="text-cuc-red font-bold">•</span> <strong>Regla de Oro:</strong> NUNCA CUELGUES. Si la llamada se corta en un pico, el riesgo de suicidio se multiplica.</li>
+                        <li class="flex items-start gap-2"><span class="text-cuc-red font-bold">•</span> <strong>Triangulación:</strong> Mantén al paciente hablando mientras contactas a emergencias por otra línea.</li>
+                        <li class="flex items-start gap-2"><span class="text-cuc-red font-bold">•</span> <strong>Contrato verbal:</strong> <em>"Prométeme que no harás nada en los próximos 10 minutos mientras hablamos"</em>.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-8 bg-red-900/40 border-l-4 border-alert-color p-4 rounded text-sm text-white relative z-10">
+                <strong><i class="fas fa-exclamation-circle text-alert-color mr-1"></i> El Desafío del Anonimato:</strong> El paciente tiene el poder absoluto de cortar la comunicación. Si el "Contacto Psicológico" (Paso 1) no se establece en los primeros 2 minutos mediante validación empática extrema, la llamada se perderá.
+            </div>
+        </section>
+
+        <!-- SECCIÓN 1.5: SIMULADOR DOBLE DE CHATBOT -->
+        <section class="mb-20">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-cuc-dark mb-4"><i class="fas fa-robot text-cuc-red"></i> Simuladores Analíticos: La Llamada</h2>
+                <p class="text-gray-600 max-w-4xl mx-auto text-lg">
+                    Profesor, use los recuadros inferiores para avanzar las simulaciones. Escriba <strong>"adelante"</strong> en el bot 1 para ver una intervención correcta, o en el bot 2 para analizar los errores de una mala praxis (Iatrogenia).
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- BOT 1: BUENA PRÁCTICA -->
+                <div class="bg-gray-50 rounded-2xl border-2 border-gray-300 shadow-xl overflow-hidden flex flex-col h-[550px]">
+                    <!-- Chat Header -->
+                    <div class="bg-cuc-dark text-white p-4 flex items-center justify-between shadow-md z-10 border-b-4 border-success-color">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-success-color rounded-full flex items-center justify-center animate-pulse">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg leading-tight">Simulación 1: Intervención Exitosa</h3>
+                                <span class="text-xs text-green-400 font-bold tracking-widest uppercase">Protocolo Correcto</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Messages Area 1 -->
+                    <div id="chat-messages-1" class="chat-scroll flex-1 overflow-y-auto p-6 space-y-6 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
+                        <div class="text-center text-gray-400 text-sm font-bold bg-white px-4 py-1 rounded-full mx-auto w-max shadow-sm">
+                            Escriba 'adelante' para iniciar.
+                        </div>
+                    </div>
+
+                    <!-- Chat Input Area 1 -->
+                    <div class="bg-white p-4 border-t border-gray-200 flex items-center gap-3">
+                        <input type="text" id="trigger-input-1" placeholder="Escribe 'adelante'..." 
+                               class="flex-1 bg-gray-100 border border-gray-300 text-gray-800 text-lg rounded-full px-6 py-3 focus:outline-none focus:ring-2 focus:ring-success-color transition-all"
+                               onkeypress="handleChatInput(event, 1)">
+                        <button onclick="checkAndAdvance(1)" 
+                                class="bg-cuc-dark text-white px-6 py-3 rounded-full font-bold hover:bg-gray-800 transition-all shadow-md flex items-center gap-2">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- BOT 2: MALA PRÁCTICA (IATROGENIA) -->
+                <div class="bg-gray-50 rounded-2xl border-2 border-red-300 shadow-xl overflow-hidden flex flex-col h-[550px]">
+                    <!-- Chat Header -->
+                    <div class="bg-alert-color text-white p-4 flex items-center justify-between shadow-md z-10 border-b-4 border-red-900">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-red-900 rounded-full flex items-center justify-center animate-pulse">
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg leading-tight">Simulación 2: Iatrogenia (Error)</h3>
+                                <span class="text-xs text-white font-bold tracking-widest uppercase opacity-80">Mala Praxis Clínica</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Messages Area 2 -->
+                    <div id="chat-messages-2" class="chat-scroll flex-1 overflow-y-auto p-6 space-y-6 bg-red-50 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
+                        <div class="text-center text-red-400 text-sm font-bold bg-white px-4 py-1 rounded-full mx-auto w-max shadow-sm border border-red-100">
+                            Escriba 'adelante' para iniciar.
+                        </div>
+                    </div>
+
+                    <!-- Chat Input Area 2 -->
+                    <div class="bg-white p-4 border-t border-red-200 flex items-center gap-3">
+                        <input type="text" id="trigger-input-2" placeholder="Escribe 'adelante'..." 
+                               class="flex-1 bg-gray-100 border border-red-200 text-gray-800 text-lg rounded-full px-6 py-3 focus:outline-none focus:ring-2 focus:ring-alert-color transition-all"
+                               onkeypress="handleChatInput(event, 2)">
+                        <button onclick="checkAndAdvance(2)" 
+                                class="bg-alert-color text-white px-6 py-3 rounded-full font-bold hover:bg-red-800 transition-all shadow-md flex items-center gap-2">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: SISTEMAS (ESCUELAS / OFICINAS) -->
+        <section class="mb-20">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-cuc-dark mb-4">Intervención Sistémica: Comunidades en Crisis</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+                    ¿Qué sucede cuando la crisis impacta a un colectivo? (Ej: suicidio de un alumno, accidente laboral, desastre natural). Las reglas individuales cambian hacia un enfoque sistémico.
+                </p>
+            </div>
+
+            <!-- TABS CONTROLS -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8" id="sys-tabs">
+                <button class="sys-btn active bg-cuc-red text-white px-8 py-3 rounded-full font-bold text-lg shadow-md transition-all hover:-translate-y-1" onclick="openSystemTab('escuelas', 0)">
+                    <i class="fas fa-school mr-2"></i> Escuelas
+                </button>
+                <button class="sys-btn bg-gray-200 text-cuc-dark px-8 py-3 rounded-full font-bold text-lg shadow-sm transition-all hover:bg-gray-300 hover:-translate-y-1" onclick="openSystemTab('organizaciones', 1)">
+                    <i class="fas fa-building mr-2"></i> Organizaciones
+                </button>
+            </div>
+
+            <!-- TABS CONTENT -->
+            <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden min-h-[400px]">
+                
+                <!-- Escuelas -->
+                <div id="escuelas" class="tab-content active p-8 md:p-10">
+                    <h3 class="text-2xl font-bold text-cuc-dark mb-8 text-center border-b pb-4">Protocolo para Instituciones Educativas</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-gray-50 p-6 rounded-xl border-l-4 border-cuc-dark">
+                            <h4 class="text-xl font-bold text-cuc-red mb-3">1. Evitar el Efecto Contagio (Werther)</h4>
+                            <p class="text-gray-700 text-sm">Ante el suicidio de un alumno, el riesgo de "suicidios en racimo" es altísimo en adolescentes.</p>
+                            <div class="mt-3 bg-white p-3 rounded shadow-sm text-sm">
+                                <strong>Acción:</strong> No glorificar el acto, no hacer altares permanentes en el pupitre, no revelar detalles del método. Informar hechos neutrales.
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl border-l-4 border-cuc-dark">
+                            <h4 class="text-xl font-bold text-cuc-red mb-3">2. Triaje por Anillos de Vulnerabilidad</h4>
+                            <p class="text-gray-700 text-sm">No se interviene a todos por igual. Se evalúa por proximidad afectiva y física al evento.</p>
+                            <div class="mt-3 bg-white p-3 rounded shadow-sm text-sm">
+                                <strong>Anillo 1 (Alto Riesgo):</strong> Mejores amigos, pareja, testigos (Intervención directa).<br>
+                                <strong>Anillo 2:</strong> Compañeros regulares (Defusing grupal).
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl border-l-4 border-cuc-dark">
+                            <h4 class="text-xl font-bold text-cuc-red mb-3">3. Intervención con Profesores</h4>
+                            <p class="text-gray-700 text-sm">Los maestros no pueden contener a otros si ellos mismos están en crisis o sienten culpa ("¿por qué no me di cuenta?").</p>
+                            <div class="mt-3 bg-white p-3 rounded shadow-sm text-sm">
+                                <strong>Acción:</strong> Brindar Primeros Auxilios Psicológicos al cuerpo docente ANTES de que enfrenten a los estudiantes.
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl border-l-4 border-cuc-dark">
+                            <h4 class="text-xl font-bold text-cuc-red mb-3">4. Restauración de la Rutina Flexible</h4>
+                            <p class="text-gray-700 text-sm">Cerrar el colegio por semanas aumenta la ansiedad. La escuela es un factor protector estructurante.</p>
+                            <div class="mt-3 bg-white p-3 rounded shadow-sm text-sm">
+                                <strong>Acción:</strong> Volver a clases pronto, con exigencia académica nula. Habilitar "Salas de Apoyo" (Safe Rooms).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Organizaciones -->
+                <div id="organizaciones" class="tab-content p-8 md:p-10">
+                    <h3 class="text-2xl font-bold text-cuc-dark mb-8 text-center border-b pb-4">Protocolo para Entornos Laborales</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-gray-50 p-6 rounded-xl border-l-4 border-cuc-dark">
+                            <h4 class="text-xl font-bold text-cuc-red mb-3">1. Gestión de la Información</h4>
+                            <p class="text-gray-700 text-sm">El rumor destruye el clima laboral tras un evento crítico (accidente, despido masivo).</p>
+                            <div class="mt-3 bg-white p-3 rounded shadow-sm text-sm">
+                                <strong>Acción:</strong> Comunicación oficial, transparente y rápida por parte de la alta gerencia. El silencio genera paranoia.
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl border-l-4 border-cuc-dark">
+                            <h4 class="text-xl font-bold text-cuc-red mb-3">2. Defusing (Desactivación Operativa)</h4>
+                            <p class="text-gray-700 text-sm">Reunión estructurada que se realiza el MISMO DÍA del incidente (1 a 12 horas después).</p>
+                            <div class="mt-3 bg-white p-3 rounded shadow-sm text-sm">
+                                <strong>Objetivo:</strong> Bajar la tensión, aclarar hechos, normalizar reacciones agudas y restablecer la operatividad básica. No es terapia.
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl border-l-4 border-cuc-dark">
+                            <h4 class="text-xl font-bold text-cuc-red mb-3">3. Debriefing Psicológico</h4>
+                            <p class="text-gray-700 text-sm">Técnica grupal realizada de 24 a 72 horas después del evento (cuando el shock inicial bajó).</p>
+                            <div class="mt-3 bg-white p-3 rounded shadow-sm text-sm">
+                                <strong>Objetivo:</strong> Reconstruir cognitivamente el evento narrando hechos, pensamientos y emociones actuales.
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl border-l-4 border-cuc-dark">
+                            <h4 class="text-xl font-bold text-cuc-red mb-3">4. Liderazgo en Crisis</h4>
+                            <p class="text-gray-700 text-sm">Los empleados miran a sus jefes directos. Si el jefe colapsa, el equipo colapsa de inmediato.</p>
+                            <div class="mt-3 bg-white p-3 rounded shadow-sm text-sm">
+                                <strong>Acción:</strong> RRHH debe capacitar a los líderes de área para que apliquen PAP básicos (empatía y flexibilidad).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: ENFERMEDADES MENTALES GRAVES (SMI) -->
+        <section class="bg-soft-red p-8 md:p-12 rounded-2xl shadow-inner mb-10">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-cuc-dark mb-4">Manejo de Psicopatología Grave en Crisis</h2>
+                <p class="text-gray-700 max-w-3xl mx-auto text-lg">
+                    Los PAP están diseñados para personas con un "Yo" intacto que colapsa ante un evento. Pero, ¿qué pasa cuando el paciente tiene una enfermedad mental severa subyacente? Las reglas cambian radicalmente.
+                </p>
+            </div>
+
+            <!-- ACORDEONES CLÍNICOS -->
+            <div class="space-y-4 max-w-5xl mx-auto">
+                
+                <!-- Psicosis -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <button class="clinic-acc-header w-full flex justify-between items-center p-6 bg-cuc-dark text-white hover:bg-cuc-red transition-colors text-left" onclick="toggleAccordion(this)">
+                        <span class="text-xl font-bold"><i class="fas fa-brain mr-3"></i> Esquizofrenia / Episodio Psicótico Agudo</span>
+                        <i class="fas fa-plus text-xl transition-transform duration-300"></i>
+                    </button>
+                    <div class="clinic-acc-content bg-white">
+                        <div class="p-6 border-b border-gray-100 bg-gray-50 italic text-gray-600">
+                            <strong>Contexto Clínico:</strong> El paciente presenta alucinaciones (escucha voces) o delirios (cree que lo persiguen). Su juicio de realidad está roto. El razonamiento lógico NO funcionará.
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-5">
+                                <h4 class="text-success-color font-bold text-lg mb-4 flex items-center gap-2">
+                                    <i class="fas fa-check-circle"></i> QUÉ HACER (Directivo)
+                                </h4>
+                                <ul class="space-y-2 text-sm text-gray-700">
+                                    <li><strong class="text-success-color">Validar el miedo, no el delirio:</strong> "No veo a los hombres que te persiguen, pero veo que estás aterrorizado y te creo".</li>
+                                    <li><strong class="text-success-color">Reducir estímulos:</strong> Llevarlo a un lugar con poca luz, sin ruido excesivo, sin mucha gente.</li>
+                                    <li><strong class="text-success-color">Hablar simple y directo:</strong> Frases cortas y literales.</li>
+                                    <li><strong class="text-success-color">Contacto médico:</strong> Actuar para contactar a psiquiatría o familia. Necesita estabilización farmacológica.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-5">
+                                <h4 class="text-alert-color font-bold text-lg mb-4 flex items-center gap-2">
+                                    <i class="fas fa-times-circle"></i> QUÉ NO HACER
+                                </h4>
+                                <ul class="space-y-2 text-sm text-gray-700">
+                                    <li><strong class="text-alert-color">No discutir el delirio:</strong> Intentar convencerlo de que sus voces son falsas solo generará agresión y desconfianza.</li>
+                                    <li><strong class="text-alert-color">No seguirle la corriente:</strong> No finjas que tú también ves a los perseguidores. Perderás tu rol de ancla con la realidad.</li>
+                                    <li><strong class="text-alert-color">No hacer movimientos bruscos:</strong> Acercarse por la espalda o tocarlo sin avisar puede desencadenar una respuesta defensiva violenta.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Manía -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <button class="clinic-acc-header w-full flex justify-between items-center p-6 bg-cuc-dark text-white hover:bg-cuc-red transition-colors text-left" onclick="toggleAccordion(this)">
+                        <span class="text-xl font-bold"><i class="fas fa-battery-full mr-3"></i> Episodio Maníaco (Trastorno Bipolar)</span>
+                        <i class="fas fa-plus text-xl transition-transform duration-300"></i>
+                    </button>
+                    <div class="clinic-acc-content bg-white">
+                        <div class="p-6 border-b border-gray-100 bg-gray-50 italic text-gray-600">
+                            <strong>Contexto Clínico:</strong> El paciente tiene energía desbordante, habla a mil por hora (taquilalia), no duerme, se siente invencible y toma decisiones de altísimo riesgo (gastar dinero, conductas sexuales).
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-5">
+                                <h4 class="text-success-color font-bold text-lg mb-4 flex items-center gap-2">
+                                    <i class="fas fa-check-circle"></i> QUÉ HACER
+                                </h4>
+                                <ul class="space-y-2 text-sm text-gray-700">
+                                    <li><strong class="text-success-color">Firmeza tranquila:</strong> Mantener un tono de voz monótono, aburrido y bajo para intentar reducir la escalada energética por contagio.</li>
+                                    <li><strong class="text-success-color">Límites físicos seguros:</strong> Mantener distancia prudente. Redirigir el movimiento hacia actividades seguras (ej. caminar en área cerrada).</li>
+                                    <li><strong class="text-success-color">Enfoque en el aquí y ahora:</strong> Interrumpir suavemente la fuga de ideas para centrarlo en su seguridad inmediata.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-5">
+                                <h4 class="text-alert-color font-bold text-lg mb-4 flex items-center gap-2">
+                                    <i class="fas fa-times-circle"></i> QUÉ NO HACER
+                                </h4>
+                                <ul class="space-y-2 text-sm text-gray-700">
+                                    <li><strong class="text-alert-color">No sermonear:</strong> No darle lecciones morales sobre sus gastos. No escuchará y se irritará profundamente.</li>
+                                    <li><strong class="text-alert-color">No entrar en debates:</strong> La persona en manía es argumentativa y provocadora. Si debates, pierdes el control de la intervención.</li>
+                                    <li><strong class="text-alert-color">Evitar actitud facilitadora:</strong> No está en capacidad de cumplir promesas o contratos verbales. Requiere actitud directiva de contención.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Borderline -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <button class="clinic-acc-header w-full flex justify-between items-center p-6 bg-cuc-dark text-white hover:bg-cuc-red transition-colors text-left" onclick="toggleAccordion(this)">
+                        <span class="text-xl font-bold"><i class="fas fa-heart-broken mr-3"></i> Desregulación Emocional (Borderline)</span>
+                        <i class="fas fa-plus text-xl transition-transform duration-300"></i>
+                    </button>
+                    <div class="clinic-acc-content bg-white">
+                        <div class="p-6 border-b border-gray-100 bg-gray-50 italic text-gray-600">
+                            <strong>Contexto Clínico:</strong> Dolor emocional intolerable desencadenado por una percepción de abandono. Alta probabilidad de amenazas de suicidio o autoagresiones (cortes) en tiempo real durante la intervención.
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-5">
+                                <h4 class="text-success-color font-bold text-lg mb-4 flex items-center gap-2">
+                                    <i class="fas fa-check-circle"></i> QUÉ HACER
+                                </h4>
+                                <ul class="space-y-2 text-sm text-gray-700">
+                                    <li><strong class="text-success-color">Validación radical:</strong> Reconocer que su dolor emocional es real, genuino y absolutamente abrumador para la persona.</li>
+                                    <li><strong class="text-success-color">Evaluación de letalidad:</strong> Evaluar seriamente CADA amenaza, incluso si parece repetitiva. Tratar cada evento como una urgencia real.</li>
+                                    <li><strong class="text-success-color">Encuadre estricto:</strong> Establecer límites claros desde el inicio ("Tengo 30 minutos para ayudarte a estar a salvo hoy, enfoquémonos en eso").</li>
+                                </ul>
+                            </div>
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-5">
+                                <h4 class="text-alert-color font-bold text-lg mb-4 flex items-center gap-2">
+                                    <i class="fas fa-times-circle"></i> QUÉ NO HACER
+                                </h4>
+                                <ul class="space-y-2 text-sm text-gray-700">
+                                    <li><strong class="text-alert-color">No invalidar:</strong> Frases como "estás exagerando" o "lo haces para llamar la atención" aumentarán exponencialmente el riesgo suicida.</li>
+                                    <li><strong class="text-alert-color">No ser el "salvador":</strong> Evitar prometer cosas que no cumplirás ("siempre estaré aquí"). Te idealizará y luego te devaluará destructivamente.</li>
+                                    <li><strong class="text-alert-color">No ceder al chantaje:</strong> Si amenaza con cortarse si cuelgas, mantén el protocolo (llamar emergencias) en lugar de romper el encuadre profesional.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-cuc-dark text-white text-center py-8 mt-auto">
+        <div class="container mx-auto px-4">
+            <p class="text-sm md:text-base mb-2">Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+            <p class="text-xs text-gray-400">Material docente diseñado por Jorge Arango Castaño. Basado en modelos de intervención clínica de urgencias psiquiátricas y sistémicas.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Tab Logic for Systems Section
+        function openSystemTab(tabId, btnIndex) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            const btns = document.querySelectorAll('.sys-btn');
+            btns.forEach(btn => {
+                btn.classList.remove('active', 'bg-cuc-red', 'text-white');
+                btn.classList.add('bg-gray-200', 'text-cuc-dark');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            
+            const activeBtn = btns[btnIndex];
+            activeBtn.classList.remove('bg-gray-200', 'text-cuc-dark');
+            activeBtn.classList.add('active', 'bg-cuc-red', 'text-white');
+        }
+
+        // Accordion Logic for Clinical Cases
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('i.fa-plus, i.fa-minus');
+            
+            const allContents = document.querySelectorAll(".clinic-acc-content");
+            const allHeaders = document.querySelectorAll(".clinic-acc-header");
+            
+            allContents.forEach((c, index) => {
+                if (c !== content) {
+                    c.style.maxHeight = null;
+                    const otherIcon = allHeaders[index].querySelector('i.fa-minus');
+                    if (otherIcon) {
+                        otherIcon.classList.remove('fa-minus');
+                        otherIcon.classList.add('fa-plus');
+                        otherIcon.style.transform = 'rotate(0deg)';
+                    }
+                }
+            });
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.classList.remove('fa-minus');
+                icon.classList.add('fa-plus');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.classList.remove('fa-plus');
+                icon.classList.add('fa-minus');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // --- LÓGICA DE LOS SIMULADORES DE CHATBOT ---
+        
+        // Guion 1: Intervención Exitosa
+        const chatScript1 = [
+            { role: 'paciente', name: 'Paciente (Laura)', text: "<em>[Respiración entrecortada]</em> ... ¿Hola? ... No sé si deba estar llamando..." },
+            { role: 'interventor', name: 'Interventor', text: "Hola, estás en la Línea de Ayuda en Crisis. Mi nombre es Carlos. Me alegra que hayas llamado, fuiste muy valiente. Tómate tu tiempo, estoy aquí para escucharte. ¿Cómo te llamas?" },
+            { role: 'paciente', name: 'Paciente (Laura)', text: "Soy Laura... Carlos, ya no puedo más. Mi esposo me confesó que tiene otra familia y se fue. Me tomé unas pastillas hace diez minutos. Quiero desaparecer." },
+            { role: 'interventor', name: 'Interventor', text: "Siento muchísimo que estés pasando por un dolor tan profundo, Laura. Escúchame bien: no te voy a dejar sola. Necesito saber, ¿qué pastillas tomaste y cuántas?" },
+            { role: 'paciente', name: 'Paciente (Laura)', text: "Me tomé como siete pastillas de Clonazepam... Me siento muy mareada. La cabeza me da vueltas." },
+            { role: 'interventor', name: 'Interventor', text: "Entiendo. Laura, para poder seguir ayudándote y asegurarme de que estés bien, necesito saber dónde estás exactamente ahora mismo. ¿Estás en tu casa sola?" },
+            { role: 'paciente', name: 'Paciente (Laura)', text: "<em>[Silencio largo]</em> ... Sí, estoy en mi habitación. Cerré con llave." },
+            { role: 'interventor', name: 'Interventor', text: "<em>[Hace seña a su equipo para rastrear la llamada y enviar ayuda]</em> Entiendo, Laura. Prométeme que no vas a tomar ni una pastilla más mientras hablamos. Quédate conmigo en la línea." },
+            { role: 'paciente', name: 'Paciente (Laura)', text: "Tengo miedo... Carlos, ¿me voy a morir? Yo no quería morir, solo quería que dejara de doler." },
+            { role: 'interventor', name: 'Interventor', text: "Es muy normal tener miedo, y entiendo que solo quieres que el dolor pare. La ayuda médica ya va en camino hacia tu casa para cuidarte. Vamos a respirar juntos mientras llegan, ¿de acuerdo? Inhala..." },
+            { role: 'system', name: 'Sistema', text: "<strong>[ÉXITO]</strong> - La ambulancia llegó a tiempo. Se logró el Contacto, se evaluó Letalidad y se ejecutó la Actitud Directiva (Triangulación)." }
+        ];
+
+        // Guion 2: Mala Praxis (Iatrogenia)
+        const chatScript2 = [
+            { role: 'paciente', name: 'Paciente (Laura)', text: "<em>[Respiración entrecortada]</em> ... ¿Hola? ... No sé si deba estar llamando..." },
+            { role: 'interventor_malo', name: 'Interventor (Mal entrenado)', text: "Línea de ayuda, dígame rápido cuál es su emergencia, por favor. Tenemos muchas llamadas en espera." },
+            { role: 'paciente', name: 'Paciente (Laura)', text: "Soy Laura... mi esposo me dejó... me tomé unas pastillas hace diez minutos. Quiero desaparecer." },
+            { role: 'interventor_malo', name: 'Interventor (Mal entrenado)', text: "¡Pero señora Laura, cómo se le ocurre hacer una tontería así por un hombre! Eso es un acto de cobardía. Vaya al baño y vomite eso ya mismo." },
+            { role: 'paciente', name: 'Paciente (Laura)', text: "¡Usted no me entiende! ¡Nadie me entiende! Ya no quiero hablar..." },
+            { role: 'interventor_malo', name: 'Interventor (Mal entrenado)', text: "Tranquilícese, no haga drama, no es el fin del mundo. Mañana se sentirá mejor y se va a arrepentir. A ver, déjeme su dirección para mandar a alguien." },
+            { role: 'paciente', name: 'Paciente (Laura)', text: "¡Déjeme en paz! <em>[Clic. Sonido de línea muerta]</em>" },
+            { role: 'interventor_malo', name: 'Interventor (Mal entrenado)', text: "¿Hola? ¿Hola?... Genial, me colgó." },
+            { role: 'system_error', name: 'Sistema', text: "<strong>[FRACASO CRÍTICO - IATROGENIA]</strong> - El paciente cortó la comunicación por culpa de la invalidación emocional y los juicios morales. El riesgo de muerte aumentó y no se logró el enlace médico." }
+        ];
+
+        let currentSteps = { 1: 0, 2: 0 };
+        const scripts = { 1: chatScript1, 2: chatScript2 };
+
+        function handleChatInput(e, botId) {
+            if (e.key === 'Enter') {
+                checkAndAdvance(botId);
+            }
+        }
+
+        function checkAndAdvance(botId) {
+            const inputEl = document.getElementById('trigger-input-' + botId);
+            const val = inputEl.value.trim().toLowerCase();
+            
+            if (val === 'adelante') {
+                advanceChat(botId);
+                inputEl.value = ''; 
+            } else {
+                alert("Por favor, escriba la palabra 'adelante' para continuar esta simulación.");
+            }
+        }
+
+        function advanceChat(botId) {
+            const script = scripts[botId];
+            const step = currentSteps[botId];
+
+            if (step < script.length) {
+                renderBubble(script[step], botId);
+                currentSteps[botId]++;
+            } else {
+                alert("La simulación " + botId + " ha finalizado.");
+            }
+        }
+
+        function renderBubble(message, botId) {
+            const chatContainer = document.getElementById('chat-messages-' + botId);
+            const bubbleDiv = document.createElement('div');
+            
+            if (message.role === 'interventor') {
+                // Estilo Bot Bueno
+                bubbleDiv.className = "flex flex-col items-end animate-fadeIn";
+                bubbleDiv.innerHTML = `
+                    <span class="text-xs text-cuc-red font-bold mb-1 mr-1">${message.name}</span>
+                    <div class="max-w-[85%] bg-blue-50 border border-blue-200 text-blue-900 rounded-2xl rounded-tr-none p-4 shadow-sm text-lg">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'interventor_malo') {
+                // Estilo Bot Malo
+                bubbleDiv.className = "flex flex-col items-end animate-fadeIn";
+                bubbleDiv.innerHTML = `
+                    <span class="text-xs text-alert-color font-bold mb-1 mr-1">${message.name}</span>
+                    <div class="max-w-[85%] bg-red-100 border border-red-300 text-red-900 rounded-2xl rounded-tr-none p-4 shadow-sm text-lg">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'paciente') {
+                // Estilo Paciente (Igual para ambos)
+                bubbleDiv.className = "flex flex-col items-start animate-fadeIn";
+                bubbleDiv.innerHTML = `
+                    <span class="text-xs text-gray-500 font-bold mb-1 ml-1">${message.name}</span>
+                    <div class="max-w-[85%] bg-white border border-gray-300 text-gray-800 rounded-2xl rounded-tl-none p-4 shadow-sm text-lg">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'system') {
+                // Sistema Éxito
+                bubbleDiv.className = "flex flex-col items-center animate-fadeIn mt-4";
+                bubbleDiv.innerHTML = `
+                    <div class="bg-green-100 border border-green-300 text-green-800 rounded-lg p-3 shadow-sm text-sm text-center w-full max-w-lg">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'system_error') {
+                // Sistema Fracaso
+                bubbleDiv.className = "flex flex-col items-center animate-fadeIn mt-4";
+                bubbleDiv.innerHTML = `
+                    <div class="bg-red-200 border border-red-400 text-red-900 rounded-lg p-3 shadow-sm text-sm text-center w-full max-w-lg font-bold">
+                        ${message.text}
+                    </div>
+                `;
+            }
+
+            chatContainer.appendChild(bubbleDiv);
+            
+            // Auto-scroll al fondo
+            chatContainer.scrollTo({
+                top: chatContainer.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>

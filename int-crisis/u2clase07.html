@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 7: Técnicas de Intervención TCC en Crisis</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cuc-red': '#A3161A',
+                        'cuc-dark': '#1a1a1a',
+                        'cuc-gray': '#f4f4f4',
+                        'soft-red': '#ffebeb',
+                        'tcc-blue': '#2563eb',
+                        'tcc-light': '#eff6ff',
+                        'success-color': '#2e7d32',
+                        'alert-color': '#d32f2f',
+                    },
+                    fontFamily: {
+                        'sans': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slideIn {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+
+        /* --- CHAT SCROLLBAR --- */
+        .chat-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-scroll::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05); 
+        }
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2); 
+            border-radius: 10px;
+        }
+        @keyframes fadeInMsg {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeInMsg {
+            animation: fadeInMsg 0.4s ease-out forwards;
+        }
+
+        /* --- Tarjetas de Grounding --- */
+        .grounding-card {
+            transition: all 0.3s ease;
+        }
+        .grounding-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+        }
+
+        /* --- Acordeones del Botiquín Socrático --- */
+        .distortion-content {
+            display: none;
+            animation: fadeInMsg 0.4s ease-out forwards;
+        }
+        .distortion-content.active {
+            display: block;
+        }
+        .socratic-acc-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-cuc-dark font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER / BANNER -->
+    <header class="bg-white border-b-4 border-cuc-red py-5 shadow-md relative md:sticky md:top-0 z-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-center items-center gap-6 text-center">
+            
+            <div class="order-3 md:order-1 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/int-crisis/u2clase07.html" 
+                     alt="QR Clase" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Ir a esta Clase</span>
+            </div>
+
+            <div class="order-1 md:order-2 flex flex-col items-center max-w-2xl">
+                <img src="logocuc.png" alt="Logo Universidad de la Costa" class="h-20 mb-2">
+                <h1 class="text-cuc-red text-2xl md:text-3xl font-black uppercase leading-tight mb-1">
+                    Intervención en Crisis
+                </h1>
+                <div class="text-sm md:text-base text-gray-800">
+                    <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                    Mg. Dirección de Proyectos - Certificado en PNL<br>
+                    <small class="block mt-1">
+                        <span class="text-cuc-red font-black">WhatsApp:</span> 3233796547 | 
+                        <span class="text-cuc-red font-black">IG:</span> caminosdelser85
+                    </small>
+                </div>
+            </div>
+
+            <div class="order-3 md:order-3 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" 
+                     alt="QR Contacto" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Guardar Contacto</span>
+            </div>
+        </div>
+    </header>
+
+    <nav class="bg-gray-100 border-b border-gray-300 py-3 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <a href="u1clase01.html" class="inline-flex items-center gap-2 font-bold text-cuc-dark hover:text-cuc-red transition-colors">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+            <span class="mx-3 text-gray-400">|</span>
+            <span class="text-gray-600 font-bold">Unidad 2: Modelo Cognitivo Conductual</span>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-10 flex-grow max-w-6xl">
+        
+        <div class="text-center mb-16 animate-slideIn">
+            <span class="bg-cuc-red text-white px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4 inline-block">Clase 7</span>
+            <h2 class="text-4xl font-black text-cuc-dark mb-6">Técnicas de Intervención (TCC)</h2>
+            <div class="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow-lg border-l-8 border-cuc-red text-left">
+                <p class="text-xl text-gray-700 italic font-light">
+                    "En una crisis aguda, la mente viaja al futuro catastrófico o al pasado traumático. El primer objetivo del clínico es traer al paciente de vuelta al 'aquí y el ahora'."
+                </p>
+                <p class="text-right text-cuc-red font-bold mt-2">— Principio de Estabilización TCC</p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 1: GROUNDING -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.2s;">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-cuc-dark mb-4">1. Intervención Fisiológica y Conductual</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+                    No se puede reestructurar un pensamiento irracional si la amígdala del paciente está secuestrada por el pánico. Primero debemos "apagar el sistema de alarma" del cuerpo.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden mb-10">
+                <div class="bg-tcc-blue p-6 text-white flex items-center gap-4">
+                    <i class="fas fa-anchor text-4xl"></i>
+                    <div>
+                        <h4 class="text-2xl font-black">Técnica de Grounding (Anclaje 5-4-3-2-1)</h4>
+                        <p class="text-blue-100 text-sm">Distrae la mente del estímulo fóbico forzando al cerebro a procesar estímulos sensoriales inmediatos.</p>
+                    </div>
+                </div>
+                <div class="p-8 grid grid-cols-2 md:grid-cols-5 gap-4">
+                    
+                    <div class="grounding-card bg-blue-50 p-4 rounded-xl text-center border border-blue-100">
+                        <div class="w-12 h-12 bg-tcc-blue text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-3">5</div>
+                        <i class="fas fa-eye text-2xl text-tcc-blue mb-2"></i>
+                        <h5 class="font-bold text-gray-800 text-sm">Cosas que puedas VER</h5>
+                        <p class="text-xs text-gray-500 mt-1">"Dime 5 objetos a tu alrededor y descríbeme su color."</p>
+                    </div>
+
+                    <div class="grounding-card bg-green-50 p-4 rounded-xl text-center border border-green-100">
+                        <div class="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-3">4</div>
+                        <i class="fas fa-hand-paper text-2xl text-green-600 mb-2"></i>
+                        <h5 class="font-bold text-gray-800 text-sm">Cosas que puedas TOCAR</h5>
+                        <p class="text-xs text-gray-500 mt-1">"Siente 4 texturas. La silla, tu pantalón, tus llaves..."</p>
+                    </div>
+
+                    <div class="grounding-card bg-yellow-50 p-4 rounded-xl text-center border border-yellow-100">
+                        <div class="w-12 h-12 bg-yellow-500 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-3">3</div>
+                        <i class="fas fa-deaf text-2xl text-yellow-500 mb-2"></i>
+                        <h5 class="font-bold text-gray-800 text-sm">Cosas que puedas OÍR</h5>
+                        <p class="text-xs text-gray-500 mt-1">"Cierra los ojos y detecta 3 sonidos distintos ahora."</p>
+                    </div>
+
+                    <div class="grounding-card bg-orange-50 p-4 rounded-xl text-center border border-orange-100">
+                        <div class="w-12 h-12 bg-orange-500 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-3">2</div>
+                        <i class="fas fa-wind text-2xl text-orange-500 mb-2"></i>
+                        <h5 class="font-bold text-gray-800 text-sm">Cosas que puedas OLER</h5>
+                        <p class="text-xs text-gray-500 mt-1">"Identifica 2 olores. ¿Huele a café, a perfume, a lluvia?"</p>
+                    </div>
+
+                    <div class="grounding-card bg-red-50 p-4 rounded-xl text-center border border-red-100 md:col-span-1 col-span-2">
+                        <div class="w-12 h-12 bg-cuc-red text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-3">1</div>
+                        <i class="fas fa-utensils text-2xl text-cuc-red mb-2"></i>
+                        <h5 class="font-bold text-gray-800 text-sm">Cosa que puedas SABOREAR</h5>
+                        <p class="text-xs text-gray-500 mt-1">"Toma un sorbo de agua o imagina el sabor de tu comida favorita."</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- SECCIÓN 1.5: VIDEO COMPLEMENTARIO -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.3s;">
+            <div class="bg-cuc-dark rounded-3xl shadow-2xl overflow-hidden max-w-5xl mx-auto flex flex-col md:flex-row items-center border border-gray-700">
+                <div class="md:w-5/12 p-8 text-white">
+                    <h3 class="text-3xl font-bold text-cuc-red mb-4"><i class="fas fa-play-circle"></i> Transición Cognitiva</h3>
+                    <p class="text-gray-300 text-lg mb-4">
+                        Antes de adentrarnos en las técnicas para desarmar pensamientos limitantes, observemos este material audiovisual.
+                    </p>
+                    <p class="text-sm text-gray-400 border-l-4 border-tcc-blue pl-3 bg-gray-800 p-3 rounded">
+                        Comprender qué es la <strong>Reestructuración Cognitiva</strong> nos preparará para utilizar el "Botiquín Socrático" de manera efectiva.
+                    </p>
+                </div>
+                <div class="md:w-7/12 w-full bg-black">
+                    <div class="relative w-full overflow-hidden" style="padding-top: 56.25%;">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/S0yQYpoc_fg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: DISTORSIONES COGNITIVAS (DASHBOARD INTERACTIVO) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.4s;">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-cuc-dark mb-4">2. Intervención Cognitiva: El Botiquín Socrático</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+                    Una vez estabilizados fisiológicamente, identificamos las <strong>Distorsiones Cognitivas</strong>. Selecciona una distorsión en las pestañas y despliega cada ejemplo para ver la intervención exacta del terapeuta.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden max-w-5xl mx-auto">
+                
+                <!-- Pestañas de Navegación -->
+                <div class="flex flex-col md:flex-row bg-gray-100 border-b border-gray-200">
+                    <button onclick="switchDistortionTab('catastrofe')" id="tab-catastrofe" class="distortion-tab-btn flex-1 py-4 px-4 font-bold text-sm uppercase tracking-wider bg-white border-t-4 border-alert-color text-alert-color shadow-sm transition-all">
+                        <i class="fas fa-meteor mr-2"></i> Catastrofización
+                    </button>
+                    <button onclick="switchDistortionTab('dicotomico')" id="tab-dicotomico" class="distortion-tab-btn flex-1 py-4 px-4 font-bold text-sm uppercase tracking-wider text-gray-500 border-t-4 border-transparent hover:bg-gray-200 transition-all">
+                        <i class="fas fa-adjust mr-2"></i> Dicotómico
+                    </button>
+                    <button onclick="switchDistortionTab('mente')" id="tab-mente" class="distortion-tab-btn flex-1 py-4 px-4 font-bold text-sm uppercase tracking-wider text-gray-500 border-t-4 border-transparent hover:bg-gray-200 transition-all">
+                        <i class="fas fa-brain mr-2"></i> Lectura de Mente
+                    </button>
+                </div>
+
+                <!-- CONTENEDOR 1: CATASTROFIZACIÓN -->
+                <div id="content-catastrofe" class="distortion-content active p-6 md:p-10">
+                    <div class="mb-6 border-l-4 border-alert-color pl-4">
+                        <h4 class="text-2xl font-black text-gray-800">Catastrofización</h4>
+                        <p class="text-gray-600">Creer ciegamente que ocurrirá "el peor escenario posible" sin evidencia proporcional. Haz clic en las frases de los pacientes para desarmarlas.</p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <!-- Ejemplo 1 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <button class="socratic-acc-header w-full flex justify-between items-center p-4 bg-red-50 hover:bg-red-100 transition-colors text-left" onclick="toggleSocraticAcc(this)">
+                                <span class="text-red-800 font-bold text-sm md:text-base italic">1. "Mi corazón late muy rápido, seguro me va a dar un infarto y moriré aquí solo."</span>
+                                <i class="fas fa-chevron-down text-alert-color transition-transform duration-300"></i>
+                            </button>
+                            <div class="socratic-acc-content bg-white">
+                                <div class="p-5 border-t border-gray-100 flex items-start gap-3">
+                                    <i class="fas fa-comment-medical text-alert-color text-2xl mt-1"></i>
+                                    <div>
+                                        <h5 class="font-bold text-gray-800 mb-1">Intervención (Descatastrofización Biológica):</h5>
+                                        <p class="text-gray-600 text-sm">"¿Cuántas veces has sentido taquicardia por ansiedad en el pasado? De todas esas decenas de veces, ¿cuántas terminaron en un infarto real? La evidencia nos dice que tu cuerpo activa una alarma ruidosa, pero no mortal."</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ejemplo 2 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <button class="socratic-acc-header w-full flex justify-between items-center p-4 bg-red-50 hover:bg-red-100 transition-colors text-left" onclick="toggleSocraticAcc(this)">
+                                <span class="text-red-800 font-bold text-sm md:text-base italic">2. "Mi hijo no contesta el teléfono hace una hora, seguro tuvo un accidente fatal."</span>
+                                <i class="fas fa-chevron-down text-alert-color transition-transform duration-300"></i>
+                            </button>
+                            <div class="socratic-acc-content bg-white">
+                                <div class="p-5 border-t border-gray-100 flex items-start gap-3">
+                                    <i class="fas fa-comment-medical text-alert-color text-2xl mt-1"></i>
+                                    <div>
+                                        <h5 class="font-bold text-gray-800 mb-1">Intervención (Probabilidades Alternativas):</h5>
+                                        <p class="text-gray-600 text-sm">"Sé que da mucho miedo. Pero hagamos una lista de otras razones lógicas por las que un joven no contesta: ¿Batería descargada? ¿En el cine? ¿Conduciendo? Si apostáramos, ¿cuál es la probabilidad estadística de un accidente versus quedarse sin batería?"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ejemplo 3 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <button class="socratic-acc-header w-full flex justify-between items-center p-4 bg-red-50 hover:bg-red-100 transition-colors text-left" onclick="toggleSocraticAcc(this)">
+                                <span class="text-red-800 font-bold text-sm md:text-base italic">3. "Reprobé este examen importante, mi carrera y mi futuro están arruinados."</span>
+                                <i class="fas fa-chevron-down text-alert-color transition-transform duration-300"></i>
+                            </button>
+                            <div class="socratic-acc-content bg-white">
+                                <div class="p-5 border-t border-gray-100 flex items-start gap-3">
+                                    <i class="fas fa-comment-medical text-alert-color text-2xl mt-1"></i>
+                                    <div>
+                                        <h5 class="font-bold text-gray-800 mb-1">Intervención (Perspectiva Temporal):</h5>
+                                        <p class="text-gray-600 text-sm">"Es un golpe duro, sin duda. Pero piensa en profesionales que admires, ¿crees que ninguno jamás reprobó un examen? Si adelantamos el tiempo 5 años, cuando ya estés ejerciendo, ¿qué tanta importancia real tendrá esta nota de este martes específico?"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ejemplo 4 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <button class="socratic-acc-header w-full flex justify-between items-center p-4 bg-red-50 hover:bg-red-100 transition-colors text-left" onclick="toggleSocraticAcc(this)">
+                                <span class="text-red-800 font-bold text-sm md:text-base italic">4. "Me equivoqué en la presentación al gerente, me van a despedir y terminaré en la calle."</span>
+                                <i class="fas fa-chevron-down text-alert-color transition-transform duration-300"></i>
+                            </button>
+                            <div class="socratic-acc-content bg-white">
+                                <div class="p-5 border-t border-gray-100 flex items-start gap-3">
+                                    <i class="fas fa-comment-medical text-alert-color text-2xl mt-1"></i>
+                                    <div>
+                                        <h5 class="font-bold text-gray-800 mb-1">Intervención (Flecha Descendente / Plan B):</h5>
+                                        <p class="text-gray-600 text-sm">"Imaginemos que ocurre tu mayor miedo: te despiden. ¿Cuál sería literalmente el paso 1 el día de mañana? ¿Actualizar la hoja de vida? ¿Llamar contactos? ¿De verdad la única e inmediata consecuencia automática es terminar viviendo en la calle sin opciones?"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTENEDOR 2: DICOTÓMICO -->
+                <div id="content-dicotomico" class="distortion-content p-6 md:p-10">
+                    <div class="mb-6 border-l-4 border-gray-800 pl-4">
+                        <h4 class="text-2xl font-black text-gray-800">Pensamiento Dicotómico</h4>
+                        <p class="text-gray-600">Ver las situaciones en términos absolutos ("Todo o Nada", "Blanco o Negro") sin escala de grises. Haz clic para desarmar la absolutización.</p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <!-- Ejemplo 1 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <button class="socratic-acc-header w-full flex justify-between items-center p-4 bg-gray-100 hover:bg-gray-200 transition-colors text-left" onclick="toggleSocraticAcc(this)">
+                                <span class="text-gray-800 font-bold text-sm md:text-base italic">1. "Me despidieron de este empleo. Soy un fracasado total, nunca volveré a ser alguien."</span>
+                                <i class="fas fa-chevron-down text-gray-800 transition-transform duration-300"></i>
+                            </button>
+                            <div class="socratic-acc-content bg-white">
+                                <div class="p-5 border-t border-gray-100 flex items-start gap-3">
+                                    <i class="fas fa-comment-medical text-gray-800 text-2xl mt-1"></i>
+                                    <div>
+                                        <h5 class="font-bold text-gray-800 mb-1">Intervención (Búsqueda de la Escala de Grises):</h5>
+                                        <p class="text-gray-600 text-sm">"Si 0 es ser un fracaso absoluto en todo y 100 es ser el dueño del universo, ¿dónde ubicarías tu carrera entera, considerando tus estudios y tus trabajos anteriores? Un solo evento malo no borra los puntos que ya ganaste en tu vida."</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ejemplo 2 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <button class="socratic-acc-header w-full flex justify-between items-center p-4 bg-gray-100 hover:bg-gray-200 transition-colors text-left" onclick="toggleSocraticAcc(this)">
+                                <span class="text-gray-800 font-bold text-sm md:text-base italic">2. "Rompí mi dieta comiéndome un postre, así que mi esfuerzo de un mes ya no sirve para nada."</span>
+                                <i class="fas fa-chevron-down text-gray-800 transition-transform duration-300"></i>
+                            </button>
+                            <div class="socratic-acc-content bg-white">
+                                <div class="p-5 border-t border-gray-100 flex items-start gap-3">
+                                    <i class="fas fa-comment-medical text-gray-800 text-2xl mt-1"></i>
+                                    <div>
+                                        <h5 class="font-bold text-gray-800 mb-1">Intervención (Examen de la Regla):</h5>
+                                        <p class="text-gray-600 text-sm">"Si en un mes hiciste alrededor de 80 comidas saludables y 1 comida con azúcar, ¿matemáticamente crees que tu cuerpo borra o anula el beneficio de las 80 buenas por 1 mala? ¿Pueden coexistir el esfuerzo y un pequeño desliz?"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ejemplo 3 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <button class="socratic-acc-header w-full flex justify-between items-center p-4 bg-gray-100 hover:bg-gray-200 transition-colors text-left" onclick="toggleSocraticAcc(this)">
+                                <span class="text-gray-800 font-bold text-sm md:text-base italic">3. "Si no saco la mejor nota de mi promoción, entonces soy un pésimo estudiante."</span>
+                                <i class="fas fa-chevron-down text-gray-800 transition-transform duration-300"></i>
+                            </button>
+                            <div class="socratic-acc-content bg-white">
+                                <div class="p-5 border-t border-gray-100 flex items-start gap-3">
+                                    <i class="fas fa-comment-medical text-gray-800 text-2xl mt-1"></i>
+                                    <div>
+                                        <h5 class="font-bold text-gray-800 mb-1">Intervención (Técnica del Doble Estándar):</h5>
+                                        <p class="text-gray-600 text-sm">"Si tu mejor amigo se esforzara muchísimo y sacara la SEGUNDA mejor nota de la clase, ¿le dirías en su cara que es un pésimo estudiante? Si a él lo mides con compasión, ¿por qué usas un tribunal tan severo solo contigo mismo?"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ejemplo 4 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <button class="socratic-acc-header w-full flex justify-between items-center p-4 bg-gray-100 hover:bg-gray-200 transition-colors text-left" onclick="toggleSocraticAcc(this)">
+                                <span class="text-gray-800 font-bold text-sm md:text-base italic">4. "Mi pareja se olvidó de llamarme hoy en el aniversario, eso significa que ya no me ama en absoluto."</span>
+                                <i class="fas fa-chevron-down text-gray-800 transition-transform duration-300"></i>
+                            </button>
+                            <div class="socratic-acc-content bg-white">
+                                <div class="p-5 border-t border-gray-100 flex items-start gap-3">
+                                    <i class="fas fa-comment-medical text-gray-800 text-2xl mt-1"></i>
+                                    <div>
+                                        <h5 class="font-bold text-gray-800 mb-1">Intervención (Evidencia Contraria Integral):</h5>
+                                        <p class="text-gray-600 text-sm">"El olvido duele, pero aislemos este evento. Nómbrame 3 cosas que tu pareja haya hecho por ti este mismo mes que demuestren cariño. ¿Es posible que alguien te ame profundamente y, al mismo tiempo, sea despistado con las fechas?"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTENEDOR 3: LECTURA DE MENTE -->
+                <div id="content-mente" class="distortion-content p-6 md:p-10">
+                    <div class="mb-6 border-l-4 border-tcc-blue pl-4">
+                        <h4 class="text-2xl font-black text-gray-800">Lectura de Mente</h4>
+                        <p class="text-gray-600">Asumir o "adivinar" que otras personas tienen intenciones o juicios negativos sobre nosotros sin confirmarlo. Haz clic para aplicar realidad.</p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <!-- Ejemplo 1 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <button class="socratic-acc-header w-full flex justify-between items-center p-4 bg-blue-50 hover:bg-blue-100 transition-colors text-left" onclick="toggleSocraticAcc(this)">
+                                <span class="text-blue-800 font-bold text-sm md:text-base italic">1. "Vi a mis compañeros riéndose. Sé perfectamente que se están burlando de mi crisis de ayer."</span>
+                                <i class="fas fa-chevron-down text-tcc-blue transition-transform duration-300"></i>
+                            </button>
+                            <div class="socratic-acc-content bg-white">
+                                <div class="p-5 border-t border-gray-100 flex items-start gap-3">
+                                    <i class="fas fa-comment-medical text-tcc-blue text-2xl mt-1"></i>
+                                    <div>
+                                        <h5 class="font-bold text-gray-800 mb-1">Intervención (Examen del "Tribunal de Justicia"):</h5>
+                                        <p class="text-gray-600 text-sm">"Entiendo tu sospecha, pero si esto fuera un juicio, ¿tienes pruebas irrefutables, como una grabación de audio, de que decían tu nombre? ¿Qué más podrían estar mirando en el celular que les cause risa?"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ejemplo 2 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <button class="socratic-acc-header w-full flex justify-between items-center p-4 bg-blue-50 hover:bg-blue-100 transition-colors text-left" onclick="toggleSocraticAcc(this)">
+                                <span class="text-blue-800 font-bold text-sm md:text-base italic">2. "Mi jefe me miró serio esta mañana al llegar, seguro está pensando en despedirme."</span>
+                                <i class="fas fa-chevron-down text-tcc-blue transition-transform duration-300"></i>
+                            </button>
+                            <div class="socratic-acc-content bg-white">
+                                <div class="p-5 border-t border-gray-100 flex items-start gap-3">
+                                    <i class="fas fa-comment-medical text-tcc-blue text-2xl mt-1"></i>
+                                    <div>
+                                        <h5 class="font-bold text-gray-800 mb-1">Intervención (Despersonalización / Hipótesis Alternas):</h5>
+                                        <p class="text-gray-600 text-sm">"Tu jefe es un ser humano. ¿Existen otras razones por las que alguien llega serio en la mañana? Quizás peleó con su esposa, durmió mal o tiene problemas financieros. ¿Por qué asumes automáticamente que su cara tiene que ver contigo?"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ejemplo 3 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <button class="socratic-acc-header w-full flex justify-between items-center p-4 bg-blue-50 hover:bg-blue-100 transition-colors text-left" onclick="toggleSocraticAcc(this)">
+                                <span class="text-blue-800 font-bold text-sm md:text-base italic">3. "Mi amiga no me saludó con entusiasmo hoy, debe estar enojada conmigo por lo que dije ayer."</span>
+                                <i class="fas fa-chevron-down text-tcc-blue transition-transform duration-300"></i>
+                            </button>
+                            <div class="socratic-acc-content bg-white">
+                                <div class="p-5 border-t border-gray-100 flex items-start gap-3">
+                                    <i class="fas fa-comment-medical text-tcc-blue text-2xl mt-1"></i>
+                                    <div>
+                                        <h5 class="font-bold text-gray-800 mb-1">Intervención (Pérdida de la Omnipotencia):</h5>
+                                        <p class="text-gray-600 text-sm">"¿Cuándo adquiriste el superpoder de leer los pensamientos ajenos sin que te digan una sola palabra? En lugar de torturarte adivinando, ¿cuál sería el resultado de preguntarle directamente: 'Oye, te noté apagada, ¿estás bien?'"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ejemplo 4 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <button class="socratic-acc-header w-full flex justify-between items-center p-4 bg-blue-50 hover:bg-blue-100 transition-colors text-left" onclick="toggleSocraticAcc(this)">
+                                <span class="text-blue-800 font-bold text-sm md:text-base italic">4. "La doctora fue muy cortante al atenderme, seguro le caí mal desde que entré al consultorio."</span>
+                                <i class="fas fa-chevron-down text-tcc-blue transition-transform duration-300"></i>
+                            </button>
+                            <div class="socratic-acc-content bg-white">
+                                <div class="p-5 border-t border-gray-100 flex items-start gap-3">
+                                    <i class="fas fa-comment-medical text-tcc-blue text-2xl mt-1"></i>
+                                    <div>
+                                        <h5 class="font-bold text-gray-800 mb-1">Intervención (Enfoque en Variables Externas):</h5>
+                                        <p class="text-gray-600 text-sm">"Ponte en los zapatos de la doctora por un segundo. ¿Es posible que lleve 12 horas trabajando de corrido atendiendo pacientes sin descanso, y que su comportamiento cortante sea puro agotamiento físico y no un juicio hacia ti?"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: SIMULADOR CLÍNICO (4 CASOS PROFUNDOS) -->
+        <section class="mb-10 animate-slideIn" style="animation-delay: 0.6s;">
+            <div class="bg-cuc-dark text-white rounded-2xl shadow-2xl overflow-hidden border border-gray-700">
+                
+                <div class="p-8 border-b border-gray-700 relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 text-9xl text-white opacity-5">
+                        <i class="fas fa-laptop-medical"></i>
+                    </div>
+                    <h2 class="text-3xl font-black text-tcc-blue mb-2 relative z-10 flex items-center gap-3">
+                        <i class="fas fa-robot"></i> Laboratorio Clínico Avanzado
+                    </h2>
+                    <p class="text-gray-300 text-md max-w-4xl relative z-10">
+                        Los pacientes reales no ceden a la primera intervención. En este simulador avanzado, observará cómo el terapeuta maneja la <strong>resistencia</strong>, el rechazo a la técnica y la hostilidad inicial antes de lograr la estabilización. Seleccione un caso clínico y espere la instrucción de su docente.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap bg-gray-800 border-b border-gray-600">
+                    <button class="sim-tab-btn active px-6 py-4 font-bold text-sm uppercase tracking-wider flex-1 md:flex-none hover:bg-gray-700 transition-colors border-b-4 border-tcc-blue text-white" onclick="switchSimCase(1)">
+                        1. Pánico (Juliana)
+                    </button>
+                    <button class="sim-tab-btn px-6 py-4 font-bold text-sm uppercase tracking-wider flex-1 md:flex-none hover:bg-gray-700 transition-colors border-b-4 border-transparent text-gray-400" onclick="switchSimCase(2)">
+                        2. Depresión (David)
+                    </button>
+                    <button class="sim-tab-btn px-6 py-4 font-bold text-sm uppercase tracking-wider flex-1 md:flex-none hover:bg-gray-700 transition-colors border-b-4 border-transparent text-gray-400" onclick="switchSimCase(3)">
+                        3. Anticipatoria (Andrés)
+                    </button>
+                    <button class="sim-tab-btn px-6 py-4 font-bold text-sm uppercase tracking-wider flex-1 md:flex-none hover:bg-gray-700 transition-colors border-b-4 border-transparent text-gray-400" onclick="switchSimCase(4)">
+                        4. Vértigo (Roberto)
+                    </button>
+                </div>
+
+                <div class="bg-gray-50 flex flex-col h-[650px] relative">
+                    
+                    <div id="sim-chat-header" class="bg-white text-cuc-dark p-4 flex items-center justify-between shadow-sm z-10 border-b border-gray-200">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-tcc-light text-tcc-blue rounded-full flex items-center justify-center font-bold">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg leading-tight text-tcc-blue" id="sim-header-title">Caso 1: Resistencia al Grounding</h3>
+                                <span class="text-xs text-gray-500 font-bold tracking-widest uppercase" id="sim-header-subtitle">Paciente: Juliana (Crisis de Angustia Severa)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="chat-messages-sim" class="chat-scroll flex-1 overflow-y-auto p-6 space-y-6 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
+                        <!-- Messages render here -->
+                    </div>
+
+                    <div class="bg-white p-4 border-t border-gray-200 flex items-center gap-3">
+                        <input type="text" id="trigger-input-sim" placeholder="Ingrese comando de control..." 
+                               class="flex-1 bg-gray-100 border border-gray-300 text-gray-800 text-lg rounded-full px-6 py-3 focus:outline-none focus:ring-2 focus:ring-tcc-blue transition-all"
+                               onkeypress="handleSimChatInput(event)">
+                        <button onclick="checkAndAdvanceSim()" 
+                                class="bg-tcc-blue text-white px-6 py-3 rounded-full font-bold hover:bg-blue-800 transition-all shadow-md flex items-center gap-2">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-cuc-dark text-white text-center py-8 mt-auto">
+        <div class="container mx-auto px-4">
+            <p class="text-sm md:text-base mb-2">Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+            <p class="text-xs text-gray-400">Material docente: Jorge Arango Castaño. Basado en Terapia Cognitivo Conductual (Evaluación Funcional).</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- LÓGICA DEL BOTIQUÍN SOCRÁTICO (DASHBOARD) ---
+        function switchDistortionTab(tabId) {
+            // Ocultar todos los contenidos
+            document.querySelectorAll('.distortion-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Reiniciar botones
+            document.querySelectorAll('.distortion-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-alert-color', 'text-gray-800', 'text-tcc-blue', 'border-alert-color', 'border-gray-800', 'border-tcc-blue', 'shadow-sm');
+                btn.classList.add('text-gray-500', 'border-transparent', 'hover:bg-gray-200');
+            });
+
+            // Mostrar activo
+            document.getElementById('content-' + tabId).classList.add('active');
+            const activeBtn = document.getElementById('tab-' + tabId);
+            activeBtn.classList.remove('text-gray-500', 'border-transparent', 'hover:bg-gray-200');
+            
+            // Asignar color específico
+            activeBtn.classList.add('bg-white', 'shadow-sm');
+            if(tabId === 'catastrofe') activeBtn.classList.add('text-alert-color', 'border-alert-color');
+            if(tabId === 'dicotomico') activeBtn.classList.add('text-gray-800', 'border-gray-800');
+            if(tabId === 'mente') activeBtn.classList.add('text-tcc-blue', 'border-tcc-blue');
+        }
+
+        function toggleSocraticAcc(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('i.fa-chevron-down, i.fa-chevron-up');
+            
+            // Encontrar el contenedor principal (para no cerrar acordeones de otras pestañas)
+            const parentContent = header.closest('.distortion-content');
+            const allContents = parentContent.querySelectorAll(".socratic-acc-content");
+            const allHeaders = parentContent.querySelectorAll(".socratic-acc-header");
+            
+            // Acordeón estilo "uno a la vez"
+            allContents.forEach((c, index) => {
+                if (c !== content) {
+                    c.style.maxHeight = null;
+                    const otherIcon = allHeaders[index].querySelector('i.fa-chevron-up');
+                    if (otherIcon) {
+                        otherIcon.classList.remove('fa-chevron-up');
+                        otherIcon.classList.add('fa-chevron-down');
+                        otherIcon.style.transform = 'rotate(0deg)';
+                    }
+                }
+            });
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // --- LÓGICA DEL SIMULADOR CLÍNICO (CHATBOT 4 CASOS EXPANDIDOS) ---
+        const simCasesData = {
+            1: {
+                title: "Caso 1: Resistencia al Grounding",
+                subtitle: "Paciente: Juliana (Línea de Crisis - Angustia Severa)",
+                script: [
+                    { role: 'paciente', name: 'Juliana', text: "¡Ayúdeme por favor! Me falta el aire... el pecho me aprieta muchísimo. ¡Me voy a morir, llame a una ambulancia!" },
+                    { role: 'system', name: 'Alerta Clínica', text: "<strong>[Análisis Inicial]</strong> La paciente presenta hiperactivación simpática aguda. La interpretación cognitiva catastrófica ('me voy a morir') retroalimenta el pánico físico. Se requiere intervención directiva y fisiológica inmediata." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Juliana, mi nombre es Carlos, estoy aquí contigo. Escucho tu respiración. La sensación que tienes es muy aterradora, pero es ansiedad, tu cuerpo activó una falsa alarma. Concéntrate en mi voz. Dime 5 cosas rojas que veas a tu alrededor ahora mismo." },
+                    { role: 'paciente', name: 'Juliana', text: "¡No puedo ver nada! Todo está borroso, me duelen los brazos... ¡No me pida pendejadas, haga algo, mi corazón va a explotar!" },
+                    { role: 'system', name: 'Resistencia Activa', text: "<strong>[Manejo del Bloqueo]</strong> La paciente rechaza la técnica por la severidad del síntoma. El terapeuta NO debe enojarse ni rendirse. Debe validar el malestar, pero mantener la instrucción de anclaje (Grounding) cambiando de canal sensorial a uno más fácil." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Te creo, Juliana, sé que sientes que el corazón va a mil y tienes visión de túnel. Es parte de la adrenalina. Si no puedes ver, usa tus manos. Toca la pared o el mueble más cercano. Dime en voz alta cómo se siente esa textura. ¿Está fría o caliente?" },
+                    { role: 'paciente', name: 'Juliana', text: "<em>[Respiración muy agitada]</em>... Estoy tocando la pared... Está... está fría y áspera." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Excelente. Sigue tocando esa pared fría. Siente lo firme que es. Ahora, dime 3 cosas que puedas escuchar aparte de mi voz en el teléfono." },
+                    { role: 'paciente', name: 'Juliana', text: "Escucho... el ventilador prendido... y unos carros afuera en la calle... <em>[Respira profundo de forma involuntaria]</em>" },
+                    { role: 'system', name: 'Efecto Terapéutico', text: "<strong>[Efectividad del Grounding]</strong> Al forzar a la corteza prefrontal a procesar texturas y sonidos externos, el terapeuta 'desconecta' el foco de atención que Juliana tenía sobre su propio corazón, reduciendo la aceleración." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Lo estás haciendo muy bien. El ventilador y los carros. Ahora pon tu mano en tu estómago. Vamos a darle a tu cuerpo la señal de que estamos a salvo. Toma aire por la nariz inflando el estómago mientras cuento hasta 4. Uno... dos... tres... cuatro..." },
+                    { role: 'paciente', name: 'Juliana', text: "<em>[Exhala largo, casi como un sollozo]</em>... uf... Mi pecho ya no me aprieta tanto. Qué susto tan horrible." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Fue un susto enorme, pero tú misma lograste controlarlo. Tu corazón se aceleró, pero le mandaste la orden de frenar con la pared y la respiración. Ya estás a salvo." },
+                    { role: 'system_success', name: 'Objetivo Alcanzado', text: "<strong>[ÉXITO]</strong> Se venció la resistencia inicial validando el dolor físico y adaptando el Grounding. La paciente pasó de un estado de pánico desbordado a un estado de calma fisiológica, lista para explorar qué detonó la crisis." }
+                ]
+            },
+            2: {
+                title: "Caso 2: Desarmando el Todo o Nada",
+                subtitle: "Paciente: David (Crisis Depresiva en Sesión Online)",
+                script: [
+                    { role: 'paciente', name: 'David', text: "Doctor, llevo 3 días sin salir de la cama ni bañarme. Perdí el contrato más importante del año en mi empresa. Soy un inútil, lo arruino todo. Mi carrera se acabó, nunca voy a lograr nada en la vida." },
+                    { role: 'system', name: 'Análisis Cognitivo', text: "<strong>[Identificación de Distorsiones]</strong> El paciente presenta la Tríada Cognitiva de Beck (visión negativa de sí mismo, del entorno y del futuro): 1. Etiquetación ('soy un inútil'), 2. Sobregeneralización ('lo arruino TODO'), 3. Pensamiento Dicotómico ('NUNCA voy a lograr nada')." },
+                    { role: 'interventor', name: 'Terapeuta', text: "David, escucho el peso que llevas encima. Es un golpe muy duro perder un proyecto al que le pusiste tanto esfuerzo. Entiendo que te sientas devastado. Sin embargo, me llama la atención cuando dices que 'lo arruinas todo'. ¿Es esto un hecho comprobable en el 100% de tus acciones?" },
+                    { role: 'paciente', name: 'David', text: "Usted me dice eso porque es psicólogo y es su trabajo animarme. Es muy fácil hablar desde ahí. De verdad lo arruiné todo, mi jefe estaba furioso y me humilló." },
+                    { role: 'system', name: 'Resistencia Activa', text: "<strong>[Manejo de la Invalidación]</strong> El paciente ataca la postura del terapeuta asumiendo que solo quiere 'animarlo' falsamente. El interventor debe esquivar la trampa defensiva, aceptar su posición externa y anclarse en la recolección de evidencia." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Tienes toda la razón, David. Yo no estoy en tu cama sintiendo ese nivel de frustración, y no intento animarte con frases vacías. Solo quiero analizar los datos reales contigo, como un científico. En los últimos dos años que llevas en esa empresa, ¿cuántos contratos SÍ lograste cerrar exitosamente?" },
+                    { role: 'paciente', name: 'David', text: "<em>[Silencio largo]</em>... Bueno, cerré las cuentas del semestre pasado. Y conseguí dos clientes nuevos en marzo. Pero eso fue pura suerte, el mercado estaba fácil. Este era el contrato que importaba." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Fíjate en lo que acaba de hacer tu mente. Cuando fracasas, dices 'soy un inútil'. Pero cuando logras dos contratos nuevos, dices 'fue pura suerte, el mercado estaba fácil'. ¿No te parece que estás usando una regla muy estricta para castigarte y una muy injusta para quitarte el mérito?" },
+                    { role: 'system', name: 'Diálogo Socrático', text: "<strong>[Confrontación del Doble Estándar]</strong> El terapeuta evidencia cómo el paciente minimiza lo positivo y maximiza lo negativo (Filtro Mental). Se le obliga a ver la inconsistencia lógica de su propia autoevaluación." },
+                    { role: 'paciente', name: 'David', text: "Yo... no lo había pensado así. Supongo que sí me esforcé en esos dos clientes. Pero la embarré monumentalmente en este último." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Y embarrarla es doloroso, cuesta dinero y trae problemas. Eso es innegable. Pero al cambiar la frase 'soy un inútil que arruina todo' por 'soy un buen profesional que cometió un error grave en este proyecto específico', ¿cambia un poco el peso que sientes ahora mismo?" },
+                    { role: 'paciente', name: 'David', text: "<em>[Suspira]</em>... Sí. Duele, pero no se siente como si fuera el fin del mundo. Sigue siendo un problema grave con mi jefe, pero no es que yo sea una basura." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Exactamente. Ahora que podemos separar tu valor personal de este error laboral, ¿cuál podría ser un primer paso pequeñito hoy para salir de ese cuarto?" },
+                    { role: 'system_success', name: 'Objetivo Alcanzado', text: "<strong>[ÉXITO]</strong> El paciente modificó su creencia nuclear catastrófica mediante reestructuración cognitiva empírica. Al reducir la carga del afecto depresivo, se abre la puerta a la activación conductual básica (salir de la cama)." }
+                ]
+            },
+            3: {
+                title: "Caso 3: La Flecha Descendente",
+                subtitle: "Paciente: Andrés (Pánico Escénico / Ansiedad Anticipatoria)",
+                script: [
+                    { role: 'paciente', name: 'Andrés', text: "Doctor, mañana tengo que sustentar mi tesis de grado frente al jurado. Llevo dos noches sin dormir, estoy sudando frío. Sé que me voy a quedar en blanco, se van a reír de mí y me van a reprobar. He decidido no ir." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Andrés, la presión de una tesis es enorme, es natural estar sumamente nervioso. Pero nota cómo tu mente viajó al futuro y ya redactó el peor final de la película. Estás asumiendo que el jurado se reirá. ¿Tienes pruebas históricas de que esos profesores en específico se burlan de los alumnos para humillarlos en las sustentaciones?" },
+                    { role: 'system', name: 'Análisis Cognitivo', text: "<strong>[Distorsión: Adivinación / Lectura de Mente]</strong> El paciente anticipa un resultado humillante sin evidencia, lo que está generando una inminente conducta de Evitación (no asistir)." },
+                    { role: 'paciente', name: 'Andrés', text: "Usted no conoce a este jurado. El Dr. Silva es un sádico con las preguntas. No son pruebas, es intuición. Si me trabo, me va a destrozar frente a todos mis compañeros. Será el fin." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Entiendo que le tienes pavor al estilo del Dr. Silva. Vamos a enfrentar ese miedo directamente en lugar de huir de él. Imaginemos el peor escenario: te hace una pregunta muy difícil, te trabas y te quedas en blanco durante 10 segundos. ¿Qué es lo peor que pasa inmediatamente después de eso?" },
+                    { role: 'system', name: 'Técnica Socrática', text: "<strong>[Técnica: Flecha Descendente / Descatastrofización]</strong> En lugar de decirle 'todo saldrá bien' (lo cual es positivismo tóxico e inútil), el terapeuta fuerza al paciente a habitar el peor escenario lógico para demostrarle que NO es el fin de su existencia." },
+                    { role: 'paciente', name: 'Andrés', text: "Pues... la gente me miraría raro. Sentiría mi cara arder de la vergüenza." },
+                    { role: 'interventor', name: 'Terapeuta', text: "¿Y después de que tu cara arda de vergüenza? ¿Se acaba el mundo? ¿Te expulsan de la universidad de por vida por no saber un dato?" },
+                    { role: 'paciente', name: 'Andrés', text: "No... no me expulsan. Supongo que el Dr. Silva me pondría mala nota en esa pregunta o me pasaría al siguiente tema con mala cara." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Exacto. Será un momento incómodo, sudarás, te dará vergüenza, pero es totalmente sobrevivible. Y para evitar que el bloqueo te paralice, ¿qué te parece si preparamos una 'frase de escape' profesional por si te quedas en blanco?" },
+                    { role: 'paciente', name: 'Andrés', text: "¿Una frase de escape? ¿Como admitir que no sé nada? Eso me humillará más." },
+                    { role: 'interventor', name: 'Terapeuta', text: "No es admitir ignorancia absoluta, es gestionar la pausa. Algo como: 'Doctor Silva, esa es una excelente pregunta. El dato exacto se me escapa por los nervios del momento, pero basándome en el marco teórico de mi investigación, la tendencia indica que...'. ¿Crees que podrías decir eso si el miedo aparece?" },
+                    { role: 'paciente', name: 'Andrés', text: "<em>[Silencio pensativo]</em>... Sí... eso suena a que todavía tengo el control, aunque esté nervioso. Solo tener esa frase guardada me hace sentir que tengo un 'Plan B'." },
+                    { role: 'system_success', name: 'Objetivo Alcanzado', text: "<strong>[ÉXITO]</strong> Se desarmó la catástrofe imaginada asumiendo el peor escenario y se bloqueó la conducta de evitación dotando al paciente de un Ensayo Conductual preventivo (frase de escape)." }
+                ]
+            },
+            4: {
+                title: "Caso 4: Vértigo Psicógeno",
+                subtitle: "Paciente: Roberto (Ataque de Pánico en Consultorio)",
+                script: [
+                    { role: 'paciente', name: 'Roberto', text: "Doctor... disculpe que lo interrumpa en medio de la sesión. Todo me está dando vueltas." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Tranquilo Roberto, aquí estoy. No te preocupes por interrumpir. ¿Qué estás sintiendo exactamente en tu cuerpo en este momento?" },
+                    { role: 'paciente', name: 'Roberto', text: "Siento que me voy a desmayar, me voy a caer de esta silla. ¡Por favor, llame a una ambulancia, es mi corazón! ¡Siento que me apago!" },
+                    { role: 'system', name: 'Alerta Clínica in situ', text: "<strong>[Crisis en Sesión]</strong> El paciente experimenta un ataque de pánico presencial con predominancia de síntomas vestibulares (vértigo psicógeno). La creencia catastrófica inminente es el síncope (desmayo). El terapeuta debe actuar de inmediato." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Roberto, mírame a los ojos. Estás a salvo aquí en el consultorio. Tu corazón está latiendo rápido porque tu cuerpo activó una falsa alarma de peligro. Pon tus pies firmes en el suelo y agarra con fuerza los apoyabrazos de la silla." },
+                    { role: 'paciente', name: 'Roberto', text: "¡No puedo, no puedo! Siento las manos dormidas, como si no fueran mías... ¡Haga algo, me voy a desmayar de verdad!" },
+                    { role: 'system', name: 'Resistencia y Parestesia', text: "<strong>[Manejo del Síntoma]</strong> La hiperventilación causa hormigueo (parestesia) y sensación de irrealidad (despersonalización), validando el terror del paciente. El terapeuta debe mantener el encuadre directivo sin dejarse contagiar por la urgencia de llamar a urgencias." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Ese hormigueo es completamente normal, Roberto, se llama hiperventilación. Es solo exceso de oxígeno en tu sangre, no es un derrame. Aprieta los apoyabrazos fuerte. Siente la madera dura bajo tus manos. Dime, ¿esa madera está fría o caliente?" },
+                    { role: 'paciente', name: 'Roberto', text: "<em>[Apretando la silla, respirando muy rápido]</em>... Está... está fría. Pero el cuarto sigue girando. Doctor, ¿y si me desmayo aquí?" },
+                    { role: 'interventor', name: 'Terapeuta', text: "Te voy a explicar algo médico muy importante: para desmayarte, tu presión arterial tiene que caer de golpe. Pero ahora mismo tu corazón late rápido y tienes mucha adrenalina. Tu presión está alta. Es biológicamente imposible que te desmayes en este estado." },
+                    { role: 'system', name: 'Intervención Cognitiva', text: "<strong>[Descatastrofización Biológica / Psicoeducación]</strong> Al confrontar el miedo irracional al desmayo con un hecho fisiológico irrefutable, el terapeuta rompe la creencia central que mantiene el pánico." },
+                    { role: 'paciente', name: 'Roberto', text: "¿En serio?... ¿No es mi corazón fallando? Es que nunca había sentido un vértigo tan fuerte sin moverme." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Es vértigo psicógeno, causado por la misma tensión de la que veníamos hablando. Hagamos la prueba de la realidad: llevas 5 minutos con el corazón a mil y no te has desmayado. Tu cuerpo es fuerte. Ahora, toma aire profundo por la nariz, cuenta hasta 4..." },
+                    { role: 'paciente', name: 'Roberto', text: "<em>[Inhala temblando]</em>... uno... dos... tres... cuatro... <em>[Exhala largo]</em>. El zumbido en mis oídos bajó un poco." },
+                    { role: 'interventor', name: 'Terapeuta', text: "Excelente. Sigue sintiendo la madera de la silla y tus pies en el piso. Tu cuerpo ya entendió que no hay ningún peligro real en este consultorio. Estás retomando el control." },
+                    { role: 'system_success', name: 'Objetivo Alcanzado', text: "<strong>[ÉXITO]</strong> El terapeuta estabilizó la crisis en vivo mediante Grounding propioceptivo, toleró la resistencia extrema sin perder la calma y desarmó la cognición catastrófica con psicoeducación directa." }
+                ]
+            }
+        };
+
+        let currentSimCaseId = 1;
+        let simProgressState = { 1: 0, 2: 0, 3: 0, 4: 0 };
+
+        function switchSimCase(caseId) {
+            currentSimCaseId = caseId;
+            
+            const tabs = document.querySelectorAll('.sim-tab-btn');
+            tabs.forEach((tab, index) => {
+                tab.classList.remove('active', 'border-tcc-blue', 'text-white');
+                tab.classList.add('border-transparent', 'text-gray-400');
+                if (index + 1 === caseId) {
+                    tab.classList.add('active', 'text-white', 'border-tcc-blue');
+                    tab.classList.remove('text-gray-400');
+                }
+            });
+
+            document.getElementById('sim-header-title').innerText = simCasesData[caseId].title;
+            document.getElementById('sim-header-subtitle').innerText = simCasesData[caseId].subtitle;
+
+            rebuildSimChatHistory();
+        }
+
+        function renderSimInitialMessage() {
+            const chatContainer = document.getElementById('chat-messages-sim');
+            chatContainer.innerHTML = `
+                <div class="text-center text-gray-500 text-sm font-bold bg-white px-6 py-2 rounded-full mx-auto w-max shadow-sm border border-gray-200">
+                    Sistema en espera. Ingrese el comando de control.
+                </div>
+            `;
+        }
+
+        function rebuildSimChatHistory() {
+            const chatContainer = document.getElementById('chat-messages-sim');
+            chatContainer.innerHTML = ''; 
+            
+            const currentStep = simProgressState[currentSimCaseId];
+            if (currentStep === 0) {
+                renderSimInitialMessage();
+                return;
+            }
+            const script = simCasesData[currentSimCaseId].script;
+            for (let i = 0; i < currentStep; i++) {
+                renderSimBubbleHTML(script[i]);
+            }
+            scrollSimToBottom();
+        }
+
+        function handleSimChatInput(e) {
+            if (e.key === 'Enter') {
+                checkAndAdvanceSim();
+            }
+        }
+
+        function checkAndAdvanceSim() {
+            const inputEl = document.getElementById('trigger-input-sim');
+            const val = inputEl.value.trim().toLowerCase();
+            
+            if (val === 'siguiente') {
+                advanceCurrentSimCase();
+                inputEl.value = ''; 
+            } else {
+                alert("COMANDO INVÁLIDO.\n\nAcceso denegado. Espere las instrucciones del docente para habilitar el simulador y avanzar la intervención.");
+            }
+        }
+
+        function advanceCurrentSimCase() {
+            const script = simCasesData[currentSimCaseId].script;
+            const step = simProgressState[currentSimCaseId];
+
+            if (step === 0) {
+                document.getElementById('chat-messages-sim').innerHTML = ''; 
+            }
+
+            if (step < script.length) {
+                renderSimBubbleHTML(script[step]);
+                simProgressState[currentSimCaseId]++;
+                scrollSimToBottom();
+            } else {
+                alert("La intervención para este paciente ha finalizado. Seleccione otra pestaña superior para ver el siguiente caso.");
+            }
+        }
+
+        function renderSimBubbleHTML(message) {
+            const chatContainer = document.getElementById('chat-messages-sim');
+            const bubbleDiv = document.createElement('div');
+            
+            if (message.role === 'interventor') {
+                bubbleDiv.className = "flex flex-col items-end animate-fadeInMsg";
+                bubbleDiv.innerHTML = `
+                    <span class="text-xs text-tcc-blue font-bold mb-1 mr-1">${message.name}</span>
+                    <div class="max-w-[85%] bg-blue-50 border border-blue-200 text-blue-900 rounded-2xl rounded-tr-none p-4 shadow-sm text-lg">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'paciente') {
+                bubbleDiv.className = "flex flex-col items-start animate-fadeInMsg";
+                bubbleDiv.innerHTML = `
+                    <span class="text-xs text-gray-500 font-bold mb-1 ml-1">${message.name}</span>
+                    <div class="max-w-[85%] bg-white border border-gray-300 text-gray-800 rounded-2xl rounded-tl-none p-4 shadow-sm text-lg">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'system') {
+                bubbleDiv.className = "flex flex-col items-center animate-fadeInMsg mt-4";
+                bubbleDiv.innerHTML = `
+                    <div class="bg-gray-800 text-yellow-300 border border-gray-600 rounded-lg p-4 shadow-sm text-sm text-left w-full max-w-xl">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'system_success') {
+                bubbleDiv.className = "flex flex-col items-center animate-fadeInMsg mt-4";
+                bubbleDiv.innerHTML = `
+                    <div class="bg-green-100 border border-green-300 text-green-800 rounded-lg p-4 shadow-sm text-sm text-center w-full max-w-xl font-bold">
+                        <i class="fas fa-check-circle mr-1"></i> ${message.text}
+                    </div>
+                `;
+            }
+
+            chatContainer.appendChild(bubbleDiv);
+        }
+
+        function scrollSimToBottom() {
+            const chatContainer = document.getElementById('chat-messages-sim');
+            chatContainer.scrollTo({
+                top: chatContainer.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            renderSimInitialMessage();
+        });
+    </script>
+</body>
+</html>
+```eof

@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 6: Evaluación Funcional de la Conducta</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cuc-red': '#A3161A',
+                        'cuc-dark': '#1a1a1a',
+                        'cuc-gray': '#f4f4f4',
+                        'soft-red': '#ffebeb',
+                        'tcc-blue': '#2563eb',
+                        'tcc-light': '#eff6ff',
+                        'success-color': '#2e7d32',
+                        'alert-color': '#d32f2f',
+                        'acc-ant': '#f59e0b', /* Ambar para Antecedente */
+                        'acc-con': '#3b82f6', /* Azul para Conducta */
+                        'acc-res': '#10b981'  /* Verde para Consecuencia */
+                    },
+                    fontFamily: {
+                        'sans': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slideIn {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+
+        /* Flechas para el diagrama A-C-C */
+        .arrow-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #cbd5e1;
+            font-size: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .arrow-connector {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+        }
+
+        /* Estilo para tarjetas de actividad */
+        .activity-card {
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 27px, #e2e8f0 27px, #e2e8f0 28px);
+            background-color: #fff;
+            background-attachment: local;
+            padding-top: 2rem;
+        }
+
+        /* Tarjetas Giratorias (Flip Cards) 3D Fluidas */
+        .flip-card {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Timeline de Pasos de Entrevista */
+        .step-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .step-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: var(--cuc-red);
+            border-radius: 4px;
+        }
+        .step-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .step-item::before {
+            content: '';
+            position: absolute;
+            left: -2.4rem;
+            top: 0.5rem;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--cuc-red);
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        /* Chat Scrollbar & Animations */
+        .chat-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-scroll::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05); 
+        }
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2); 
+            border-radius: 10px;
+        }
+        @keyframes fadeInMsg {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeInMsg {
+            animation: fadeInMsg 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-cuc-dark font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER / BANNER (No fijo en móvil) -->
+    <header class="bg-white border-b-4 border-cuc-red py-5 shadow-md relative md:sticky md:top-0 z-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-center items-center gap-6 text-center">
+            
+            <!-- QR Navegación -->
+            <div class="order-3 md:order-1 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/int-crisis/u2clase06.html" 
+                     alt="QR Clase" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Ir a esta Clase</span>
+            </div>
+
+            <!-- Logo & Info -->
+            <div class="order-1 md:order-2 flex flex-col items-center max-w-2xl">
+                <img src="logocuc.png" alt="Logo Universidad de la Costa" class="h-20 mb-2">
+                <h1 class="text-cuc-red text-2xl md:text-3xl font-black uppercase leading-tight mb-1">
+                    Intervención en Crisis
+                </h1>
+                <div class="text-sm md:text-base text-gray-800">
+                    <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                    Mg. Dirección de Proyectos - Certificado en PNL<br>
+                    <small class="block mt-1">
+                        <span class="text-cuc-red font-black">WhatsApp:</span> 3233796547 | 
+                        <span class="text-cuc-red font-black">IG:</span> caminosdelser85
+                    </small>
+                </div>
+            </div>
+
+            <!-- QR Contacto -->
+            <div class="order-3 md:order-3 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" 
+                     alt="QR Contacto" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Guardar Contacto</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="bg-gray-100 border-b border-gray-300 py-3 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <a href="u1clase01.html" class="inline-flex items-center gap-2 font-bold text-cuc-dark hover:text-cuc-red transition-colors">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+            <span class="mx-3 text-gray-400">|</span>
+            <span class="text-gray-600 font-bold">Unidad 2: Modelo Cognitivo Conductual</span>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container mx-auto px-4 py-10 flex-grow max-w-6xl">
+        
+        <div class="text-center mb-16 animate-slideIn">
+            <span class="bg-cuc-red text-white px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4 inline-block">Clase 6</span>
+            <h2 class="text-4xl font-black text-cuc-dark mb-6">Evaluación Funcional de la Conducta</h2>
+            <div class="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow-lg border-l-8 border-cuc-red text-left">
+                <p class="text-xl text-gray-700 italic font-light">
+                    "El comportamiento humano se entiende mejor no por sus motivos ocultos, sino por las consecuencias tangibles que lo mantienen en el presente."
+                </p>
+                <p class="text-right text-cuc-red font-bold mt-2">— Principio del Conductismo Clínico</p>
+            </div>
+        </div>
+
+        <!-- NOTA ACLARATORIA TCC -->
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-12 flex items-start gap-4 max-w-4xl mx-auto animate-slideIn" style="animation-delay: 0.1s;">
+            <i class="fas fa-exclamation-circle text-2xl text-tcc-blue mt-1"></i>
+            <div>
+                <h4 class="font-bold text-tcc-blue text-lg">¡Aclaración Conceptual Importante!</h4>
+                <p class="text-sm text-gray-700">En la clase anterior vimos el modelo cognitivo <strong>A-B-C de Ellis</strong> (Acontecimiento - Creencia - Consecuencia). Hoy, desde la perspectiva conductual pura, veremos el <strong>A-C-C Operante</strong> (Antecedente - Conducta - Consecuencia). Son dos lupas distintas para observar la misma crisis.</p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 1: EL MODELO A-C-C (INTERACTIVO) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.2s;">
+            <h3 class="text-3xl font-bold text-center mb-6 text-cuc-dark">El Modelo Funcional <span class="text-tcc-blue">A-C-C</span></h3>
+            <p class="text-center text-gray-500 mb-10 text-sm font-bold">(Pasa el cursor sobre cada tarjeta para girarla y ver los ejemplos)</p>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 max-w-6xl mx-auto">
+                
+                <!-- A: Antecedente (Flip Card) -->
+                <div class="w-full md:w-1/3 h-[440px] flip-card">
+                    <div class="flip-card-inner text-center">
+                        
+                        <!-- Frente -->
+                        <div class="flip-card-front bg-white border-t-8 border-acc-ant shadow-lg flex flex-col justify-center p-6">
+                            <div class="w-20 h-20 bg-orange-100 text-acc-ant rounded-full flex items-center justify-center text-4xl font-black mb-6 mx-auto shadow-inner">A</div>
+                            <h4 class="text-2xl font-bold text-gray-800 mb-2">Antecedente</h4>
+                            <p class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-4">El Disparador</p>
+                            <p class="text-gray-600 text-sm mb-6">Todo aquello que ocurre <em>inmediatamente antes</em> de la crisis. Es el estímulo interno o externo que "despierta" el comportamiento.</p>
+                            <div class="mt-auto text-acc-ant font-bold animate-pulse"><i class="fas fa-sync-alt"></i> Gira para ver ejemplos</div>
+                        </div>
+
+                        <!-- Reverso -->
+                        <div class="flip-card-back bg-orange-50 border-2 border-acc-ant shadow-lg flex flex-col p-6 text-left">
+                            <h4 class="font-bold text-acc-ant text-lg mb-4 border-b border-orange-200 pb-2"><i class="fas fa-list-ol"></i> 4 Ejemplos Clínicos:</h4>
+                            <ul class="space-y-4 text-sm text-gray-800">
+                                <li><strong class="text-acc-ant">1. Ambiental:</strong> Entrar a un ascensor o un lugar atestado de gente (Dispara Claustrofobia).</li>
+                                <li><strong class="text-acc-ant">2. Social:</strong> Que el jefe diga inesperadamente "Tenemos que hablar en mi oficina" (Dispara Ansiedad).</li>
+                                <li><strong class="text-acc-ant">3. Fisiológico:</strong> Sentir una leve punzada en el pecho o taquicardia (Dispara Pánico).</li>
+                                <li><strong class="text-acc-ant">4. Cognitivo:</strong> Recordar repentinamente el rostro del agresor (Dispara TEPT).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flecha -->
+                <div class="arrow-connector"><i class="fas fa-chevron-right"></i></div>
+
+                <!-- C: Conducta (Flip Card) -->
+                <div class="w-full md:w-1/3 h-[440px] flip-card">
+                    <div class="flip-card-inner text-center">
+                        
+                        <!-- Frente -->
+                        <div class="flip-card-front bg-white border-t-8 border-acc-con shadow-lg flex flex-col justify-center p-6">
+                            <div class="w-20 h-20 bg-blue-100 text-acc-con rounded-full flex items-center justify-center text-4xl font-black mb-6 mx-auto shadow-inner">C</div>
+                            <h4 class="text-2xl font-bold text-gray-800 mb-2">Conducta</h4>
+                            <p class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-4">La Respuesta Triple</p>
+                            <p class="text-gray-600 text-sm mb-6">Lo que la persona <em>hace</em> frente al antecedente. En psicología clínica, la conducta se divide en 3 canales de respuesta.</p>
+                            <div class="mt-auto text-acc-con font-bold animate-pulse"><i class="fas fa-sync-alt"></i> Gira para ver ejemplos</div>
+                        </div>
+
+                        <!-- Reverso -->
+                        <div class="flip-card-back bg-blue-50 border-2 border-acc-con shadow-lg flex flex-col p-6 text-left">
+                            <h4 class="font-bold text-acc-con text-lg mb-4 border-b border-blue-200 pb-2"><i class="fas fa-list-ol"></i> 4 Ejemplos Clínicos:</h4>
+                            <ul class="space-y-4 text-sm text-gray-800">
+                                <li><strong class="text-acc-con">1. Motora (Evitación):</strong> Salir corriendo de la sala de reuniones o esconderse.</li>
+                                <li><strong class="text-acc-con">2. Motora (Afrontamiento):</strong> Tomarse 3 pastillas de ansiolítico de golpe.</li>
+                                <li><strong class="text-acc-con">3. Fisiológica:</strong> Hiperventilación intensa, taquicardia severa y sudoración fría.</li>
+                                <li><strong class="text-acc-con">4. Cognitiva:</strong> Rumiar mentalmente: "Me voy a infartar, nadie me va a ayudar, moriré aquí".</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flecha -->
+                <div class="arrow-connector"><i class="fas fa-chevron-right"></i></div>
+
+                <!-- C: Consecuencia (Flip Card) -->
+                <div class="w-full md:w-1/3 h-[440px] flip-card">
+                    <div class="flip-card-inner text-center">
+                        
+                        <!-- Frente -->
+                        <div class="flip-card-front bg-white border-t-8 border-acc-res shadow-lg flex flex-col justify-center p-6">
+                            <div class="w-20 h-20 bg-green-100 text-acc-res rounded-full flex items-center justify-center text-4xl font-black mb-6 mx-auto shadow-inner">C</div>
+                            <h4 class="text-2xl font-bold text-gray-800 mb-2">Consecuencia</h4>
+                            <p class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-4">El Mantenedor</p>
+                            <p class="text-gray-600 text-sm mb-6">Lo que ocurre <em>inmediatamente después</em>. Es el resultado que refuerza o castiga la probabilidad de que la conducta se repita.</p>
+                            <div class="mt-auto text-acc-res font-bold animate-pulse"><i class="fas fa-sync-alt"></i> Gira para ver ejemplos</div>
+                        </div>
+
+                        <!-- Reverso -->
+                        <div class="flip-card-back bg-green-50 border-2 border-acc-res shadow-lg flex flex-col p-6 text-left">
+                            <h4 class="font-bold text-acc-res text-lg mb-4 border-b border-green-200 pb-2"><i class="fas fa-list-ol"></i> 4 Ejemplos Clínicos:</h4>
+                            <ul class="space-y-4 text-sm text-gray-800">
+                                <li><strong class="text-acc-res">1. Refuerzo Negativo (Corto plazo):</strong> Alivio inmediato del pánico al lograr salir huyendo del lugar.</li>
+                                <li><strong class="text-acc-res">2. Refuerzo Positivo (Corto plazo):</strong> Recibir abrazos, atención extra y consuelo de toda la familia.</li>
+                                <li><strong class="text-acc-res">3. Castigo (Largo plazo):</strong> Aislamiento social y deterioro de relaciones por el miedo a salir.</li>
+                                <li><strong class="text-acc-res">4. Costo (Largo plazo):</strong> Perder el empleo por inasistencia continua o evitación.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: PROTOCOLO PASO A PASO -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.5s;">
+            <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-200">
+                <div class="text-center mb-10">
+                    <span class="bg-cuc-dark text-white px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-3 inline-block">Protocolo Clínico</span>
+                    <h3 class="text-3xl font-bold text-cuc-dark">6 Pasos de la Entrevista Conductual</h3>
+                    <p class="text-gray-600 mt-4 max-w-3xl mx-auto">Para estructurar correctamente el modelo A-C-C en consulta, el clínico debe guiar la entrevista a través de esta secuencia lógica y exhaustiva:</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    
+                    <!-- Columna Izquierda (Pasos 1-3) -->
+                    <div class="step-timeline">
+                        <!-- Paso 1 -->
+                        <div class="step-item bg-gray-50 p-5 rounded-xl border border-gray-100 hover:shadow-md transition-shadow">
+                            <h4 class="text-lg font-bold text-cuc-red mb-2">1. Delimitación del Problema</h4>
+                            <p class="text-sm text-gray-700">Enfocarnos en el funcionamiento concreto. Debemos clasificar si el problema central del paciente es:</p>
+                            <ul class="mt-2 text-sm">
+                                <li><i class="fas fa-arrow-down text-alert-color mr-1"></i> <strong>Un Déficit:</strong> Una conducta que <em>no ocurre</em>, pero debería ocurrir (Ej. Falta de asertividad, aislamiento).</li>
+                                <li><i class="fas fa-arrow-up text-tcc-blue mr-1"></i> <strong>Un Exceso:</strong> Una conducta que <em>ocurre</em>, pero no debería ocurrir (Ej. Ataques de llanto, ataques de pánico).</li>
+                            </ul>
+                        </div>
+
+                        <!-- Paso 2 -->
+                        <div class="step-item bg-gray-50 p-5 rounded-xl border border-gray-100 hover:shadow-md transition-shadow">
+                            <h4 class="text-lg font-bold text-cuc-red mb-2">2. Operativización de la Conducta</h4>
+                            <p class="text-sm text-gray-700">Identificar exactamente cuál es el canal de respuesta predominante que está fallando:</p>
+                            <ul class="mt-2 text-sm text-gray-600">
+                                <li><strong>Motor:</strong> Ej. Evitación, encerrarse, temblar, gritar.</li>
+                                <li><strong>Psicofisiológico:</strong> Ej. Náuseas, taquicardia, sudoración fría.</li>
+                                <li><strong>Cognitivo:</strong> Pensamientos automáticos limitantes o catastróficos.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Paso 3 -->
+                        <div class="step-item bg-gray-50 p-5 rounded-xl border border-gray-100 hover:shadow-md transition-shadow">
+                            <h4 class="text-lg font-bold text-cuc-red mb-2">3. Estimuladores Previos (Antecedentes)</h4>
+                            <p class="text-sm text-gray-700">Explorar rigurosamente los eventos que desencadenan el problema. ¿Qué ocurrió justo antes?</p>
+                            <p class="text-sm text-gray-600 mt-2 bg-white p-2 rounded border border-gray-200">
+                                Se debe distinguir si el estimulador fue <strong>Interno</strong> (un dolor físico, un recuerdo súbito) o <strong>Externo</strong> (una crítica, un lugar, oscurecer, etc).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha (Pasos 4-6) -->
+                    <div class="step-timeline">
+                        <!-- Paso 4 -->
+                        <div class="step-item bg-gray-50 p-5 rounded-xl border border-gray-100 hover:shadow-md transition-shadow">
+                            <h4 class="text-lg font-bold text-cuc-red mb-2">4. Consecuencias y Atribuciones</h4>
+                            <p class="text-sm text-gray-700">Evaluar qué ocurre después de la conducta (mantenedores a corto y largo plazo). Además, preguntar: <em>"¿A qué atribuyes tú este problema?"</em></p>
+                            <div class="mt-2 flex flex-wrap gap-2 text-xs font-bold">
+                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded">Atribución Interna (Yo soy el problema)</span>
+                                <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded">Atribución Externa (El entorno tiene la culpa)</span>
+                            </div>
+                        </div>
+
+                        <!-- Paso 5 -->
+                        <div class="step-item bg-gray-50 p-5 rounded-xl border border-gray-100 hover:shadow-md transition-shadow">
+                            <h4 class="text-lg font-bold text-cuc-red mb-2">5. Objetivos de Cambio</h4>
+                            <p class="text-sm text-gray-700">El trabajo no consiste únicamente en que desaparezca el problema. Se debe establecer una meta positiva, funcional y alcanzable con el paciente.</p>
+                            <p class="text-sm text-gray-600 mt-2">Ej: "Lograr caminar por el parque 10 minutos sin ataques de pánico".</p>
+                        </div>
+
+                        <!-- Paso 6 -->
+                        <div class="step-item bg-gray-50 p-5 rounded-xl border border-gray-100 hover:shadow-md transition-shadow">
+                            <h4 class="text-lg font-bold text-cuc-red mb-2">6. Formulación de Hipótesis y Cierre</h4>
+                            <p class="text-sm text-gray-700">Con la información recolectada, el terapeuta genera el resumen clínico (hipótesis sobre por qué se mantiene el problema).</p>
+                            <p class="text-sm text-green-700 font-bold bg-green-50 p-2 border border-green-200 rounded mt-2">
+                                <i class="fas fa-comment-medical"></i> Cierre: "Hemos terminado con las preguntas de evaluación y ahora procederemos a la intervención...".
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: ACTIVIDAD EN CLASE (EL TALLER) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.7s;">
+            <div class="bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden">
+                
+                <!-- Encabezado de la Actividad -->
+                <div class="bg-tcc-blue p-8 text-center text-white relative">
+                    <div class="absolute top-4 right-6 text-5xl opacity-20">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <span class="bg-white text-tcc-blue font-black px-3 py-1 rounded text-xs uppercase tracking-widest mb-3 inline-block shadow-sm">Actividad Grupal en Aula</span>
+                    <h2 class="text-3xl font-black mb-2">Taller Clínico: El Protocolo de 6 Pasos</h2>
+                    <p class="text-blue-100 max-w-3xl mx-auto">Organícense en grupos. Seleccionen uno de los 3 casos clínicos a continuación y utilicen la plantilla de la derecha para diseccionarlo aplicando estrictamente los 6 pasos de la entrevista conductual.</p>
+                </div>
+
+                <div class="p-8 md:p-10 flex flex-col lg:flex-row gap-8">
+                    
+                    <!-- Casos Clínicos (TABS) -->
+                    <div class="lg:w-2/5 flex flex-col">
+                        <!-- Botones de Tabs -->
+                        <div class="flex gap-2 mb-4 bg-gray-100 p-1 rounded-lg">
+                            <button onclick="changeActivityCase(1)" id="btn-case-1" class="flex-1 py-2 px-3 bg-white text-tcc-blue font-bold text-sm rounded shadow-sm transition-all">1. Marcos (Miedo)</button>
+                            <button onclick="changeActivityCase(2)" id="btn-case-2" class="flex-1 py-2 px-3 text-gray-500 font-bold text-sm rounded hover:bg-gray-200 transition-all">2. Elena (TOC)</button>
+                            <button onclick="changeActivityCase(3)" id="btn-case-3" class="flex-1 py-2 px-3 text-gray-500 font-bold text-sm rounded hover:bg-gray-200 transition-all">3. Javier (Ira)</button>
+                        </div>
+
+                        <!-- Contenido Caso 1 -->
+                        <div id="activity-case-1" class="case-content-activity block">
+                            <h3 class="text-2xl font-bold text-cuc-dark mb-4 border-b-2 border-cuc-red pb-2 inline-block">El Caso de Marcos</h3>
+                            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 text-gray-700 text-base leading-relaxed shadow-inner">
+                                <p class="mb-4">Marcos, de 35 años, sufrió un atraco a mano armada hace un mes mientras esperaba el autobús a las 7:00 PM. Resultó ileso físicamente, pero quedó profundamente asustado.</p>
+                                <p class="mb-4">Ayer, iba a ir a una cena. A las 6:45 PM, miró por la ventana y vio que ya estaba oscureciendo. Inmediatamente sintió un vacío en el estómago, sudoración fría y taquicardia. Pensó: <em>"Si salgo ahora que está oscuro, me van a atracar y matar"</em>. Él mismo se dice: "La ciudad es un peligro".</p>
+                                <p>Desesperado, llamó a sus amigos, mintió diciendo que tenía fiebre, apagó el celular y se encerró bajo las sábanas. Sintió un alivio inmediato. Sin embargo, su novia le acaba de decir que no soporta más este encierro continuo.</p>
+                            </div>
+                        </div>
+
+                        <!-- Contenido Caso 2 -->
+                        <div id="activity-case-2" class="case-content-activity hidden">
+                            <h3 class="text-2xl font-bold text-cuc-dark mb-4 border-b-2 border-cuc-red pb-2 inline-block">El Caso de Elena</h3>
+                            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 text-gray-700 text-base leading-relaxed shadow-inner">
+                                <p class="mb-4">Elena, de 28 años, desarrolló un terror irracional a los gérmenes desde la pandemia.</p>
+                                <p class="mb-4">Esta mañana, al subir al autobús para ir al trabajo, tuvo que agarrarse de la manija metálica porque el chofer frenó bruscamente. Al instante, sintió asco extremo, opresión en el pecho y náuseas. Su mente se llenó de una imagen intrusiva: <em>"Esa manija estaba infectada, me voy a enfermar de un virus mortal y voy a contagiar a mi familia"</em>.</p>
+                                <p>Al llegar a la oficina, corrió al baño y se lavó las manos con jabón y alcohol durante 15 minutos exactos, frotando hasta que la piel le dolió. Inmediatamente la ansiedad desapareció. El problema es que sus manos tienen dermatitis severa y ya tiene dos llamados de atención en RRHH por llegar tarde.</p>
+                            </div>
+                        </div>
+
+                        <!-- Contenido Caso 3 -->
+                        <div id="activity-case-3" class="case-content-activity hidden">
+                            <h3 class="text-2xl font-bold text-cuc-dark mb-4 border-b-2 border-cuc-red pb-2 inline-block">El Caso de Javier</h3>
+                            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 text-gray-700 text-base leading-relaxed shadow-inner">
+                                <p class="mb-4">Javier, de 42 años, es gerente de ventas y tiene un historial de conflictos laborales por su carácter explosivo.</p>
+                                <p class="mb-4">Ayer, durante una reunión de equipo, un analista junior le señaló un error de cálculo en su presentación. Al escuchar esto frente a todos, Javier sintió un calor repentino subiendo por su cuello y sus músculos se tensaron. Pensó: <em>"Este niñato me quiere humillar frente a mi equipo para robar mi autoridad"</em>.</p>
+                                <p>Se puso de pie bruscamente, golpeó la mesa con el puño y le gritó al analista ordenándole que se callara. El analista bajó la mirada y el equipo guardó un silencio absoluto. Javier retomó la reunión sintiendo que había "recuperado el respeto", pero el gerente general lo citó hoy con intenciones de despedirlo por acoso laboral.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Plantilla para llenar (6 Pasos) -->
+                    <div class="lg:w-3/5">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4"><i class="fas fa-clipboard-check text-tcc-blue"></i> Plantilla de Análisis (Resuélvelo)</h3>
+                        
+                        <div class="activity-card rounded-xl border-2 border-gray-300 p-6 grid grid-cols-1 md:grid-cols-2 gap-6 shadow-sm">
+                            <!-- PASO 1 -->
+                            <div>
+                                <h4 class="font-bold text-cuc-red text-sm uppercase flex items-center gap-2 mb-1">
+                                    <i class="fas fa-bullseye w-4"></i> 1. Delimitación
+                                </h4>
+                                <p class="text-xs text-gray-500 mb-2">¿Déficit o Exceso?</p>
+                                <div class="border-b-2 border-dashed border-gray-400 h-6"></div>
+                            </div>
+
+                            <!-- PASO 2 -->
+                            <div>
+                                <h4 class="font-bold text-cuc-red text-sm uppercase flex items-center gap-2 mb-1">
+                                    <i class="fas fa-layer-group w-4"></i> 2. Operativización
+                                </h4>
+                                <p class="text-xs text-gray-500 mb-2">Canal Motor, Fisiológico y Cognitivo:</p>
+                                <div class="border-b-2 border-dashed border-gray-400 h-6"></div>
+                                <div class="border-b-2 border-dashed border-gray-400 h-6 mt-2"></div>
+                            </div>
+
+                            <!-- PASO 3 -->
+                            <div>
+                                <h4 class="font-bold text-cuc-red text-sm uppercase flex items-center gap-2 mb-1">
+                                    <i class="fas fa-bolt w-4"></i> 3. Estimuladores
+                                </h4>
+                                <p class="text-xs text-gray-500 mb-2">¿Cuál es el detonante interno/externo?</p>
+                                <div class="border-b-2 border-dashed border-gray-400 h-6"></div>
+                            </div>
+
+                            <!-- PASO 4 -->
+                            <div>
+                                <h4 class="font-bold text-cuc-red text-sm uppercase flex items-center gap-2 mb-1">
+                                    <i class="fas fa-balance-scale w-4"></i> 4. Consecuencias
+                                </h4>
+                                <p class="text-xs text-gray-500 mb-2">Mantenedores y Atribución (¿a qué culpa?)</p>
+                                <div class="border-b-2 border-dashed border-gray-400 h-6"></div>
+                                <div class="border-b-2 border-dashed border-gray-400 h-6 mt-2"></div>
+                            </div>
+
+                            <!-- PASO 5 -->
+                            <div>
+                                <h4 class="font-bold text-cuc-red text-sm uppercase flex items-center gap-2 mb-1">
+                                    <i class="fas fa-flag-checkered w-4"></i> 5. Objetivos
+                                </h4>
+                                <p class="text-xs text-gray-500 mb-2">¿Qué meta funcional proponen?</p>
+                                <div class="border-b-2 border-dashed border-gray-400 h-6"></div>
+                            </div>
+
+                            <!-- PASO 6 -->
+                            <div>
+                                <h4 class="font-bold text-cuc-red text-sm uppercase flex items-center gap-2 mb-1">
+                                    <i class="fas fa-brain w-4"></i> 6. Hipótesis
+                                </h4>
+                                <p class="text-xs text-gray-500 mb-2">Resumen clínico del problema:</p>
+                                <div class="border-b-2 border-dashed border-gray-400 h-6"></div>
+                                <div class="border-b-2 border-dashed border-gray-400 h-6 mt-2"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 text-right">
+                            <button onclick="showSolution()" 
+                                    class="text-xs text-gray-400 hover:text-cuc-red font-bold underline cursor-pointer bg-transparent border-none p-0">
+                                Ver solucionario (Solo Docente)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: SIMULADOR CLÍNICO (NUEVO) -->
+        <section class="mb-10 animate-slideIn" style="animation-delay: 0.8s;">
+            <div class="bg-cuc-dark text-white rounded-2xl shadow-2xl overflow-hidden border border-gray-700">
+                
+                <div class="p-8 border-b border-gray-700 relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 text-9xl text-white opacity-5">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h2 class="text-3xl font-black text-tcc-blue mb-2 relative z-10 flex items-center gap-3">
+                        <i class="fas fa-robot"></i> Laboratorio Clínico: Intervención TCC
+                    </h2>
+                    <p class="text-gray-300 text-md max-w-4xl relative z-10">
+                        Ahora que resolvieron el taller, observemos cómo el psicólogo aplica los 6 pasos en tiempo real con estos mismos pacientes para estabilizar la crisis. Seleccione un caso e ingrese el comando autorizado para avanzar en la terapia.
+                    </p>
+                </div>
+
+                <!-- TABS DE SIMULADOR -->
+                <div class="flex flex-wrap bg-gray-800 border-b border-gray-600">
+                    <button class="sim-tab-btn active px-6 py-4 font-bold text-sm uppercase tracking-wider flex-1 md:flex-none hover:bg-gray-700 transition-colors border-b-4 border-tcc-blue text-white" onclick="switchSimCase(1)">
+                        1. Marcos (TEPT)
+                    </button>
+                    <button class="sim-tab-btn px-6 py-4 font-bold text-sm uppercase tracking-wider flex-1 md:flex-none hover:bg-gray-700 transition-colors border-b-4 border-transparent text-gray-400" onclick="switchSimCase(2)">
+                        2. Elena (TOC)
+                    </button>
+                    <button class="sim-tab-btn px-6 py-4 font-bold text-sm uppercase tracking-wider flex-1 md:flex-none hover:bg-gray-700 transition-colors border-b-4 border-transparent text-gray-400" onclick="switchSimCase(3)">
+                        3. Javier (Ira)
+                    </button>
+                </div>
+
+                <div class="bg-gray-50 flex flex-col h-[550px] relative">
+                    
+                    <!-- Chat Header Dinámico -->
+                    <div id="sim-chat-header" class="bg-white text-cuc-dark p-4 flex items-center justify-between shadow-sm z-10 border-b border-gray-200">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-tcc-light text-tcc-blue rounded-full flex items-center justify-center font-bold">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg leading-tight text-tcc-blue" id="sim-header-title">Caso 1: Mapeo y Estabilización</h3>
+                                <span class="text-xs text-gray-500 font-bold tracking-widest uppercase" id="sim-header-subtitle">Paciente: Marcos (Miedo y Evitación)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Messages Area -->
+                    <div id="chat-messages-sim" class="chat-scroll flex-1 overflow-y-auto p-6 space-y-6 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
+                        <!-- Messages render here -->
+                    </div>
+
+                    <!-- Chat Input Area -->
+                    <div class="bg-white p-4 border-t border-gray-200 flex items-center gap-3">
+                        <input type="text" id="trigger-input-sim" placeholder="Ingrese comando..." 
+                               class="flex-1 bg-gray-100 border border-gray-300 text-gray-800 text-lg rounded-full px-6 py-3 focus:outline-none focus:ring-2 focus:ring-tcc-blue transition-all"
+                               onkeypress="handleSimChatInput(event)">
+                        <button onclick="checkAndAdvanceSim()" 
+                                class="bg-tcc-blue text-white px-6 py-3 rounded-full font-bold hover:bg-blue-800 transition-all shadow-md flex items-center gap-2">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-cuc-dark text-white text-center py-8 mt-auto">
+        <div class="container mx-auto px-4">
+            <p class="text-sm md:text-base mb-2">Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+            <p class="text-xs text-gray-400">Material docente: Jorge Arango Castaño. Basado en Terapia Cognitivo Conductual (Evaluación Funcional).</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- LÓGICA DE LAS TABS DE LA ACTIVIDAD GRUPAL (TALLER) ---
+        let currentActivityCase = 1;
+        function changeActivityCase(caseId) {
+            currentActivityCase = caseId;
+            document.querySelectorAll('.case-content-activity').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block');
+            });
+            document.querySelectorAll('[id^="btn-case-"]').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-tcc-blue', 'shadow-sm');
+                btn.classList.add('text-gray-500', 'hover:bg-gray-200');
+            });
+            document.getElementById('activity-case-' + caseId).classList.remove('hidden');
+            document.getElementById('activity-case-' + caseId).classList.add('block');
+            const activeBtn = document.getElementById('btn-case-' + caseId);
+            activeBtn.classList.remove('text-gray-500', 'hover:bg-gray-200');
+            activeBtn.classList.add('bg-white', 'text-tcc-blue', 'shadow-sm');
+        }
+
+        function showSolution() {
+            const clave = prompt("Ingrese la clave de acceso (Solo Docente):");
+            if (clave === "10001") {
+                if (currentActivityCase === 1) {
+                    alert("SOLUCIÓN CASO 1 (MARCOS - TEPT/EVITACIÓN):\n\n1. DELIMITACIÓN: Exceso (ansiedad y evitación).\n2. OPERATIVIZACIÓN:\n  - Fis: Vacío estómago, sudor, taquicardia.\n  - Cog: 'Me van a atracar y matar'.\n  - Mot: Mentir, apagar celular, esconderse.\n3. ESTIMULADOR: Externo (Ver oscurecer a las 6:45pm).\n4. CONSECUENCIAS:\n  - Corto Plazo: Alivio de ansiedad (Refuerzo Negativo).\n  - Largo Plazo: Deterioro pareja/social (Castigo).\n  - Atribución: Externa ('La ciudad es un peligro').\n5. OBJETIVOS: Salir de noche progresivamente sin evitación.\n6. HIPÓTESIS: TEPT mantenido por refuerzo negativo (alivio al evitar).");
+                } else if (currentActivityCase === 2) {
+                    alert("SOLUCIÓN CASO 2 (ELENA - TOC):\n\n1. DELIMITACIÓN: Exceso (ansiedad y compulsión de lavado).\n2. OPERATIVIZACIÓN:\n  - Fis: Opresión en el pecho, náuseas.\n  - Cog: 'Me voy a infectar de un virus mortal'.\n  - Mot: Lavarse 15 min con alcohol.\n3. ESTIMULADOR: Externo (Tocar manija del bus).\n4. CONSECUENCIAS:\n  - Corto Plazo: Alivio inmediato (Refuerzo Negativo).\n  - Largo Plazo: Dermatitis, problemas en RRHH (Castigo).\n  - Atribución: Externa (Las cosas están infectadas).\n5. OBJETIVOS: Tolerancia a la ansiedad al no lavarse las manos (Exposición).\n6. HIPÓTESIS: TOC mantenido por compulsiones que actúan como refuerzo negativo.");
+                } else if (currentActivityCase === 3) {
+                    alert("SOLUCIÓN CASO 3 (JAVIER - AGRESIVIDAD):\n\n1. DELIMITACIÓN: Exceso (conducta agresiva y desregulación).\n2. OPERATIVIZACIÓN:\n  - Fis: Calor en cara, tensión muscular.\n  - Cog: 'Me quiere humillar/robar autoridad'.\n  - Mot: Golpear mesa, gritar, insultar.\n3. ESTIMULADOR: Externo (Crítica pública del analista).\n4. CONSECUENCIAS:\n  - Corto Plazo: Sumisión del otro, falsa sensación de poder (Refuerzo Positivo/Negativo).\n  - Largo Plazo: Posible despido, rechazo social (Castigo).\n  - Atribución: Externa ('El niñato quiere humillarme').\n5. OBJETIVOS: Expresión asertiva de discrepancias sin gritos.\n6. HIPÓTESIS: Agresividad impulsiva mantenida por refuerzo social a corto plazo ante la percepción irracional de amenaza.");
+                }
+            } else if (clave !== null && clave !== "") {
+                alert("Acceso denegado: Clave incorrecta.");
+            }
+        }
+
+        // --- LÓGICA DEL SIMULADOR CLÍNICO (CHATBOT) ---
+        const simCasesData = {
+            1: {
+                title: "Caso 1: Mapeo y Estabilización",
+                subtitle: "Paciente: Marcos (Miedo y Evitación)",
+                script: [
+                    { role: 'paciente', name: 'Marcos', text: "Doctor, estoy temblando... Hoy a las 6:45 PM volví a asomarme por la ventana. Estaba oscureciendo y me dio un ataque. Cancelé la cena. Siento que si salgo a oscuras, me van a matar." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Marcos, noto tu respiración acelerada ahora mismo. Es normal que tu cuerpo reaccione así por el susto que te diste. Antes de hablar de la calle, acompáñame a tomar aire. Inhala en 4 segundos..." },
+                    { role: 'system', name: 'Estabilización', text: "<strong>[Paso 2: Operativización]</strong> El terapeuta detecta la activación del Canal Fisiológico en tiempo real (taquicardia, hiperventilación) e interviene de inmediato con respiración diafragmática para estabilizar antes de la entrevista." },
+                    { role: 'paciente', name: 'Marcos', text: "<em>[Respira tres veces]</em>... Gracias. Es que no lo controlo. Cuando veo que el sol se oculta, siento un nudo en el estómago." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Bien hecho. Has identificado el detonante exacto. El sol ocultándose es tu 'Estimulador Previo' (Paso 3). Y cuando sentiste ese nudo, ¿qué fue lo primero que se te cruzó por la mente?" },
+                    { role: 'paciente', name: 'Marcos', text: "Que la ciudad es un peligro. Que apenas ponga un pie afuera, los ladrones me van a estar esperando. Es seguro que me van a atracar." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Esa es la parte cognitiva. Y ante ese pensamiento aterrador, ¿qué decidiste hacer físicamente?" },
+                    { role: 'paciente', name: 'Marcos', text: "Llamé, mentí diciendo que estaba enfermo y me escondí bajo las cobijas. Cuando lo hice, sentí un alivio enorme. Sentí que estaba a salvo." },
+                    { role: 'system', name: 'Análisis de Consecuencias', text: "<strong>[Paso 4: Consecuencias]</strong> El 'alivio enorme' es un Refuerzo Negativo a corto plazo. Esconderse le quita la ansiedad de inmediato, por lo que su cerebro aprende que EVITAR = SOBREVIVIR." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Tiene mucho sentido, Marcos. Te escondiste para sobrevivir y tu cerebro te premió con alivio. Pero dime, a largo plazo, en la vida real... ¿qué está pasando con tu novia y tus amigos por esconderte bajo las cobijas?" },
+                    { role: 'paciente', name: 'Marcos', text: "Mi novia me va a dejar. Me dijo que no soporta esto. Me estoy quedando solo." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Entonces, esconderte bajo las cobijas elimina el miedo hoy, pero te está robando la vida a largo plazo. Tu cerebro cree que te está protegiendo de un peligro 100% seguro. Pero, ¿qué probabilidad matemática hay de que te atraquen CADA VEZ que pisas la calle?" },
+                    { role: 'paciente', name: 'Marcos', text: "Bueno... matemáticamente, no todos los días te atracan. Posibilidad hay, pero no es el 100%." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Exacto (Paso 6: Hipótesis). Tu alarma está descalibrada por el trauma. Para arreglarla, nuestro objetivo (Paso 5) no será obligarte a caminar solo a medianoche, sino salir juntos a la puerta de tu casa a las 7:00 PM y tolerar la ansiedad sin escondernos." },
+                    { role: 'system_success', name: 'Cierre Clínico', text: "<strong>[ÉXITO]</strong> El psicólogo estabilizó la fisiología, mapeó el A-C-C junto con el paciente y propuso un Objetivo Funcional de 'Exposición Gradual', rompiendo el ciclo del Refuerzo Negativo." }
+                ]
+            },
+            2: {
+                title: "Caso 2: Prevención de Respuesta",
+                subtitle: "Paciente: Elena (TOC - Contaminación)",
+                script: [
+                    { role: 'paciente', name: 'Elena', text: "Doctor, estoy en la oficina y estoy al borde de un colapso. Venía en el bus y tuve que tocar la manija de metal con la mano desnuda. ¡Siento que los virus me están subiendo por el brazo!" },
+                    { role: 'interventor', name: 'Psicólogo', text: "Elena, escúchame. Sé que el nivel de asco y ansiedad que sientes ahora mismo es altísimo. Dime dónde estás ahora mismo y qué estás a punto de hacer." },
+                    { role: 'paciente', name: 'Elena', text: "Estoy caminando rápido hacia el baño. Necesito lavarme con jabón antibacterial y alcohol por 15 minutos, como siempre. Si no lo hago, voy a infectar a toda mi familia." },
+                    { role: 'system', name: 'Alerta Operativa', text: "<strong>[Pasos 2 y 3]</strong> Antecedente: Tocar la manija. Cognición: 'Voy a infectar a mi familia'. Conducta Motora inminente: Lavado compulsivo por 15 minutos." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Elena, detente antes de entrar al baño. Escucha mi voz. Si te lavas durante 15 minutos, sentirás un alivio inmediato (Consecuencia), pero mañana la ansiedad será más fuerte y tus manos sangrarán. Vamos a cambiar la regla hoy." },
+                    { role: 'paciente', name: 'Elena', text: "¡No puedo detenerlo, la ansiedad me va a matar! Siento que no puedo respirar." },
+                    { role: 'interventor', name: 'Psicólogo', text: "La ansiedad es terriblemente incómoda, pero NO te va a matar. Es como una ola. Sube mucho, pero eventualmente tiene que bajar sola. Si te lavas, le enseñas a tu cerebro que la única forma de bajar la ola es la compulsión." },
+                    { role: 'paciente', name: 'Elena', text: "Por favor, déjeme lavarme. Al menos un minuto, se lo suplico." },
+                    { role: 'system', name: 'Negociación / Objetivo', text: "<strong>[Paso 5: Objetivo de Cambio]</strong> El terapeuta aplica 'Prevención de Respuesta'. No elimina la conducta de tajo (lo que causaría pánico extremo), sino que negocia un paso funcional que ella pueda tolerar." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Hagamos un trato. Vas a entrar al baño, pero solo vas a lavarte las manos con agua y jabón normal durante 20 segundos. Ni alcohol, ni frotar duro. Y luego saldrás del baño conmigo en la línea." },
+                    { role: 'paciente', name: 'Elena', text: "<em>[Llorando]</em>... 20 segundos... está bien. Listo. Ya lo hice. Pero mis manos todavía se sienten sucias. La ansiedad sigue aquí." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Lo hiciste increíblemente bien, Elena. Esa ansiedad residual es normal. La vamos a sentar a nuestro lado y la vamos a tolerar juntos. Siente cómo tu corazón poco a poco va volviendo a su ritmo sin haber hecho el ritual de 15 minutos." },
+                    { role: 'system_success', name: 'Cierre Clínico', text: "<strong>[ÉXITO]</strong> El psicólogo interrumpió el patrón compulsivo (Prevención de Respuesta). Al impedir el ritual completo, evitó que se consolidara el refuerzo negativo y entrenó la tolerancia a la ansiedad." }
+                ]
+            },
+            3: {
+                title: "Caso 3: Desescalada de Ira",
+                subtitle: "Paciente: Javier (Falta de Control)",
+                script: [
+                    { role: 'paciente', name: 'Javier', text: "¡Estoy harto! Ese analista junior me corrigió un cálculo frente a todo el equipo. Me puse rojo de la rabia, golpeé la mesa y le grité que se callara. Ahora resulta que RRHH me va a echar por 'acoso'." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Noto mucha rabia en tu voz, Javier. Y es completamente válido sentir molestia si percibes que alguien te desafía frente a tu equipo. Vamos a desarmar lo que pasó. ¿Qué sentiste en el cuerpo justo cuando él te corrigió?" },
+                    { role: 'system', name: 'Desescalada y Operativización', text: "<strong>[Pasos 1 y 2]</strong> El terapeuta no lo juzga por gritar, valida el <em>sentimiento</em> primario para bajar la guardia. Luego indaga el Canal Fisiológico (el momento exacto de la chispa)." },
+                    { role: 'paciente', name: 'Javier', text: "Sentí un calor que me subió por el cuello. Mis puños se apretaron solos. En mi cabeza solo resonaba una cosa: 'Este niñato me quiere humillar y robar mi autoridad en la empresa'." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Ese es el punto clave, Javier (Paso 3). El detonante externo fue 'la corrección'. Pero lo que te hizo estallar no fue el error matemático, fue tu pensamiento interno: 'Me quiere humillar'. Y cuando le gritaste y él se calló, ¿qué sentiste tú inmediatamente?" },
+                    { role: 'paciente', name: 'Javier', text: "Sentí que recuperaba mi poder. Que ponía orden. Me sentí respetado de nuevo." },
+                    { role: 'system', name: 'Análisis de Consecuencias', text: "<strong>[Paso 4: Consecuencias]</strong> El psicólogo evidencia que Javier recibe un Refuerzo Positivo a corto plazo (falsa sensación de poder y sumisión). Pero necesita mostrarle el costo real." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Exacto. Tu cerebro aprendió que 'Gritar = Recuperar respeto'. Pero te pregunto: ¿Ese chico se calló porque te respeta profundamente, o porque te tiene terror? Y a largo plazo, ¿ser despedido por acoso laboral es mantener tu autoridad?" },
+                    { role: 'paciente', name: 'Javier', text: "<em>[Silencio]</em>... No... supongo que me tienen miedo, no respeto. Y si me echan, pierdo todo lo que he construido." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Javier, vamos a reevaluar ese pensamiento automático. ¿Existe otra posibilidad, aparte de la humillación, por la cual el analista señaló el error en la tabla?" },
+                    { role: 'paciente', name: 'Javier', text: "Tal vez... solo estaba haciendo su trabajo. Su tarea es revisar los números. Si el número estaba mal, era su deber decirlo." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Ahí tienes el cambio de foco. Si él hace su trabajo, tú no estás bajo ataque. Nuestro objetivo de cambio (Paso 5) será aprender a pedir 5 minutos de 'tiempo fuera' (Time Out) cuando sientas ese calor en el cuello, antes de abrir la boca." },
+                    { role: 'system_success', name: 'Cierre Clínico', text: "<strong>[ÉXITO]</strong> El psicólogo confrontó la distorsión ('Me quiere humillar') re-atribuyendo la intención del otro. Mostró el costo a largo plazo de la ira (despido) y propuso una herramienta funcional (Time Out) antes de reaccionar." }
+                ]
+            }
+        };
+
+        let currentSimCaseId = 1;
+        let simProgressState = { 1: 0, 2: 0, 3: 0 };
+
+        function switchSimCase(caseId) {
+            currentSimCaseId = caseId;
+            
+            // Actualizar botones Tabs
+            const tabs = document.querySelectorAll('.sim-tab-btn');
+            tabs.forEach((tab, index) => {
+                tab.classList.remove('active', 'border-tcc-blue', 'text-white');
+                tab.classList.add('border-transparent', 'text-gray-400');
+                if (index + 1 === caseId) {
+                    tab.classList.add('active', 'text-white', 'border-tcc-blue');
+                    tab.classList.remove('text-gray-400');
+                }
+            });
+
+            // Actualizar Header
+            document.getElementById('sim-header-title').innerText = simCasesData[caseId].title;
+            document.getElementById('sim-header-subtitle').innerText = simCasesData[caseId].subtitle;
+
+            rebuildSimChatHistory();
+        }
+
+        function renderSimInitialMessage() {
+            const chatContainer = document.getElementById('chat-messages-sim');
+            chatContainer.innerHTML = `
+                <div class="text-center text-gray-500 text-sm font-bold bg-white px-6 py-2 rounded-full mx-auto w-max shadow-sm border border-gray-200">
+                    Sistema en espera. Ingrese el comando de control.
+                </div>
+            `;
+        }
+
+        function rebuildSimChatHistory() {
+            const chatContainer = document.getElementById('chat-messages-sim');
+            chatContainer.innerHTML = ''; 
+            
+            const currentStep = simProgressState[currentSimCaseId];
+            if (currentStep === 0) {
+                renderSimInitialMessage();
+                return;
+            }
+            const script = simCasesData[currentSimCaseId].script;
+            for (let i = 0; i < currentStep; i++) {
+                renderSimBubbleHTML(script[i]);
+            }
+            scrollSimToBottom();
+        }
+
+        function handleSimChatInput(e) {
+            if (e.key === 'Enter') {
+                checkAndAdvanceSim();
+            }
+        }
+
+        function checkAndAdvanceSim() {
+            const inputEl = document.getElementById('trigger-input-sim');
+            const val = inputEl.value.trim().toLowerCase();
+            
+            if (val === 'siguiente') {
+                advanceCurrentSimCase();
+                inputEl.value = ''; 
+            } else {
+                alert("COMANDO INVÁLIDO.\n\nEl comando ingresado no es correcto. Espere las instrucciones del docente para habilitar el simulador.");
+            }
+        }
+
+        function advanceCurrentSimCase() {
+            const script = simCasesData[currentSimCaseId].script;
+            const step = simProgressState[currentSimCaseId];
+
+            if (step === 0) {
+                document.getElementById('chat-messages-sim').innerHTML = ''; 
+            }
+
+            if (step < script.length) {
+                renderSimBubbleHTML(script[step]);
+                simProgressState[currentSimCaseId]++;
+                scrollSimToBottom();
+            } else {
+                alert("La sesión clínica de estabilización para este caso ha finalizado. Seleccione otra pestaña superior para ver otro caso.");
+            }
+        }
+
+        function renderSimBubbleHTML(message) {
+            const chatContainer = document.getElementById('chat-messages-sim');
+            const bubbleDiv = document.createElement('div');
+            
+            if (message.role === 'interventor') {
+                bubbleDiv.className = "flex flex-col items-end animate-fadeInMsg";
+                bubbleDiv.innerHTML = `
+                    <span class="text-xs text-tcc-blue font-bold mb-1 mr-1">${message.name}</span>
+                    <div class="max-w-[85%] bg-blue-50 border border-blue-200 text-blue-900 rounded-2xl rounded-tr-none p-4 shadow-sm text-lg">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'paciente') {
+                bubbleDiv.className = "flex flex-col items-start animate-fadeInMsg";
+                bubbleDiv.innerHTML = `
+                    <span class="text-xs text-gray-500 font-bold mb-1 ml-1">${message.name}</span>
+                    <div class="max-w-[85%] bg-white border border-gray-300 text-gray-800 rounded-2xl rounded-tl-none p-4 shadow-sm text-lg">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'system') {
+                bubbleDiv.className = "flex flex-col items-center animate-fadeInMsg mt-4";
+                bubbleDiv.innerHTML = `
+                    <div class="bg-gray-800 text-yellow-300 border border-gray-600 rounded-lg p-4 shadow-sm text-sm text-left w-full max-w-xl">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'system_success') {
+                bubbleDiv.className = "flex flex-col items-center animate-fadeInMsg mt-4";
+                bubbleDiv.innerHTML = `
+                    <div class="bg-green-100 border border-green-300 text-green-800 rounded-lg p-4 shadow-sm text-sm text-center w-full max-w-xl font-bold">
+                        <i class="fas fa-check-circle mr-1"></i> ${message.text}
+                    </div>
+                `;
+            }
+
+            chatContainer.appendChild(bubbleDiv);
+        }
+
+        function scrollSimToBottom() {
+            const chatContainer = document.getElementById('chat-messages-sim');
+            chatContainer.scrollTo({
+                top: chatContainer.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Init Simulador
+        window.addEventListener('DOMContentLoaded', () => {
+            renderSimInitialMessage();
+        });
+    </script>
+</body>
+</html>
+```eof

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 10: Evaluación de las Funciones del Yo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cuc-red': '#A3161A',
+                        'cuc-dark': '#1a1a1a',
+                        'cuc-gray': '#f4f4f4',
+                        'soft-red': '#ffebeb',
+                        'psy-purple': '#6b21a8', /* Morado para psicoanálisis */
+                        'psy-light': '#f3e8ff',
+                        'success-color': '#2e7d32',
+                        'warning-color': '#d97706',
+                    },
+                    fontFamily: {
+                        'sans': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slideIn {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+
+        /* Tabs Interactivas Yo */
+        .ego-tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .ego-tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .ego-step-btn {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-cuc-dark font-sans min-h-screen flex flex-col">
+
+    <header class="bg-white border-b-4 border-cuc-red py-5 shadow-md relative md:sticky md:top-0 z-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-center items-center gap-6 text-center">
+            
+            <div class="order-3 md:order-1 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/int-crisis/u3clase10.html" 
+                     alt="QR Clase" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Ir a esta Clase</span>
+            </div>
+
+            <div class="order-1 md:order-2 flex flex-col items-center max-w-2xl">
+                <img src="logocuc.png" alt="Logo Universidad de la Costa" class="h-20 mb-2">
+                <h1 class="text-cuc-red text-2xl md:text-3xl font-black uppercase leading-tight mb-1">
+                    Intervención en Crisis
+                </h1>
+                <div class="text-sm md:text-base text-gray-800">
+                    <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                    Mg. Dirección de Proyectos - Certificado en PNL<br>
+                    <small class="block mt-1">
+                        <span class="text-cuc-red font-black">WhatsApp:</span> 3233796547 | 
+                        <span class="text-cuc-red font-black">IG:</span> caminosdelser85
+                    </small>
+                </div>
+            </div>
+
+            <div class="order-3 md:order-3 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" 
+                     alt="QR Contacto" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Guardar Contacto</span>
+            </div>
+        </div>
+    </header>
+
+    <nav class="bg-gray-100 border-b border-gray-300 py-3 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <a href="u1clase01.html" class="inline-flex items-center gap-2 font-bold text-cuc-dark hover:text-cuc-red transition-colors">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+            <span class="mx-3 text-gray-400">|</span>
+            <span class="text-gray-600 font-bold">Unidad 3: Enfoque Psicoanalítico</span>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-10 flex-grow max-w-6xl">
+        
+        <div class="text-center mb-16 animate-slideIn">
+            <span class="bg-cuc-red text-white px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4 inline-block">Clase 10</span>
+            <h2 class="text-4xl font-black text-cuc-dark mb-6">Diagnóstico de la Estructura Mental en Crisis</h2>
+            <div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-lg border-l-8 border-psy-purple text-left flex items-center gap-6">
+                <i class="fas fa-microscope text-6xl text-gray-200 hidden md:block"></i>
+                <div>
+                    <p class="text-lg text-gray-700 italic font-light mb-2">
+                        "La crisis es el martillo que golpea el cristal de la mente. Evaluar las funciones del Yo de Bellak nos permite saber si ese cristal solo se astilló, si se rompió en mil pedazos, o si el paciente tiene la fortaleza ('Fuerza del Yo') para sostener una psicoterapia breve."
+                    </p>
+                    <p class="text-sm font-bold text-psy-purple uppercase tracking-wider">— Leopold Bellak</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.1s;">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="bg-psy-light p-8 rounded-3xl shadow-md border border-purple-200">
+                    <h3 class="text-2xl font-black text-psy-purple mb-4">El Propósito del Diagnóstico</h3>
+                    <p class="text-gray-700 mb-4 leading-relaxed">
+                        En la Psicoterapia Breve, Intensiva y de Urgencia (P.B.I.U.), no tenemos meses para conocer al paciente. Necesitamos un mapeo rápido de su "Estructura Yoica" en la primera sesión para tomar decisiones vitales.
+                    </p>
+                    <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-warning-color">
+                        <strong class="block text-warning-color mb-1">La Decisión Terapéutica Clave:</strong>
+                        <ul class="list-disc list-inside text-sm text-gray-600">
+                            <li>Si el Yo está <strong>fuerte</strong> <i class="fas fa-arrow-right mx-1"></i> Iniciamos Psicoterapia Breve (Insight).</li>
+                            <li>Si el Yo está <strong>colapsado</strong> <i class="fas fa-arrow-right mx-1"></i> Intervención directiva, contención, remisión a psiquiatría o internación.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 text-center">
+                        <i class="fas fa-brain text-4xl text-gray-300 mb-3"></i>
+                        <h4 class="font-bold text-gray-800">El Ello</h4>
+                        <p class="text-xs text-gray-500 mt-2">Los impulsos, traumas y deseos desbordados por la crisis.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-cuc-red text-center relative">
+                        <span class="absolute -top-3 -right-3 bg-cuc-red text-white text-[0.6rem] font-bold px-2 py-1 rounded-full animate-pulse">¡Bajo Presión!</span>
+                        <i class="fas fa-shield-alt text-4xl text-cuc-red mb-3"></i>
+                        <h4 class="font-bold text-gray-800">El Yo</h4>
+                        <p class="text-xs text-gray-500 mt-2">El administrador que debe mediar con la realidad. (Nuestro foco de evaluación).</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 text-center col-span-2">
+                        <i class="fas fa-gavel text-4xl text-gray-300 mb-3"></i>
+                        <h4 class="font-bold text-gray-800">El Superyó</h4>
+                        <p class="text-xs text-gray-500 mt-2">La culpa y el castigo interno que agrava el síntoma.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.3s;">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-black text-cuc-dark mb-4">Las 5 Funciones Clínicas del Yo (Bellak)</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+                    Bellak describió 12 funciones, pero en Intervención en Crisis nos enfocamos en las 5 más críticas para la supervivencia psicológica. Selecciona cada una para ver cómo evaluarla.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden">
+                
+                <div class="flex flex-wrap p-2 gap-2 bg-gray-100 border-b border-gray-200 justify-center">
+                    <button onclick="openEgoTab('f1')" id="btn-f1" class="ego-step-btn flex-1 min-w-[150px] py-3 px-4 rounded-lg text-center transform scale-105 bg-psy-purple text-white shadow-md font-bold text-sm">
+                        <i class="fas fa-eye mr-1"></i> Prueba de Realidad
+                    </button>
+                    <button onclick="openEgoTab('f2')" id="btn-f2" class="ego-step-btn flex-1 min-w-[150px] py-3 px-4 rounded-lg text-center bg-white text-gray-600 hover:text-psy-purple font-bold text-sm border border-gray-200">
+                        <i class="fas fa-hand-paper mr-1"></i> Control Impulsos
+                    </button>
+                    <button onclick="openEgoTab('f3')" id="btn-f3" class="ego-step-btn flex-1 min-w-[150px] py-3 px-4 rounded-lg text-center bg-white text-gray-600 hover:text-psy-purple font-bold text-sm border border-gray-200">
+                        <i class="fas fa-users mr-1"></i> Rel. Objetales
+                    </button>
+                    <button onclick="openEgoTab('f4')" id="btn-f4" class="ego-step-btn flex-1 min-w-[150px] py-3 px-4 rounded-lg text-center bg-white text-gray-600 hover:text-psy-purple font-bold text-sm border border-gray-200">
+                        <i class="fas fa-project-diagram mr-1"></i> Pensamiento
+                    </button>
+                    <button onclick="openEgoTab('f5')" id="btn-f5" class="ego-step-btn flex-1 min-w-[150px] py-3 px-4 rounded-lg text-center bg-white text-gray-600 hover:text-psy-purple font-bold text-sm border border-gray-200">
+                        <i class="fas fa-shield-virus mr-1"></i> Mec. Defensa
+                    </button>
+                </div>
+
+                <div class="p-8 md:p-10 relative min-h-[400px]">
+                    
+                    <div id="tab-f1" class="ego-tab-content active">
+                        <div class="flex items-center gap-4 border-b-2 border-purple-100 pb-4 mb-6">
+                            <div class="w-14 h-14 bg-psy-purple text-white rounded-full flex items-center justify-center text-2xl shadow-lg"><i class="fas fa-eye"></i></div>
+                            <h3 class="text-3xl font-black text-gray-800">Prueba de Realidad</h3>
+                        </div>
+                        <p class="text-gray-700 mb-6 text-lg">Es la capacidad de distinguir entre los estímulos internos (fantasías, miedos, alucinaciones) y los externos (los hechos reales). ¿El paciente sabe qué es real y qué es producto de su crisis?</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h4 class="font-bold text-cuc-red mb-2"><i class="fas fa-times-circle mr-2"></i>Indicadores de Falla</h4>
+                                <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+                                    <li>Alucinaciones o delirios francos (Psicosis).</li>
+                                    <li>Desorientación grave en tiempo y espacio.</li>
+                                    <li>Negación absoluta de un hecho evidente (Ej. "Mi esposo no murió, está de viaje").</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 p-5 rounded-xl border border-purple-200">
+                                <h4 class="font-bold text-psy-purple mb-2"><i class="fas fa-stethoscope mr-2"></i>Pregunta Diagnóstica</h4>
+                                <p class="text-sm text-gray-700 italic font-medium">"¿Puedes describirme qué fue exactamente lo que pasó hoy en la mañana antes de venir aquí?"</p>
+                                <p class="text-xs text-gray-500 mt-2">(Un Yo fuerte narra los hechos objetivamente, aunque llore. Un Yo colapsado distorsiona la historia).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab-f2" class="ego-tab-content">
+                        <div class="flex items-center gap-4 border-b-2 border-purple-100 pb-4 mb-6">
+                            <div class="w-14 h-14 bg-psy-purple text-white rounded-full flex items-center justify-center text-2xl shadow-lg"><i class="fas fa-hand-paper"></i></div>
+                            <h3 class="text-3xl font-black text-gray-800">Control de Impulsos</h3>
+                        </div>
+                        <p class="text-gray-700 mb-6 text-lg">Es la capacidad del paciente para tolerar la frustración y posponer la gratificación de impulsos agresivos, sexuales o autodestructivos bajo la presión de la crisis.</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h4 class="font-bold text-cuc-red mb-2"><i class="fas fa-times-circle mr-2"></i>Indicadores de Falla</h4>
+                                <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+                                    <li>Actos violentos incontrolables (golpear paredes, atacar a otros).</li>
+                                    <li>Abuso súbito de sustancias como vía de escape.</li>
+                                    <li><strong>Ideación o intentos suicidas impulsivos.</strong></li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 p-5 rounded-xl border border-purple-200">
+                                <h4 class="font-bold text-psy-purple mb-2"><i class="fas fa-stethoscope mr-2"></i>Evaluación Clínica</h4>
+                                <p class="text-sm text-gray-700 italic font-medium">Si esta función está severamente comprometida, el paciente es un peligro para sí mismo o para otros. <strong>NO</strong> se hace terapia profunda (insight); se aplica contención de 1ra instancia (P.A.P) o remisión psiquiátrica.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab-f3" class="ego-tab-content">
+                        <div class="flex items-center gap-4 border-b-2 border-purple-100 pb-4 mb-6">
+                            <div class="w-14 h-14 bg-psy-purple text-white rounded-full flex items-center justify-center text-2xl shadow-lg"><i class="fas fa-users"></i></div>
+                            <h3 class="text-3xl font-black text-gray-800">Relaciones Objetales</h3>
+                        </div>
+                        <p class="text-gray-700 mb-6 text-lg">Evalúa cómo el paciente se vincula con los demás ("objetos"). En una crisis, nos interesa saber si puede mantener vínculos de apoyo o si percibe a los demás como amenazas u objetos de uso.</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h4 class="font-bold text-cuc-red mb-2"><i class="fas fa-times-circle mr-2"></i>Indicadores de Falla</h4>
+                                <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+                                    <li>Aislamiento social absoluto (retraimiento esquizoide).</li>
+                                    <li>Relaciones sádicas, abusivas o altamente parasitarias.</li>
+                                    <li>Incapacidad para percibir al terapeuta como alguien que quiere ayudar (paranoia severa).</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 p-5 rounded-xl border border-purple-200">
+                                <h4 class="font-bold text-psy-purple mb-2"><i class="fas fa-stethoscope mr-2"></i>Pregunta Diagnóstica</h4>
+                                <p class="text-sm text-gray-700 italic font-medium">"¿A quién has acudido o a quién has llamado desde que pasó esto?"</p>
+                                <p class="text-xs text-gray-500 mt-2">Permite mapear su red de apoyo. Un paciente sin relaciones objetales integradas requerirá un abordaje mucho más directivo.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab-f4" class="ego-tab-content">
+                        <div class="flex items-center gap-4 border-b-2 border-purple-100 pb-4 mb-6">
+                            <div class="w-14 h-14 bg-psy-purple text-white rounded-full flex items-center justify-center text-2xl shadow-lg"><i class="fas fa-project-diagram"></i></div>
+                            <h3 class="text-3xl font-black text-gray-800">Procesos de Pensamiento</h3>
+                        </div>
+                        <p class="text-gray-700 mb-6 text-lg">Evalúa la coherencia, lógica y abstracción del discurso. ¿El paciente puede pensar con claridad sobre su problema, o la angustia ha fragmentado su cognición?</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h4 class="font-bold text-cuc-red mb-2"><i class="fas fa-times-circle mr-2"></i>Indicadores de Falla</h4>
+                                <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+                                    <li>Fuga de ideas (habla rapidísimo saltando de un tema a otro sin conexión).</li>
+                                    <li>Pensamiento mágico severo o ilógico.</li>
+                                    <li>Incapacidad para concentrarse o recordar hechos simples de la crisis.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 p-5 rounded-xl border border-purple-200">
+                                <h4 class="font-bold text-psy-purple mb-2"><i class="fas fa-stethoscope mr-2"></i>Evaluación Clínica</h4>
+                                <p class="text-sm text-gray-700 italic font-medium">Se evalúa escuchando la narrativa del paciente. Si el paciente no puede hilar dos ideas lógicas, es imposible generar *Insight*. Hay que calmar la crisis aguda antes de intentar interpretar.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab-f5" class="ego-tab-content">
+                        <div class="flex items-center gap-4 border-b-2 border-purple-100 pb-4 mb-6">
+                            <div class="w-14 h-14 bg-psy-purple text-white rounded-full flex items-center justify-center text-2xl shadow-lg"><i class="fas fa-shield-virus"></i></div>
+                            <h3 class="text-3xl font-black text-gray-800">Funcionamiento Defensivo</h3>
+                        </div>
+                        <p class="text-gray-700 mb-6 text-lg">En el psicoanálisis, las defensas son normales y necesarias. El problema en una crisis es cuando las defensas son demasiado primitivas (infantiles) o colapsan por completo.</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h4 class="font-bold text-cuc-red mb-2"><i class="fas fa-times-circle mr-2"></i>Defensas Patológicas (Riesgo)</h4>
+                                <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+                                    <li><strong>Escisión (Splitting):</strong> Ver a los demás como ángeles o demonios absolutos.</li>
+                                    <li><strong>Actuación (Acting out):</strong> Resolver la angustia mediante acciones impulsivas (ej. peleas, promiscuidad súbita).</li>
+                                    <li><strong>Proyección Paranoide:</strong> Culpar irracionalmente a todo el mundo del evento traumático.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 p-5 rounded-xl border border-purple-200">
+                                <h4 class="font-bold text-success-color mb-2"><i class="fas fa-check-circle mr-2"></i>Defensas Maduras (Buen pronóstico)</h4>
+                                <ul class="text-sm text-gray-700 space-y-2 list-disc list-inside">
+                                    <li><strong>Intelectualización:</strong> Intentar entender el problema lógicamente para calmarse.</li>
+                                    <li><strong>Sublimación:</strong> Usar el dolor para crear algo útil o ayudar a otros.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-10 animate-slideIn" style="animation-delay: 0.5s;">
+            <div class="bg-cuc-dark text-white rounded-3xl shadow-2xl border-t-8 border-cuc-red overflow-hidden p-8 md:p-12 relative">
+                <i class="fas fa-clipboard-check absolute -right-10 -top-10 text-9xl text-white opacity-5"></i>
+                
+                <h2 class="text-3xl font-black mb-6 text-center">De la Evaluación a la Acción (Insight)</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8 relative z-10">
+                    <div>
+                        <p class="text-gray-300 text-lg leading-relaxed mb-4">
+                            Si tu evaluación concluye que las funciones del Yo del paciente (especialmente Prueba de Realidad y Control de Impulsos) están relativamente <strong>intactas</strong>, el paciente es candidato ideal para la P.B.I.U.
+                        </p>
+                        <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                            El siguiente paso es utilizar la <strong>Interpretación</strong>. Como vimos en la Clase 9, debes mostrarle al paciente cómo su *Apercepción* (sus conflictos pasados) está distorsionando su visión del evento actual.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700">
+                        <h4 class="text-xl font-bold text-psy-light mb-3 flex items-center gap-2">
+                            <i class="fas fa-bolt text-yellow-400"></i> ¿Qué es el Insight?
+                        </h4>
+                        <p class="text-sm text-gray-400 mb-4">
+                            Es el "darse cuenta". Es el momento clínico donde el paciente comprende que su reacción desproporcionada ante la crisis actual es un eco de una herida infantil.
+                        </p>
+                        <div class="bg-cuc-red p-3 rounded text-sm font-bold text-white shadow-inner">
+                            "Ah, no lloro porque mi novia me dejó ayer... lloro porque reviví el terror que sentí cuando mi madre me abandonó a los 5 años."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-200 text-cuc-dark text-center py-8 mt-auto border-t border-gray-300">
+        <div class="container mx-auto px-4">
+            <p class="text-sm font-bold mb-2">Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+            <p class="text-xs text-gray-600">Material docente: Jorge Arango Castaño. Asignatura: Intervención en Crisis.</p>
+        </div>
+    </footer>
+
+    <script>
+        function openEgoTab(tabId) {
+            // Ocultar todos los contenidos
+            document.querySelectorAll('.ego-tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Resetear todos los botones
+            document.querySelectorAll('.ego-step-btn').forEach(btn => {
+                btn.classList.remove('bg-psy-purple', 'text-white', 'transform', 'scale-105', 'shadow-md');
+                btn.classList.add('bg-white', 'text-gray-600');
+            });
+            
+            // Mostrar la pestaña seleccionada
+            document.getElementById('tab-' + tabId).classList.add('active');
+            
+            // Aplicar estilos de activo al botón clickeado
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.remove('bg-white', 'text-gray-600');
+            activeBtn.classList.add('bg-psy-purple', 'text-white', 'transform', 'scale-105', 'shadow-md');
+        }
+    </script>
+</body>
+</html>

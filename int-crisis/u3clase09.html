@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 9: Psicoterapia Breve y de Urgencia</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cuc-red': '#A3161A',
+                        'cuc-dark': '#1a1a1a',
+                        'cuc-gray': '#f4f4f4',
+                        'soft-red': '#ffebeb',
+                        'psy-purple': '#6b21a8', /* Morado para psicoanálisis */
+                        'psy-light': '#f3e8ff',
+                        'success-color': '#2e7d32',
+                    },
+                    fontFamily: {
+                        'sans': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slideIn {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+
+        /* --- FLIP CARDS 3D --- */
+        .flip-card {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Acordeón */
+        .acc-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-cuc-dark font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER / BANNER -->
+    <header class="bg-white border-b-4 border-cuc-red py-5 shadow-md relative md:sticky md:top-0 z-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-center items-center gap-6 text-center">
+            
+            <div class="order-3 md:order-1 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/int-crisis/u3clase09.html" 
+                     alt="QR Clase" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Ir a esta Clase</span>
+            </div>
+
+            <div class="order-1 md:order-2 flex flex-col items-center max-w-2xl">
+                <img src="logocuc.png" alt="Logo Universidad de la Costa" class="h-20 mb-2">
+                <h1 class="text-cuc-red text-2xl md:text-3xl font-black uppercase leading-tight mb-1">
+                    Intervención en Crisis
+                </h1>
+                <div class="text-sm md:text-base text-gray-800">
+                    <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                    Mg. Dirección de Proyectos - Certificado en PNL<br>
+                    <small class="block mt-1">
+                        <span class="text-cuc-red font-black">WhatsApp:</span> 3233796547 | 
+                        <span class="text-cuc-red font-black">IG:</span> caminosdelser85
+                    </small>
+                </div>
+            </div>
+
+            <div class="order-3 md:order-3 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" 
+                     alt="QR Contacto" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Guardar Contacto</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="bg-gray-100 border-b border-gray-300 py-3 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <a href="u1clase01.html" class="inline-flex items-center gap-2 font-bold text-cuc-dark hover:text-cuc-red transition-colors">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+            <span class="mx-3 text-gray-400">|</span>
+            <span class="text-gray-600 font-bold">Unidad 3: Enfoque Psicoanalítico</span>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container mx-auto px-4 py-10 flex-grow max-w-6xl">
+        
+        <!-- INTRODUCCIÓN -->
+        <div class="text-center mb-16 animate-slideIn">
+            <span class="bg-cuc-red text-white px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4 inline-block">Clase 9</span>
+            <h2 class="text-4xl font-black text-cuc-dark mb-6">Psicoterapia Breve, Intensiva y de Urgencia</h2>
+            <div class="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow-lg border-l-8 border-psy-purple text-left">
+                <p class="text-xl text-gray-700 italic font-light">
+                    "La crisis actual es solo la chispa. El verdadero incendio ocurre cuando ese evento resuena y despierta conflictos infantiles reprimidos. La P.B.I.U. no busca reestructurar toda la personalidad, sino apagar ese incendio específico."
+                </p>
+                <p class="text-right text-psy-purple font-bold mt-2">— Leopold Bellak</p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 1: DIFERENCIAS CLAVE (PAP vs Terapia de Urgencia) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.2s;">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-cuc-dark mb-4">¿En qué se diferencia de los P.A.P.?</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+                    En la Unidad 1 aprendimos los Primeros Auxilios Psicológicos (1ª Instancia). Ahora entramos a la <strong>2ª Instancia</strong>. La P.B.I.U. requiere un profesional especializado para intervenir más allá del síntoma superficial.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Primeros Auxilios -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+                    <h4 class="text-2xl font-black text-cuc-red mb-4 flex items-center gap-2">
+                        <i class="fas fa-medkit"></i> 1ª Instancia (P.A.P.)
+                    </h4>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-times text-cuc-red mt-1"></i>
+                            <span><strong>Duración:</strong> Minutos u horas. Se aplica en el lugar de la crisis (calle, hospital, teléfono).</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-times text-cuc-red mt-1"></i>
+                            <span><strong>Objetivo:</strong> Reestablecer el enfrentamiento inmediato. Evitar que la persona muera o empeore agudamente.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-times text-cuc-red mt-1"></i>
+                            <span><strong>Profundidad:</strong> Superficial. Se centra exclusivamente en el síntoma actual y la seguridad. No explora el pasado.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- P.B.I.U. -->
+                <div class="bg-psy-light p-8 rounded-2xl shadow-md border-l-4 border-psy-purple">
+                    <h4 class="text-2xl font-black text-psy-purple mb-4 flex items-center gap-2">
+                        <i class="fas fa-couch"></i> 2ª Instancia (P.B.I.U.)
+                    </h4>
+                    <ul class="space-y-4 text-gray-800">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-psy-purple mt-1"></i>
+                            <span><strong>Duración:</strong> 1 a 6 sesiones máximas. Se realiza en un ambiente clínico controlado (consultorio).</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-psy-purple mt-1"></i>
+                            <span><strong>Objetivo:</strong> Resolver el trauma subyacente. Devolver al paciente a su nivel de funcionamiento previo o superior.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-psy-purple mt-1"></i>
+                            <span><strong>Profundidad:</strong> Dinámica. Conecta el síntoma actual con los conflictos reprimidos e inconscientes de la historia del paciente.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: FUNDAMENTOS DEL MODELO (FLIP CARDS) -->
+        <section class="mb-20 bg-cuc-dark py-12 px-4 rounded-3xl shadow-2xl animate-slideIn" style="animation-delay: 0.3s;">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-white mb-4">Postulados Básicos de Leopold Bellak</h3>
+                <p class="text-gray-400 max-w-3xl mx-auto text-lg">Pasa el cursor sobre las tarjetas para descubrir cómo la teoría psicoanalítica se adapta a las exigencias de tiempo limitado de una crisis.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                
+                <!-- 1. Causalidad -->
+                <div class="w-full h-72 flip-card">
+                    <div class="flip-card-inner text-center">
+                        <div class="flip-card-front bg-white border-t-8 border-psy-purple flex flex-col justify-center items-center p-6">
+                            <i class="fas fa-project-diagram text-5xl text-psy-purple mb-4"></i>
+                            <h4 class="text-xl font-bold text-gray-800">Determinismo Psíquico</h4>
+                            <p class="text-xs text-gray-400 mt-2 uppercase tracking-widest font-bold">Gira para leer</p>
+                        </div>
+                        <div class="flip-card-back bg-psy-purple text-white flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-white/30 pb-2 mb-3">Nada es al azar</h4>
+                            <p class="text-sm">En el psicoanálisis, la reacción desproporcionada ante un evento traumático (ej. un despido) no es producto del azar. Existe una causalidad inconsciente. El evento actual actúa como un "eco" que despierta angustias antiguas (ej. un abandono en la infancia).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Economía -->
+                <div class="w-full h-72 flip-card">
+                    <div class="flip-card-inner text-center">
+                        <div class="flip-card-front bg-white border-t-8 border-cuc-red flex flex-col justify-center items-center p-6">
+                            <i class="fas fa-hourglass-half text-5xl text-cuc-red mb-4"></i>
+                            <h4 class="text-xl font-bold text-gray-800">Economía de Intervención</h4>
+                            <p class="text-xs text-gray-400 mt-2 uppercase tracking-widest font-bold">Gira para leer</p>
+                        </div>
+                        <div class="flip-card-back bg-cuc-red text-white flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-white/30 pb-2 mb-3">Foco Exacto</h4>
+                            <p class="text-sm">A diferencia del psicoanálisis clásico que dura años, la P.B.I.U. exige que el terapeuta identifique rápidamente el "Denominador Común" (el conflicto focal) y trabaje <strong>solo</strong> sobre él, ignorando otras neurosis del paciente que no estén relacionadas con la crisis actual.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Funciones del Yo -->
+                <div class="w-full h-72 flip-card">
+                    <div class="flip-card-inner text-center">
+                        <div class="flip-card-front bg-white border-t-8 border-bio-blue flex flex-col justify-center items-center p-6">
+                            <i class="fas fa-shield-alt text-5xl text-bio-blue mb-4"></i>
+                            <h4 class="text-xl font-bold text-gray-800">Evaluación de las Funciones del Yo</h4>
+                            <p class="text-xs text-gray-400 mt-2 uppercase tracking-widest font-bold">Gira para leer</p>
+                        </div>
+                        <div class="flip-card-back bg-bio-blue text-white flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-white/30 pb-2 mb-3">La Estructura Mental</h4>
+                            <p class="text-sm">Bellak propone que la crisis fractura el "Yo" del paciente. El terapeuta evalúa qué tan rotas están funciones como: la prueba de realidad, el control de impulsos, o los mecanismos de defensa, para decidir si el paciente requiere medicación o si puede sostener la terapia.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: EL CONCEPTO DE APERCEPCIÓN (Acordeón) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.4s;">
+            <div class="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden max-w-4xl mx-auto">
+                <div class="bg-gray-100 p-8 text-center border-b border-gray-200">
+                    <h3 class="text-2xl font-bold text-cuc-dark mb-2">Apercepción vs. Percepción</h3>
+                    <p class="text-gray-600 text-sm">El núcleo de la interpretación psicoanalítica en crisis.</p>
+                </div>
+                <div class="p-8">
+                    
+                    <button class="w-full text-left p-4 font-bold text-lg text-gray-800 flex justify-between items-center border-b border-gray-200 hover:bg-gray-50 transition-colors" onclick="toggleAccordion(this)">
+                        <span>1. La Percepción (El Hecho Objetivo)</span>
+                        <i class="fas fa-chevron-down text-cuc-red transition-transform duration-300"></i>
+                    </button>
+                    <div class="acc-content bg-white">
+                        <div class="p-4 text-gray-600 text-sm">
+                            Es el proceso neurológico y objetivo de recibir un estímulo. En una crisis, es el evento tal cual sucedió, sin adornos. <br><br>
+                            <em>Ejemplo: "Mi jefe me entregó una carta de despido en una hoja blanca."</em>
+                        </div>
+                    </div>
+
+                    <button class="w-full text-left p-4 font-bold text-lg text-psy-purple flex justify-between items-center border-b border-gray-200 hover:bg-gray-50 transition-colors" onclick="toggleAccordion(this)">
+                        <span>2. La Apercepción (La Interpretación Inconsciente)</span>
+                        <i class="fas fa-chevron-down text-cuc-red transition-transform duration-300"></i>
+                    </button>
+                    <div class="acc-content bg-white">
+                        <div class="p-4 text-gray-600 text-sm border-l-4 border-psy-purple ml-2 bg-psy-light rounded-r">
+                            <strong>Es la percepción distorsionada por las experiencias pasadas del individuo.</strong> No reaccionamos a los hechos, reaccionamos a lo que esos hechos significan para nuestro inconsciente.<br><br>
+                            <em>Ejemplo: El paciente no llora por el papel blanco del despido (Percepción). Llora porque ese despido reaviva la herida de cuando su padre lo abandonó sintiéndose insuficiente (Apercepción). La terapia breve busca que el paciente adquiera "Insight" sobre esta conexión oculta.</em>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: PREPARACIÓN PARA LAS PRÓXIMAS CLASES -->
+        <section class="mb-10 animate-slideIn" style="animation-delay: 0.5s;">
+            <div class="bg-white border border-gray-200 p-8 md:p-12 rounded-3xl shadow-lg border-t-8 border-cuc-dark text-center">
+                <i class="fas fa-search-plus text-5xl text-gray-300 mb-4"></i>
+                <h2 class="text-3xl font-black text-cuc-dark mb-4">¿Hacia dónde vamos en esta Unidad 3?</h2>
+                <p class="text-gray-600 text-lg leading-relaxed mb-6 max-w-2xl mx-auto">
+                    Hoy entendimos la base: en P.B.I.U., el tiempo apremia y debemos enfocarnos en la apercepción del trauma. En las <strong>Clases 10 y 11</strong>, aprenderemos exactamente <em>cómo</em> evaluar las Funciones del Yo de Bellak y qué técnicas interpretativas usar para generar *Insight* en menos de 6 sesiones.
+                </p>
+                <div class="inline-block bg-yellow-50 border border-yellow-200 text-yellow-800 px-6 py-3 rounded-lg font-bold text-sm shadow-sm">
+                    <i class="fas fa-headphones mr-2"></i> Recordatorio: La Clase 11 incluirá la elaboración de un Podcast evaluativo.
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-cuc-dark text-white text-center py-8 mt-auto">
+        <div class="container mx-auto px-4">
+            <p class="text-sm md:text-base mb-2">Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+            <p class="text-xs text-gray-400">Material docente: Jorge Arango Castaño. Basado en L. Bellak: Psicoterapia Breve y de Urgencia.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        function toggleAccordion(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+    </script>
+</body>
+</html>

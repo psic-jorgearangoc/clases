@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Temática - Intervención en Crisis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --soft-red: #ffebeb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER / BANNER CON QR --- */
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky; /* Fijo por defecto en PC */
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .qr-code img {
+            max-height: 80px;
+            border: 2px solid var(--cuc-gray);
+            border-radius: 5px;
+            padding: 2px;
+            transition: transform 0.3s;
+        }
+
+        .qr-code img:hover {
+            transform: scale(1.1);
+            border-color: var(--cuc-red);
+        }
+
+        .qr-label {
+            display: block;
+            font-size: 0.6rem;
+            color: #666;
+            margin-top: 3px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .header-logo img {
+            max-height: 90px;
+            background-color: transparent; 
+        }
+
+        .header-info {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .course-title {
+            color: var(--cuc-red);
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            line-height: 1.1;
+        }
+
+        .prof-info {
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .prof-info strong {
+            color: var(--cuc-red);
+        }
+
+        .contact-label {
+            color: var(--cuc-red);
+            font-weight: 900;
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .intro-text {
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- SECCIÓN BIENESTAR (CARRUSEL) --- */
+        .wellness-section {
+            margin-bottom: 50px;
+            text-align: center;
+            background-color: #fafafa;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #eee;
+        }
+
+        .section-title {
+            color: var(--cuc-red);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+
+        .wellness-container {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            min-height: 420px;
+            display: flex;
+            align-items: center;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            padding: 40px;
+            animation: fade 0.8s;
+        }
+
+        .slide.active-slide {
+            display: block;
+        }
+
+        @keyframes fade {
+            from {opacity: .4} 
+            to {opacity: 1}
+        }
+
+        .slide-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .wellness-info h3 {
+            color: var(--cuc-dark);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .wellness-info p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 25px;
+            background-color: var(--cuc-red);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .contact-btn:hover {
+            background-color: #8a1216;
+            transform: scale(1.05);
+        }
+
+        /* Navegación del Carrusel */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            margin-top: -22px;
+            padding: 16px;
+            color: var(--cuc-dark);
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(200,200,200,0.2);
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        .prev {
+            left: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: var(--cuc-red);
+            color: white;
+        }
+
+        .dots-container {
+            text-align: center;
+            padding: 15px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 12px;
+            width: 12px;
+            margin: 0 4px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active-dot, .dot:hover {
+            background-color: var(--cuc-red);
+        }
+
+        .section-separator {
+            border-bottom: 2px solid var(--cuc-gray);
+            margin: 40px auto;
+            width: 80%;
+        }
+
+        /* --- TIMELINE / UNITS --- */
+        .timeline-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            position: relative;
+            gap: 20px;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 4px;
+            background: #e0e0e0;
+            z-index: 0;
+            transform: translateY(-50%);
+        }
+
+        .unit-wrapper {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .unit-card {
+            background: var(--white);
+            border: 2px solid var(--cuc-gray);
+            border-radius: 15px;
+            width: 300px;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .unit-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--cuc-red);
+            box-shadow: 0 15px 30px rgba(163, 22, 26, 0.15);
+        }
+
+        .unit-number {
+            background-color: var(--cuc-red);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 0 auto 15px;
+        }
+
+        .unit-title {
+            color: var(--cuc-red);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .unit-desc {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .btn-ver-mas {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+
+        .unit-card:hover .btn-ver-mas {
+            background-color: var(--cuc-red);
+        }
+
+        .exam-marker {
+            margin-top: 25px;
+            display: inline-block;
+            padding: 8px 20px;
+            border: 2px dashed var(--cuc-red);
+            color: var(--cuc-red);
+            font-weight: bold;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background-color: #fff5f5;
+        }
+
+        /* --- MODAL --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from {top: -100px; opacity: 0;}
+            to {top: 0; opacity: 1;}
+        }
+
+        .modal-header {
+            background-color: var(--cuc-red);
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-btn {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #ddd;
+        }
+
+        .modal-body {
+            padding: 30px;
+            text-align: left;
+        }
+
+        /* --- ACCORDION --- */
+        .accordion {
+            background-color: #f9f9f9;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            transition: 0.4s;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .active, .accordion:hover {
+            background-color: #eee;
+            color: var(--cuc-red);
+        }
+
+        .accordion:after {
+            content: '\002B';
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2212";
+        }
+
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            border-left: 4px solid var(--cuc-red);
+        }
+
+        .panel p, .panel ul {
+            margin: 15px 0;
+        }
+
+        .panel ul {
+            padding-left: 20px;
+        }
+        
+        .btn-go-class {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: var(--cuc-red);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-go-class:hover {
+            background-color: #8a1216;
+        }
+
+        footer {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 0.8rem;
+        }
+
+        /* --- RESPONSIVE OPTIMIZATION (MOBILE) --- */
+        @media screen and (max-width: 768px) {
+            header {
+                position: relative; /* Ya no es fijo en móvil para ahorrar espacio */
+                padding: 10px;
+                gap: 15px;
+            }
+
+            .header-logo img {
+                max-height: 60px; /* Logo más pequeño */
+            }
+
+            .course-title {
+                font-size: 1.4rem; /* Título más compacto */
+                line-height: 1.2;
+            }
+
+            .prof-info {
+                font-size: 0.85rem;
+            }
+
+            /* Reorganización Flex para Móvil */
+            .header-logo { order: 1; width: 100%; margin-bottom: 5px;}
+            .header-info { order: 2; width: 100%; margin-bottom: 15px;}
+            
+            /* Los QR se muestran al lado en la parte inferior */
+            .qr-code { 
+                order: 3; 
+                width: 45%; 
+                margin: 0 auto;
+            }
+
+            .qr-code img {
+                max-height: 80px;
+            }
+
+            .wellness-section {
+                padding: 15px;
+            }
+            
+            .wellness-container {
+                min-height: auto; /* Altura flexible */
+            }
+            
+            .slide {
+                padding: 20px 10px 40px 10px;
+            }
+
+            .timeline-container::before {
+                display: none; /* Quita línea conectora en móvil */
+            }
+            
+            .unit-card {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- QR NAVEGACIÓN (Izquierda en PC, Abajo Izq en Móvil) -->
+        <div class="qr-code">
+            <!-- Apunta a este archivo específico: u1clase01.html -->
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/int-crisis/u1clase01.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+
+        <!-- LOGO CUC (Centro en PC, Arriba en Móvil) -->
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa">
+        </div>
+
+        <!-- INFO DOCENTE (Derecha en PC, Medio en Móvil) -->
+        <div class="header-info">
+            <div class="course-title">Intervención en Crisis</div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> caminosdelser85 | 
+                    <span class="contact-label">Web:</span> www.caminosdelser.co
+                </small>
+            </div>
+        </div>
+
+        <!-- QR CONTACTO (Derecha extrema en PC, Abajo Der en Móvil) -->
+        <div class="qr-code">
+            <!-- Datos vCard con FN: Jorge Arango -->
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="intro-text">
+            <h1 style="color: var(--cuc-red); margin-bottom: 10px;">Mapa de Navegación del Curso</h1>
+            <p>Bienvenido al semestre. Esta ruta interactiva te guiará a través de los tres grandes bloques de conocimiento. Haz clic en cada unidad para descubrir el desglose de las 4 clases magistrales.</p>
+        </div>
+
+        <!-- CARRUSEL DE BIENESTAR -->
+        <div class="wellness-section">
+            <h2 class="section-title">Centro de Bienestar Institucional</h2>
+            <div class="wellness-container">
+                
+                <!-- Slide 1: Coordinación -->
+                <div class="slide active-slide">
+                    <div class="slide-icon">👩‍🏫</div>
+                    <div class="wellness-info">
+                        <h3>Coordinación de Bienestar - Psicología</h3>
+                        <p><strong>Sandy Ibañez</strong></p>
+                        <p>Apoyo en dificultades académicas y emocionales.</p>
+                        <p style="font-size: 0.9rem; color: var(--cuc-red);"><i class="fas fa-map-marker-alt"></i> Bloque 7, Piso 5</p>
+                        <a href="mailto:sibanez1@cuc.edu.co" class="contact-btn">✉️ sibanez1@cuc.edu.co</a>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Salud Mental -->
+                <div class="slide">
+                    <div class="slide-icon">📞</div>
+                    <div class="wellness-info">
+                        <h3>Líneas de Salud Mental 24/7</h3>
+                        <p>Línea de Vida: <strong>(605) 339 9999</strong></p>
+                        <p>Habla y te sanas: <strong>(317) 621 8394</strong></p>
+                        <p style="font-size: 0.9rem; color: #777; margin-top:10px;">Bienestar Contigo: (318) 454 2345 (8am-9pm)</p>
+                        
+                        <!-- QR para guardar contactos de Salud Mental -->
+                        <div style="margin-top: 15px;">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AFN%3AL%C3%ADneas%20Salud%20Mental%0AORG%3ACUC%20Bienestar%0ATEL%3BTYPE%3DWORK%2CVOICE%3A6053399999%0ATEL%3BTYPE%3DCELL%2CVOICE%3A3176218394%0ATEL%3BTYPE%3DMAIN%2CVOICE%3A3184542345%0ANOTE%3AL%C3%ADnea%20de%20Vida%3A%203399999%2C%20Habla%20y%20te%20sanas%3A%203176218394%0AEND%3AVCARD" alt="QR Contactos Salud Mental" style="border: 2px solid #eee; padding: 5px; border-radius: 10px;">
+                            <p style="font-size: 0.8rem; color: #999; margin-top: 5px;">Escanea para guardar contactos</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Blue Point -->
+                <div class="slide">
+                    <div class="slide-icon">🔵</div>
+                    <div class="wellness-info">
+                        <h3>Estrategia Blue Point</h3>
+                        <p>Líder: <strong>Wendy Florez Portela</strong></p>
+                        <p>Salud mental de estudiantes para estudiantes.</p>
+                        <a href="mailto:wflorez4@cuc.edu.co" class="contact-btn">✉️ wflorez4@cuc.edu.co</a>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Ruta de Género -->
+                <div class="slide">
+                    <div class="slide-icon">💜</div>
+                    <div class="wellness-info">
+                        <h3>Ruta de Género</h3>
+                        <p>Atención de emergencias y acompañamiento.</p>
+                        <p>Oficina: Bienestar Estudiantil (Bloque 8, Piso 1)</p>
+                        <a href="mailto:equidadygenero@cuc.edu.co" class="contact-btn">✉️ equidadygenero@cuc.edu.co</a>
+                    </div>
+                </div>
+
+                <!-- Controles -->
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                
+                <div class="dots-container">
+                    <span class="dot active-dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-separator"></div>
+
+        <div class="timeline-container">
+            
+            <!-- UNIDAD 1: MODELO GENÉRICO + TALLER DE VIDA -->
+            <div class="unit-wrapper">
+                <div class="unit-card" onclick="openModal('modal1')">
+                    <div class="unit-number">1</div>
+                    <h3 class="unit-title">Modelo Genérico</h3>
+                    <p class="unit-desc">Reconocimiento de la intervención en crisis desde los fundamentos de Slaikeu y el taller de propósito de vida.</p>
+                    <span class="btn-ver-mas">Explorar Clases 1-4</span>
+                </div>
+                <div class="exam-marker">Examen Corte 1</div>
+            </div>
+
+            <!-- UNIDAD 2: MODELO COGNITIVO CONDUCTUAL -->
+            <div class="unit-wrapper">
+                <div class="unit-card" onclick="openModal('modal2')">
+                    <div class="unit-number">2</div>
+                    <h3 class="unit-title">Modelo Cognitivo Conductual</h3>
+                    <p class="unit-desc">Comprensión profunda de la evaluación e intervención centrada en la reestructuración y la conducta.</p>
+                    <span class="btn-ver-mas">Explorar Clases 5-8</span>
+                </div>
+                <div class="exam-marker">Examen Corte 2</div>
+            </div>
+
+            <!-- UNIDAD 3: ENFOQUE PSICOANALÍTICO -->
+            <div class="unit-wrapper">
+                <div class="unit-card" onclick="openModal('modal3')">
+                    <div class="unit-number">3</div>
+                    <h3 class="unit-title">Enfoque Psicoanalítico</h3>
+                    <p class="unit-desc">Psicoterapia breve, intensiva y de urgencia. Profundización en el trauma y lo latente.</p>
+                    <span class="btn-ver-mas">Explorar Clases 9-12</span>
+                </div>
+                <div class="exam-marker">Examen Final</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL UNIDAD 1 -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Unidad 1: Modelo Genérico (Slaikeu) + Propósito</h2>
+                <span class="close-btn" onclick="closeModal('modal1')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><strong>Objetivo:</strong> Establecer la brújula personal (Propósito) y asimilar los fundamentos de la teoría de crisis.</p>
+                <hr style="border:0; border-top:1px solid #eee; margin: 20px 0;">
+
+                <button class="accordion">Clase 1: Taller Propósito y Proyecto de Vida</button>
+                <div class="panel">
+                    <p><strong>Fundamentación:</strong> "Primero Yo". Autocuidado del terapeuta.</p>
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Método HALCÓN (Habilidades, Aspiración, Lógica, Construcción...).</li>
+                        <li>Diferencia Propósito vs Proyecto.</li>
+                        <li>Libertad de Ser (May/Frankl).</li>
+                    </ul>
+                    <a href="https://www.caminosdelser.co/Clases/int-crisis/u1clase01.html" class="btn-go-class">Ir a la Clase 1 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 2: Teoría de la Crisis (Slaikeu)</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Definición de Crisis: Peligro vs Oportunidad.</li>
+                        <li>Intervención de 1ª Instancia (PAP) vs Terapia.</li>
+                        <li>Modelo Multimodal CASIC (Introducción).</li>
+                    </ul>
+                    <a href="https://www.caminosdelser.co/Clases/int-crisis/u1clase02.html" class="btn-go-class">Ir a la Clase 2 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 3: Evaluación y PAP</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Los 5 componentes de los Primeros Auxilios Psicológicos.</li>
+                        <li>Evaluación de la letalidad y riesgo.</li>
+                        <li>La entrevista clínica en el modelo genérico.</li>
+                    </ul>
+                    <a href="https://www.caminosdelser.co/Clases/int-crisis/u1clase03.html" class="btn-go-class">Ir a la Clase 3 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 4: Aplicación en Sistemas</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Intervención telefónica y en escuelas/oficinas.</li>
+                        <li>Análisis de caso: Enfermedades mentales graves.</li>
+                        <li>Cierre de unidad y preparación para el parcial.</li>
+                    </ul>
+                    <a href="https://www.caminosdelser.co/Clases/int-crisis/u1clase04.html" class="btn-go-class">Ir a la Clase 4 ➜</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL UNIDAD 2 -->
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Unidad 2: Modelo Cognitivo Conductual</h2>
+                <span class="close-btn" onclick="closeModal('modal2')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><strong>Objetivo:</strong> Evaluar e intervenir desde las creencias, pensamientos y conductas observables.</p>
+                <hr style="border:0; border-top:1px solid #eee; margin: 20px 0;">
+
+                <button class="accordion">Clase 5: Fundamentos TCC en Crisis</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Teoría Cognitivo-Conductual de urgencia.</li>
+                        <li>Distorsiones cognitivas en el trauma.</li>
+                        <li>La tríada cognitiva en situaciones límite.</li>
+                    </ul>
+                    <a href="https://www.caminosdelser.co/Clases/int-crisis/u2clase05.html" class="btn-go-class">Ir a la Clase 5 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 6: Evaluación Funcional</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Análisis funcional de la conducta (Antecedente-Conducta-Consecuencia).</li>
+                        <li>Entrevista conductual en crisis.</li>
+                        <li>Identificación de creencias limitantes agudas.</li>
+                    </ul>
+                    <a href="https://www.caminosdelser.co/Clases/int-crisis/u2clase06.html" class="btn-go-class">Ir a la Clase 6 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 7: Técnicas de Intervención</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Reestructuración cognitiva "en caliente".</li>
+                        <li>Técnicas de desactivación fisiológica (Respiración/Relajación).</li>
+                        <li>Inoculación de estrés.</li>
+                    </ul>
+                    <a href="https://www.caminosdelser.co/Clases/int-crisis/u2clase07.html" class="btn-go-class">Ir a la Clase 7 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 8: Protocolos y Casos</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Diseño de protocolos de intervención.</li>
+                        <li>Club de lectura: Aplicaciones contemporáneas.</li>
+                        <li>Socialización de Proyecto de Aula (Parte 2).</li>
+                    </ul>
+                    <a href="https://www.caminosdelser.co/Clases/int-crisis/u2clase08.html" class="btn-go-class">Ir a la Clase 8 ➜</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL UNIDAD 3 -->
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Unidad 3: Psicoterapia Breve y de Urgencia</h2>
+                <span class="close-btn" onclick="closeModal('modal3')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><strong>Objetivo:</strong> Comprender la intervención breve, intensiva y de urgencia desde el enfoque Psicoanalítico.</p>
+                <hr style="border:0; border-top:1px solid #eee; margin: 20px 0;">
+
+                <button class="accordion">Clase 9: Principios Básicos</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Fundamentos de la psicoterapia breve y de urgencia.</li>
+                        <li>El enfoque psicoanalítico en situaciones agudas (Bellak).</li>
+                    </ul>
+                    <a href="https://www.caminosdelser.co/Clases/int-crisis/u3clase09.html" class="btn-go-class">Ir a la Clase 9 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 10: Métodos de Evaluación Analítica</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Evaluación de las funciones del Yo en crisis.</li>
+                        <li>Insight y contención en tiempo limitado.</li>
+                    </ul>
+                    <a href="https://www.caminosdelser.co/Clases/int-crisis/u3clase10.html" class="btn-go-class">Ir a la Clase 10 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 11: Procedimientos de Intervención</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Técnicas de soporte y esclarecimiento.</li>
+                        <li>Manejo de la transferencia en urgencias.</li>
+                        <li>Elaboración de Podcast sobre la temática.</li>
+                    </ul>
+                    <a href="https://www.caminosdelser.co/Clases/int-crisis/u3clase11.html" class="btn-go-class">Ir a la Clase 11 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 12: Casos y Cierre</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Análisis de casos clínicos complejos.</li>
+                        <li>Foro virtual de discusión.</li>
+                        <li>Entrega final del Proyecto de Aula.</li>
+                    </ul>
+                    <a href="https://www.caminosdelser.co/Clases/int-crisis/u3clase12.html" class="btn-go-class">Ir a la Clase 12 ➜</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p>Material diseñado para uso exclusivo académico.</p>
+    </footer>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+
+        // Funciones del Slider
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("slide");
+            var dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+                slides[i].classList.remove('active-slide');
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active-dot", "");
+            }
+            slides[slideIndex-1].style.display = "block"; 
+            slides[slideIndex-1].classList.add('active-slide');
+            dots[slideIndex-1].className += " active-dot";
+        }
+    </script>
+</body>
+</html>

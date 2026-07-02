@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 8: Exposición y Prevención de Respuesta (EPR)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cuc-red': '#A3161A',
+                        'cuc-dark': '#1a1a1a',
+                        'cuc-gray': '#f4f4f4',
+                        'soft-red': '#ffebeb',
+                        'tcc-blue': '#2563eb',
+                        'tcc-light': '#eff6ff',
+                        'success-color': '#2e7d32',
+                        'alert-color': '#d32f2f',
+                        'suds-20': '#a7f3d0', /* Verde claro */
+                        'suds-40': '#fef08a', /* Amarillo */
+                        'suds-60': '#fbbf24', /* Naranja claro */
+                        'suds-80': '#f97316', /* Naranja oscuro */
+                        'suds-100': '#ef4444', /* Rojo */
+                        'law-gold': '#b8860b'
+                    },
+                    fontFamily: {
+                        'sans': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slideIn {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+
+        /* --- ESTILOS DE LA ESCALERA Y TARJETAS --- */
+        .pool-container {
+            min-height: 120px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            background-color: #f8fafc;
+        }
+
+        .step-slot {
+            min-height: 60px;
+            border: 2px dashed #94a3b8;
+            border-radius: 0.5rem;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .step-slot.filled {
+            border-style: solid;
+            border-color: transparent;
+        }
+
+        .hierarchy-card {
+            cursor: pointer;
+            padding: 0.75rem 1rem;
+            background-color: white;
+            border-left: 6px solid var(--tcc-blue);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #1e293b;
+            transition: all 0.2s ease;
+            width: 100%;
+            user-select: none;
+        }
+
+        .hierarchy-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.15);
+        }
+
+        .pool-card {
+            width: calc(50% - 0.25rem);
+        }
+        @media (max-width: 768px) {
+            .pool-card { width: 100%; }
+        }
+
+        .staircase {
+            display: flex;
+            flex-direction: column-reverse; /* El paso 1 abajo, paso 5 arriba */
+            gap: 1rem;
+        }
+
+        .step-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #1e293b;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            flex-shrink: 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Colores de SUDS visuales al validar */
+        .valid-20 { border-left-color: #10b981 !important; background-color: #ecfdf5; }
+        .valid-40 { border-left-color: #eab308 !important; background-color: #fefce8; }
+        .valid-60 { border-left-color: #f59e0b !important; background-color: #fffbeb; }
+        .valid-80 { border-left-color: #ea580c !important; background-color: #fff7ed; }
+        .valid-100 { border-left-color: #ef4444 !important; background-color: #fef2f2; }
+
+        /* Club de Lectura Cards */
+        .book-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+    </style>
+</head>
+<body class="bg-gray-50 text-cuc-dark font-sans min-h-screen flex flex-col">
+
+    <header class="bg-white border-b-4 border-cuc-red py-5 shadow-md relative md:sticky md:top-0 z-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-center items-center gap-6 text-center">
+            
+            <div class="order-3 md:order-1 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/int-crisis/u2clase08.html" 
+                     alt="QR Clase" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Ir a esta Clase</span>
+            </div>
+
+            <div class="order-1 md:order-2 flex flex-col items-center max-w-2xl">
+                <img src="logocuc.png" alt="Logo Universidad de la Costa" class="h-20 mb-2">
+                <h1 class="text-cuc-red text-2xl md:text-3xl font-black uppercase leading-tight mb-1">
+                    Intervención en Crisis
+                </h1>
+                <div class="text-sm md:text-base text-gray-800">
+                    <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                    Mg. Dirección de Proyectos - Certificado en PNL<br>
+                    <small class="block mt-1">
+                        <span class="text-cuc-red font-black">WhatsApp:</span> 3233796547 | 
+                        <span class="text-cuc-red font-black">IG:</span> caminosdelser85
+                    </small>
+                </div>
+            </div>
+
+            <div class="order-3 md:order-3 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" 
+                     alt="QR Contacto" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Guardar Contacto</span>
+            </div>
+        </div>
+    </header>
+
+    <nav class="bg-gray-100 border-b border-gray-300 py-3 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <a href="u1clase01.html" class="inline-flex items-center gap-2 font-bold text-cuc-dark hover:text-cuc-red transition-colors">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+            <span class="mx-3 text-gray-400">|</span>
+            <span class="text-gray-600 font-bold">Unidad 2: Modelo Cognitivo Conductual</span>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-10 flex-grow max-w-6xl">
+        
+        <div class="text-center mb-16 animate-slideIn">
+            <span class="bg-cuc-red text-white px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4 inline-block">Clase 8</span>
+            <h2 class="text-4xl font-black text-cuc-dark mb-6">Exposición, Protocolos y Tendencias</h2>
+            <div class="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow-lg border-l-8 border-cuc-red text-left">
+                <p class="text-xl text-gray-700 italic font-light">
+                    "El miedo no se cura huyendo de él, ni hablando infinitamente sobre él. El miedo se cura enseñándole a la amígdala, mediante la experiencia directa, que el peligro que imaginaba no es real."
+                </p>
+                <p class="text-right text-cuc-red font-bold mt-2">— Principio de Habituación (EPR)</p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 1: TEORÍA BÁSICA Y EVITACIÓN -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.1s;">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                
+                <div class="bg-white p-8 rounded-3xl shadow-md border border-gray-200">
+                    <h3 class="text-2xl font-black text-cuc-dark mb-4 flex items-center gap-3">
+                        <i class="fas fa-running text-alert-color"></i> El Ciclo de la Evitación
+                    </h3>
+                    <p class="text-gray-700 mb-4">
+                        En clases pasadas vimos que la <strong>evitación motora</strong> (huir o esconderse) genera un alivio inmediato (Refuerzo Negativo). Sin embargo, a largo plazo, huir le confirma al cerebro que el estímulo era efectivamente mortal.
+                    </p>
+                    <div class="bg-red-50 p-4 rounded-xl border border-red-100">
+                        <p class="text-sm text-red-800 font-bold">La regla de oro del TCC:</p>
+                        <p class="text-sm text-red-700 mt-1">Mientras más evitas algo para no sentir ansiedad, más grande, generalizado y paralizante se vuelve el miedo.</p>
+                    </div>
+                </div>
+
+                <div class="bg-cuc-dark p-8 rounded-3xl shadow-md text-white relative overflow-hidden">
+                    <i class="fas fa-thermometer-half absolute -right-6 -bottom-6 text-9xl text-gray-700 opacity-20"></i>
+                    <h3 class="text-2xl font-black text-tcc-blue mb-4 flex items-center gap-3 relative z-10">
+                        <i class="fas fa-temperature-high text-tcc-blue"></i> Escala SUDS y Exposición
+                    </h3>
+                    <p class="text-gray-300 mb-4 relative z-10 text-sm">
+                        Para curar la fobia o el trauma, usamos la técnica EPR (Exposición y Prevención de Respuesta). No arrojamos al paciente a su peor miedo de golpe; usamos la escala <strong>SUDS</strong>, midiendo la ansiedad de 0 a 100 para graduar la experiencia.
+                    </p>
+                    <ul class="space-y-2 relative z-10 text-sm font-bold bg-white/10 p-4 rounded-lg mb-4">
+                        <li class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-suds-20 block"></span> 20: Incomodidad leve</li>
+                        <li class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-suds-40 block"></span> 40: Ansiedad moderada (Requiere esfuerzo)</li>
+                        <li class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-suds-60 block"></span> 60: Ansiedad alta (Sudoración, ganas de huir)</li>
+                        <li class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-suds-80 block"></span> 80: Miedo intenso (Síntomas físicos severos)</li>
+                        <li class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-suds-100 block"></span> 100: Pánico absoluto (Terror máximo)</li>
+                    </ul>
+                    
+                    <!-- NUEVA CAJA DE ACLARACIÓN SOBRE LA SUBJETIVIDAD DEL SUDS -->
+                    <div class="bg-white/10 p-4 rounded-lg border-l-4 border-law-gold relative z-10 shadow-inner">
+                        <p class="text-sm text-law-gold font-bold mb-1 flex items-center gap-2"><i class="fas fa-lightbulb"></i> Aclaración Clínica Clave:</p>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            <strong>¿Quién asigna estos puntajes?</strong> ¡El paciente, NO el terapeuta! SUDS significa Escala de Unidades <em>Subjetivas</em>. El psicólogo no adivina los números; se sienta con el paciente y le pregunta: <em>"De 0 a 100, ¿cuánta ansiedad te da darle la mano a un familiar?"</em>. Lo que para un paciente es un 60, para otro puede ser un 90. <strong>La jerarquía siempre es 100% individual y subjetiva.</strong>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: MECANISMOS DE LA EPR (NUEVA TEORÍA) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.2s;">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-cuc-dark mb-4">1. Mecanismos de Acción Clínicos</h2>
+                <p class="text-gray-600 max-w-4xl mx-auto text-lg">
+                    ¿Por qué funciona la Exposición y Prevención de Respuesta (EPR)? La terapia no es magia, se basa en procesos neurobiológicos y de aprendizaje profundamente estudiados.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Habituación -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-tcc-blue">
+                    <div class="w-12 h-12 bg-blue-100 text-tcc-blue rounded-full flex items-center justify-center text-xl mb-4">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-cuc-dark mb-2">1. Habituación</h3>
+                    <p class="text-gray-600 text-sm">
+                        Es el "aburrimiento" del cerebro. Si un estímulo se presenta prolongadamente y no ocurre ningún daño real, la amígdala agota su capacidad de segregar adrenalina. Fisiológicamente, el cuerpo no puede mantener un ataque de pánico por siempre; la ansiedad eventualmente <strong>tiene que caer</strong> por sí sola.
+                    </p>
+                </div>
+                <!-- Extinción -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-success-color">
+                    <div class="w-12 h-12 bg-green-100 text-success-color rounded-full flex items-center justify-center text-xl mb-4">
+                        <i class="fas fa-unlink"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-cuc-dark mb-2">2. Extinción (Re-aprendizaje)</h3>
+                    <p class="text-gray-600 text-sm">
+                        No se "borra" el recuerdo traumático, se crea un <strong>nuevo aprendizaje competitivo</strong>. El cerebro aprende que el estímulo condicionado (ej. subirse a un auto tras un choque) ya no está acoplado al peligro inminente (ej. la muerte). Este nuevo recuerdo seguro se superpone al antiguo.
+                    </p>
+                </div>
+                <!-- Prevención de Respuesta -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-cuc-red">
+                    <div class="w-12 h-12 bg-red-100 text-cuc-red rounded-full flex items-center justify-center text-xl mb-4">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-cuc-dark mb-2">3. Prevención de Respuesta</h3>
+                    <p class="text-gray-600 text-sm">
+                        Es el núcleo ético de la técnica. De nada sirve exponer al paciente si se le permite realizar su "conducta de seguridad" (ej. mirar compulsivamente el celular, tomarse un ansiolítico, lavarse las manos). <strong>Se debe bloquear el escape</strong> para que la habituación ocurra de manera pura.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: TAXONOMÍA DE LA EXPOSICIÓN (NUEVA TEORÍA) -->
+        <section class="mb-20 animate-slideIn bg-gray-100 p-8 md:p-12 rounded-3xl border border-gray-200 shadow-inner" style="animation-delay: 0.3s;">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-cuc-dark mb-4">2. Taxonomía de la Exposición Terapéutica</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto">Dependiendo de la patología y la etapa de la jerarquía (SUDS), el terapeuta selecciona el formato exacto de exposición clínica.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl flex items-start gap-4 shadow-sm hover:shadow-md transition-shadow">
+                    <i class="fas fa-cloud text-3xl text-gray-400 mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-cuc-dark text-lg">1. Exposición en Imaginación</h4>
+                        <p class="text-sm text-gray-600 mt-1">Se utiliza al inicio de la jerarquía (SUDS bajos) o cuando el estímulo no puede recrearse (ej. trauma de guerra o abuso infantil). Se le pide al paciente visualizar la escena con un detalle vívido e intenso en el consultorio.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl flex items-start gap-4 shadow-sm hover:shadow-md transition-shadow">
+                    <i class="fas fa-walking text-3xl text-tcc-blue mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-cuc-dark text-lg">2. Exposición In Vivo</h4>
+                        <p class="text-sm text-gray-600 mt-1">El nivel más eficaz. El paciente se enfrenta al objeto, lugar o situación temida en el mundo real, de manera controlada y jerárquica (ej. tocar el pasamanos de un bus, ir al centro comercial, acariciar un perro).</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl flex items-start gap-4 shadow-sm hover:shadow-md transition-shadow">
+                    <i class="fas fa-heartbeat text-3xl text-cuc-red mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-cuc-dark text-lg">3. Exposición Interoceptiva</h4>
+                        <p class="text-sm text-gray-600 mt-1">Específica para el **Trastorno de Pánico**. El paciente teme a sus propios síntomas físicos. La terapia consiste en provocar deliberadamente esos síntomas inofensivos (ej. respirar por un pitillo para sentir asfixia, girar en una silla para marearse) para perderles el miedo.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl flex items-start gap-4 shadow-sm hover:shadow-md transition-shadow">
+                    <i class="fas fa-vr-cardboard text-3xl text-purple-600 mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-cuc-dark text-lg">4. Exposición en Realidad Virtual (VRET)</h4>
+                        <p class="text-sm text-gray-600 mt-1">Tecnología de última generación. Permite recrear escenarios complejos de controlar en la vida real (ej. turbulencias en un avión, hablar en un auditorio lleno) bajo el control absoluto y seguro del clínico.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: DISEÑO DE PROTOCOLOS (EL LABORATORIO INTERACTIVO) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.4s;">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-cuc-dark mb-4">3. Diseño de Jerarquías Terapéuticas</h2>
+                <p class="text-gray-600 max-w-4xl mx-auto text-lg">
+                    Parte fundamental del rol clínico es saber diseñar una <strong>Escalera de Exposición</strong> a la medida del paciente, evitando dar saltos bruscos que provoquen iatrogenia (inundación o re-traumatización).
+                </p>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden">
+                <div class="bg-tcc-blue p-6 text-center text-white relative">
+                    <span class="bg-white text-tcc-blue font-black px-3 py-1 rounded text-xs uppercase tracking-widest mb-2 inline-block shadow-sm">Laboratorio Clínico de EPR</span>
+                    <h3 class="text-2xl font-black">Constructor de Jerarquías SUDS</h3>
+                    <p class="text-blue-100 text-sm mt-2 max-w-2xl mx-auto">
+                        Haz clic en las tareas desordenadas (Bandeja superior) para moverlas a la Escalera (de menor a mayor ansiedad). <em>Nota: Para este ejercicio académico, los valores SUDS ya han sido evaluados previamente por el paciente simulado.</em>
+                    </p>
+                </div>
+
+                <div class="p-6 md:p-10">
+                    
+                    <!-- TABS DE CASOS -->
+                    <div class="flex flex-col sm:flex-row gap-2 mb-8 bg-gray-100 p-2 rounded-xl">
+                        <button onclick="loadHierarchyCase(1)" id="btn-hier-1" class="hier-tab-btn flex-1 py-3 px-4 bg-white text-tcc-blue font-black text-sm rounded-lg shadow-md transition-all uppercase tracking-wider">
+                            Caso 1: Agorafobia
+                        </button>
+                        <button onclick="loadHierarchyCase(2)" id="btn-hier-2" class="hier-tab-btn flex-1 py-3 px-4 text-gray-500 font-bold text-sm rounded-lg hover:bg-gray-200 transition-all uppercase tracking-wider">
+                            Caso 2: TOC (Limpieza)
+                        </button>
+                        <button onclick="loadHierarchyCase(3)" id="btn-hier-3" class="hier-tab-btn flex-1 py-3 px-4 text-gray-500 font-bold text-sm rounded-lg hover:bg-gray-200 transition-all uppercase tracking-wider">
+                            Caso 3: TEPT (Accidente)
+                        </button>
+                    </div>
+
+                    <!-- CONTEXTO CLÍNICO DEL CASO -->
+                    <div id="case-context-box" class="bg-blue-50 border-l-4 border-tcc-blue p-5 rounded-r-xl mb-8 text-sm text-gray-700 shadow-sm animate-fadeInMsg">
+                        <!-- El contexto del paciente se inyecta aquí -->
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                        
+                        <!-- Panel Izquierdo: Bandeja de Tareas -->
+                        <div>
+                            <h4 class="text-xl font-bold text-cuc-dark mb-2 flex items-center gap-2">
+                                <i class="fas fa-inbox text-gray-400"></i> Tareas Clínicas Disponibles
+                            </h4>
+                            <p class="text-sm text-gray-500 mb-4">Haz clic en una tarea para enviarla al escalón vacío más bajo de tu jerarquía.</p>
+                            
+                            <div id="card-pool" class="pool-container">
+                                <!-- Las tarjetas se inyectan aquí vía JS -->
+                            </div>
+
+                            <!-- Área de Alertas y Botón de Validación -->
+                            <div class="mt-8 text-center">
+                                <button onclick="validateHierarchy()" class="bg-cuc-dark text-white px-8 py-4 rounded-xl font-black text-lg shadow-lg hover:bg-black transition-transform transform hover:-translate-y-1 w-full flex justify-center items-center gap-3">
+                                    <i class="fas fa-check-double"></i> Evaluar Protocolo
+                                </button>
+                                
+                                <div id="feedback-alert" class="mt-4 p-4 rounded-xl hidden font-bold text-sm">
+                                    <!-- Mensajes de éxito o error -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Panel Derecho: La Escalera -->
+                        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 relative shadow-inner">
+                            <h4 class="text-xl font-bold text-cuc-dark mb-6 flex items-center gap-2">
+                                <i class="fas fa-stairs text-tcc-blue"></i> Escalera de Exposición Gradual
+                            </h4>
+                            
+                            <!-- Indicador Visual Lateral -->
+                            <div class="absolute left-[39px] top-[80px] bottom-[40px] w-1 bg-gradient-to-t from-suds-20 via-suds-60 to-suds-100 z-0 rounded-full"></div>
+
+                            <div class="staircase relative z-10" id="staircase-container">
+                                <div class="step-wrapper">
+                                    <div class="step-number bg-white border-4 border-suds-20 text-cuc-dark">1</div>
+                                    <div class="step-slot w-full text-gray-400 text-sm shadow-sm" data-slot="1" onclick="returnCardToPool(1)">
+                                        Vacío (SUDS más bajo / Inicial)
+                                    </div>
+                                </div>
+                                <div class="step-wrapper">
+                                    <div class="step-number bg-white border-4 border-suds-40 text-cuc-dark">2</div>
+                                    <div class="step-slot w-full text-gray-400 text-sm shadow-sm" data-slot="2" onclick="returnCardToPool(2)">
+                                        Vacío
+                                    </div>
+                                </div>
+                                <div class="step-wrapper">
+                                    <div class="step-number bg-white border-4 border-suds-60 text-cuc-dark">3</div>
+                                    <div class="step-slot w-full text-gray-400 text-sm shadow-sm" data-slot="3" onclick="returnCardToPool(3)">
+                                        Vacío
+                                    </div>
+                                </div>
+                                <div class="step-wrapper">
+                                    <div class="step-number bg-white border-4 border-suds-80 text-cuc-dark">4</div>
+                                    <div class="step-slot w-full text-gray-400 text-sm shadow-sm" data-slot="4" onclick="returnCardToPool(4)">
+                                        Vacío
+                                    </div>
+                                </div>
+                                <div class="step-wrapper">
+                                    <div class="step-number bg-white border-4 border-suds-100 text-cuc-dark">5</div>
+                                    <div class="step-slot w-full text-gray-400 text-sm shadow-sm" data-slot="5" onclick="returnCardToPool(5)">
+                                        Vacío (SUDS más alto / Meta final)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Botón Docente -->
+                    <div class="mt-10 pt-6 border-t border-gray-200 text-right">
+                        <button onclick="showTeacherSolution()" class="text-xs text-cuc-red font-bold uppercase tracking-widest hover:underline bg-transparent border-none cursor-pointer flex items-center gap-1 ml-auto">
+                            <i class="fas fa-lock"></i> Solucionario Docente
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: CLUB DE LECTURA (APLICACIONES CONTEMPORÁNEAS) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.5s;">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-cuc-dark mb-4">4. Club de Lectura: Aplicaciones Contemporáneas</h2>
+                <p class="text-gray-600 max-w-4xl mx-auto text-lg">
+                    La terapia cognitivo-conductual ha evolucionado. Hoy en día, la tecnología y las "Terapias de Tercera Generación" han expandido la eficacia de nuestros protocolos de intervención.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Card 1: VR -->
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden book-card flex flex-col">
+                    <div class="h-40 bg-gradient-to-r from-purple-600 to-indigo-600 flex justify-center items-center relative">
+                        <i class="fas fa-vr-cardboard text-6xl text-white opacity-90"></i>
+                        <span class="absolute top-4 right-4 bg-white text-indigo-700 text-xs font-bold px-2 py-1 rounded shadow">VRET</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="text-xl font-bold text-cuc-dark mb-3">Terapia de Exposición en Realidad Virtual</h4>
+                        <p class="text-sm text-gray-600 mb-4 flex-grow">
+                            Utilizada extensamente para tratar el Trastorno de Estrés Postraumático (TEPT) en veteranos de guerra y fobias específicas (ej. aerofobia). Permite al clínico crear un entorno SUDS 100 de forma 100% controlada y segura en el consultorio.
+                        </p>
+                        <a href="https://scielo.isciii.es/scielo.php?script=sci_arttext&pid=S0212-97282002000300007" target="_blank" class="text-indigo-600 font-bold text-sm hover:underline flex items-center gap-1">
+                            <i class="fas fa-external-link-alt"></i> Leer artículo científico (SciELO)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 2: mHealth -->
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden book-card flex flex-col">
+                    <div class="h-40 bg-gradient-to-r from-teal-500 to-emerald-600 flex justify-center items-center relative">
+                        <i class="fas fa-mobile-alt text-6xl text-white opacity-90"></i>
+                        <span class="absolute top-4 right-4 bg-white text-emerald-700 text-xs font-bold px-2 py-1 rounded shadow">mHealth</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="text-xl font-bold text-cuc-dark mb-3">Intervenciones Móviles Momentáneas</h4>
+                        <p class="text-sm text-gray-600 mb-4 flex-grow">
+                            La TCC Ecológica. El uso de aplicaciones móviles permite hacer "Prevención de Respuesta" en tiempo real. Cuando el paciente siente un ataque de pánico en la calle, la app le guía mediante biofeedback (ritmo cardíaco) y Grounding en ese mismo instante.
+                        </p>
+                        <a href="https://www.apa.org/monitor/2018/02/mobile-health" target="_blank" class="text-emerald-600 font-bold text-sm hover:underline flex items-center gap-1">
+                            <i class="fas fa-external-link-alt"></i> Leer publicación (APA Monitor)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 3: ACT / Mindfulness -->
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden book-card flex flex-col">
+                    <div class="h-40 bg-gradient-to-r from-amber-500 to-orange-600 flex justify-center items-center relative">
+                        <i class="fas fa-leaf text-6xl text-white opacity-90"></i>
+                        <span class="absolute top-4 right-4 bg-white text-orange-700 text-xs font-bold px-2 py-1 rounded shadow">3ª Gen</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="text-xl font-bold text-cuc-dark mb-3">Terapia de Aceptación y Compromiso (ACT)</h4>
+                        <p class="text-sm text-gray-600 mb-4 flex-grow">
+                            En lugar de intentar "modificar o eliminar" el pensamiento catastrófico (como hace la TCC clásica), ACT entrena al paciente para observar el pensamiento sin engancharse (defusión cognitiva) y actuar de acuerdo a sus valores, aceptando la ansiedad.
+                        </p>
+                        <a href="https://www.redalyc.org/pdf/778/77808502.pdf" target="_blank" class="text-orange-600 font-bold text-sm hover:underline flex items-center gap-1">
+                            <i class="fas fa-external-link-alt"></i> Leer artículo (Redalyc)
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 6: SOCIALIZACIÓN PROYECTO DE AULA -->
+        <section class="mb-10 animate-slideIn" style="animation-delay: 0.6s;">
+            <div class="bg-cuc-dark text-white p-10 md:p-12 rounded-3xl shadow-2xl border-t-8 border-law-gold flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
+                <i class="fas fa-users-cog absolute -right-10 -bottom-10 text-9xl text-white opacity-5"></i>
+                <div class="md:w-2/3 relative z-10">
+                    <span class="text-law-gold font-bold tracking-widest uppercase text-sm mb-2 block">Cierre del Corte 2</span>
+                    <h2 class="text-3xl font-black mb-4">5. Socialización Proyecto de Aula (Parte 2)</h2>
+                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                        Es el momento de aterrizar la teoría. Los grupos de trabajo deben presentar la sustentación clínica de su <strong>Protocolo de Intervención en Crisis</strong> específico (ej. Violencia de género, intento autolítico, duelo agudo).
+                    </p>
+                    <p class="text-gray-400 text-sm mb-6 italic">Requisitos: Deben integrar la Evaluación Funcional (A-C-C), identificar distorsiones cognitivas de su población, y proponer un bosquejo de Jerarquía de Intervención.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="bg-gray-800 border border-gray-600 px-4 py-2 rounded-lg text-sm font-bold"><i class="fas fa-users mr-2 text-cuc-red"></i> Trabajo Grupal</span>
+                        <span class="bg-gray-800 border border-gray-600 px-4 py-2 rounded-lg text-sm font-bold"><i class="fas fa-stopwatch mr-2 text-cuc-red"></i> 10 a 15 min por grupo</span>
+                    </div>
+                </div>
+                <div class="md:w-1/3 text-center relative z-10">
+                    <i class="fas fa-project-diagram text-7xl text-gray-500 mb-4 block"></i>
+                    <p class="text-sm text-gray-400 font-bold bg-black/30 p-3 rounded-lg border border-gray-700">Prepárense para recibir retroalimentación del docente y sus compañeros antes de la entrega final.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-cuc-dark text-white text-center py-8 mt-auto">
+        <div class="container mx-auto px-4">
+            <p class="text-sm md:text-base mb-2">Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+            <p class="text-xs text-gray-400">Material docente: Jorge Arango Castaño. Alineado al Sílabo (Proyecto de Aula, Protocolos y Aplicaciones Contemporáneas).</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS PARA LA ACTIVIDAD INTERACTIVA -->
+    <script>
+        // DATOS DE LOS CASOS CLÍNICOS
+        const casesData = {
+            1: { // Caso 1: Agorafobia (Miedo a salir)
+                context: "<strong><i class='fas fa-user-injured text-tcc-blue'></i> Expediente Clínico:</strong> Paciente de 35 años con Trastorno de Pánico y Agorafobia. Desde hace 6 meses evita salir de su casa por miedo a sufrir un infarto en la calle y no recibir ayuda médica. Su 'zona segura' es su hogar, y asocia fuertemente la compañía de figuras de autoridad (como el terapeuta) con seguridad.",
+                hint: "En la agorafobia, la ansiedad se rige por dos variables clave: la <strong>distancia a la 'zona segura'</strong> (la casa) y la <strong>presencia de 'figuras de seguridad'</strong> (el terapeuta). El cerebro del agorafóbico percibe que estar acompañado siempre es mucho más seguro que estar solo, incluso si se está más lejos de la casa. Revisa tu escalera teniendo en cuenta qué tareas se hacen a solas y cuáles acompañado.",
+                items: [
+                    { id: 'c1-1', suds: 100, text: "Ir solo a un centro comercial lleno en hora pico." },
+                    { id: 'c1-2', suds: 20, text: "Exposición en Imaginación: Cerrar los ojos e imaginar que abre la puerta de la casa." },
+                    { id: 'c1-3', suds: 60, text: "Caminar una cuadra entera alejado de la casa en compañía del terapeuta." },
+                    { id: 'c1-4', suds: 80, text: "Entrar solo a una tienda pequeña cercana por 5 minutos." },
+                    { id: 'c1-5', suds: 40, text: "Abrir la puerta de la casa y pararse en la acera por 3 minutos." }
+                ]
+            },
+            2: { // Caso 2: TOC Contaminación
+                context: "<strong><i class='fas fa-hands-wash text-tcc-blue'></i> Expediente Clínico:</strong> Paciente con TOC de contaminación. Su miedo obsesivo es contraer enfermedades graves por contacto con fluidos de desconocidos. Se lava las manos compulsivamente hasta sangrar. Evalúa el nivel de peligro basándose en la cantidad de extraños (posibles portadores) que frecuentan un lugar.",
+                hint: "¡Cuidado con la lógica clínica! En el TOC de contaminación, el cerebro evalúa el peligro por el <strong>nivel de tráfico público y de desconocidos</strong>, NO por la supervisión clínica. Una sala de espera (por donde pasan cientos de extraños potencialmente enfermos) es una zona de alto riesgo biológico para el paciente, y genera mucha más ansiedad que darle la mano a un familiar conocido. La progresión lógica va de: <em>lo esterilizado ➔ lo propio/personal ➔ personas familiares ➔ espacios semi-públicos ➔ espacios públicos masivos</em>.",
+                items: [
+                    { id: 'c2-1', suds: 40, text: "Tocar el picaporte de su propia habitación sin lavarse las manos de inmediato." },
+                    { id: 'c2-2', suds: 80, text: "Tocar una silla en la sala de espera del consultorio." },
+                    { id: 'c2-3', suds: 100, text: "Tocar el pasamanos de un baño público y comer un snack con esa mano." },
+                    { id: 'c2-4', suds: 20, text: "Tocar un bolígrafo desinfectado previamente por el terapeuta." },
+                    { id: 'c2-5', suds: 60, text: "Darle la mano a un familiar que acaba de llegar de la calle." }
+                ]
+            },
+            3: { // Caso 3: TEPT Accidente de Tránsito
+                context: "<strong><i class='fas fa-car-crash text-tcc-blue'></i> Expediente Clínico:</strong> Paciente con Trastorno de Estrés Postraumático (TEPT) tras sobrevivir a un choque frontal grave en la Avenida Central. Presenta flashbacks, pesadillas y evitación fóbica total a los vehículos. Teme perder el control del auto y morir.",
+                hint: "En el trauma automovilístico, la exposición debe progresar desde estímulos <strong>pasivos/virtuales</strong> (ver videos, ir de copiloto donde otro tiene el control), hacia el <strong>involucramiento motor activo</strong> en zonas de bajo riesgo (encender el auto, conducir en calles vacías), dejando como paso final y definitivo la exposición 'In Vivo' al lugar exacto donde ocurrió el trauma original.",
+                items: [
+                    { id: 'c3-1', suds: 20, text: "Ver un video de 2 minutos de un automóvil conduciendo en una carretera vacía." },
+                    { id: 'c3-2', suds: 80, text: "Conducir el coche a baja velocidad en un barrio residencial vacío." },
+                    { id: 'c3-3', suds: 60, text: "Sentarse en el asiento del conductor con el motor encendido, sin moverse." },
+                    { id: 'c3-4', suds: 100, text: "Conducir en la avenida principal donde ocurrió el accidente." },
+                    { id: 'c3-5', suds: 40, text: "Sentarse en el asiento del copiloto mientras un familiar conduce despacio." }
+                ]
+            }
+        };
+
+        let currentCase = 1;
+        let poolItems = [];
+        let ladderSlots = { 1: null, 2: null, 3: null, 4: null, 5: null };
+
+        // Función para barajar el array (Fisher-Yates)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Cargar el caso seleccionado
+        function loadHierarchyCase(caseId) {
+            currentCase = caseId;
+            
+            document.querySelectorAll('.hier-tab-btn').forEach((btn, index) => {
+                btn.classList.remove('bg-white', 'text-tcc-blue', 'shadow-md');
+                btn.classList.add('text-gray-500', 'hover:bg-gray-200');
+                if (index + 1 === caseId) {
+                    btn.classList.add('bg-white', 'text-tcc-blue', 'shadow-md');
+                    btn.classList.remove('text-gray-500', 'hover:bg-gray-200');
+                }
+            });
+            
+            // Cargar el contexto clínico del caso
+            document.getElementById('case-context-box').innerHTML = casesData[caseId].context;
+
+            poolItems = JSON.parse(JSON.stringify(casesData[caseId].items));
+            poolItems = shuffleArray(poolItems);
+            ladderSlots = { 1: null, 2: null, 3: null, 4: null, 5: null };
+
+            // Limpiar UI de alertas
+            const alertBox = document.getElementById('feedback-alert');
+            alertBox.classList.add('hidden');
+            alertBox.className = 'mt-4 p-4 rounded-xl hidden font-bold text-sm';
+
+            renderUI();
+        }
+
+        // Renderizar la bandeja y la escalera
+        function renderUI() {
+            const poolContainer = document.getElementById('card-pool');
+            poolContainer.innerHTML = '';
+
+            // Renderizar pool
+            poolItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'hierarchy-card pool-card';
+                card.innerHTML = `<i class="fas fa-grip-lines text-gray-300 mr-2"></i> ${item.text}`;
+                card.onclick = () => moveCardToLadder(item);
+                poolContainer.appendChild(card);
+            });
+
+            // Renderizar escalera
+            for (let i = 1; i <= 5; i++) {
+                const slotDiv = document.querySelector(`.step-slot[data-slot="${i}"]`);
+                // Limpiar clases de validación previas
+                slotDiv.classList.remove('valid-20', 'valid-40', 'valid-60', 'valid-80', 'valid-100', 'filled');
+                
+                if (ladderSlots[i] !== null) {
+                    const item = ladderSlots[i];
+                    slotDiv.innerHTML = `<div class="hierarchy-card border-none shadow-none bg-transparent hover:transform-none w-full text-left pl-0"><i class="fas fa-times-circle text-red-300 hover:text-cuc-red mr-2 transition-colors"></i> ${item.text}</div>`;
+                    slotDiv.classList.add('filled');
+                } else {
+                    const labels = {1: "Vacío (SUDS más bajo)", 2: "Vacío", 3: "Vacío", 4: "Vacío", 5: "Vacío (SUDS más alto)"};
+                    slotDiv.innerHTML = labels[i];
+                }
+            }
+        }
+
+        // Mover de bandeja a escalera
+        function moveCardToLadder(item) {
+            // Buscar el primer slot vacío empezando desde abajo (1)
+            let emptySlot = null;
+            for (let i = 1; i <= 5; i++) {
+                if (ladderSlots[i] === null) {
+                    emptySlot = i;
+                    break;
+                }
+            }
+
+            if (emptySlot !== null) {
+                // Remover del pool
+                poolItems = poolItems.filter(p => p.id !== item.id);
+                // Agregar al slot
+                ladderSlots[emptySlot] = item;
+                renderUI();
+            } else {
+                alert("La escalera está llena. Haz clic en una tarea de la escalera para regresarla a la bandeja.");
+            }
+        }
+
+        // Mover de escalera a bandeja
+        function returnCardToPool(slotIndex) {
+            if (ladderSlots[slotIndex] !== null) {
+                const item = ladderSlots[slotIndex];
+                ladderSlots[slotIndex] = null;
+                poolItems.push(item);
+                
+                // Limpiar el feedback si mueven algo
+                document.getElementById('feedback-alert').classList.add('hidden');
+                renderUI();
+            }
+        }
+
+        // Validar la jerarquía
+        function validateHierarchy() {
+            const alertBox = document.getElementById('feedback-alert');
+            alertBox.classList.remove('hidden', 'bg-red-100', 'text-red-800', 'bg-yellow-100', 'text-yellow-800', 'bg-green-100', 'text-green-800');
+
+            // Verificar si hay vacíos
+            for (let i = 1; i <= 5; i++) {
+                if (ladderSlots[i] === null) {
+                    alertBox.classList.add('bg-yellow-100', 'text-yellow-800');
+                    alertBox.innerHTML = '<i class="fas fa-exclamation-triangle"></i> La jerarquía está incompleta. Coloca las 5 tareas en los escalones.';
+                    return;
+                }
+            }
+
+            // Extraer array de SUDS colocados (orden de abajo hacia arriba: slot1, slot2...)
+            const sudsPlaced = [
+                ladderSlots[1].suds,
+                ladderSlots[2].suds,
+                ladderSlots[3].suds,
+                ladderSlots[4].suds,
+                ladderSlots[5].suds
+            ];
+
+            let isPerfect = true;
+            let inundacion = false;
+
+            // Lógica de validación
+            for (let i = 0; i < 4; i++) {
+                // Si el siguiente paso es de menor ansiedad que el actual = desorden
+                if (sudsPlaced[i+1] < sudsPlaced[i]) {
+                    isPerfect = false;
+                }
+                // Si el salto de ansiedad entre un paso y el siguiente es mayor a 20 = Salto Brusco / Inundación
+                if (sudsPlaced[i+1] - sudsPlaced[i] > 20) {
+                    inundacion = true;
+                }
+            }
+
+            if (sudsPlaced[0] !== 20 || isPerfect === false) {
+                alertBox.classList.add('bg-red-100', 'text-red-800');
+                
+                let errorHtml = '';
+                if (inundacion) {
+                    errorHtml = '<i class="fas fa-radiation"></i> <strong>¡MALA PRAXIS! (Riesgo de Inundación y Sensibilización):</strong> Has colocado una tarea de altísima ansiedad sin los pasos previos adecuados. El paciente sufrirá un ataque de pánico y abandonará la terapia. Revisa el orden.';
+                } else {
+                    errorHtml = '<i class="fas fa-times-circle"></i> <strong>Orden Incorrecto:</strong> La jerarquía no es gradual. Debes empezar con la tarea más fácil (imaginación o visual) y terminar con la más difícil (exposición in vivo).';
+                }
+                
+                // Agregar el feedback clínico (hint) dinámico
+                errorHtml += `<div class="mt-4 bg-white p-4 rounded-xl border border-red-200 text-gray-800 text-sm shadow-sm"><i class="fas fa-lightbulb text-law-gold mr-2 text-lg"></i> <strong>Retroalimentación Clínica:</strong> ${casesData[currentCase].hint}</div>`;
+                
+                alertBox.innerHTML = errorHtml;
+                return;
+            }
+
+            // Si es perfecto
+            if (isPerfect) {
+                alertBox.classList.add('bg-green-100', 'text-green-800');
+                alertBox.innerHTML = '<i class="fas fa-check-circle text-2xl mb-2"></i><br><strong>¡PROTOCOLO APROBADO!</strong><br>Has diseñado una Desensibilización Sistemática perfecta. El paciente puede habituarse a cada estímulo (20, 40, 60, 80, 100) de forma ética y sin traumatizarse.';
+                
+                // Iluminar la escalera con éxito
+                document.querySelector('.step-slot[data-slot="1"]').classList.add('valid-20');
+                document.querySelector('.step-slot[data-slot="2"]').classList.add('valid-40');
+                document.querySelector('.step-slot[data-slot="3"]').classList.add('valid-60');
+                document.querySelector('.step-slot[data-slot="4"]').classList.add('valid-80');
+                document.querySelector('.step-slot[data-slot="5"]').classList.add('valid-100');
+            }
+        }
+
+        // Solucionario Docente
+        function showTeacherSolution() {
+            const clave = prompt("Ingrese clave de acceso (Solo Docente):");
+            if (clave === "10001") {
+                let solutionText = "";
+                if(currentCase === 1) {
+                    solutionText = "SOLUCIÓN CASO 1 (Agorafobia):\n\n1 (SUDS 20): Exposición en Imaginación.\n2 (SUDS 40): Abrir la puerta y pararse en acera.\n3 (SUDS 60): Caminar 1 cuadra con el terapeuta.\n4 (SUDS 80): Entrar solo a tienda pequeña 5 min.\n5 (SUDS 100): Ir solo al centro comercial en hora pico.";
+                } else if(currentCase === 2) {
+                    solutionText = "SOLUCIÓN CASO 2 (TOC Limpieza):\n\n1 (SUDS 20): Tocar bolígrafo desinfectado por terapeuta.\n2 (SUDS 40): Tocar picaporte de su habitación.\n3 (SUDS 60): Dar mano a familiar que llega de calle.\n4 (SUDS 80): Tocar silla en sala de espera.\n5 (SUDS 100): Tocar pasamanos de baño público y comer snack.";
+                } else if(currentCase === 3) {
+                    solutionText = "SOLUCIÓN CASO 3 (TEPT Accidente):\n\n1 (SUDS 20): Ver video de 2 min conduciendo en carretera vacía.\n2 (SUDS 40): Sentarse de copiloto mientras familiar conduce.\n3 (SUDS 60): Sentarse de conductor con motor encendido, sin moverse.\n4 (SUDS 80): Conducir a baja velocidad en barrio residencial.\n5 (SUDS 100): Conducir en avenida principal donde ocurrió el accidente.";
+                }
+                alert(solutionText + "\n\nNota Pedagógica: Recuérdeles que si pasan del SUDS 20 al 80, ocurre 'Inundación' (Sensibilización), causando abandono terapéutico.");
+            } else if (clave !== null && clave !== "") {
+                alert("Acceso denegado: Clave incorrecta.");
+            }
+        }
+
+        // Init
+        window.addEventListener('DOMContentLoaded', () => {
+            loadHierarchyCase(1);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 5: Fundamentos TCC en Crisis</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cuc-red': '#A3161A',
+                        'cuc-dark': '#1a1a1a',
+                        'cuc-gray': '#f4f4f4',
+                        'soft-red': '#ffebeb',
+                        'tcc-blue': '#2563eb',
+                        'tcc-light': '#eff6ff',
+                        'success-color': '#2e7d32',
+                        'alert-color': '#d32f2f'
+                    },
+                    fontFamily: {
+                        'sans': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slideIn {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+        
+        /* Triangle for Triada Cognitiva */
+        .triangle-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            aspect-ratio: 1 / 0.866; /* Equilateral triangle ratio */
+        }
+        
+        .node {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: white;
+            border: 4px solid var(--cuc-red);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 10;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .node:hover {
+            transform: scale(1.1);
+            background: var(--soft-red);
+        }
+
+        .node-top { top: 0; left: 50%; transform: translateX(-50%); }
+        .node-left { bottom: 0; left: 0; }
+        .node-right { bottom: 0; right: 0; }
+        
+        .node-top:hover { transform: translateX(-50%) scale(1.1); }
+
+        .line {
+            position: absolute;
+            background: #cbd5e1;
+            z-index: 1;
+            transform-origin: 0 0;
+        }
+
+        /* Distorsiones Flip Cards */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        
+        .flip-card-inner {
+            transition: transform 0.6s;
+        }
+        
+        .group:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Chat Scrollbar */
+        .chat-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-scroll::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05); 
+        }
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2); 
+            border-radius: 10px;
+        }
+        
+        @keyframes fadeInMsg {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeInMsg {
+            animation: fadeInMsg 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-cuc-dark font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER / BANNER -->
+    <header class="bg-white border-b-4 border-cuc-red py-5 shadow-md relative md:sticky md:top-0 z-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-center items-center gap-6 text-center">
+            
+            <!-- QR Navegación -->
+            <div class="order-3 md:order-1 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/int-crisis/u2clase05.html" 
+                     alt="QR Clase" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Ir a esta Clase</span>
+            </div>
+
+            <!-- Logo & Info -->
+            <div class="order-1 md:order-2 flex flex-col items-center max-w-2xl">
+                <img src="logocuc.png" alt="Logo Universidad de la Costa" class="h-20 mb-2">
+                <h1 class="text-cuc-red text-2xl md:text-3xl font-black uppercase leading-tight mb-1">
+                    Intervención en Crisis
+                </h1>
+                <div class="text-sm md:text-base text-gray-800">
+                    <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                    Mg. Dirección de Proyectos - Certificado en PNL<br>
+                    <small class="block mt-1">
+                        <span class="text-cuc-red font-black">WhatsApp:</span> 3233796547 | 
+                        <span class="text-cuc-red font-black">IG:</span> caminosdelser85
+                    </small>
+                </div>
+            </div>
+
+            <!-- QR Contacto -->
+            <div class="order-3 md:order-3 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" 
+                     alt="QR Contacto" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Guardar Contacto</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="bg-gray-100 border-b border-gray-300 py-3 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <a href="u1clase01.html" class="inline-flex items-center gap-2 font-bold text-cuc-dark hover:text-cuc-red transition-colors">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+            <span class="mx-3 text-gray-400">|</span>
+            <span class="text-gray-600 font-bold">Unidad 2: Modelo Cognitivo Conductual</span>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container mx-auto px-4 py-10 flex-grow max-w-6xl">
+        
+        <div class="text-center mb-16 animate-slideIn">
+            <span class="bg-cuc-red text-white px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4 inline-block">Clase 5</span>
+            <h2 class="text-4xl font-black text-cuc-dark mb-6">Fundamentos TCC en Crisis</h2>
+            <div class="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow-lg border-l-8 border-cuc-red text-left">
+                <p class="text-xl text-gray-700 italic font-light">
+                    "No son las cosas que nos pasan las que nos perturban, sino la interpretación que hacemos de ellas."
+                </p>
+                <p class="text-right text-cuc-red font-bold mt-2">— Epicteto (Filósofo Estoico)</p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 1: EL MODELO A-B-C EN CRISIS -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.2s;">
+            <h3 class="text-3xl font-bold text-center mb-10 text-cuc-dark">El Paradigma <span class="text-tcc-blue">A-B-C</span> en el Trauma</h3>
+            <p class="text-center text-gray-600 max-w-4xl mx-auto mb-12 text-lg">
+                En la Terapia Cognitivo Conductual (Albert Ellis), la crisis no es generada directamente por el evento traumático, sino por el sistema de creencias que se activa o se fractura en ese instante.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- A -->
+                <div class="bg-white rounded-2xl p-8 shadow-xl border-t-4 border-gray-400 relative overflow-hidden group hover:-translate-y-2 transition-transform">
+                    <div class="absolute -right-4 -top-4 text-8xl text-gray-100 font-black group-hover:text-gray-200 transition-colors">A</div>
+                    <div class="relative z-10">
+                        <h4 class="text-2xl font-black text-gray-800 mb-2">Acontecimiento</h4>
+                        <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Activating Event</p>
+                        <p class="text-gray-700 mb-4">El evento externo, objetivo y factual. Lo que la cámara de seguridad grabaría.</p>
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <strong>Ejemplo:</strong> "Ocurrió un terremoto y mi casa se derrumbó."
+                        </div>
+                    </div>
+                </div>
+
+                <!-- B -->
+                <div class="bg-white rounded-2xl p-8 shadow-xl border-t-4 border-tcc-blue relative overflow-hidden group hover:-translate-y-2 transition-transform">
+                    <div class="absolute -right-4 -top-4 text-8xl text-tcc-light font-black group-hover:text-blue-100 transition-colors">B</div>
+                    <div class="relative z-10">
+                        <h4 class="text-2xl font-black text-tcc-blue mb-2">Creencias</h4>
+                        <p class="text-sm font-bold text-blue-400 uppercase tracking-widest mb-4">Beliefs</p>
+                        <p class="text-gray-700 mb-4">La evaluación cognitiva, los pensamientos automáticos y el significado atribuido al evento.</p>
+                        <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                            <strong>Ejemplo:</strong> "El mundo es impredecible, no estoy a salvo en ningún lado, voy a morir."
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C -->
+                <div class="bg-white rounded-2xl p-8 shadow-xl border-t-4 border-cuc-red relative overflow-hidden group hover:-translate-y-2 transition-transform">
+                    <div class="absolute -right-4 -top-4 text-8xl text-soft-red font-black group-hover:text-red-100 transition-colors">C</div>
+                    <div class="relative z-10">
+                        <h4 class="text-2xl font-black text-cuc-red mb-2">Consecuencias</h4>
+                        <p class="text-sm font-bold text-red-400 uppercase tracking-widest mb-4">Consequences</p>
+                        <p class="text-gray-700 mb-4">La respuesta emocional (pánico) y conductual (parálisis) resultante del punto B.</p>
+                        <div class="bg-red-50 p-4 rounded-lg border border-red-100">
+                            <strong>Ejemplo:</strong> Ataque de pánico, hiperventilación, incapacidad para evacuar la zona.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 bg-cuc-dark text-white p-6 rounded-xl text-center max-w-3xl mx-auto shadow-md">
+                <i class="fas fa-bullseye text-2xl text-cuc-red mb-2"></i>
+                <p class="text-lg"><strong>Foco de la Intervención:</strong> No podemos cambiar el Acontecimiento (<strong>A</strong>), y queremos aliviar la Consecuencia (<strong>C</strong>). El trabajo del interventor en crisis es identificar, desafiar y reestructurar rápidamente las Creencias (<strong>B</strong>).</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: LA TRÍADA COGNITIVA EN SITUACIONES LÍMITE -->
+        <section class="mb-20 bg-white p-10 rounded-3xl shadow-lg border border-gray-100 animate-slideIn" style="animation-delay: 0.4s;">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                
+                <div class="lg:w-1/2">
+                    <h3 class="text-3xl font-bold text-cuc-dark mb-6">La Tríada Cognitiva de Beck <br><span class="text-cuc-red text-xl">(Aplicada al Trauma)</span></h3>
+                    <p class="text-gray-600 mb-6 text-lg">
+                        Aaron Beck postuló que los trastornos emocionales se basan en una visión negativa tripartita. Durante una crisis severa, el paciente sufre un colapso simultáneo en estas tres áreas, generando un estado de desesperanza aguda.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-xl text-cuc-red font-black shrink-0 shadow-inner">1</div>
+                            <div>
+                                <h4 class="font-bold text-lg text-cuc-dark">Visión del Sí Mismo (Yo)</h4>
+                                <p class="text-gray-600 text-sm">"Soy vulnerable, soy débil, soy culpable de lo que pasó, no tengo las herramientas para sobrevivir a esto."</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-xl text-tcc-blue font-black shrink-0 shadow-inner">2</div>
+                            <div>
+                                <h4 class="font-bold text-lg text-cuc-dark">Visión del Mundo (Entorno)</h4>
+                                <p class="text-gray-600 text-sm">"El mundo es un lugar intrínsecamente hostil, peligroso e impredecible. Los demás me harán daño o no podrán ayudarme."</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-xl text-gray-800 font-black shrink-0 shadow-inner">3</div>
+                            <div>
+                                <h4 class="font-bold text-lg text-cuc-dark">Visión del Futuro</h4>
+                                <p class="text-gray-600 text-sm">"El dolor nunca va a parar. Las cosas solo van a empeorar. No hay salida ni esperanza." <em class="text-cuc-red font-bold">(Riesgo Suicida)</em></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráfico Interactivo -->
+                <div class="lg:w-1/2 w-full flex justify-center py-10">
+                    <div class="triangle-container">
+                        <!-- Las líneas se dibujan con CSS o SVG, usaremos SVG de fondo para facilidad -->
+                        <svg class="absolute top-0 left-0 w-full h-full" style="z-index: 1;">
+                            <line x1="50%" y1="15%" x2="15%" y2="85%" stroke="#cbd5e1" stroke-width="4" />
+                            <line x1="50%" y1="15%" x2="85%" y2="85%" stroke="#cbd5e1" stroke-width="4" />
+                            <line x1="15%" y1="85%" x2="85%" y2="85%" stroke="#cbd5e1" stroke-width="4" />
+                        </svg>
+                        
+                        <div class="node node-top" onclick="alert('Visión del YO: Fractura de la autoestima y autoeficacia. Genera CULPA.')">
+                            <i class="fas fa-user mb-1 text-cuc-red text-2xl"></i>
+                            <span>El YO</span>
+                        </div>
+                        <div class="node node-left" onclick="alert('Visión del MUNDO: Pérdida de la seguridad básica. Genera PARANOIA/ANSIEDAD.')">
+                            <i class="fas fa-globe-americas mb-1 text-tcc-blue text-2xl"></i>
+                            <span>El MUNDO</span>
+                        </div>
+                        <div class="node node-right" onclick="alert('Visión del FUTURO: Ausencia de proyección. Genera DESESPERANZA y LETALIDAD.')">
+                            <i class="fas fa-road mb-1 text-gray-800 text-2xl"></i>
+                            <span>El FUTURO</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: DISTORSIONES COGNITIVAS -->
+        <section class="mb-10 animate-slideIn" style="animation-delay: 0.6s;">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-cuc-dark mb-4">Distorsiones Cognitivas en Urgencias</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+                    Bajo estrés extremo, la corteza prefrontal pierde control y el procesamiento de la información se vuelve sesgado, rígido y primitivo. Estas son las trampas mentales más comunes que debemos reestructurar.
+                </p>
+                <p class="text-sm text-cuc-red mt-2 font-bold">(Pasa el mouse sobre las tarjetas para ver los ejemplos)</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Distorsión 1 -->
+                <div class="group h-64 perspective-1000">
+                    <div class="flip-card-inner relative w-full h-full text-center transform-style-3d shadow-lg rounded-xl">
+                        <!-- Frente -->
+                        <div class="absolute w-full h-full backface-hidden bg-white border-2 border-gray-200 rounded-xl flex flex-col justify-center items-center p-6">
+                            <i class="fas fa-meteor text-4xl text-cuc-red mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Catastrofización</h4>
+                        </div>
+                        <!-- Reverso -->
+                        <div class="absolute w-full h-full backface-hidden bg-cuc-red text-white rounded-xl rotate-y-180 flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-red-400 pb-2 mb-3">Pensamiento:</h4>
+                            <p class="text-sm italic">"Me despidieron hoy. Eso significa que nunca más conseguiré trabajo, perderé mi casa y mi familia terminará en la calle muriendo de hambre."</p>
+                            <p class="text-xs mt-4 text-red-200"><strong>Intervención:</strong> Análisis de probabilidades reales (Descatastrofización).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Distorsión 2 -->
+                <div class="group h-64 perspective-1000">
+                    <div class="flip-card-inner relative w-full h-full text-center transform-style-3d shadow-lg rounded-xl">
+                        <!-- Frente -->
+                        <div class="absolute w-full h-full backface-hidden bg-white border-2 border-gray-200 rounded-xl flex flex-col justify-center items-center p-6">
+                            <i class="fas fa-toggle-on text-4xl text-tcc-blue mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Pensamiento Dicotómico</h4>
+                            <p class="text-gray-500 text-sm mt-1">(Todo o Nada)</p>
+                        </div>
+                        <!-- Reverso -->
+                        <div class="absolute w-full h-full backface-hidden bg-tcc-blue text-white rounded-xl rotate-y-180 flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-blue-400 pb-2 mb-3">Pensamiento:</h4>
+                            <p class="text-sm italic">"Si no saco 5.0 en este examen, significa que soy un fracaso absoluto como ser humano y nada en mi vida vale la pena."</p>
+                            <p class="text-xs mt-4 text-blue-200"><strong>Intervención:</strong> Búsqueda de grises y matices.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Distorsión 3 -->
+                <div class="group h-64 perspective-1000">
+                    <div class="flip-card-inner relative w-full h-full text-center transform-style-3d shadow-lg rounded-xl">
+                        <!-- Frente -->
+                        <div class="absolute w-full h-full backface-hidden bg-white border-2 border-gray-200 rounded-xl flex flex-col justify-center items-center p-6">
+                            <i class="fas fa-hand-point-left text-4xl text-gray-800 mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Personalización</h4>
+                        </div>
+                        <!-- Reverso -->
+                        <div class="absolute w-full h-full backface-hidden bg-gray-800 text-white rounded-xl rotate-y-180 flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-gray-600 pb-2 mb-3">Pensamiento:</h4>
+                            <p class="text-sm italic">"Mi hijo tuvo el accidente de tránsito porque yo no le recordé que se pusiera el cinturón esta mañana. Yo causé esto."</p>
+                            <p class="text-xs mt-4 text-gray-400"><strong>Intervención:</strong> Reatribución de responsabilidades externas (Pastel de responsabilidad).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Distorsión 4 -->
+                <div class="group h-64 perspective-1000">
+                    <div class="flip-card-inner relative w-full h-full text-center transform-style-3d shadow-lg rounded-xl">
+                        <!-- Frente -->
+                        <div class="absolute w-full h-full backface-hidden bg-white border-2 border-gray-200 rounded-xl flex flex-col justify-center items-center p-6">
+                            <i class="fas fa-filter text-4xl text-orange-500 mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Abstracción Selectiva</h4>
+                            <p class="text-gray-500 text-sm mt-1">(Visión de Túnel)</p>
+                        </div>
+                        <!-- Reverso -->
+                        <div class="absolute w-full h-full backface-hidden bg-orange-500 text-white rounded-xl rotate-y-180 flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-orange-300 pb-2 mb-3">Pensamiento:</h4>
+                            <p class="text-sm italic">Paciente tras ruptura amorosa: Solo recuerda el dolor del abandono. Ignora sistemáticamente que tiene salud, una red de apoyo y un trabajo estable.</p>
+                            <p class="text-xs mt-4 text-orange-200"><strong>Intervención:</strong> Ampliación del foco atencional al contexto total.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: SIMULADOR TCC (MULTICASE) -->
+        <section class="mb-10 animate-slideIn" style="animation-delay: 0.8s;">
+            <div class="bg-cuc-dark text-white rounded-2xl shadow-2xl overflow-hidden border border-gray-700">
+                
+                <div class="p-8 border-b border-gray-700 relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 text-9xl text-white opacity-5">
+                        <i class="fas fa-laptop-medical"></i>
+                    </div>
+                    <h2 class="text-3xl font-black text-tcc-blue mb-2 relative z-10 flex items-center gap-3">
+                        <i class="fas fa-microchip"></i> Laboratorio Clínico TCC
+                    </h2>
+                    <p class="text-gray-300 text-md max-w-3xl relative z-10">
+                        Seleccione un caso. Escriba siempre el comando <strong class="text-white bg-cuc-red px-2 py-0.5 rounded uppercase">adelante</strong> para avanzar la simulación elegida. Analizaremos 3 casos de éxito y 1 de mala praxis clínica.
+                    </p>
+                </div>
+
+                <!-- TABS DE CASOS -->
+                <div class="flex flex-wrap bg-gray-800 border-b border-gray-600">
+                    <button class="case-tab-btn active px-6 py-4 font-bold text-sm uppercase tracking-wider flex-1 md:flex-none hover:bg-gray-700 transition-colors border-b-4 border-tcc-blue text-white" onclick="switchCase(1)">
+                        1. Catastrofización
+                    </button>
+                    <button class="case-tab-btn px-6 py-4 font-bold text-sm uppercase tracking-wider flex-1 md:flex-none hover:bg-gray-700 transition-colors border-b-4 border-transparent text-gray-400" onclick="switchCase(2)">
+                        2. Todo o Nada
+                    </button>
+                    <button class="case-tab-btn px-6 py-4 font-bold text-sm uppercase tracking-wider flex-1 md:flex-none hover:bg-gray-700 transition-colors border-b-4 border-transparent text-gray-400" onclick="switchCase(3)">
+                        3. Personalización
+                    </button>
+                    <button class="case-tab-btn px-6 py-4 font-bold text-sm uppercase tracking-wider flex-1 md:flex-none hover:bg-red-900 transition-colors border-b-4 border-transparent text-red-400 bg-red-950/30" onclick="switchCase(4)">
+                        <i class="fas fa-skull-crossbones mr-1"></i> 4. Iatrogenia (Error)
+                    </button>
+                </div>
+
+                <div class="bg-gray-50 flex flex-col h-[450px] md:h-[500px] relative">
+                    
+                    <!-- Chat Header Dinámico -->
+                    <div id="chat-header" class="bg-white text-cuc-dark p-4 flex items-center justify-between shadow-sm z-10 border-b border-gray-200">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-tcc-light text-tcc-blue rounded-full flex items-center justify-center font-bold" id="header-icon">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg leading-tight text-tcc-blue" id="header-title">Caso 1: Desempleo Súbito</h3>
+                                <span class="text-xs text-gray-500 font-bold tracking-widest uppercase" id="header-subtitle">Paciente: Andrés</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Messages Area -->
+                    <div id="chat-messages" class="chat-scroll flex-1 overflow-y-auto p-6 space-y-6 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
+                        <!-- Messages render here -->
+                    </div>
+
+                    <!-- Chat Input Area -->
+                    <div class="bg-white p-4 border-t border-gray-200 flex items-center gap-3">
+                        <input type="text" id="trigger-input" placeholder="Escribe 'adelante'..." 
+                               class="flex-1 bg-gray-100 border border-gray-300 text-gray-800 text-lg rounded-full px-6 py-3 focus:outline-none focus:ring-2 focus:ring-tcc-blue transition-all"
+                               onkeypress="handleChatInput(event)">
+                        <button onclick="checkAndAdvance()" 
+                                class="bg-tcc-blue text-white px-6 py-3 rounded-full font-bold hover:bg-blue-800 transition-all shadow-md flex items-center gap-2">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-cuc-dark text-white text-center py-8 mt-auto">
+        <div class="container mx-auto px-4">
+            <p class="text-sm md:text-base mb-2">Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+            <p class="text-xs text-gray-400">Material docente: Jorge Arango Castaño. Basado en Terapia Cognitivo Conductual (A. Beck / A. Ellis).</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS DE SIMULACIÓN MULTICASE -->
+    <script>
+        // --- DATA DE LOS CASOS ---
+        const casesData = {
+            1: {
+                title: "Caso 1: Desempleo Súbito",
+                subtitle: "Paciente: Andrés (Catastrofización)",
+                themeColor: "tcc-blue",
+                isError: false,
+                script: [
+                    { role: 'paciente', name: 'Andrés', text: "Aún no lo puedo creer... Me despidieron hoy en la mañana después de 10 años en la empresa. Se acabó." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "Andrés, entiendo que recibir esta noticia de manera súbita es un golpe fuertísimo. Es completamente válido que te sientas abrumado en este instante. ¿Qué es lo que más te asusta de esta situación?" },
+                    { role: 'paciente', name: 'Andrés', text: "¡Me asusta que lo perdí todo! Eso significa que nunca más voy a conseguir un buen trabajo a mi edad, voy a perder mi casa y mi familia terminará en la calle muriendo de hambre." },
+                    { role: 'system', name: 'Pausa Analítica', text: "<strong>[Identificación A-B-C]</strong><br>A (Acontecimiento): Despido laboral.<br>B (Creencia): 'Nunca más conseguiré empleo, moriremos de hambre' (Catastrofización).<br>C (Consecuencia): Terror y parálisis." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "Escucho el terror que sientes por el bienestar de tu familia, Andrés. Perder el empleo genera mucha incertidumbre. Pero antes de analizar el futuro, ¿qué estás sintiendo en tu cuerpo en este momento?" },
+                    { role: 'paciente', name: 'Andrés', text: "Siento que me asfixio. Tengo una opresión horrible en el pecho y las manos me sudan. Siento que me va a dar un infarto." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "Esa es la consecuencia física directa del estrés extremo (La 'C' de nuestro modelo). Tu cuerpo se está preparando para una amenaza inminente. Vamos a detener esa hiperactivación un momento. Acompáñame a hacer 3 respiraciones diafragmáticas lentas. Inhala en 4 segundos..." },
+                    { role: 'paciente', name: 'Andrés', text: "<em>[Respira profundamente un par de veces]</em>... Está bien. Ya no siento que me asfixio tanto. Pero el problema sigue ahí, sigo desempleado." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "Exacto, el Acontecimiento no ha cambiado, pero tu cuerpo ya no está en pánico total. Ahora, con la mente un poco más oxigenada, quiero que evaluemos ese pensamiento de que 'nunca más conseguirás trabajo'. ¿Es un hecho 100% comprobable hoy, o es un miedo hablando?" },
+                    { role: 'paciente', name: 'Andrés', text: "Es un miedo... pero es realista. Tengo 45 años, la economía está terrible. Nadie contrata a alguien de mi edad." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "Hagamos una búsqueda de evidencia en tu propia historia. ¿Has estado desempleado antes?" },
+                    { role: 'paciente', name: 'Andrés', text: "Sí, hace como 10 años, antes de entrar a esta empresa. Hubo un recorte masivo. Estuve 4 meses sin empleo fijo." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "¿Y en esos 4 meses, tu familia terminó en la calle muriendo de hambre?" },
+                    { role: 'paciente', name: 'Andrés', text: "No. Nos ajustamos mucho el cinturón. Mi esposa empezó a vender postres y yo hice algunas asesorías independientes pequeñas hasta que me llamaron de esta empresa." },
+                    { role: 'system', name: 'Pausa Analítica', text: "<strong>[Técnica TCC]</strong> El terapeuta utiliza el <em>Cuestionamiento Socrático</em> para que el propio paciente descubra evidencia empírica en su pasado que desmienta su creencia catastrófica actual." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "Entonces tienes evidencia histórica y real de que eres capaz de sobrevivir a una crisis laboral y adaptarte. Hoy, además de esa experiencia, tienes una liquidación, ahorros y un perfil como coordinador de 10 años. ¿Cómo podríamos reescribir ese pensamiento catastrófico inicial?" },
+                    { role: 'paciente', name: 'Andrés', text: "Supongo que... 'Perdí mi empleo y serán unos meses difíciles, pero tengo experiencia y ahorros para sostenerme mientras busco opciones'." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "Ese es un pensamiento realista y funcional. No estamos diciendo que sea fácil, estamos diciendo que no es el fin del mundo. No tienes que resolver los próximos 10 años hoy. Vamos a enfocarnos únicamente en organizar la semana que entra." },
+                    { role: 'system_success', name: 'Resultado', text: "<strong>[ÉXITO CLÍNICO]</strong> - Se redujo la activación somática mediante respiración, se identificó la distorsión, se buscó evidencia empírica para refutarla y se reconstruyó una creencia funcional que permite al paciente pasar a la acción." }
+                ]
+            },
+            2: {
+                title: "Caso 2: Presión Académica",
+                subtitle: "Paciente: Lucía (Pensamiento Dicotómico)",
+                themeColor: "tcc-blue",
+                isError: false,
+                script: [
+                    { role: 'paciente', name: 'Lucía', text: "Lloré todo el camino a su consultorio. Me entregaron la nota final de Neuroanatomía... saqué 2.0. Reprobé la materia." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "Es comprensible que estés tan afectada, Lucía. Sé que has estudiado muchísimo este semestre. Reprobar una materia importante duele." },
+                    { role: 'paciente', name: 'Lucía', text: "Duele porque me di cuenta de la verdad. Voy a cancelar la carrera de Medicina hoy mismo. Si no soy capaz de sacar notas perfectas, seré una médica mediocre y terminaré matando a algún paciente." },
+                    { role: 'system', name: 'Pausa Analítica', text: "<strong>[Distorsión Cognitiva]</strong> <em>Pensamiento Dicotómico (Todo o Nada).</em> Lucía evalúa su identidad en categorías extremas: o es perfecta (5.0) o es una asesina en potencia." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "Entiendo que sientes que este 2.0 define todo tu futuro. Lucía, ¿conoces algún médico brillante, a alguien que admires profundamente en la facultad?" },
+                    { role: 'paciente', name: 'Lucía', text: "Sí, claro. El Dr. Ramírez, el jefe de neurocirugía. Es una eminencia, salva vidas todos los días." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "¿Y tienes la certeza absoluta de que el Dr. Ramírez jamás, en sus 7 años de carrera y especialización, reprobó un solo examen?" },
+                    { role: 'paciente', name: 'Lucía', text: "Bueno... de hecho una vez contó en una clase que repitió farmacología porque se le cruzó con problemas familiares." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "Interesante. Entonces, según tu lógica actual de 'Todo o Nada', el Dr. Ramírez es un médico mediocre que no debería estar operando, ¿cierto?" },
+                    { role: 'paciente', name: 'Lucía', text: "No, obvio no. Él es excelente. Un tropiezo en una materia no lo hace mal médico." },
+                    { role: 'system_success', name: 'Resultado', text: "<strong>[FLEXIBILIZACIÓN LOGRADA]</strong> - Mediante confrontación socrática, el paciente rompe el extremo blanco/negro y acepta los matices (grises) de la experiencia humana, reduciendo la urgencia de abandonar la carrera." }
+                ]
+            },
+            3: {
+                title: "Caso 3: Accidente y Culpa",
+                subtitle: "Paciente: Martín (Personalización)",
+                themeColor: "tcc-blue",
+                isError: false,
+                script: [
+                    { role: 'paciente', name: 'Martín', text: "Mi hijo de 18 años está en la UCI. Tuvo un accidente de tránsito grave anoche. Fue mi culpa... todo esto es mi culpa." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "Es una situación terriblemente angustiante, Martín. Estoy aquí contigo. Dime, ¿por qué sientes que tú eres el culpable del accidente?" },
+                    { role: 'paciente', name: 'Martín', text: "Porque anoche tuvimos una pequeña discusión por tonterías. Él salió furioso con las llaves del carro y yo, de orgullo, no lo detuve ni le dije 'maneja con cuidado' como siempre hago. Si yo no hubiera peleado, si le hubiera dicho esas palabras, él habría ido más despacio y no habría chocado." },
+                    { role: 'system', name: 'Pausa Analítica', text: "<strong>[Distorsión Cognitiva]</strong> <em>Personalización.</em> El paciente asume la responsabilidad total de un evento negativo externo, ignorando múltiples variables." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "Comprendo el peso enorme que estás cargando. Martín, ¿tienes el reporte de tránsito? ¿Qué causó el accidente físicamente?" },
+                    { role: 'paciente', name: 'Martín', text: "El reporte dice que estaba lloviendo fuerte, la vía estaba lisa, y un camión se saltó un pare y lo embistió por un lado." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "Martín, quiero que imaginemos que la responsabilidad del accidente es un pastel del 100%. ¿Qué porcentaje de culpa tiene el chofer del camión que se saltó el pare?" },
+                    { role: 'paciente', name: 'Martín', text: "Supongo que mucha... quizás un 70% o 80%, él cometió la infracción grave." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "De acuerdo. ¿Y qué porcentaje le damos a las condiciones climáticas, a la lluvia y la vía lisa?" },
+                    { role: 'paciente', name: 'Martín', text: "Un 15%, porque hizo que el carro patinara y mi hijo no pudiera frenar a tiempo." },
+                    { role: 'interventor', name: 'Terapeuta TCC', text: "Bien. Ya tenemos 95% de responsabilidad dividida en causas externas reales (conductor imprudente y clima). ¿Cómo encaja en el 5% restante tu argumento de que 'no decirle maneja con cuidado' causó un choque contra un camión?" },
+                    { role: 'paciente', name: 'Martín', text: "<em>[Silencio largo, comienza a llorar aliviado]</em>... Suena ilógico cuando lo dividimos así. Yo no controlo los camiones ni la lluvia. No fue mi culpa... solo tengo mucho miedo de perderlo." },
+                    { role: 'system_success', name: 'Resultado', text: "<strong>[TÉCNICA APLICADA]</strong> - El uso de la 'Técnica del Pastel de Responsabilidad' (Reatribución) permitió al paciente ver las variables externas, aliviando la culpa patológica inmediata." }
+                ]
+            },
+            4: {
+                title: "Caso 4: Ruptura Amorosa",
+                subtitle: "Paciente: Valeria (IATROGENIA)",
+                themeColor: "alert-color",
+                isError: true,
+                script: [
+                    { role: 'paciente', name: 'Valeria', text: "No he parado de llorar en dos días. Mi novio me dejó después de 5 años. Siento que mi vida no tiene ningún sentido sin él. Solo quiero desaparecer." },
+                    { role: 'interventor_malo', name: 'Terapeuta (Mal praxis)', text: "Valeria, estás exagerando un poco. Por un hombre no vale la pena sufrir de esta manera, hay muchos peces en el mar." },
+                    { role: 'system_error', name: 'Análisis de Error', text: "<strong>[IATROGENIA: INVALIDACIÓN]</strong> El terapeuta minimiza el dolor agudo de la paciente. Trata la pérdida como algo trivial, destruyendo la empatía inicial." },
+                    { role: 'paciente', name: 'Valeria', text: "¡No es cualquier hombre! Era mi prometido, teníamos planes de casarnos. Toda mi rutina, mis amigos, giraban en torno a él. Siento un vacío que me quema por dentro." },
+                    { role: 'interventor_malo', name: 'Terapeuta (Mal praxis)', text: "Estás teniendo una distorsión cognitiva clara de 'Abstracción Selectiva'. Solo te enfocas en él y no ves que tienes trabajo y salud. Tienes que pensar positivo. Cambia el chip ya mismo." },
+                    { role: 'system_error', name: 'Análisis de Error', text: "<strong>[IATROGENIA: USO TÉCNICO INADECUADO]</strong> Usar lenguaje técnico clínico para regañar al paciente. Obligar al 'positivismo tóxico' cuando la persona está en fase aguda de dolor solo genera culpa secundaria (me siento mal por sentirme mal)." },
+                    { role: 'paciente', name: 'Valeria', text: "¿Cambiar el chip? ¿Crees que si pudiera hacerlo no lo habría hecho ya? Me duele el pecho, no puedo dormir. Eres un insensible, no me entiendes en absoluto." },
+                    { role: 'interventor_malo', name: 'Terapeuta (Mal praxis)', text: "Soy un profesional de la salud mental y te digo que la vida sigue. El problema es que eres muy dependiente emocionalmente. Si no te quieres a ti misma, ¿cómo quieres que él te quiera? Tienes que ir al gimnasio mañana." },
+                    { role: 'paciente', name: 'Valeria', text: "Vete al diablo. No me vuelvas a llamar. No sirves para nada." },
+                    { role: 'system_error', name: 'Fracaso Crítico', text: "<strong>[RUPTURA DE RAPPORT Y RIESGO ALTO]</strong> El terapeuta atacó a la paciente ('eres dependiente') en lugar de contenerla. La paciente abandonó la intervención, dejándola en alto riesgo de autoagresión al sentirse doblemente rechazada (por su novio y por el psicólogo)." }
+                ]
+            }
+        };
+
+        // --- ESTADO DE LA APLICACIÓN ---
+        let currentCaseId = 1;
+        let progressState = { 1: 0, 2: 0, 3: 0, 4: 0 };
+
+        // --- INICIALIZACIÓN ---
+        window.onload = () => {
+            renderInitialMessage();
+        };
+
+        function switchCase(caseId) {
+            currentCaseId = caseId;
+            
+            // Actualizar UI de los botones de pestañas
+            const tabs = document.querySelectorAll('.case-tab-btn');
+            tabs.forEach((tab, index) => {
+                const isErrorTab = (index === 3); // La pestaña 4 es error
+                
+                // Reset states
+                tab.classList.remove('active', 'border-tcc-blue', 'text-white', 'border-alert-color');
+                tab.classList.add('border-transparent');
+                
+                if (isErrorTab) {
+                    tab.classList.remove('text-red-100');
+                    tab.classList.add('text-red-400');
+                } else {
+                    tab.classList.remove('text-white');
+                    tab.classList.add('text-gray-400');
+                }
+
+                // Active states
+                if (index + 1 === caseId) {
+                    tab.classList.add('active', 'text-white');
+                    tab.classList.remove('text-gray-400', 'text-red-400');
+                    
+                    if (isErrorTab) {
+                        tab.classList.add('border-alert-color');
+                    } else {
+                        tab.classList.add('border-tcc-blue');
+                    }
+                }
+            });
+
+            // Actualizar Header
+            const caseData = casesData[caseId];
+            document.getElementById('header-title').innerText = caseData.title;
+            document.getElementById('header-subtitle').innerText = caseData.subtitle;
+            
+            const headerIcon = document.getElementById('header-icon');
+            if (caseData.isError) {
+                headerIcon.className = "w-10 h-10 bg-red-900 text-white rounded-full flex items-center justify-center font-bold";
+                headerIcon.innerHTML = '<i class="fas fa-times"></i>';
+                document.getElementById('chat-header').className = "bg-alert-color text-white p-4 flex items-center justify-between shadow-sm z-10 border-b border-red-900";
+                document.getElementById('header-title').className = "font-bold text-lg leading-tight text-white";
+                document.getElementById('header-subtitle').className = "text-xs text-red-200 font-bold tracking-widest uppercase";
+                
+                // Cambiar input btn
+                const sendBtn = document.querySelector('.fa-paper-plane').parentElement;
+                sendBtn.className = "bg-alert-color text-white px-6 py-3 rounded-full font-bold hover:bg-red-800 transition-all shadow-md flex items-center gap-2";
+            } else {
+                headerIcon.className = "w-10 h-10 bg-tcc-light text-tcc-blue rounded-full flex items-center justify-center font-bold";
+                headerIcon.innerHTML = '<i class="fas fa-user-md"></i>';
+                document.getElementById('chat-header').className = "bg-white text-cuc-dark p-4 flex items-center justify-between shadow-sm z-10 border-b border-gray-200";
+                document.getElementById('header-title').className = "font-bold text-lg leading-tight text-tcc-blue";
+                document.getElementById('header-subtitle').className = "text-xs text-gray-500 font-bold tracking-widest uppercase";
+                
+                const sendBtn = document.querySelector('.fa-paper-plane').parentElement;
+                sendBtn.className = "bg-tcc-blue text-white px-6 py-3 rounded-full font-bold hover:bg-blue-800 transition-all shadow-md flex items-center gap-2";
+            }
+
+            rebuildChatHistory();
+        }
+
+        function renderInitialMessage() {
+            const chatContainer = document.getElementById('chat-messages');
+            chatContainer.innerHTML = `
+                <div class="text-center text-gray-500 text-sm font-bold bg-white px-6 py-2 rounded-full mx-auto w-max shadow-sm border border-gray-200">
+                    Escriba la palabra <span class="text-cuc-red">adelante</span> para iniciar.
+                </div>
+            `;
+        }
+
+        function rebuildChatHistory() {
+            const chatContainer = document.getElementById('chat-messages');
+            chatContainer.innerHTML = ''; // Clear
+            
+            const currentStep = progressState[currentCaseId];
+            
+            if (currentStep === 0) {
+                renderInitialMessage();
+                return;
+            }
+
+            const script = casesData[currentCaseId].script;
+            for (let i = 0; i < currentStep; i++) {
+                renderBubbleHTML(script[i], casesData[currentCaseId].isError);
+            }
+            scrollToBottom();
+        }
+
+        function handleChatInput(e) {
+            if (e.key === 'Enter') {
+                checkAndAdvance();
+            }
+        }
+
+        function checkAndAdvance() {
+            const inputEl = document.getElementById('trigger-input');
+            const val = inputEl.value.trim().toLowerCase();
+            
+            if (val === 'adelante') {
+                advanceCurrentCase();
+                inputEl.value = ''; 
+            } else {
+                // Mensaje de error estricto solicitado
+                alert("COMANDO INVÁLIDO.\n\nPara evitar saltos de protocolo y asegurar el análisis clínico paso a paso, el único comando permitido es la palabra: adelante\n\nPor favor, intente nuevamente.");
+            }
+        }
+
+        function advanceCurrentCase() {
+            const script = casesData[currentCaseId].script;
+            const step = progressState[currentCaseId];
+
+            if (step === 0) {
+                document.getElementById('chat-messages').innerHTML = ''; // Quitar mensaje inicial
+            }
+
+            if (step < script.length) {
+                renderBubbleHTML(script[step], casesData[currentCaseId].isError);
+                progressState[currentCaseId]++;
+                scrollToBottom();
+            } else {
+                alert("La simulación clínica de este caso ha finalizado. Puede seleccionar otra pestaña en la parte superior.");
+            }
+        }
+
+        function renderBubbleHTML(message, isErrorCase) {
+            const chatContainer = document.getElementById('chat-messages');
+            const bubbleDiv = document.createElement('div');
+            
+            if (message.role === 'interventor') {
+                bubbleDiv.className = "flex flex-col items-end animate-fadeInMsg";
+                bubbleDiv.innerHTML = `
+                    <span class="text-xs text-tcc-blue font-bold mb-1 mr-1">${message.name}</span>
+                    <div class="max-w-[85%] bg-blue-50 border border-blue-200 text-blue-900 rounded-2xl rounded-tr-none p-4 shadow-sm text-lg">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'interventor_malo') {
+                bubbleDiv.className = "flex flex-col items-end animate-fadeInMsg";
+                bubbleDiv.innerHTML = `
+                    <span class="text-xs text-alert-color font-bold mb-1 mr-1">${message.name}</span>
+                    <div class="max-w-[85%] bg-red-100 border border-red-300 text-red-900 rounded-2xl rounded-tr-none p-4 shadow-sm text-lg">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'paciente') {
+                bubbleDiv.className = "flex flex-col items-start animate-fadeInMsg";
+                bubbleDiv.innerHTML = `
+                    <span class="text-xs text-gray-500 font-bold mb-1 ml-1">${message.name}</span>
+                    <div class="max-w-[85%] bg-white border border-gray-300 text-gray-800 rounded-2xl rounded-tl-none p-4 shadow-sm text-lg">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'system') {
+                bubbleDiv.className = "flex flex-col items-center animate-fadeInMsg mt-4";
+                bubbleDiv.innerHTML = `
+                    <div class="bg-gray-800 text-yellow-300 border border-gray-600 rounded-lg p-4 shadow-sm text-sm text-left w-full max-w-xl">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'system_success') {
+                bubbleDiv.className = "flex flex-col items-center animate-fadeInMsg mt-4";
+                bubbleDiv.innerHTML = `
+                    <div class="bg-green-100 border border-green-300 text-green-800 rounded-lg p-4 shadow-sm text-sm text-center w-full max-w-xl font-bold">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'system_error') {
+                bubbleDiv.className = "flex flex-col items-center animate-fadeInMsg mt-4";
+                bubbleDiv.innerHTML = `
+                    <div class="bg-red-200 border border-red-400 text-red-900 rounded-lg p-4 shadow-sm text-sm text-left w-full max-w-xl font-bold">
+                        ${message.text}
+                    </div>
+                `;
+            }
+
+            chatContainer.appendChild(bubbleDiv);
+        }
+
+        function scrollToBottom() {
+            const chatContainer = document.getElementById('chat-messages');
+            chatContainer.scrollTo({
+                top: chatContainer.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>
