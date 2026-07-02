@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 3: Ética Moderna</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --soft-red: #ffebeb;
+            --kant-blue: #0d47a1;
+            --bentham-green: #1b5e20;
+            --bg-lab: #f0f2f5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER / BANNER (Optimizado Móvil) --- */
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .qr-code img {
+            max-height: 80px;
+            border: 2px solid var(--cuc-gray);
+            border-radius: 5px;
+            padding: 2px;
+            transition: transform 0.3s;
+        }
+
+        .qr-code img:hover {
+            transform: scale(1.1);
+            border-color: var(--cuc-red);
+        }
+
+        .qr-label {
+            display: block;
+            font-size: 0.6rem;
+            color: #666;
+            margin-top: 3px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .header-logo img {
+            max-height: 90px;
+            background-color: transparent; 
+        }
+
+        .header-info {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .course-title {
+            color: var(--cuc-red);
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            line-height: 1.1;
+        }
+
+        .prof-info {
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .prof-info strong {
+            color: var(--cuc-red);
+        }
+
+        .contact-label {
+            color: var(--cuc-red);
+            font-weight: 900;
+        }
+
+        /* --- NAVEGACIÓN --- */
+        .nav-bar {
+            background-color: var(--cuc-gray);
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .btn-home {
+            text-decoration: none;
+            color: var(--cuc-dark);
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn-home:hover {
+            color: var(--cuc-red);
+        }
+
+        /* --- CONTENIDO --- */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .section-header {
+            margin-bottom: 50px;
+        }
+
+        .section-header h1 {
+            color: var(--cuc-red);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .section-header p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* --- SECCIÓN 1: VERSUS (FLIP CARDS) --- */
+        .versus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+            justify-items: center;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            max-width: 350px;
+            height: 400px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 15px;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .flip-card-front {
+            background-color: var(--white);
+            border: 1px solid #ddd;
+        }
+        
+        .kant-front { border-top: 5px solid var(--kant-blue); }
+        .bentham-front { border-top: 5px solid var(--bentham-green); }
+
+        .philosopher-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: #eee;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #555;
+        }
+
+        .flip-card-back {
+            color: white;
+            transform: rotateY(180deg);
+            padding: 30px;
+        }
+        
+        .kant-back { background-color: var(--kant-blue); }
+        .bentham-back { background-color: var(--bentham-green); }
+
+        .concept-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; text-transform: uppercase;}
+        .concept-desc { font-size: 0.95rem; }
+
+        /* --- SECCIÓN 2: COMPARATIVA --- */
+        .comparison-box {
+            background: #f9f9f9;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 60px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table th {
+            background-color: var(--cuc-dark);
+            color: white;
+            text-align: center;
+        }
+
+        .comparison-table td:first-child {
+            font-weight: bold;
+            color: var(--cuc-red);
+            width: 20%;
+        }
+
+        /* --- SECCIÓN 3: LABORATORIO DE DILEMAS (5 CASOS) --- */
+        .lab-section {
+            margin-bottom: 60px;
+            text-align: center;
+            padding: 40px;
+            background-color: var(--bg-lab);
+            border-radius: 15px;
+            border: 2px dashed #ccc;
+        }
+
+        .lab-controls {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .case-btn {
+            padding: 10px 20px;
+            border: none;
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            min-width: 120px;
+        }
+
+        .case-btn:hover, .case-btn.active {
+            background-color: var(--cuc-red);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .case-display {
+            background: white;
+            border-radius: 10px;
+            padding: 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            text-align: left;
+            display: none;
+            animation: fadeIn 0.5s;
+            overflow: hidden;
+        }
+
+        .case-header {
+            background: var(--cuc-dark);
+            color: white;
+            padding: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .case-content {
+            padding: 30px;
+        }
+
+        .analysis-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .analysis-trigger {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .trigger-kant { border-color: var(--kant-blue); color: var(--kant-blue); }
+        .trigger-kant:hover { background: var(--kant-blue); color: white; }
+
+        .trigger-util { border-color: var(--bentham-green); color: var(--bentham-green); }
+        .trigger-util:hover { background: var(--bentham-green); color: white; }
+
+        .analysis-result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+            font-size: 0.95rem;
+        }
+        
+        .result-kant { background-color: #e3f2fd; border-left: 5px solid var(--kant-blue); }
+        .result-util { background-color: #e8f5e9; border-left: 5px solid var(--bentham-green); }
+
+        @keyframes fadeIn { from {opacity:0; transform: translateY(10px);} to {opacity:1; transform: translateY(0);} }
+
+        footer {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 0.8rem;
+        }
+
+        /* Responsive Mobile */
+        @media screen and (max-width: 768px) {
+            header {
+                position: relative;
+                padding: 10px;
+                gap: 15px;
+            }
+            .header-logo img { max-height: 60px; }
+            .course-title { font-size: 1.4rem; line-height: 1.2; }
+            .header-logo { order: 1; width: 100%; margin-bottom: 5px;}
+            .header-info { order: 2; width: 100%; margin-bottom: 15px;}
+            
+            .qr-code { 
+                order: 3; 
+                width: 45%; 
+                margin: 0 auto;
+            }
+            .qr-code img { max-height: 80px; }
+
+            .comparison-table, .comparison-table tbody, .comparison-table tr, .comparison-table td, .comparison-table th {
+                display: block;
+            }
+            .comparison-table thead { display: none; }
+            .comparison-table tr { margin-bottom: 15px; border: 1px solid #ddd; }
+            .comparison-table td { 
+                text-align: right; 
+                padding-left: 50%; 
+                position: relative; 
+            }
+            .comparison-table td::before { 
+                content: attr(data-label); 
+                position: absolute; 
+                left: 10px; 
+                width: 45%; 
+                padding-right: 10px; 
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+            }
+            .comparison-table td:first-child {
+                text-align: center;
+                background: #f0f0f0;
+                width: 100%;
+                padding-left: 15px;
+            }
+            .comparison-table td:first-child::before { content: none; }
+            
+            .analysis-options { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- QR NAVEGACIÓN -->
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/bioetica/u1clase03.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+
+        <!-- LOGO CUC -->
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa">
+        </div>
+
+        <!-- INFO DOCENTE -->
+        <div class="header-info">
+            <div class="course-title">Bioética y Deontología de la Psicología</div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> caminosdelser85 | 
+                    <span class="contact-label">Web:</span> www.caminosdelser.co
+                </small>
+            </div>
+        </div>
+
+        <!-- QR CONTACTO -->
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="nav-bar">
+        <a href="u1clase01.html" class="btn-home"><i class="fas fa-arrow-left"></i> Volver a la Guía Temática</a>
+    </div>
+
+    <div class="container">
+        
+        <div class="section-header">
+            <h1>Clase 3: Ética Moderna</h1>
+            <p>El Deber vs. La Utilidad. ¿Cómo decidimos qué es lo correcto en psicología? Dos gigantes de la filosofía nos ofrecen respuestas opuestas.</p>
+        </div>
+
+        <!-- SECCIÓN 1: KANT VS BENTHAM -->
+        <div class="versus-grid">
+            
+            <!-- Immanuel Kant -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front kant-front">
+                        <div class="philosopher-img"><i class="fas fa-gavel"></i></div>
+                        <h2>Immanuel Kant</h2>
+                        <p class="prof-info">Deontología (El Deber)</p>
+                        <p style="color: #666; font-style: italic;">(Pasa el mouse)</p>
+                    </div>
+                    <div class="flip-card-back kant-back">
+                        <div class="concept-title">Imperativo Categórico</div>
+                        <p class="concept-desc">
+                            "Obra sólo según aquella máxima por la cual puedas querer que al mismo tiempo se convierta en ley universal".
+                        </p>
+                        <hr style="border-color: rgba(255,255,255,0.3); margin: 15px 0;">
+                        <p class="concept-desc">
+                            <strong>Principio:</strong> Las personas son fines en sí mismas, nunca medios. La intención y la regla moral importan más que el resultado.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jeremy Bentham -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front bentham-front">
+                        <div class="philosopher-img"><i class="fas fa-balance-scale"></i></div>
+                        <h2>Jeremy Bentham</h2>
+                        <p class="prof-info">Utilitarismo (Consecuencialismo)</p>
+                        <p style="color: #666; font-style: italic;">(Pasa el mouse)</p>
+                    </div>
+                    <div class="flip-card-back bentham-back">
+                        <div class="concept-title">Cálculo Hedonista</div>
+                        <p class="concept-desc">
+                            "La mayor felicidad para el mayor número de personas".
+                        </p>
+                        <hr style="border-color: rgba(255,255,255,0.3); margin: 15px 0;">
+                        <p class="concept-desc">
+                            <strong>Principio:</strong> Una acción es correcta si sus consecuencias maximizan el placer y minimizan el dolor. El fin justifica los medios.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SECCIÓN 2: COMPARATIVA -->
+        <div class="comparison-box">
+            <h2 style="text-align: center; margin-bottom: 20px; color: var(--cuc-dark);">Comparativa Estructural</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Kant (Deontología)</th>
+                        <th>Bentham (Utilitarismo)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Concepto">Enfoque</td>
+                        <td data-label="Kant">En la <strong>ACCIÓN</strong> misma (¿Es correcta la conducta?).</td>
+                        <td data-label="Bentham">En el <strong>RESULTADO</strong> (¿Produce bienestar?).</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Concepto">Valor Humano</td>
+                        <td data-label="Kant">Dignidad absoluta. No negociable.</td>
+                        <td data-label="Bentham">Bienestar colectivo. El individuo puede sacrificarse por el grupo.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Concepto">Excepciones</td>
+                        <td data-label="Kant">Ninguna. Las reglas son universales.</td>
+                        <td data-label="Bentham">Depende del contexto y el cálculo de consecuencias.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECCIÓN 3: LABORATORIO DE DILEMAS ÉTICOS EN PSICOLOGÍA -->
+        <div class="lab-section">
+            <h2 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-flask"></i> Laboratorio de Dilemas Psicológicos</h2>
+            <p style="color: #666; margin-bottom: 25px;">Selecciona un caso clínico y analiza la solución desde ambas posturas filosóficas.</p>
+
+            <div class="lab-controls">
+                <button class="case-btn active" onclick="showCase(1)">1. Confidencialidad</button>
+                <button class="case-btn" onclick="showCase(2)">2. Engaño Investigativo</button>
+                <button class="case-btn" onclick="showCase(3)">3. Internamiento</button>
+                <button class="case-btn" onclick="showCase(4)">4. Relación Dual</button>
+                <button class="case-btn" onclick="showCase(5)">5. La Verdad</button>
+            </div>
+
+            <!-- CASO 1: CONFIDENCIALIDAD (TARASOFF) -->
+            <div id="case1" class="case-display" style="display: block;">
+                <div class="case-header">
+                    <span>CASO 1: CONFIDENCIALIDAD VS. RIESGO A TERCEROS</span>
+                    <i class="fas fa-user-secret"></i>
+                </div>
+                <div class="case-content">
+                    <p><strong>Situación:</strong> Un paciente le confiesa a su psicólogo que planea asesinar a su ex-pareja. El psicólogo debe decidir si romper el secreto profesional (regla de oro) para advertir a la víctima o mantener la confidencialidad.</p>
+                    
+                    <div class="analysis-options">
+                        <div class="analysis-trigger trigger-kant" onclick="toggleAnalysis('c1-kant')">Análisis Kantiano</div>
+                        <div class="analysis-trigger trigger-util" onclick="toggleAnalysis('c1-util')">Análisis Utilitarista</div>
+                    </div>
+                    
+                    <div id="c1-kant" class="analysis-result result-kant">
+                        <strong>KANT DIRÍA:</strong> Es un dilema de deberes. El deber de mantener la promesa (secreto) choca con el deber de proteger la vida (fin en sí mismo). Un kantiano estricto diría que romper una promesa destruye la confianza universal en la terapia. Sin embargo, permitir un asesinato trata a la víctima como un medio desechable. Generalmente, la vida prima como deber supremo.
+                    </div>
+                    <div id="c1-util" class="analysis-result result-util">
+                        <strong>BENTHAM DIRÍA:</strong> Rompe el secreto inmediatamente. El dolor de una muerte es infinitamente superior al dolor de romper la confianza de un paciente. El bienestar de la víctima (seguir viva) y la seguridad social pesan más que la privacidad de un individuo. El cálculo es claro.
+                    </div>
+                </div>
+            </div>
+
+            <!-- CASO 2: ENGAÑO EN INVESTIGACIÓN -->
+            <div id="case2" class="case-display">
+                <div class="case-header">
+                    <span>CASO 2: ENGAÑO EN INVESTIGACIÓN</span>
+                    <i class="fas fa-microscope"></i>
+                </div>
+                <div class="case-content">
+                    <p><strong>Situación:</strong> Un psicólogo social quiere estudiar la obediencia. Para ello, engaña a los participantes diciéndoles que están dando descargas eléctricas a otra persona (aunque es falso). El estrés en los participantes es alto, pero el conocimiento científico sería revolucionario.</p>
+                    
+                    <div class="analysis-options">
+                        <div class="analysis-trigger trigger-kant" onclick="toggleAnalysis('c2-kant')">Análisis Kantiano</div>
+                        <div class="analysis-trigger trigger-util" onclick="toggleAnalysis('c2-util')">Análisis Utilitarista</div>
+                    </div>
+                    
+                    <div id="c2-kant" class="analysis-result result-kant">
+                        <strong>KANT DIRÍA:</strong> Inmoral. No puedes mentir a los participantes para obtener datos, sin importar cuán valioso sea el descubrimiento. Estás usando a las personas como "medios" para un fin científico, violando su autonomía y dignidad. La verdad es innegociable.
+                    </div>
+                    <div id="c2-util" class="analysis-result result-util">
+                        <strong>BENTHAM DIRÍA:</strong> Ético si el beneficio supera el daño. Si el estrés de los participantes es temporal y el conocimiento ayuda a prevenir genocidios o entender la violencia humana (beneficio para millones), el engaño está justificado por sus consecuencias positivas a largo plazo.
+                    </div>
+                </div>
+            </div>
+
+            <!-- CASO 3: HOSPITALIZACIÓN INVOLUNTARIA -->
+            <div id="case3" class="case-display">
+                <div class="case-header">
+                    <span>CASO 3: LIBERTAD VS. VIDA (ANOREXIA)</span>
+                    <i class="fas fa-hospital-user"></i>
+                </div>
+                <div class="case-content">
+                    <p><strong>Situación:</strong> Una paciente con anorexia nerviosa severa (IMC crítico) se niega a ser hospitalizada o alimentada. El psicólogo debe decidir si solicitar una orden judicial para internarla contra su voluntad para salvarle la vida.</p>
+                    
+                    <div class="analysis-options">
+                        <div class="analysis-trigger trigger-kant" onclick="toggleAnalysis('c3-kant')">Análisis Kantiano</div>
+                        <div class="analysis-trigger trigger-util" onclick="toggleAnalysis('c3-util')">Análisis Utilitarista</div>
+                    </div>
+                    
+                    <div id="c3-kant" class="analysis-result result-kant">
+                        <strong>KANT DIRÍA:</strong> Problemático. Respetar la autonomía de una persona racional es ley. Forzarla es violentar su libertad y tratarla como un objeto o un niño. Sin embargo, si la enfermedad anula su racionalidad, el deber es restaurar esa capacidad. Pero la coerción *per se* es moralmente cuestionable.
+                    </div>
+                    <div id="c3-util" class="analysis-result result-util">
+                        <strong>BENTHAM DIRÍA:</strong> Intervenla. La consecuencia de no hacerlo es la muerte (el peor resultado). El sufrimiento temporal del encierro es menor que la pérdida de una vida entera. Salvarla maximiza las posibilidades de felicidad futura para ella y su familia.
+                    </div>
+                </div>
+            </div>
+
+            <!-- CASO 4: RELACIÓN DUAL RURAL -->
+            <div id="case4" class="case-display">
+                <div class="case-header">
+                    <span>CASO 4: RELACIÓN DUAL EN ZONA RURAL</span>
+                    <i class="fas fa-tractor"></i>
+                </div>
+                <div class="case-content">
+                    <p><strong>Situación:</strong> Eres el único psicólogo en un pueblo lejano. El único mecánico del pueblo sufre depresión y pide cita. Si lo atiendes, tendrás una relación dual (paciente/mecánico). Si no, se queda sin ayuda.</p>
+                    
+                    <div class="analysis-options">
+                        <div class="analysis-trigger trigger-kant" onclick="toggleAnalysis('c4-kant')">Análisis Kantiano</div>
+                        <div class="analysis-trigger trigger-util" onclick="toggleAnalysis('c4-util')">Análisis Utilitarista</div>
+                    </div>
+                    
+                    <div id="c4-kant" class="analysis-result result-kant">
+                        <strong>KANT DIRÍA:</strong> Las reglas deontológicas prohíben las relaciones duales para garantizar la objetividad. Si la norma es "no tratar conocidos", debe cumplirse universalmente para no corromper la práctica profesional, sin importar la incomodidad del caso particular.
+                    </div>
+                    <div id="c4-util" class="analysis-result result-util">
+                        <strong>BENTHAM DIRÍA:</strong> Atiéndelo. La consecuencia de no atenderlo es que una persona sufre sin ayuda (dolor). La consecuencia de atenderlo es que recibe tratamiento (placer/bienestar). El beneficio de la salud mental supera por mucho el riesgo menor de confusión de roles.
+                    </div>
+                </div>
+            </div>
+
+            <!-- CASO 5: VERDAD VS PATERNALISMO -->
+            <div id="case5" class="case-display">
+                <div class="case-header">
+                    <span>CASO 5: LA VERDAD AL PACIENTE</span>
+                    <i class="fas fa-file-medical"></i>
+                </div>
+                <div class="case-content">
+                    <p><strong>Situación:</strong> La familia de un adolescente pide al psicólogo que NO le diga que su diagnóstico es Esquizofrenia, argumentando que "se deprimirá y perderá la esperanza". El joven pregunta directamente: "¿Qué tengo?".</p>
+                    
+                    <div class="analysis-options">
+                        <div class="analysis-trigger trigger-kant" onclick="toggleAnalysis('c5-kant')">Análisis Kantiano</div>
+                        <div class="analysis-trigger trigger-util" onclick="toggleAnalysis('c5-util')">Análisis Utilitarista</div>
+                    </div>
+                    
+                    <div id="c5-kant" class="analysis-result result-kant">
+                        <strong>KANT DIRÍA:</strong> Di la verdad. Mentirle al paciente le roba su dignidad y su derecho a saber sobre su propia mente. Tratarlo con paternalismo es infantilizarlo. La verdad es un deber, independientemente de si le causa dolor emocional momentáneo.
+                    </div>
+                    <div id="c5-util" class="analysis-result result-util">
+                        <strong>BENTHAM DIRÍA:</strong> Evalúa las consecuencias. Si decirle la verdad ahora mismo provocará un intento de suicidio o abandono del tratamiento (dolor extremo), se justifica ocultarla temporalmente o dosificarla. El objetivo es el bienestar del paciente, no la verdad abstracta.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p>Material diseñado para uso exclusivo académico.</p>
+    </footer>
+
+    <script>
+        // Control de pestañas de casos
+        function showCase(caseNum) {
+            // Ocultar todos los casos
+            var cases = document.getElementsByClassName("case-display");
+            for (var i = 0; i < cases.length; i++) {
+                cases[i].style.display = "none";
+            }
+            
+            // Desactivar botones
+            var btns = document.getElementsByClassName("case-btn");
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].classList.remove("active");
+            }
+
+            // Mostrar seleccionado
+            document.getElementById("case" + caseNum).style.display = "block";
+            // Activar botón
+            btns[caseNum-1].classList.add("active");
+        }
+
+        // Control de análisis dentro de cada caso
+        function toggleAnalysis(id) {
+            var element = document.getElementById(id);
+            if (element.style.display === "block") {
+                element.style.display = "none";
+            } else {
+                element.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
