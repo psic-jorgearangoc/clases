@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 11: IA y Bioética Digital</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cuc-red': '#A3161A',
+                        'cuc-dark': '#1a1a1a',
+                        'cuc-gray': '#f4f4f4',
+                        'soft-red': '#ffebeb',
+                        'bio-blue': '#0d47a1',
+                        'law-gold': '#b8860b',
+                        'success-color': '#2e7d32',
+                        'alert-color': '#d32f2f',
+                        'digital-purple': '#6b21a8',
+                        'ai-cyan': '#0891b2',
+                    },
+                    fontFamily: {
+                        'sans': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slideIn {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+
+        /* --- FLIP CARDS MANUALES 3D (CORREGIDO) --- */
+        .flip-card {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card-inner.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .flip-card-front {
+            z-index: 2;
+            transform: rotateY(0deg);
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+            z-index: 1;
+        }
+
+        /* --- SMARTPHONE SIMULATOR --- */
+        .smartphone {
+            width: 100%;
+            max-width: 320px;
+            height: 600px;
+            border: 12px solid #1a1a1a;
+            border-radius: 36px;
+            margin: 0 auto;
+            position: relative;
+            background-color: #f3f4f6;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+        .notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background-color: #1a1a1a;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 10;
+        }
+
+        /* Scrollbars customizados */
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        /* Carousel Fade */
+        .fade-content {
+            animation: fadeEffect 0.3s ease-in-out;
+        }
+        @keyframes fadeEffect {
+            from { opacity: 0; transform: translateX(5px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-cuc-dark font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER / BANNER -->
+    <header class="bg-white border-b-4 border-cuc-red py-5 shadow-md relative md:sticky md:top-0 z-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-center items-center gap-6 text-center">
+            
+            <div class="order-3 md:order-1 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/bioetica/u3clase11.html" 
+                     alt="QR Clase" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Ir a esta Clase</span>
+            </div>
+
+            <div class="order-1 md:order-2 flex flex-col items-center max-w-2xl">
+                <img src="logocuc.png" alt="Logo Universidad de la Costa" class="h-20 mb-2">
+                <h1 class="text-cuc-red text-2xl md:text-3xl font-black uppercase leading-tight mb-1">
+                    Bioética y Deontología
+                </h1>
+                <div class="text-sm md:text-base text-gray-800">
+                    <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                    Mg. Dirección de Proyectos - Certificado en PNL<br>
+                    <small class="block mt-1">
+                        <span class="text-cuc-red font-black">WhatsApp:</span> 3233796547 | 
+                        <span class="text-cuc-red font-black">IG:</span> caminosdelser85
+                    </small>
+                </div>
+            </div>
+
+            <div class="order-3 md:order-3 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" 
+                     alt="QR Contacto" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Guardar Contacto</span>
+            </div>
+        </div>
+    </header>
+
+    <nav class="bg-gray-100 border-b border-gray-300 py-3 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <a href="u1clase01.html" class="inline-flex items-center gap-2 font-bold text-cuc-dark hover:text-cuc-red transition-colors">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+            <span class="mx-3 text-gray-400">|</span>
+            <span class="text-gray-600 font-bold">Unidad 3: Ética Aplicada</span>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container mx-auto px-4 py-10 flex-grow max-w-6xl">
+        
+        <!-- INTRODUCCIÓN -->
+        <div class="text-center mb-16 animate-slideIn">
+            <span class="bg-ai-cyan text-white px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4 inline-block shadow-sm">Clase 11</span>
+            <h2 class="text-4xl font-black text-cuc-dark mb-6">Inteligencia Artificial y Bioética Digital</h2>
+            <div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-lg border-l-8 border-ai-cyan text-left flex items-center gap-6">
+                <i class="fas fa-robot text-6xl text-gray-200 hidden md:block"></i>
+                <div>
+                    <p class="text-xl text-gray-700 italic font-light mb-2">
+                        "La tecnología ha roto los muros de los consultorios, las oficinas y los colegios. La IA no es una amenaza ética por defecto; el reto es utilizar su poder predictivo como una extensión de nuestra beneficencia, jamás como un sustituto de nuestro juicio profesional."
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 1: DILEMAS Y PRÁCTICAS EN LOS 4 CAMPOS (FLIP CARDS + CAROUSEL DOBLE) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.1s;">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-cuc-dark mb-4"><i class="fas fa-microchip text-ai-cyan"></i> El Doble Filo de la IA en los 4 Campos</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">La Inteligencia Artificial es un arma de doble filo. Utiliza las flechas para explorar los 5 dilemas en cada área, y haz clic en el botón inferior para girar la tarjeta y descubrir las 5 buenas prácticas.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- ORGANIZACIONAL -->
+                <div class="h-[480px] flip-card">
+                    <div id="flip-inner-org" class="flip-card-inner">
+                        
+                        <!-- Frente: Dilemas (Riesgos) -->
+                        <div class="flip-card-front bg-white border-t-8 border-law-gold group">
+                            <!-- Fondo aislado para no romper el 3D -->
+                            <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-xl">
+                                <i class="fas fa-briefcase absolute -right-6 -bottom-6 text-8xl text-law-gold opacity-10 transition-transform group-hover:scale-110"></i>
+                            </div>
+                            
+                            <div class="relative z-10 flex flex-col h-full p-8">
+                                <h4 class="text-2xl font-black text-law-gold mb-1">Organizacional</h4>
+                                <span class="text-xs font-bold text-red-500 uppercase tracking-widest mb-4">Riesgos y Dilemas</span>
+                                
+                                <!-- Contenido Carrusel -->
+                                <div id="content-org-dilemma" class="flex-grow fade-content"></div>
+
+                                <!-- Controles Carrusel y Giro -->
+                                <div class="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3">
+                                    <div class="flex justify-between items-center">
+                                        <button onclick="changeSlide('org', 'dilemma', -1)" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-law-gold hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-left text-xs"></i></button>
+                                        <span class="text-xs font-bold text-gray-400 tracking-widest" id="counter-org-dilemma">1 / 5</span>
+                                        <button onclick="changeSlide('org', 'dilemma', 1)" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-law-gold hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-right text-xs"></i></button>
+                                    </div>
+                                    <button onclick="toggleFlip('org')" class="w-full bg-yellow-50 text-law-gold border border-yellow-200 py-2 rounded-lg text-sm font-bold hover:bg-law-gold hover:text-white transition-colors">
+                                        Ver Usos Adecuados <i class="fas fa-sync-alt ml-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Reverso: Buenas Prácticas -->
+                        <div class="flip-card-back bg-yellow-50 border-2 border-law-gold group">
+                            <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-xl">
+                                <i class="fas fa-check-circle absolute -right-6 -bottom-6 text-8xl text-law-gold opacity-10 transition-transform group-hover:scale-110"></i>
+                            </div>
+
+                            <div class="relative z-10 flex flex-col h-full p-8">
+                                <h4 class="text-2xl font-black text-law-gold mb-1">Organizacional</h4>
+                                <span class="text-xs font-bold text-green-600 uppercase tracking-widest mb-4">Buenas Prácticas (IA)</span>
+                                
+                                <!-- Contenido Carrusel -->
+                                <div id="content-org-practice" class="flex-grow fade-content"></div>
+
+                                <!-- Controles Carrusel y Giro -->
+                                <div class="mt-4 pt-4 border-t border-yellow-200 flex flex-col gap-3">
+                                    <div class="flex justify-between items-center">
+                                        <button onclick="changeSlide('org', 'practice', -1)" class="w-8 h-8 rounded-full bg-white hover:bg-law-gold hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-left text-xs"></i></button>
+                                        <span class="text-xs font-bold text-gray-500 tracking-widest" id="counter-org-practice">1 / 5</span>
+                                        <button onclick="changeSlide('org', 'practice', 1)" class="w-8 h-8 rounded-full bg-white hover:bg-law-gold hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-right text-xs"></i></button>
+                                    </div>
+                                    <button onclick="toggleFlip('org')" class="w-full bg-white text-law-gold border border-yellow-300 py-2 rounded-lg text-sm font-bold hover:bg-law-gold hover:text-white transition-colors">
+                                        Ver Dilemas <i class="fas fa-sync-alt ml-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EDUCATIVO -->
+                <div class="h-[480px] flip-card">
+                    <div id="flip-inner-edu" class="flip-card-inner">
+                        
+                        <!-- Frente: Dilemas (Riesgos) -->
+                        <div class="flip-card-front bg-white border-t-8 border-green-600 group">
+                            <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-xl">
+                                <i class="fas fa-school absolute -right-6 -bottom-6 text-8xl text-green-600 opacity-10 transition-transform group-hover:scale-110"></i>
+                            </div>
+
+                            <div class="relative z-10 flex flex-col h-full p-8">
+                                <h4 class="text-2xl font-black text-green-600 mb-1">Educativo</h4>
+                                <span class="text-xs font-bold text-red-500 uppercase tracking-widest mb-4">Riesgos y Dilemas</span>
+                                
+                                <div id="content-edu-dilemma" class="flex-grow fade-content"></div>
+
+                                <div class="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3">
+                                    <div class="flex justify-between items-center">
+                                        <button onclick="changeSlide('edu', 'dilemma', -1)" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-green-600 hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-left text-xs"></i></button>
+                                        <span class="text-xs font-bold text-gray-400 tracking-widest" id="counter-edu-dilemma">1 / 5</span>
+                                        <button onclick="changeSlide('edu', 'dilemma', 1)" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-green-600 hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-right text-xs"></i></button>
+                                    </div>
+                                    <button onclick="toggleFlip('edu')" class="w-full bg-green-50 text-green-700 border border-green-200 py-2 rounded-lg text-sm font-bold hover:bg-green-600 hover:text-white transition-colors">
+                                        Ver Usos Adecuados <i class="fas fa-sync-alt ml-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Reverso: Buenas Prácticas -->
+                        <div class="flip-card-back bg-green-50 border-2 border-green-600 group">
+                            <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-xl">
+                                <i class="fas fa-check-circle absolute -right-6 -bottom-6 text-8xl text-green-600 opacity-10 transition-transform group-hover:scale-110"></i>
+                            </div>
+
+                            <div class="relative z-10 flex flex-col h-full p-8">
+                                <h4 class="text-2xl font-black text-green-600 mb-1">Educativo</h4>
+                                <span class="text-xs font-bold text-green-600 uppercase tracking-widest mb-4">Buenas Prácticas (IA)</span>
+                                
+                                <div id="content-edu-practice" class="flex-grow fade-content"></div>
+
+                                <div class="mt-4 pt-4 border-t border-green-200 flex flex-col gap-3">
+                                    <div class="flex justify-between items-center">
+                                        <button onclick="changeSlide('edu', 'practice', -1)" class="w-8 h-8 rounded-full bg-white hover:bg-green-600 hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-left text-xs"></i></button>
+                                        <span class="text-xs font-bold text-gray-500 tracking-widest" id="counter-edu-practice">1 / 5</span>
+                                        <button onclick="changeSlide('edu', 'practice', 1)" class="w-8 h-8 rounded-full bg-white hover:bg-green-600 hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-right text-xs"></i></button>
+                                    </div>
+                                    <button onclick="toggleFlip('edu')" class="w-full bg-white text-green-700 border border-green-300 py-2 rounded-lg text-sm font-bold hover:bg-green-600 hover:text-white transition-colors">
+                                        Ver Dilemas <i class="fas fa-sync-alt ml-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SOCIAL / COMUNITARIO -->
+                <div class="h-[480px] flip-card">
+                    <div id="flip-inner-soc" class="flip-card-inner">
+                        
+                        <!-- Frente: Dilemas (Riesgos) -->
+                        <div class="flip-card-front bg-white border-t-8 border-orange-500 group">
+                            <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-xl">
+                                <i class="fas fa-users absolute -right-6 -bottom-6 text-8xl text-orange-500 opacity-10 transition-transform group-hover:scale-110"></i>
+                            </div>
+
+                            <div class="relative z-10 flex flex-col h-full p-8">
+                                <h4 class="text-2xl font-black text-orange-500 mb-1">Social / Comunitario</h4>
+                                <span class="text-xs font-bold text-red-500 uppercase tracking-widest mb-4">Riesgos y Dilemas</span>
+                                
+                                <div id="content-soc-dilemma" class="flex-grow fade-content"></div>
+
+                                <div class="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3">
+                                    <div class="flex justify-between items-center">
+                                        <button onclick="changeSlide('soc', 'dilemma', -1)" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-orange-500 hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-left text-xs"></i></button>
+                                        <span class="text-xs font-bold text-gray-400 tracking-widest" id="counter-soc-dilemma">1 / 5</span>
+                                        <button onclick="changeSlide('soc', 'dilemma', 1)" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-orange-500 hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-right text-xs"></i></button>
+                                    </div>
+                                    <button onclick="toggleFlip('soc')" class="w-full bg-orange-50 text-orange-600 border border-orange-200 py-2 rounded-lg text-sm font-bold hover:bg-orange-500 hover:text-white transition-colors">
+                                        Ver Usos Adecuados <i class="fas fa-sync-alt ml-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Reverso: Buenas Prácticas -->
+                        <div class="flip-card-back bg-orange-50 border-2 border-orange-500 group">
+                            <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-xl">
+                                <i class="fas fa-check-circle absolute -right-6 -bottom-6 text-8xl text-orange-500 opacity-10 transition-transform group-hover:scale-110"></i>
+                            </div>
+
+                            <div class="relative z-10 flex flex-col h-full p-8">
+                                <h4 class="text-2xl font-black text-orange-500 mb-1">Social / Comunitario</h4>
+                                <span class="text-xs font-bold text-green-600 uppercase tracking-widest mb-4">Buenas Prácticas (IA)</span>
+                                
+                                <div id="content-soc-practice" class="flex-grow fade-content"></div>
+
+                                <div class="mt-4 pt-4 border-t border-orange-200 flex flex-col gap-3">
+                                    <div class="flex justify-between items-center">
+                                        <button onclick="changeSlide('soc', 'practice', -1)" class="w-8 h-8 rounded-full bg-white hover:bg-orange-500 hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-left text-xs"></i></button>
+                                        <span class="text-xs font-bold text-gray-500 tracking-widest" id="counter-soc-practice">1 / 5</span>
+                                        <button onclick="changeSlide('soc', 'practice', 1)" class="w-8 h-8 rounded-full bg-white hover:bg-orange-500 hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-right text-xs"></i></button>
+                                    </div>
+                                    <button onclick="toggleFlip('soc')" class="w-full bg-white text-orange-600 border border-orange-300 py-2 rounded-lg text-sm font-bold hover:bg-orange-500 hover:text-white transition-colors">
+                                        Ver Dilemas <i class="fas fa-sync-alt ml-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CLÍNICO -->
+                <div class="h-[480px] flip-card">
+                    <div id="flip-inner-cli" class="flip-card-inner">
+                        
+                        <!-- Frente: Dilemas (Riesgos) -->
+                        <div class="flip-card-front bg-white border-t-8 border-bio-blue group">
+                            <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-xl">
+                                <i class="fas fa-user-md absolute -right-6 -bottom-6 text-8xl text-bio-blue opacity-10 transition-transform group-hover:scale-110"></i>
+                            </div>
+
+                            <div class="relative z-10 flex flex-col h-full p-8">
+                                <h4 class="text-2xl font-black text-bio-blue mb-1">Clínico</h4>
+                                <span class="text-xs font-bold text-red-500 uppercase tracking-widest mb-4">Riesgos y Dilemas</span>
+                                
+                                <div id="content-cli-dilemma" class="flex-grow fade-content"></div>
+
+                                <div class="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3">
+                                    <div class="flex justify-between items-center">
+                                        <button onclick="changeSlide('cli', 'dilemma', -1)" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-bio-blue hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-left text-xs"></i></button>
+                                        <span class="text-xs font-bold text-gray-400 tracking-widest" id="counter-cli-dilemma">1 / 5</span>
+                                        <button onclick="changeSlide('cli', 'dilemma', 1)" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-bio-blue hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-right text-xs"></i></button>
+                                    </div>
+                                    <button onclick="toggleFlip('cli')" class="w-full bg-blue-50 text-blue-700 border border-blue-200 py-2 rounded-lg text-sm font-bold hover:bg-bio-blue hover:text-white transition-colors">
+                                        Ver Usos Adecuados <i class="fas fa-sync-alt ml-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Reverso: Buenas Prácticas -->
+                        <div class="flip-card-back bg-blue-50 border-2 border-bio-blue group">
+                            <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-xl">
+                                <i class="fas fa-check-circle absolute -right-6 -bottom-6 text-8xl text-bio-blue opacity-10 transition-transform group-hover:scale-110"></i>
+                            </div>
+
+                            <div class="relative z-10 flex flex-col h-full p-8">
+                                <h4 class="text-2xl font-black text-bio-blue mb-1">Clínico</h4>
+                                <span class="text-xs font-bold text-green-600 uppercase tracking-widest mb-4">Buenas Prácticas (IA)</span>
+                                
+                                <div id="content-cli-practice" class="flex-grow fade-content"></div>
+
+                                <div class="mt-4 pt-4 border-t border-blue-200 flex flex-col gap-3">
+                                    <div class="flex justify-between items-center">
+                                        <button onclick="changeSlide('cli', 'practice', -1)" class="w-8 h-8 rounded-full bg-white hover:bg-bio-blue hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-left text-xs"></i></button>
+                                        <span class="text-xs font-bold text-gray-500 tracking-widest" id="counter-cli-practice">1 / 5</span>
+                                        <button onclick="changeSlide('cli', 'practice', 1)" class="w-8 h-8 rounded-full bg-white hover:bg-bio-blue hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-chevron-right text-xs"></i></button>
+                                    </div>
+                                    <button onclick="toggleFlip('cli')" class="w-full bg-white text-blue-700 border border-blue-300 py-2 rounded-lg text-sm font-bold hover:bg-bio-blue hover:text-white transition-colors">
+                                        Ver Dilemas <i class="fas fa-sync-alt ml-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: EL MITO DE WHATSAPP (ACLARACIÓN) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.3s;">
+            <div class="bg-cuc-dark rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center gap-10">
+                <i class="fab fa-whatsapp absolute -left-10 -bottom-10 text-9xl text-green-500 opacity-10"></i>
+                
+                <div class="md:w-1/3 flex justify-center z-10">
+                    <div class="w-40 h-40 bg-green-500 rounded-full flex items-center justify-center border-8 border-gray-800 shadow-lg relative">
+                        <i class="fas fa-lock text-6xl text-white"></i>
+                        <div class="absolute -bottom-2 -right-2 bg-cuc-red text-white text-xs font-bold px-2 py-1 rounded-full animate-pulse">ERROR</div>
+                    </div>
+                </div>
+
+                <div class="md:w-2/3 text-white z-10">
+                    <h3 class="text-3xl font-black text-cuc-red mb-4">El Mito de WhatsApp en la Telepsicología</h3>
+                    <p class="text-gray-300 text-lg mb-4">
+                        Muchos psicólogos asumen que, como WhatsApp o Telegram tienen <em>"Encriptación de Extremo a Extremo (E2EE)"</em>, son plataformas legales para dar terapia o enviar informes. <strong>Esto es un grave error deontológico.</strong>
+                    </p>
+                    <div class="space-y-4">
+                        <div class="bg-gray-800 p-4 rounded-xl border-l-4 border-alert-color">
+                            <h4 class="font-bold text-red-400 mb-1">1. El problema de los Metadatos</h4>
+                            <p class="text-sm text-gray-400">Aunque el contenido está encriptado, Meta (Facebook) recolecta la "metadata": sabe con quién hablas, a qué hora, con qué frecuencia y la ubicación. Eso ya vulnera el anonimato de la relación terapéutica.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-xl border-l-4 border-alert-color">
+                            <h4 class="font-bold text-red-400 mb-1">2. Copias de Seguridad (Backups)</h4>
+                            <p class="text-sm text-gray-400">Los chats suelen guardarse automáticamente en Google Drive o iCloud del paciente y del psicólogo. En esas nubes de terceros, los datos médicos quedan vulnerables a hackeos y sin encriptación E2EE garantizada.</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-xl border-l-4 border-alert-color">
+                            <h4 class="font-bold text-red-400 mb-1">3. Carencia de Contratos de Salud (BAA)</h4>
+                            <p class="text-sm text-gray-400">WhatsApp no firma acuerdos de custodia de datos médicos. Para videollamadas clínicas o envío de informes, se deben usar plataformas avaladas (Zoom for Healthcare, Doxy.me) que cumplan normativas como HIPAA o la Ley 1581 en Colombia.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: LA HUELLA DIGITAL (SIMULADOR SMARTPHONE) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.4s;">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-cuc-dark mb-4"><i class="fas fa-mobile-alt text-digital-purple"></i> La Huella Digital del Profesional</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">Tus redes sociales y apps ya no son tan "personales" cuando tienes tu Tarjeta Profesional. Interactúa con el simulador para analizar 3 escenarios donde cruzamos la delgada línea entre la tecnología y la mala praxis.</p>
+            </div>
+
+            <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-200 flex flex-col lg:flex-row items-center gap-10">
+                
+                <div class="lg:w-1/2">
+                    <div class="space-y-3">
+                        <button onclick="loadPhoneCase(1)" id="btn-phone-1" class="w-full text-left bg-gray-100 hover:bg-gray-200 border-l-4 border-cuc-red p-4 rounded transition-colors text-gray-800 font-bold shadow-sm">
+                            1. Clínica: El Match Inesperado
+                        </button>
+                        <button onclick="loadPhoneCase(2)" id="btn-phone-2" class="w-full text-left bg-white border border-gray-200 hover:bg-gray-100 border-l-4 border-transparent p-4 rounded transition-colors text-gray-500 font-bold">
+                            2. Educativo: Resumir con IA
+                        </button>
+                        <button onclick="loadPhoneCase(3)" id="btn-phone-3" class="w-full text-left bg-white border border-gray-200 hover:bg-gray-100 border-l-4 border-transparent p-4 rounded transition-colors text-gray-500 font-bold">
+                            3. Organizacional: Espionaje Digital
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2 flex justify-center w-full z-10">
+                    <!-- Simulador de Teléfono -->
+                    <div class="smartphone">
+                        <div class="notch"></div>
+                        
+                        <!-- Pantalla del Celular -->
+                        <div class="bg-white w-full h-full pt-10 pb-6 px-4 flex flex-col relative" id="phone-screen">
+                            
+                            <!-- Header de la App (Simulada) -->
+                            <div class="flex items-center gap-3 border-b pb-3 mb-4" id="phone-app-header">
+                                <img src="https://ui-avatars.com/api/?name=Tinder&background=F52459&color=fff" class="w-8 h-8 rounded-full" id="phone-icon">
+                                <div class="font-bold text-gray-800 text-sm" id="phone-title">Tinder</div>
+                            </div>
+
+                            <!-- Contenido Principal -->
+                            <div class="flex-1 overflow-y-auto custom-scroll pr-2" id="phone-content">
+                                <!-- Contenido inyectado por JS -->
+                            </div>
+
+                            <!-- Análisis Ético Inferior -->
+                            <div class="mt-4 bg-red-50 border border-red-200 p-3 rounded-lg text-xs" id="phone-analysis">
+                                <!-- Análisis inyectado por JS -->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: LABORATORIO DE DEBATE -->
+        <section class="mb-10 animate-slideIn" style="animation-delay: 0.5s;">
+            <div class="bg-white border border-gray-200 p-8 md:p-12 rounded-3xl shadow-lg border-t-8 border-law-gold">
+                <div class="text-center mb-10">
+                    <span class="bg-law-gold text-white px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-3 inline-block shadow-sm">Debate en Aula</span>
+                    <h2 class="text-3xl font-black text-cuc-dark mb-4">Laboratorio: Zonas Grises del Siglo XXI</h2>
+                    <p class="text-gray-600 max-w-3xl mx-auto">Discutan en grupos los siguientes dilemas éticos y decidan la postura legal basándose en la Ley 1090 y los Principios Bioéticos.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Debate 1 -->
+                    <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-blue-100 text-bio-blue rounded-full flex items-center justify-center text-xl mb-4"><i class="fas fa-video"></i></div>
+                        <h4 class="font-bold text-gray-800 mb-2">1. El Familiar Oculto (Clínica)</h4>
+                        <p class="text-sm text-gray-600 mb-4">Haces terapia de pareja por Zoom. Notas el reflejo en un espejo: la madre de la esposa está sentada fuera de cámara escuchando y anotando todo lo que el esposo confiesa.</p>
+                        <div class="bg-white p-3 rounded shadow-sm text-sm border-l-2 border-cuc-red">
+                            <strong class="text-cuc-red">El Dilema:</strong> ¿Detienes la sesión abruptamente por violación de confidencialidad, arriesgando una crisis de pareja en vivo, o lo manejas sutilmente?
+                        </div>
+                    </div>
+
+                    <!-- Debate 2 -->
+                    <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-purple-100 text-digital-purple rounded-full flex items-center justify-center text-xl mb-4"><i class="fas fa-camera"></i></div>
+                        <h4 class="font-bold text-gray-800 mb-2">2. El Influencer (Social)</h4>
+                        <p class="text-sm text-gray-600 mb-4">Un paciente famoso graba un TikTok ("StoryTime") desde tu sala de espera mencionando tu nombre, recomendándote a sus 2 millones de seguidores con el mensaje "El mejor psicólogo".</p>
+                        <div class="bg-white p-3 rounded shadow-sm text-sm border-l-2 border-cuc-red">
+                            <strong class="text-cuc-red">El Dilema:</strong> ¿Le pides que borre el video para proteger el Secreto Profesional (aunque él quiso revelarlo voluntariamente), o "reposteamos" el video para conseguir clientes?
+                        </div>
+                    </div>
+
+                    <!-- Debate 3 -->
+                    <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-xl mb-4"><i class="fas fa-chart-line"></i></div>
+                        <h4 class="font-bold text-gray-800 mb-2">3. El Algoritmo Predictivo (Org)</h4>
+                        <p class="text-sm text-gray-600 mb-4">Tu empresa compra un software de IA que analiza el tono de voz de los empleados en llamadas para predecir quién se va a deprimir y despedirlo antes de que pida incapacidad.</p>
+                        <div class="bg-white p-3 rounded shadow-sm text-sm border-l-2 border-cuc-red">
+                            <strong class="text-cuc-red">El Dilema:</strong> Tu jefe te pide "validar" la herramienta con tu firma de psicólogo. ¿Qué principio aplicas para negarte?
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Botón Docente -->
+                <div class="mt-10 text-center">
+                    <button onclick="showTeacherDebateGuide()" class="bg-cuc-dark text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-black transition-transform hover:-translate-y-1 flex items-center justify-center gap-2 mx-auto">
+                        <i class="fas fa-lock"></i> Ver Conclusiones (Solo Docente)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-cuc-dark text-white text-center py-8 mt-auto">
+        <div class="container mx-auto px-4">
+            <p class="text-sm md:text-base mb-2">Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+            <p class="text-xs text-gray-400">Material docente: Jorge Arango Castaño. Basado en directrices APA sobre Telepsicología e IA.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // --- DATOS DEL CARRUSEL DE LAS 4 ÁREAS (IA) DOBLE CARA ---
+        const areasData = {
+            org: {
+                dilemma: [
+                    {
+                        title: "Sesgo Algorítmico en Selección",
+                        desc: "Las empresas usan IAs para filtrar miles de hojas de vida. Un algoritmo, entrenado con datos históricos sesgados, descarta automáticamente a mujeres o minorías para cargos gerenciales.",
+                        principle: "Justicia y Equidad. El psicólogo es responsable de auditar que las herramientas automatizadas no discriminen."
+                    },
+                    {
+                        title: "Monitorización de Emociones (Burnout)",
+                        desc: "La empresa instala una IA que analiza las pausas del teclado y el tono de voz para predecir 'burnout', usándolo como excusa para despedir preventivamente.",
+                        principle: "Beneficencia / No Maleficencia. Usar métricas encubiertas para perjudicar laboralmente a alguien daña su salud."
+                    },
+                    {
+                        title: "Evaluación de Desempeño Robótica",
+                        desc: "Un algoritmo despide automáticamente a un empleado por no cumplir micrométricas de inactividad de mouse, ignorando el contexto psicológico humano (ej. duelo reciente).",
+                        principle: "Competencia. Es una falta delegar decisiones que afectan el bienestar humano a máquinas sin revisión clínica."
+                    },
+                    {
+                        title: "El Chatbot Espía de RRHH",
+                        desc: "RRHH lanza un 'bot de salud mental'. Los trabajadores confiesan su estrés, pero la IA genera reportes de vulnerabilidad enviados directo a los gerentes.",
+                        principle: "Secreto Profesional. Recolectar datos íntimos bajo la falsa promesa de apoyo psicológico para uso administrativo es fraude."
+                    },
+                    {
+                        title: "Predicción de Sindicatos",
+                        desc: "Una IA cruza perfiles psicológicos y publicaciones en redes para predecir quién tiene una personalidad proclive a formar sindicatos, descartándolos.",
+                        principle: "Autonomía y Justicia. Discriminar y perfilar sin consentimiento explícito viola el derecho a la libre asociación."
+                    }
+                ],
+                practice: [
+                    {
+                        title: "Auditoría de Sesgos en Selección",
+                        desc: "El psicólogo organizacional lidera la revisión periódica de los algoritmos de filtrado (ATS) para garantizar métricas de diversidad, equidad e inclusión (DEI) en la contratación.",
+                        principle: "Justicia. Usar la tecnología para corregir sesgos históricos en lugar de perpetuarlos."
+                    },
+                    {
+                        title: "Entrenamiento en Liderazgo (VR)",
+                        desc: "Se generan simulaciones de Realidad Virtual (VR) éticamente seguras para entrenar a líderes en resolución de conflictos complejos antes de que ocurran en la vida real.",
+                        principle: "Beneficencia. Promover competencias blandas mediante entornos controlados y seguros."
+                    },
+                    {
+                        title: "Encuestas de Clima Anonimizadas por IA",
+                        desc: "Optimizar el análisis semántico de encuestas de clima laboral abiertas, utilizando IAs cerradas (On-Premise) que garantizan el anonimato total del empleado.",
+                        principle: "Secreto Profesional. La tecnología debe servir como un escudo protector de la identidad del usuario."
+                    },
+                    {
+                        title: "Redacción de Perfiles Inclusivos",
+                        desc: "Uso de LLMs entrenados específicamente para auditar y redactar descripciones de perfiles de cargo libres de lenguaje excluyente o condicionamientos de género.",
+                        principle: "Equidad. Fomentar ambientes organizacionales igualitarios desde la base del reclutamiento."
+                    },
+                    {
+                        title: "Análisis Predictivo de Retención",
+                        desc: "Análisis ético de datos macro (sin individualizar) para predecir picos de estrés por áreas y diseñar políticas preventivas de bienestar laboral y salud mental.",
+                        principle: "No Maleficencia. Anticipar riesgos psicosociales organizacionales para actuar de forma protectora."
+                    }
+                ]
+            },
+            edu: {
+                dilemma: [
+                    {
+                        title: "Profecía Autocumplida por Webcam",
+                        desc: "Un colegio instala software que lee expresiones faciales de los niños para predecir si tienen TDAH o si 'fracasarán' escolarmente este año.",
+                        principle: "Beneficencia y Confidencialidad. Diagnosticar a un menor con software predictivo lo estigmatiza."
+                    },
+                    {
+                        title: "Alerta de Suicidio (Falso Positivo)",
+                        desc: "Un algoritmo escanea ensayos escolares. Alerta a padres sobre riesgo de suicidio de un alumno por usar la palabra 'morir' en un cuento de ficción.",
+                        principle: "No Maleficencia. El pánico generado por un diagnóstico automatizado erróneo causa Iatrogenia."
+                    },
+                    {
+                        title: "Tutor IA Paternalista",
+                        desc: "Un bot escolar asume el rol de orientador y aconseja a un estudiante con ideación suicida que 'se encierre', sin avisar a la red humana de apoyo.",
+                        principle: "Competencia y Responsabilidad. La intervención en crisis grave no puede delegarse a una IA."
+                    },
+                    {
+                        title: "Vigilancia de Sentimientos (Bullying)",
+                        desc: "El colegio obliga a instalar una app que escanea conversaciones privadas de WhatsApp con IA para detectar ciberacoso y sancionarlos.",
+                        principle: "Autonomía. Monitorear comunicaciones privadas sin orden legal es una violación grave a la intimidad."
+                    },
+                    {
+                        title: "Exclusión Algorítmica",
+                        desc: "Un modelo predictivo niega a un alumno el acceso a clases avanzadas porque su 'perfil psicológico' autogenerado indica baja resiliencia.",
+                        principle: "Justicia Distributiva. Condenar el futuro educativo basado en una estadística opaca es inaceptable."
+                    }
+                ],
+                practice: [
+                    {
+                        title: "Tutorización Adaptativa",
+                        desc: "Uso de sistemas de IA para adaptar el ritmo y formato del material didáctico a estudiantes con Neurodiversidad (TEA, TDAH), fomentando su inclusión.",
+                        principle: "Beneficencia. Personalizar la educación para maximizar el potencial de desarrollo del menor."
+                    },
+                    {
+                        title: "Detección Temprana de Deserción",
+                        desc: "Analítica de datos (asistencia, calificaciones) para que el equipo de psicorientación active protocolos de apoyo temprano, sin emitir diagnósticos automatizados.",
+                        principle: "Prevención. Intervenir proactivamente ante indicadores de riesgo de abandono escolar."
+                    },
+                    {
+                        title: "Creación de Material Accesible",
+                        desc: "Generación rápida de material didáctico multimodal (texto a voz, subtitulado dinámico) mediante IA para estudiantes con discapacidades visuales o auditivas.",
+                        principle: "Justicia Educativa. Garantizar igualdad de oportunidades en el acceso al conocimiento."
+                    },
+                    {
+                        title: "Simuladores para Maestros",
+                        desc: "Entrenamiento de docentes mediante simuladores conversacionales impulsados por IA para practicar el manejo empático de estudiantes disruptivos o en crisis.",
+                        principle: "Competencia. Fortalecer las habilidades blandas de los educadores sin poner en riesgo a los alumnos."
+                    },
+                    {
+                        title: "Organización Anti-Burnout Docente",
+                        desc: "Uso de IA para organizar horarios escolares inteligentes que optimicen los descansos de los maestros, reduciendo la carga cognitiva y el síndrome de Burnout.",
+                        principle: "Bienestar. Cuidar la salud mental de los educadores para proteger indirectamente a los estudiantes."
+                    }
+                ]
+            },
+            soc: {
+                dilemma: [
+                    {
+                        title: "Vigilancia vs. Prevención",
+                        desc: "El Estado utiliza algoritmos espiando masivamente las redes sociales de poblaciones vulnerables para predecir estallidos sociales o suicidios.",
+                        principle: "Autonomía y Consentimiento. Intervenir usando datos sin permiso explícito viola la intimidad ciudadana."
+                    },
+                    {
+                        title: "Triaje Automatizado de Beneficios",
+                        desc: "Una IA decide qué víctimas de desplazamiento forzado reciben ayuda psicológica primero basándose en un 'puntaje de trauma' de un algoritmo opaco.",
+                        principle: "Justicia y Equidad. Las decisiones en salud pública deben ser explicables y auditables por psicólogos."
+                    },
+                    {
+                        title: "Deepfakes Terapéuticos",
+                        desc: "Uso de IA en una comunidad para recrear avatares en video de familiares asesinados, con el fin de 'ayudar a cerrar el duelo' masivamente.",
+                        principle: "No Maleficencia. Resucitar a muertos digitalmente sin evaluación individual causa alto riesgo psicótico."
+                    },
+                    {
+                        title: "Reemplazo en Líneas de Crisis",
+                        desc: "Una gobernación despide a los psicólogos de una Línea Violeta (violencia de género) y pone a un bot conversacional a atender a las víctimas.",
+                        principle: "Responsabilidad Profesional. Una máquina no tiene empatía ni responsabilidad penal si hay daño."
+                    },
+                    {
+                        title: "Perfilamiento Criminal Prematuro",
+                        desc: "Uso de IA predictiva en barrios marginales para identificar qué adolescentes tienen 'perfil psicológico criminal' e intervenirlos forzosamente.",
+                        principle: "Justicia y No Maleficencia. El determinismo algorítmico criminaliza por el origen, no por los actos."
+                    }
+                ],
+                practice: [
+                    {
+                        title: "Mapeo Estratégico en Desastres",
+                        desc: "Uso de IA y cruce de datos demográficos/satelitales para priorizar el despliegue rápido de brigadas psicosociales en zonas afectadas por desastres naturales.",
+                        principle: "Beneficencia y Justicia. Optimizar recursos en emergencias para atender a las poblaciones más críticas primero."
+                    },
+                    {
+                        title: "Traducción Simultánea Neuronal",
+                        desc: "Derribar barreras lingüísticas en tiempo real mediante herramientas de IA durante intervenciones psicosociales con comunidades indígenas o migrantes.",
+                        principle: "Equidad. Garantizar el derecho a recibir atención y contención psicológica en la lengua materna."
+                    },
+                    {
+                        title: "Sistematización de Talleres Participativos",
+                        desc: "Utilizar algoritmos de procesamiento de lenguaje natural (NLP) para agrupar y analizar rápidamente las narrativas y necesidades expresadas por la comunidad en asambleas.",
+                        principle: "Transparencia. Devolver resultados inmediatos a la comunidad para la toma de decisiones conjuntas."
+                    },
+                    {
+                        title: "Análisis de Macro-datos de Salud Mental",
+                        desc: "Estudio de tendencias poblacionales abiertas y anonimizadas para orientar eficazmente el presupuesto del Estado en campañas de prevención del suicidio.",
+                        principle: "Responsabilidad Social. Promover políticas públicas basadas en evidencia predictiva ética."
+                    },
+                    {
+                        title: "Chatbots de Triaje Primario (Apoyo)",
+                        desc: "Implementar IA exclusivamente en líneas de atención ciudadana para clasificar el nivel de urgencia y derivar inmediatamente a los pacientes críticos a interventores humanos.",
+                        principle: "Competencia. La IA actúa como filtro logístico, no como reemplazo de la psicoterapia humana."
+                    }
+                ]
+            },
+            cli: {
+                dilemma: [
+                    {
+                        title: "El Chatbot Terapeuta (Resúmenes)",
+                        desc: "Un psicólogo usa ChatGPT público para redactar informes, pegando transcripciones de audio de las sesiones para que la IA los resuma 'más rápido'.",
+                        principle: "Secreto Profesional (Falta Gravísima). Entregar datos clínicos reales a servidores externos rompe la custodia legal."
+                    },
+                    {
+                        title: "Terapia Clonada (Fraude)",
+                        desc: "Un psicólogo cobra consulta completa, pero programa un bot (entrenado con su estilo) para que atienda por chat a los pacientes con síntomas leves mientras él duerme.",
+                        principle: "Integridad y Estándares Morales. Cobrar por un servicio humano y entregar un bot a escondidas es fraude."
+                    },
+                    {
+                        title: "Diagnóstico de Caja Negra",
+                        desc: "El software clínico de la IPS diagnostica Trastorno Bipolar. El psicólogo asume el diagnóstico como cierto sin entender cómo llegó a esa conclusión.",
+                        principle: "Competencia e Independencia. Ceder el juicio experto a una 'caja negra' algorítmica es pérdida de autonomía."
+                    },
+                    {
+                        title: "Dependencia del Acompañante Virtual",
+                        desc: "El terapeuta recomienda al paciente interactuar con una IA emocional 24/7. El paciente termina aislándose socialmente de personas reales.",
+                        principle: "Beneficencia. Promover un sustituto artificial del vínculo humano puede generar Iatrogenia."
+                    },
+                    {
+                        title: "Sesgo de Género en Diagnóstico",
+                        desc: "Software clínico ignora síntomas de TEA (Autismo) en mujeres adultas porque fue entrenado mayoritariamente con datos de niños varones.",
+                        principle: "Justicia y Competencia. Confiar ciegamente en IAs sesgadas retrasa el tratamiento de poblaciones marginadas."
+                    }
+                ],
+                practice: [
+                    {
+                        title: "Exposición en Realidad Virtual (VRET)",
+                        desc: "Implementar escenarios inmersivos (ej. simulador de vuelo, altura, multitudes) para tratar fobias y TEPT en el consultorio, permitiendo al clínico un control absoluto del estímulo (Escala SUDS).",
+                        principle: "Beneficencia y Seguridad. Exponer al paciente al trauma en un entorno 100% libre de riesgo físico."
+                    },
+                    {
+                        title: "Apps de Biofeedback (mHealth)",
+                        desc: "Uso de aplicaciones médicas encriptadas (HIPAA-compliant) que permiten al paciente registrar sus síntomas fisiológicos (ej. ritmo cardíaco) para entrenar técnicas de Grounding en casa.",
+                        principle: "Autonomía. Empoderar al paciente dotándolo de herramientas de autorregulación guiada fuera de sesión."
+                    },
+                    {
+                        title: "Material Psicoeducativo Genérico",
+                        desc: "Utilizar LLMs (IAs de texto) para generar rápidamente metáforas, cuentos terapéuticos o plantillas de ejercicios genéricos sin introducir NINGÚN dato identificable del paciente.",
+                        principle: "Competencia. Optimizar el tiempo administrativo del terapeuta respetando estrictamente el Secreto Profesional."
+                    },
+                    {
+                        title: "Sistemas de Predicción de Abandono",
+                        desc: "Uso de algoritmos logísticos para analizar patrones de ausentismo (citas canceladas) y activar recordatorios amigables o llamadas de seguimiento preventivo.",
+                        principle: "No Maleficencia. Reducir la tasa de deserción clínica para asegurar la continuidad y éxito del tratamiento."
+                    },
+                    {
+                        title: "Transcripción Voice-to-Text Clínica",
+                        desc: "Empleo de software de dictado cerrado y avalado para el sector salud, que convierte las notas orales del psicólogo en texto para la historia clínica, ahorrando tiempo sin riesgo de fuga a nubes públicas.",
+                        principle: "Estándares de Calidad. Mantener un registro exhaustivo de la historia clínica (Ley 1090) con mayor eficiencia."
+                    }
+                ]
+            }
+        };
+
+        const state = {
+            org: { dilemma: 0, practice: 0 },
+            edu: { dilemma: 0, practice: 0 },
+            soc: { dilemma: 0, practice: 0 },
+            cli: { dilemma: 0, practice: 0 }
+        };
+
+        const colors = {
+            org: 'law-gold', edu: 'green-600', soc: 'orange-500', cli: 'bio-blue'
+        };
+
+        // Función para girar la tarjeta
+        function toggleFlip(area) {
+            document.getElementById(`flip-inner-${area}`).classList.toggle('is-flipped');
+        }
+
+        // Función para cambiar slide de carrusel (Dilema o Práctica)
+        function changeSlide(area, type, direction) {
+            const dataArr = areasData[area][type];
+            const maxIndex = dataArr.length - 1;
+            
+            state[area][type] += direction;
+            if (state[area][type] > maxIndex) state[area][type] = 0;
+            if (state[area][type] < 0) state[area][type] = maxIndex;
+
+            renderSlide(area, type);
+        }
+
+        function renderSlide(area, type) {
+            const container = document.getElementById(`content-${area}-${type}`);
+            const counter = document.getElementById(`counter-${area}-${type}`);
+            const index = state[area][type];
+            const item = areasData[area][type][index];
+            const colorClass = colors[area];
+
+            // Trigger animation
+            container.classList.remove('fade-content');
+            void container.offsetWidth; // reflow
+            container.classList.add('fade-content');
+
+            // Set colors based on Type (Dilemma = Red-ish box, Practice = Green-ish box)
+            let boxBg, boxBorder, boxText;
+            if (type === 'dilemma') {
+                boxBg = 'bg-red-50';
+                boxBorder = 'border-red-200';
+                boxText = 'text-red-800';
+            } else {
+                boxBg = 'bg-green-50';
+                boxBorder = 'border-green-200';
+                boxText = 'text-green-800';
+            }
+
+            container.innerHTML = `
+                <p class="font-bold text-gray-800 mb-2">${type === 'dilemma' ? 'Dilema' : 'Práctica'}: ${item.title}</p>
+                <p class="text-gray-600 text-sm mb-4 leading-relaxed">${item.desc}</p>
+                <div class="${boxBg} p-3 rounded-lg text-sm border-l-4 ${boxBorder} ${boxText} font-medium mt-auto shadow-sm">
+                    <strong>Principio Ético:</strong> ${item.principle}
+                </div>
+            `;
+            
+            counter.innerText = `${index + 1} / 5`;
+        }
+
+        // --- DATOS DEL SIMULADOR DE TELÉFONO ---
+        const phoneCases = {
+            1: {
+                appName: "Tinder",
+                appColor: "F52459",
+                content: `
+                    <div class="bg-gray-100 rounded-lg p-3 mb-4 text-center text-sm font-bold text-gray-600">¡Hicieron Match!</div>
+                    <div class="bg-pink-50 p-4 rounded-2xl mb-4 shadow-sm border border-pink-200">
+                        <img src="https://ui-avatars.com/api/?name=Paciente&background=random" class="w-16 h-16 rounded-full mx-auto mb-2 shadow-sm">
+                        <p class="text-center font-bold text-gray-800">Andrés (Tu paciente actual)</p>
+                        <p class="text-center text-xs text-gray-500 mb-3">"A 2 kilómetros de ti"</p>
+                        <div class="bg-white p-3 rounded-xl text-sm text-gray-700 italic border border-pink-200 relative">
+                            <div class="absolute -left-2 top-3 w-3 h-3 bg-white border-l border-b border-pink-200 transform rotate-45"></div>
+                            "Doc, ¡qué sorpresa encontrarla por aquí! Sabía que teníamos química en el consultorio 😉 ¿Nos tomamos un café este viernes?"
+                        </div>
+                    </div>
+                `,
+                analysis: `
+                    <strong class="text-red-700 block mb-1"><i class="fas fa-ban"></i> Riesgo de Relación Dual (Clínico)</strong>
+                    <span class="text-gray-700">Tener apps de citas es legal. Pero al hacer match con un paciente activo, el encuadre se rompe. <strong>Acción ética:</strong> Deshacer el match de inmediato y en la próxima sesión abordar el límite terapéutico.</span>
+                `
+            },
+            2: {
+                appName: "ChatGPT 4",
+                appColor: "10a37f",
+                content: `
+                    <div class="flex flex-col gap-3">
+                        <div class="bg-white p-3 rounded-xl rounded-tr-none border border-gray-200 self-end shadow-sm w-5/6 text-sm text-gray-800">
+                            <strong>Prompt del Psicólogo:</strong> "Resume la entrevista clínica de este alumno: Juan Pérez, 14 años, confiesa abuso de sustancias en casa y maltrato por parte de su padre biológico Carlos Pérez."
+                        </div>
+                        <div class="bg-teal-50 p-3 rounded-xl rounded-tl-none border border-teal-200 self-start shadow-sm w-5/6 text-sm text-teal-900">
+                            <strong>IA:</strong> "Resumen Clínico Escolar generado: El estudiante Juan Pérez (14) presenta vulnerabilidad por..."
+                        </div>
+                    </div>
+                `,
+                analysis: `
+                    <strong class="text-red-700 block mb-1"><i class="fas fa-lock-open"></i> Violación de Confidencialidad (Educativo)</strong>
+                    <span class="text-gray-700">Subir datos identificables (nombres, problemas) de un menor a una IA abierta entrega la Historia Clínica a los servidores de OpenAI, perdiendo el control de la información (Falta gravísima a la Ley 1090).</span>
+                `
+            },
+            3: {
+                appName: "LinkedIn / Google",
+                appColor: "0A66C2",
+                content: `
+                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                        <div class="text-xs text-gray-400 mb-2 uppercase tracking-widest font-bold">Historial de Búsqueda</div>
+                        <div class="bg-gray-50 p-3 rounded text-sm text-gray-700 border-l-4 border-blue-600 mb-3">
+                            <i class="fas fa-search text-gray-400 mr-2"></i> "María Gómez candidata puesto contabilidad fotos fiesta"
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded text-sm text-gray-700 border-l-4 border-blue-600">
+                            <i class="fas fa-search text-gray-400 mr-2"></i> "María Gómez Facebook público opiniones políticas"
+                        </div>
+                    </div>
+                `,
+                analysis: `
+                    <strong class="text-red-700 block mb-1"><i class="fas fa-user-secret"></i> Ruptura de Objetividad (Organizacional)</strong>
+                    <span class="text-gray-700">"Googlear" a un candidato o paciente para investigar su vida privada sin su consentimiento explícito viola su derecho a la intimidad y contamina la evaluación técnica del psicólogo con sesgos personales.</span>
+                `
+            }
+        };
+
+        function loadPhoneCase(caseId) {
+            document.querySelectorAll('[id^="btn-phone-"]').forEach((btn, index) => {
+                if (index + 1 === caseId) {
+                    btn.classList.add('border-cuc-red', 'bg-gray-100', 'text-gray-800');
+                    btn.classList.remove('border-transparent', 'bg-white', 'text-gray-500');
+                } else {
+                    btn.classList.remove('border-cuc-red', 'bg-gray-100', 'text-gray-800');
+                    btn.classList.add('border-transparent', 'bg-white', 'text-gray-500');
+                }
+            });
+
+            const data = phoneCases[caseId];
+            
+            document.getElementById('phone-icon').src = `https://ui-avatars.com/api/?name=${data.appName.substring(0,1)}&background=${data.appColor}&color=fff`;
+            document.getElementById('phone-title').innerText = data.appName;
+
+            const contentDiv = document.getElementById('phone-content');
+            const analysisDiv = document.getElementById('phone-analysis');
+            
+            contentDiv.style.opacity = 0;
+            analysisDiv.style.opacity = 0;
+
+            setTimeout(() => {
+                contentDiv.innerHTML = data.content;
+                analysisDiv.innerHTML = data.analysis;
+                
+                contentDiv.style.transition = 'opacity 0.4s';
+                analysisDiv.style.transition = 'opacity 0.4s';
+                contentDiv.style.opacity = 1;
+                analysisDiv.style.opacity = 1;
+            }, 200);
+        }
+
+        function showTeacherDebateGuide() {
+            const clave = prompt("Ingrese la clave de moderador (Solo Docente):");
+            if (clave === "10001") {
+                alert("⚖️ GUÍA DE DEBATE - BIOÉTICA, IA Y TELEPSICOLOGÍA:\n\n1. EL FAMILIAR OCULTO: La confidencialidad es la base del encuadre clínico y legal. Si hay un intruso, la sesión pierde su validez ética (posible coacción). Se debe detener la sesión educadamente, alegando 'problemas técnicos', para reprogramarla y fijar reglas estrictas de privacidad en privado con la pareja.\n\n2. EL INFLUENCER: El Secreto Profesional OBLIGA al terapeuta, pero NO al paciente. El paciente es libre de publicar quién es su psicólogo. El dilema surge si el psicólogo 'repostea' el video usándolo como publicidad (Violación de Anuncios Públicos - Relación Dual). La acción correcta es ignorar el video públicamente.\n\n3. EL ALGORITMO PREDICTIVO (Org): El psicólogo debe negarse invocando el Principio de Competencia y Justicia. Una IA no puede reemplazar el juicio clínico humano para despedir a alguien, y usar la salud mental como excusa para despidos es Maleficencia y discriminación laboral.");
+            } else if (clave !== null && clave !== "") {
+                alert("Acceso denegado: Clave incorrecta.");
+            }
+        }
+
+        // Init
+        window.addEventListener('DOMContentLoaded', () => {
+            ['org', 'edu', 'soc', 'cli'].forEach(area => {
+                renderSlide(area, 'dilemma');
+                renderSlide(area, 'practice');
+            });
+            loadPhoneCase(1);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 2: Ética Griega Clásica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --greek-gold: #d4af37;
+            --soft-red: #ffebeb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER / BANNER (Optimizado Móvil) --- */
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .qr-code img {
+            max-height: 80px;
+            border: 2px solid var(--cuc-gray);
+            border-radius: 5px;
+            padding: 2px;
+            transition: transform 0.3s;
+        }
+
+        .qr-code img:hover {
+            transform: scale(1.1);
+            border-color: var(--cuc-red);
+        }
+
+        .qr-label {
+            display: block;
+            font-size: 0.6rem;
+            color: #666;
+            margin-top: 3px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .header-logo img {
+            max-height: 90px;
+            background-color: transparent; 
+        }
+
+        .header-info {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .course-title {
+            color: var(--cuc-red);
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            line-height: 1.1;
+        }
+
+        .prof-info {
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .prof-info strong {
+            color: var(--cuc-red);
+        }
+
+        .contact-label {
+            color: var(--cuc-red);
+            font-weight: 900;
+        }
+
+        /* --- NAVEGACIÓN --- */
+        .nav-bar {
+            background-color: var(--cuc-gray);
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .btn-home {
+            text-decoration: none;
+            color: var(--cuc-dark);
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn-home:hover {
+            color: var(--cuc-red);
+        }
+
+        /* --- CONTENIDO --- */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .section-header {
+            margin-bottom: 50px;
+        }
+
+        .section-header h1 {
+            color: var(--cuc-red);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* SECCIÓN 1: LOS 3 MAESTROS */
+        .philosophers-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+
+        .philosopher-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            width: 300px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .philosopher-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(163, 22, 26, 0.15);
+            border-color: var(--cuc-red);
+        }
+
+        .card-img-top {
+            background-color: var(--cuc-dark);
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+
+        .card-body {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .card-title {
+            color: var(--cuc-red);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .card-subtitle {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .card-text {
+            font-size: 0.95rem;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        /* Detalles ocultos */
+        .more-info {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            text-align: left;
+            background: var(--soft-red);
+            border-radius: 8px;
+            padding: 0 15px;
+        }
+
+        .more-info.show {
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .btn-expand {
+            background: transparent;
+            border: 2px solid var(--cuc-red);
+            color: var(--cuc-red);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-expand:hover {
+            background: var(--cuc-red);
+            color: white;
+        }
+
+        /* SECCIÓN 2: ARISTÓTELES Y EL JUSTO MEDIO */
+        .golden-mean-section {
+            background-color: #fafafa;
+            padding: 40px;
+            border-radius: 15px;
+            border-top: 5px solid var(--cuc-red);
+            margin-bottom: 60px;
+        }
+
+        .mean-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .mean-header h2 { color: var(--cuc-dark); }
+
+        .mean-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            padding: 20px 0;
+        }
+
+        /* Línea base */
+        .mean-diagram::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ccc, var(--cuc-red), #ccc);
+            z-index: 0;
+        }
+
+        .mean-point {
+            position: relative;
+            z-index: 1;
+            background: white;
+            padding: 15px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            width: 28%;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .mean-point.center {
+            border-color: var(--cuc-red);
+            border-width: 3px;
+            transform: scale(1.1);
+            background-color: var(--white);
+            box-shadow: 0 0 15px rgba(163, 22, 26, 0.2);
+        }
+
+        .mean-point:hover { transform: scale(1.05); }
+        .mean-point.center:hover { transform: scale(1.15); }
+
+        .point-label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        .point-title {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: var(--cuc-dark);
+        }
+        
+        .center .point-title { color: var(--cuc-red); }
+
+        .mean-description {
+            margin-top: 30px;
+            text-align: center;
+            min-height: 80px;
+            font-size: 1.1rem;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* SECCIÓN 3: CONEXIÓN PSICOLÓGICA */
+        .connection-box {
+            background: var(--cuc-dark);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .connection-icon {
+            font-size: 4rem;
+            color: var(--cuc-red);
+        }
+
+        .connection-text h3 {
+            color: var(--cuc-red);
+            margin-bottom: 15px;
+        }
+
+        footer {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 0.8rem;
+        }
+
+        /* Responsive Mobile */
+        @media screen and (max-width: 768px) {
+            header {
+                position: relative;
+                padding: 10px;
+                gap: 15px;
+            }
+            .header-logo img { max-height: 60px; }
+            .course-title { font-size: 1.4rem; line-height: 1.2; }
+            .header-logo { order: 1; width: 100%; margin-bottom: 5px;}
+            .header-info { order: 2; width: 100%; margin-bottom: 15px;}
+            
+            .qr-code { 
+                order: 3; 
+                width: 45%; 
+                margin: 0 auto;
+            }
+            .qr-code img { max-height: 80px; }
+
+            .mean-diagram { flex-direction: column; gap: 20px; }
+            .mean-diagram::before { 
+                width: 4px; height: 100%; top: 0; left: 50%; transform: translateX(-50%); 
+                background: linear-gradient(180deg, #ccc, var(--cuc-red), #ccc);
+            }
+            .mean-point { width: 80%; }
+            .connection-box { flex-direction: column; text-align: center; }
+            .philosopher-card { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- QR NAVEGACIÓN -->
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/bioetica/u1clase02.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+
+        <!-- LOGO CUC -->
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa">
+        </div>
+
+        <!-- INFO DOCENTE -->
+        <div class="header-info">
+            <div class="course-title">Bioética y Deontología de la Psicología</div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> caminosdelser85 | 
+                    <span class="contact-label">Web:</span> www.caminosdelser.co
+                </small>
+            </div>
+        </div>
+
+        <!-- QR CONTACTO -->
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="nav-bar">
+        <a href="u1clase01.html" class="btn-home"><i class="fas fa-arrow-left"></i> Volver a la Guía Temática</a>
+    </div>
+
+    <div class="container">
+
+        <div class="section-header">
+            <h1>Clase 2: Ética Griega Clásica</h1>
+            <p>Los cimientos del pensamiento ético occidental: De la introspección socrática a la felicidad aristotélica. Bases filosóficas de la conducta humana.</p>
+        </div>
+
+        <!-- SECCIÓN 1: LOS 3 MAESTROS -->
+        <div class="philosophers-container">
+            
+            <!-- Sócrates -->
+            <div class="philosopher-card">
+                <div class="card-img-top"><i class="fas fa-question"></i></div>
+                <div class="card-body">
+                    <h3 class="card-title">Sócrates</h3>
+                    <span class="card-subtitle">"Conócete a ti mismo"</span>
+                    <p class="card-text">Padre de la ética. Centró la filosofía en el ser humano y la virtud.</p>
+                    <button class="btn-expand" onclick="toggleCard(this)">Ver Aportes</button>
+                    <div class="more-info">
+                        <p><strong>Intelectualismo Moral:</strong> Nadie obra mal a sabiendas. El vicio es ignorancia; la virtud es conocimiento.</p>
+                        <p><strong>La Mayéutica:</strong> El arte de "dar a luz" la verdad a través del diálogo y preguntas constantes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Platón -->
+            <div class="philosopher-card">
+                <div class="card-img-top"><i class="fas fa-dungeon"></i></div>
+                <div class="card-body">
+                    <h3 class="card-title">Platón</h3>
+                    <span class="card-subtitle">"El Mundo de las Ideas"</span>
+                    <p class="card-text">La justicia como armonía entre las partes del alma y la sociedad.</p>
+                    <button class="btn-expand" onclick="toggleCard(this)">Ver Aportes</button>
+                    <div class="more-info">
+                        <p><strong>Dualismo:</strong> Cuerpo (cárcel) y Alma (eterna). El bien supremo reside en el mundo inteligible.</p>
+                        <p><strong>4 Virtudes Cardinales:</strong> Prudencia (Gobernantes), Fortaleza (Guerreros), Templanza (Artesanos) = Justicia.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aristóteles -->
+            <div class="philosopher-card">
+                <div class="card-img-top"><i class="fas fa-balance-scale"></i></div>
+                <div class="card-body">
+                    <h3 class="card-title">Aristóteles</h3>
+                    <span class="card-subtitle">"Eudaimonía"</span>
+                    <p class="card-text">La ética como ciencia práctica. El fin último del hombre es la felicidad.</p>
+                    <button class="btn-expand" onclick="toggleCard(this)">Ver Aportes</button>
+                    <div class="more-info">
+                        <p><strong>Teleología:</strong> Todo tiene un fin (Telos). El fin del hombre es razonar bien.</p>
+                        <p><strong>Hábito:</strong> "Somos lo que hacemos repetidamente". La excelencia no es un acto, es un hábito.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SECCIÓN 2: EL JUSTO MEDIO (Interactivo) -->
+        <div class="golden-mean-section">
+            <div class="mean-header">
+                <h2>La Teoría del Justo Medio</h2>
+                <p>Para Aristóteles, la virtud es el equilibrio racional entre dos extremos viciosos. Haz clic para ver ejemplos:</p>
+            </div>
+
+            <div class="mean-diagram">
+                <div class="mean-point" onclick="showMean('defecto')">
+                    <span class="point-label">Vicio por Defecto</span>
+                    <span class="point-title">Cobardía</span>
+                </div>
+                
+                <div class="mean-point center" onclick="showMean('virtud')">
+                    <span class="point-label">Virtud (Justo Medio)</span>
+                    <span class="point-title">Valentía</span>
+                </div>
+                
+                <div class="mean-point" onclick="showMean('exceso')">
+                    <span class="point-label">Vicio por Exceso</span>
+                    <span class="point-title">Temeridad</span>
+                </div>
+            </div>
+
+            <div id="mean-desc" class="mean-description">
+                Haz clic en los recuadros de arriba para entender la dinámica de la virtud aristotélica.
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3: CONEXIÓN -->
+        <div class="connection-box">
+            <div class="connection-icon"><i class="fas fa-brain"></i></div>
+            <div class="connection-text">
+                <h3>Conexión con la Psicología</h3>
+                <p>Estos conceptos no están muertos. La <strong>Mayéutica</strong> de Sócrates es el antecedente de la entrevista clínica y la reestructuración cognitiva. La búsqueda de la <strong>Eudaimonía</strong> (felicidad a través del sentido y la realización) es central en la Psicología Positiva y Humanista, especialmente en la construcción del Proyecto de Vida.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p>Material diseñado para uso exclusivo académico.</p>
+    </footer>
+
+    <script>
+        // Expandir tarjetas de filósofos
+        function toggleCard(btn) {
+            var content = btn.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                content.classList.remove("show");
+                btn.innerText = "Ver Aportes";
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                content.classList.add("show");
+                btn.innerText = "Ocultar";
+            }
+        }
+
+        // Lógica del Justo Medio
+        function showMean(type) {
+            var desc = document.getElementById('mean-desc');
+            if(type === 'defecto') {
+                desc.innerHTML = "<strong>El Defecto:</strong> La ausencia de la cualidad necesaria. El cobarde huye por miedo y no enfrenta lo que debe enfrentar. En psicología, esto se asemeja a la evitación patológica.";
+            } else if (type === 'virtud') {
+                desc.innerHTML = "<strong>La Virtud:</strong> El equilibrio racional. El valiente siente miedo, pero actúa a pesar de él, de manera inteligente y en el momento adecuado. Es la gestión emocional sana.";
+            } else if (type === 'exceso') {
+                desc.innerHTML = "<strong>El Exceso:</strong> La exageración desmedida. El temerario se arriesga sin evaluar peligros, poniendo en riesgo su vida innecesariamente. Similar a la impulsividad.";
+            }
+        }
+    </script>
+</body>
+</html>

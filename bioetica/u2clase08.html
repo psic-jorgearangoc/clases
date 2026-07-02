@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 8: Dilemas Éticos en Psicología</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cuc-red': '#A3161A',
+                        'cuc-dark': '#1a1a1a',
+                        'cuc-gray': '#f4f4f4',
+                        'bio-blue': '#0d47a1',
+                        'law-gold': '#b8860b',
+                        'success-color': '#2e7d32',
+                        'alert-color': '#d32f2f',
+                    },
+                    fontFamily: {
+                        'sans': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slideIn {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+
+        /* --- Tarjetas de Ejemplos --- */
+        .dilemma-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .dilemma-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        /* --- Árbol de Decisiones --- */
+        .decision-node {
+            animation: fadeInNode 0.5s ease-out forwards;
+        }
+        @keyframes fadeInNode {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .btn-decision {
+            transition: all 0.2s ease;
+        }
+        .btn-decision:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .btn-decision:active {
+            transform: translateY(0);
+        }
+        
+        .history-item {
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+        .history-item:hover {
+            opacity: 1;
+        }
+        
+        /* Botones de Tabs de Árbol */
+        .tree-tab-btn {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-cuc-dark font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER / BANNER -->
+    <header class="bg-white border-b-4 border-cuc-red py-5 shadow-md relative md:sticky md:top-0 z-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-center items-center gap-6 text-center">
+            
+            <div class="order-3 md:order-1 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/bioetica/u2clase08.html" 
+                     alt="QR Clase" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Ir a esta Clase</span>
+            </div>
+
+            <div class="order-1 md:order-2 flex flex-col items-center max-w-2xl">
+                <img src="logocuc.png" alt="Logo Universidad de la Costa" class="h-20 mb-2">
+                <h1 class="text-cuc-red text-2xl md:text-3xl font-black uppercase leading-tight mb-1">
+                    Bioética y Deontología
+                </h1>
+                <div class="text-sm md:text-base text-gray-800">
+                    <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                    Mg. Dirección de Proyectos - Certificado en PNL<br>
+                    <small class="block mt-1">
+                        <span class="text-cuc-red font-black">WhatsApp:</span> 3233796547 | 
+                        <span class="text-cuc-red font-black">IG:</span> caminosdelser85
+                    </small>
+                </div>
+            </div>
+
+            <div class="order-3 md:order-3 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" 
+                     alt="QR Contacto" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Guardar Contacto</span>
+            </div>
+        </div>
+    </header>
+
+    <nav class="bg-gray-100 border-b border-gray-300 py-3 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <a href="u1clase01.html" class="inline-flex items-center gap-2 font-bold text-cuc-dark hover:text-cuc-red transition-colors">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+            <span class="mx-3 text-gray-400">|</span>
+            <span class="text-gray-600 font-bold">Unidad 2: Deontología (Ley 1090)</span>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container mx-auto px-4 py-10 flex-grow max-w-6xl">
+        
+        <div class="text-center mb-16 animate-slideIn">
+            <span class="bg-cuc-dark text-white px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4 inline-block">Clase 8</span>
+            <h2 class="text-4xl font-black text-cuc-red mb-6">Resolución de Dilemas Éticos en Psicología</h2>
+            <div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-lg border-l-8 border-cuc-dark text-left">
+                <p class="text-xl text-gray-700 italic font-light">
+                    "Un dilema ético no es elegir entre lo correcto y lo incorrecto (eso es fácil). Un dilema surge cuando debemos elegir entre dos principios correctos que chocan entre sí, donde obedecer a uno implica inevitablemente traicionar al otro."
+                </p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 1: GALERÍA DE DILEMAS (TEORÍA) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.1s;">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-cuc-dark mb-4">Galería de Dilemas Contemporáneos</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">En la práctica psicológica diaria, los principios de Autonomía, Beneficencia, No Maleficencia y Justicia colisionan constantemente. Exploremos 4 ejemplos clásicos.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Confidencialidad vs Riesgo -->
+                <div class="bg-white p-6 rounded-xl shadow-md dilemma-card hover:border-cuc-red border border-gray-100">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-red-100 text-cuc-red rounded-full flex items-center justify-center text-xl font-bold shrink-0"><i class="fas fa-user-secret"></i></div>
+                        <h4 class="text-xl font-bold text-gray-800">1. Confidencialidad vs. Prevención de Daño</h4>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">El paciente confiesa un delito inminente (ej. planea abusar de un menor o suicidarse). El psicólogo prometió guardar el secreto profesional.</p>
+                    <div class="bg-gray-50 p-3 rounded text-sm border-l-2 border-gray-300">
+                        <strong>Conflicto:</strong> Autonomía (Respeto a la privacidad del paciente) <strong>VS</strong> Beneficencia/No Maleficencia (Proteger la vida de un tercero vulnerable).
+                    </div>
+                </div>
+
+                <!-- Lealtad Institucional -->
+                <div class="bg-white p-6 rounded-xl shadow-md dilemma-card hover:border-bio-blue border border-gray-100">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-blue-100 text-bio-blue rounded-full flex items-center justify-center text-xl font-bold shrink-0"><i class="fas fa-building"></i></div>
+                        <h4 class="text-xl font-bold text-gray-800">2. Lealtad Institucional vs. Bienestar</h4>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Trabajas en RRHH. La empresa te pide que apliques pruebas psicológicas para encontrar excusas "clínicas" y despedir a un empleado sindicalista sin pagarle indemnización.</p>
+                    <div class="bg-gray-50 p-3 rounded text-sm border-l-2 border-gray-300">
+                        <strong>Conflicto:</strong> Justicia (Cumplir con el contrato de la empresa que te paga) <strong>VS</strong> No Maleficencia (No usar la psicología para perjudicar laboralmente a una persona sana).
+                    </div>
+                </div>
+
+                <!-- Autonomía vs Paternalismo -->
+                <div class="bg-white p-6 rounded-xl shadow-md dilemma-card hover:border-law-gold border border-gray-100">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-yellow-100 text-law-gold rounded-full flex items-center justify-center text-xl font-bold shrink-0"><i class="fas fa-hands-helping"></i></div>
+                        <h4 class="text-xl font-bold text-gray-800">3. Autonomía vs. Paternalismo</h4>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Un paciente con Anorexia Severa, pero completamente lúcido, se niega a ser hospitalizado o a recibir tratamiento alimenticio, sabiendo que su vida corre peligro.</p>
+                    <div class="bg-gray-50 p-3 rounded text-sm border-l-2 border-gray-300">
+                        <strong>Conflicto:</strong> Autonomía (Derecho a rechazar un tratamiento médico) <strong>VS</strong> Beneficencia (El deber del terapeuta de actuar para salvarle la vida obligándolo a internarse).
+                    </div>
+                </div>
+
+                <!-- Valores Personales -->
+                <div class="bg-white p-6 rounded-xl shadow-md dilemma-card hover:border-success-color border border-gray-100">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-green-100 text-success-color rounded-full flex items-center justify-center text-xl font-bold shrink-0"><i class="fas fa-balance-scale"></i></div>
+                        <h4 class="text-xl font-bold text-gray-800">4. Valores del Terapeuta vs. Objetividad</h4>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Una mujer acude a terapia buscando apoyo para sobrellevar un aborto voluntario. El psicólogo tiene profundas creencias religiosas provida que le impiden ser objetivo.</p>
+                    <div class="bg-gray-50 p-3 rounded text-sm border-l-2 border-gray-300">
+                        <strong>Conflicto:</strong> Autonomía del Profesional (Objeción de conciencia y libertad de culto) <strong>VS</strong> Beneficencia del Paciente (Derecho a recibir atención sin ser juzgado moralmente).
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: SIMULADOR DE RUTAS (ÁRBOL DE DECISIONES 5 CASOS NUEVOS) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.3s;">
+            <div class="bg-cuc-dark text-white rounded-t-3xl p-8 md:p-10 text-center relative overflow-hidden">
+                <i class="fas fa-project-diagram absolute -left-4 -top-4 text-9xl text-white opacity-5"></i>
+                <h2 class="text-3xl font-black text-law-gold mb-3 relative z-10">Laboratorio Clínico: Árbol de Decisiones</h2>
+                <p class="text-gray-300 max-w-4xl mx-auto relative z-10">
+                    Aquí tienes <strong>5 ejemplos clínicos interactivos distintos</strong> a los de arriba. Selecciona una pestaña. Lee el escenario, elige un camino (A o B) y descubre en tiempo real las consecuencias legales y éticas según la <strong>Ley 1090 de 2006</strong>.
+                </p>
+            </div>
+
+            <div class="bg-gray-100 p-6 md:p-10 rounded-b-3xl border-2 border-t-0 border-cuc-dark shadow-xl">
+                
+                <!-- TABS DE CASOS ÉTICOS (ESTOS SON LOS BOTONES FALTANTES) -->
+                <div class="flex flex-wrap justify-center gap-2 mb-8 bg-white p-2 rounded-xl shadow-sm border border-gray-200">
+                    <button onclick="switchDecisionCase(1)" id="tree-btn-1" class="tree-tab-btn flex-1 min-w-[150px] py-3 px-3 bg-law-gold text-white font-bold text-sm rounded-lg shadow-md uppercase tracking-wider">
+                        1. Divorcio
+                    </button>
+                    <button onclick="switchDecisionCase(2)" id="tree-btn-2" class="tree-tab-btn flex-1 min-w-[150px] py-3 px-3 bg-gray-200 text-gray-700 font-bold text-sm rounded-lg hover:bg-gray-300 uppercase tracking-wider">
+                        2. Redes
+                    </button>
+                    <button onclick="switchDecisionCase(3)" id="tree-btn-3" class="tree-tab-btn flex-1 min-w-[150px] py-3 px-3 bg-gray-200 text-gray-700 font-bold text-sm rounded-lg hover:bg-gray-300 uppercase tracking-wider">
+                        3. El Regalo
+                    </button>
+                    <button onclick="switchDecisionCase(4)" id="tree-btn-4" class="tree-tab-btn flex-1 min-w-[150px] py-3 px-3 bg-gray-200 text-gray-700 font-bold text-sm rounded-lg hover:bg-gray-300 uppercase tracking-wider">
+                        4. La EPS
+                    </button>
+                    <button onclick="switchDecisionCase(5)" id="tree-btn-5" class="tree-tab-btn flex-1 min-w-[150px] py-3 px-3 bg-gray-200 text-gray-700 font-bold text-sm rounded-lg hover:bg-gray-300 uppercase tracking-wider">
+                        5. Prensa
+                    </button>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <!-- Historial (Izquierda) -->
+                    <div class="lg:w-1/3 bg-white p-6 rounded-xl border border-gray-200 shadow-sm overflow-y-auto max-h-[500px]">
+                        <h4 class="font-bold text-cuc-dark mb-4 border-b pb-2"><i class="fas fa-history text-gray-400"></i> Historial Clínico</h4>
+                        <div id="decision-history" class="space-y-4 text-sm text-gray-600">
+                            <div class="text-center italic mt-10">Tus decisiones aparecerán aquí...</div>
+                        </div>
+                    </div>
+
+                    <!-- Nodo Actual (Derecha) -->
+                    <div class="lg:w-2/3 bg-white p-8 rounded-xl border-l-8 shadow-md relative min-h-[400px] flex flex-col justify-center" id="current-node-container">
+                        
+                        <div id="node-badge" class="absolute top-4 right-4 bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                            Cargando...
+                        </div>
+
+                        <div id="node-content" class="decision-node">
+                            <!-- El texto del escenario se inyecta aquí -->
+                        </div>
+
+                        <div id="node-options" class="mt-8 space-y-3 decision-node">
+                            <!-- Los botones A y B se inyectan aquí -->
+                        </div>
+
+                        <div class="mt-8 text-center hidden" id="restart-btn-container">
+                            <button onclick="startDecisionTree()" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-full font-bold hover:bg-gray-300 transition-colors text-sm shadow-sm">
+                                <i class="fas fa-redo mr-1"></i> Reiniciar Este Caso
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: SOCIALIZACIÓN PROYECTO DE AULA -->
+        <section class="mb-10 animate-slideIn" style="animation-delay: 0.5s;">
+            <div class="bg-white border border-gray-200 p-10 md:p-12 rounded-3xl shadow-lg border-t-8 border-law-gold flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
+                <div class="md:w-2/3 relative z-10">
+                    <span class="text-law-gold font-bold tracking-widest uppercase text-sm mb-2 block">Cierre del Corte 2</span>
+                    <h2 class="text-3xl font-black text-cuc-dark mb-4">Socialización Proyecto de Aula (Parte 2)</h2>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                        Es el momento de aterrizar la teoría. Los grupos de trabajo deben presentar la sustentación de un <strong>Dilema Bioético Real</strong>, aplicando los conceptos aprendidos hoy y el marco legal colombiano.
+                    </p>
+                    <div class="bg-yellow-50 border-l-4 border-law-gold p-4 rounded mb-6 text-sm text-gray-800">
+                        <strong>Requisitos de Sustentación:</strong><br>
+                        1. Identificar claramente los principios bioéticos en tensión (Ej. Autonomía vs. Beneficencia).<br>
+                        2. Citar los artículos específicos de la Ley 1090 de 2006 que aplican al caso.<br>
+                        3. Argumentar la resolución basándose en la ética de Aristóteles, Kant o Bentham.
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="bg-gray-100 border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-bold"><i class="fas fa-users mr-2 text-cuc-red"></i> Exposición Grupal</span>
+                        <span class="bg-gray-100 border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-bold"><i class="fas fa-stopwatch mr-2 text-cuc-red"></i> 15 min por grupo</span>
+                    </div>
+                </div>
+                <div class="md:w-1/3 text-center relative z-10">
+                    <div class="w-32 h-32 bg-gray-50 rounded-full border-4 border-law-gold flex items-center justify-center mx-auto mb-4 shadow-inner">
+                        <i class="fas fa-gavel text-5xl text-law-gold"></i>
+                    </div>
+                    <p class="text-sm text-gray-500 font-bold">El Tribunal Escucha: Prepárense para defender su veredicto.</p>
+                </div>
+            </div>
+            
+            <!-- Botón Docente -->
+            <div class="mt-6 text-right">
+                <button onclick="showTeacherGuide()" class="text-xs text-cuc-red font-bold uppercase tracking-widest hover:underline bg-transparent border-none cursor-pointer flex items-center gap-1 ml-auto">
+                    <i class="fas fa-lock"></i> Solucionario Docente (Clase 8)
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-cuc-dark text-white text-center py-8 mt-auto">
+        <div class="container mx-auto px-4">
+            <p class="text-sm md:text-base mb-2">Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+            <p class="text-xs text-gray-400">Material docente: Jorge Arango Castaño. Alineado al Sílabo (Dilemas Éticos y Proyecto de Aula).</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS (Árbol de Decisiones Multi-Caso) -->
+    <script>
+        // ESTADO GLOBAL
+        let currentTreeId = 1;
+        let historyLog = [];
+
+        // DATOS DEL ÁRBOL DE DECISIONES (5 CASOS COMPLETAMENTE NUEVOS)
+        const treesData = {
+            1: { // Caso 1: Padres Divorciados
+                start: {
+                    badge: "Fase 1: El Dilema Principal",
+                    color: "bio-blue",
+                    text: "<strong class='text-xl text-gray-800 block mb-4'>Caso 1: 'Custodia en Disputa'</strong> Eres psicólogo clínico infantil. Atiendes a un niño de 8 años para ayudarlo con su ansiedad. Sus padres están en un divorcio sumamente conflictivo. El padre te exige que redactes un informe declarando que la madre es 'inestable y peligrosa' para ganar la custodia total, amenazando con demandarte por obstrucción a la justicia si te niegas.",
+                    options: [
+                        { text: "Ceder a la presión: Redactar el informe para evitar una demanda legal.", target: "node_a1", class: "bg-gray-200 hover:bg-gray-300 text-gray-800" },
+                        { text: "Priorizar la Ética: Negarte a emitir juicios periciales fuera de tu rol clínico.", target: "node_b1", class: "bg-blue-600 hover:bg-blue-700 text-white" }
+                    ]
+                },
+                node_a1: {
+                    badge: "Resolución Final",
+                    color: "alert-color",
+                    isEnd: true,
+                    text: "<strong class='text-2xl text-alert-color block mb-2'><i class='fas fa-times-circle'></i> MALA PRAXIS (Impericia y Falsedad)</strong>Emitir un concepto pericial forense sobre una persona que NO es tu paciente (la madre) desde un rol puramente clínico, es una violación flagrante a la Ley 1090. Faltaste al principio de Competencia y dañaste el proceso legal del menor.",
+                    options: []
+                },
+                node_b1: {
+                    badge: "Fase 2: El Abandono",
+                    color: "law-gold",
+                    text: "Te niegas. Le explicas que tu rol es clínico y terapéutico, no forense evaluativo. El padre enfurece y dice que te va a arruinar. Tienes miedo. ¿Qué haces con el niño?",
+                    options: [
+                        { text: "Cerrar el caso inmediatamente y negarte a seguir viendo al niño para evitar problemas con los padres.", target: "node_b2", class: "bg-gray-200 hover:bg-gray-300 text-gray-800" },
+                        { text: "Mantener la terapia del niño, blindando el encuadre clínico por escrito e informando a ambas partes tus límites legales.", target: "node_b3", class: "bg-yellow-600 hover:bg-yellow-700 text-white" }
+                    ]
+                },
+                node_b2: {
+                    badge: "Resolución Final",
+                    color: "alert-color",
+                    isEnd: true,
+                    text: "<strong class='text-2xl text-alert-color block mb-2'><i class='fas fa-exclamation-triangle'></i> MALA PRAXIS (Abandono)</strong>Aunque hiciste bien en no redactar el informe, abandonar a un paciente menor de edad en medio de su tratamiento por miedo a sus padres viola el principio de Beneficencia. Los terapeutas no pueden abandonar pacientes intempestivamente.",
+                    options: []
+                },
+                node_b3: {
+                    badge: "Resolución Final",
+                    color: "success-color",
+                    isEnd: true,
+                    text: "<strong class='text-2xl text-success-color block mb-2'><i class='fas fa-check-circle'></i> BUENA PRAXIS (Firmeza Ética)</strong>Mantuviste la integridad de tu rol (Competencia) y no abandonaste a tu paciente (Beneficencia). Al fijar límites claros y por escrito, proteges al menor del conflicto legal y te blindas ante el Tribunal Deontológico.",
+                    options: []
+                }
+            },
+            2: { // Caso 2: Redes Sociales
+                start: {
+                    badge: "Fase 1: El Dilema Principal",
+                    color: "bio-blue",
+                    text: "<strong class='text-xl text-gray-800 block mb-4'>Caso 2: 'El Límite Digital'</strong> Un paciente con Trastorno de Personalidad y gran temor al rechazo encuentra tu perfil personal de Instagram. Te envía solicitud de amistad y comenta fotos de tus vacaciones diciendo: 'Mi doc favorito, tan guapo como siempre'.",
+                    options: [
+                        { text: "Aceptar la solicitud y agradecer el comentario para no herir sus sentimientos ni dañar el rapport.", target: "node_a1", class: "bg-gray-200 hover:bg-gray-300 text-gray-800" },
+                        { text: "Mantener la distancia profesional y no aceptar la solicitud en tu red personal.", target: "node_b1", class: "bg-blue-600 hover:bg-blue-700 text-white" }
+                    ]
+                },
+                node_a1: {
+                    badge: "Resolución Final",
+                    color: "alert-color",
+                    isEnd: true,
+                    text: "<strong class='text-2xl text-alert-color block mb-2'><i class='fas fa-times-circle'></i> MALA PRAXIS (Relación Dual)</strong>Aceptar a un paciente en redes personales borra la frontera terapéutica. Permitir comentarios de índole casi romántica abre la puerta a la confusión de roles, explotación y pérdida absoluta de la objetividad clínica.",
+                    options: []
+                },
+                node_b1: {
+                    badge: "Fase 2: El Manejo Clínico",
+                    color: "law-gold",
+                    text: "Rechazas la solicitud. Al día siguiente en sesión, el paciente se muestra profundamente ofendido: 'Usted me rechazó en Instagram, pensé que le importaba, pero solo soy un número para usted'. ¿Cómo respondes?",
+                    options: [
+                        { text: "Decirle fríamente: 'Son las reglas éticas. No me hable de mis redes sociales, enfoquémonos en su problema'.", target: "node_b2", class: "bg-gray-200 hover:bg-gray-300 text-gray-800" },
+                        { text: "Validar su emoción y explicar empáticamente que mantener el encuadre protege su espacio terapéutico y su propia sanación.", target: "node_b3", class: "bg-yellow-600 hover:bg-yellow-700 text-white" }
+                    ]
+                },
+                node_b2: {
+                    badge: "Resolución Final",
+                    color: "alert-color",
+                    isEnd: true,
+                    text: "<strong class='text-2xl text-alert-color block mb-2'><i class='fas fa-exclamation-triangle'></i> IATROGENIA (Invalidación)</strong>Cumpliste con la ética (No Relación Dual), pero fallaste en la clínica. Una respuesta hostil y cortante a un paciente con miedo al rechazo confirma su herida primaria, dañando el proceso terapéutico.",
+                    options: []
+                },
+                node_b3: {
+                    badge: "Resolución Final",
+                    color: "success-color",
+                    isEnd: true,
+                    text: "<strong class='text-2xl text-success-color block mb-2'><i class='fas fa-check-circle'></i> BUENA PRAXIS (Encuadre Sanador)</strong>Proteger el límite no significa ser cruel. Al usar el rechazo en redes como material de trabajo clínico (para explorar su miedo al abandono) conviertes una crisis deontológica en una oportunidad terapéutica (Beneficencia).",
+                    options: []
+                }
+            },
+            3: { // Caso 3: El Regalo
+                start: {
+                    badge: "Fase 1: El Dilema Principal",
+                    color: "bio-blue",
+                    text: "<strong class='text-xl text-gray-800 block mb-4'>Caso 3: 'El Reloj de Oro'</strong> Has logrado salvar la vida de un paciente con depresión severa y muchos recursos económicos. En la última sesión del año, saca una caja y te regala un reloj Rolex valorado en $10,000 USD. Te dice llorando: 'Si no lo acepta, me sentiré insultado. Usted me devolvió la vida'.",
+                    options: [
+                        { text: "Aceptar el reloj: Recibirlo con gratitud para no ofenderlo, ya que es el fin de año.", target: "node_a1", class: "bg-gray-200 hover:bg-gray-300 text-gray-800" },
+                        { text: "Rechazar el regalo: Mantener la objetividad financiera de la relación terapéutica.", target: "node_b1", class: "bg-blue-600 hover:bg-blue-700 text-white" }
+                    ]
+                },
+                node_a1: {
+                    badge: "Resolución Final",
+                    color: "alert-color",
+                    isEnd: true,
+                    text: "<strong class='text-2xl text-alert-color block mb-2'><i class='fas fa-times-circle'></i> MALA PRAXIS (Conflicto de Intereses)</strong>Recibir obsequios de tan alto valor distorsiona severamente la asimetría de la terapia. Afecta tu objetividad futura y entra en el terreno de la explotación financiera del usuario (Ley 1090).",
+                    options: []
+                },
+                node_b1: {
+                    badge: "Fase 2: El Manejo del Rechazo",
+                    color: "law-gold",
+                    text: "Decides que no puedes aceptar un objeto de tal magnitud. El paciente te mira con dolor y decepción. ¿Cómo manejas esta delicada devolución?",
+                    options: [
+                        { text: "Devolverlo bruscamente: 'La ley me prohíbe aceptar sobornos o regalos caros. Lléveselo de mi consultorio'.", target: "node_b2", class: "bg-gray-200 hover:bg-gray-300 text-gray-800" },
+                        { text: "Agradecer la profunda carga emocional del gesto, pero explicar suavemente que el éxito de la terapia es su mejor regalo y que el código ético impide transacciones materiales.", target: "node_b3", class: "bg-yellow-600 hover:bg-yellow-700 text-white" }
+                    ]
+                },
+                node_b2: {
+                    badge: "Resolución Final",
+                    color: "alert-color",
+                    isEnd: true,
+                    text: "<strong class='text-2xl text-alert-color block mb-2'><i class='fas fa-exclamation-triangle'></i> IMPRUDENCIA CLÍNICA</strong>El paciente no intentaba sobornarte, intentaba expresar gratitud desde su lenguaje afectivo (dinero). Tratarlo como un delincuente destruye la alianza terapéutica innecesariamente.",
+                    options: []
+                },
+                node_b3: {
+                    badge: "Resolución Final",
+                    color: "success-color",
+                    isEnd: true,
+                    text: "<strong class='text-2xl text-success-color block mb-2'><i class='fas fa-check-circle'></i> BUENA PRAXIS (Asertividad Ética)</strong>Separaste el valor monetario del valor emocional. Al validar el sentimiento pero rechazar el objeto físico, mantienes la pureza de la relación clínica sin causar daño al ego del paciente (Beneficencia y Justicia).",
+                    options: []
+                }
+            },
+            4: { // Caso 4: La EPS
+                start: {
+                    badge: "Fase 1: El Dilema Principal",
+                    color: "bio-blue",
+                    text: "<strong class='text-xl text-gray-800 block mb-4'>Caso 4: 'La Cuota de la EPS'</strong> Trabajas en una IPS infantil. Tienes 20 minutos por niño. El coordinador médico te exige que diagnostiques con TDAH (Trastorno por Déficit de Atención) a casi todos los niños inquietos para justificar la medicación y alcanzar las 'metas de facturación'. Te dice que si no lo haces, no te renovarán el contrato.",
+                    options: [
+                        { text: "Ceder por el empleo: Seguir la directriz administrativa para no quedar desempleado.", target: "node_a1", class: "bg-gray-200 hover:bg-gray-300 text-gray-800" },
+                        { text: "Defender el Criterio: Priorizar la ciencia sobre las cuotas administrativas.", target: "node_b1", class: "bg-blue-600 hover:bg-blue-700 text-white" }
+                    ]
+                },
+                node_a1: {
+                    badge: "Resolución Final",
+                    color: "alert-color",
+                    isEnd: true,
+                    text: "<strong class='text-2xl text-alert-color block mb-2'><i class='fas fa-times-circle'></i> MALA PRAXIS (Fraude y Maleficencia)</strong>Diagnosticar enfermedades psiquiátricas inexistentes para enriquecer a una institución es un delito grave y una violación absoluta a la integridad de los niños, quienes recibirán medicación psiquiátrica innecesaria (daño real).",
+                    options: []
+                },
+                node_b1: {
+                    badge: "Fase 2: La Protesta",
+                    color: "law-gold",
+                    text: "Te niegas. El coordinador empieza a presionarte, a gritarte y a poner quejas falsas sobre tu desempeño. Estás furioso. ¿Qué haces?",
+                    options: [
+                        { text: "Renunciar inmediatamente y llevarte las Historias Clínicas de los niños a tu casa para 'tener pruebas' contra la EPS.", target: "node_b2", class: "bg-gray-200 hover:bg-gray-300 text-gray-800" },
+                        { text: "Levantar un acta formal apelando al Artículo 9 de la Ley 1090 (Autonomía), y denunciar la coacción ante el Tribunal Deontológico.", target: "node_b3", class: "bg-yellow-600 hover:bg-yellow-700 text-white" }
+                    ]
+                },
+                node_b2: {
+                    badge: "Resolución Final",
+                    color: "alert-color",
+                    isEnd: true,
+                    text: "<strong class='text-2xl text-alert-color block mb-2'><i class='fas fa-exclamation-triangle'></i> DELITO (Robo de Historias)</strong>Tus intenciones eran nobles, pero sacar Historias Clínicas de la institución sin orden judicial rompe la cadena de custodia y viola el derecho a la intimidad de los pacientes. Es un delito autónomo.",
+                    options: []
+                },
+                node_b3: {
+                    badge: "Resolución Final",
+                    color: "success-color",
+                    isEnd: true,
+                    text: "<strong class='text-2xl text-success-color block mb-2'><i class='fas fa-check-circle'></i> BUENA PRAXIS (Institucionalidad)</strong>Utilizaste los mecanismos legales diseñados precisamente para protegerte. El Artículo 9 prohíbe a superiores no-psicólogos imponer criterios diagnósticos. Defendiste tu autonomía y la salud de los niños.",
+                    options: []
+                }
+            },
+            5: { // Caso 5: La Prensa
+                start: {
+                    badge: "Fase 1: El Dilema Principal",
+                    color: "bio-blue",
+                    text: "<strong class='text-xl text-gray-800 block mb-4'>Caso 5: 'El Periodista'</strong> Eres el psicoterapeuta de un famoso político que atraviesa una crisis severa. Un periodista de un canal nacional te intercepta. Te ofrece dinero y exposición mediática solo para confirmar un detalle menor: 'Solo quiero saber si él es tu paciente, no me des diagnósticos, solo dime si entra a tu consultorio'.",
+                    options: [
+                        { text: "Confirmar solo la asistencia: 'Sí, es mi paciente, pero no daré más detalles'.", target: "node_a1", class: "bg-gray-200 hover:bg-gray-300 text-gray-800" },
+                        { text: "Proteger la confidencialidad total: Negarte a dar información.", target: "node_b1", class: "bg-blue-600 hover:bg-blue-700 text-white" }
+                    ]
+                },
+                node_a1: {
+                    badge: "Resolución Final",
+                    color: "alert-color",
+                    isEnd: true,
+                    text: "<strong class='text-2xl text-alert-color block mb-2'><i class='fas fa-times-circle'></i> MALA PRAXIS (Ruptura del Secreto)</strong>El Secreto Profesional cubre NO SOLO lo que se habla en terapia, sino el HECHO MISMO de que la persona asiste a tu consulta. Confirmar que alguien es tu paciente ante la prensa viola su derecho a la intimidad y autonomía.",
+                    options: []
+                },
+                node_b1: {
+                    badge: "Fase 2: El Manejo Periodístico",
+                    color: "law-gold",
+                    text: "Sabes que no puedes confirmar nada. Sin embargo, el periodista es insistente, pone micrófonos en tu cara y te acorrala en la salida. ¿Cómo te liberas de la presión?",
+                    options: [
+                        { text: "Mentir para salvarlo: 'No, él nunca ha venido aquí. No conozco a ese señor'.", target: "node_b2", class: "bg-gray-200 hover:bg-gray-300 text-gray-800" },
+                        { text: "Apelar a la ley: 'Por ética profesional y legal, no puedo confirmar ni negar la asistencia de ninguna persona a mi consultorio'.", target: "node_b3", class: "bg-yellow-600 hover:bg-yellow-700 text-white" }
+                    ]
+                },
+                node_b2: {
+                    badge: "Resolución Final",
+                    color: "alert-color",
+                    isEnd: true,
+                    text: "<strong class='text-2xl text-alert-color block mb-2'><i class='fas fa-exclamation-triangle'></i> ERROR PROCEDIMENTAL</strong>Aunque quieres proteger al político, el psicólogo no debe emitir falsedades públicas ('nunca ha venido'). Si luego se comprueba que sí iba (ej. facturas, cámaras), tu credibilidad como profesional quedará destruida públicamente.",
+                    options: []
+                },
+                node_b3: {
+                    badge: "Resolución Final",
+                    color: "success-color",
+                    isEnd: true,
+                    text: "<strong class='text-2xl text-success-color block mb-2'><i class='fas fa-check-circle'></i> BUENA PRAXIS (Barrera Ética)</strong>Usar la fórmula 'ni confirmo ni niego' basada en el código de ética (Ley 1090) te blinda jurídicamente y cierra cualquier puerta al acoso periodístico sin tener que recurrir a la mentira. Máxima protección al paciente.",
+                    options: []
+                }
+            }
+        };
+
+        // --- FUNCIONES DEL ÁRBOL ---
+        function switchDecisionCase(caseId) {
+            currentTreeId = caseId;
+            
+            // Actualizar botones de las pestañas
+            document.querySelectorAll('.tree-tab-btn').forEach((btn, index) => {
+                btn.classList.remove('bg-law-gold', 'text-white', 'shadow-md');
+                btn.classList.add('bg-gray-200', 'text-gray-700');
+                if (index + 1 === caseId) {
+                    btn.classList.add('bg-law-gold', 'text-white', 'shadow-md');
+                    btn.classList.remove('bg-gray-200', 'text-gray-700');
+                }
+            });
+            
+            // Reiniciar y cargar el árbol seleccionado
+            startDecisionTree();
+        }
+
+        function startDecisionTree() {
+            historyLog = [];
+            updateHistoryUI();
+            document.getElementById('restart-btn-container').classList.add('hidden');
+            renderNode('start');
+        }
+
+        function renderNode(nodeId) {
+            const node = treesData[currentTreeId][nodeId];
+            const container = document.getElementById('current-node-container');
+            const content = document.getElementById('node-content');
+            const optionsContainer = document.getElementById('node-options');
+            const badge = document.getElementById('node-badge');
+
+            // Actualizar Badge y Color de borde
+            badge.innerHTML = node.badge;
+            badge.className = `absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-${node.color.replace('color', '100')} text-${node.color}`;
+            
+            // Si el color no usa el sufijo -color (ej. bio-blue), arreglamos el bg
+            if(node.color === 'bio-blue') badge.className = "absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-800";
+            if(node.color === 'law-gold') badge.className = "absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-yellow-100 text-yellow-800";
+            if(node.color === 'alert-color') badge.className = "absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-red-100 text-red-800";
+            if(node.color === 'success-color') badge.className = "absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-green-100 text-green-800";
+
+            container.className = `lg:w-2/3 bg-white p-8 rounded-xl border-l-8 border-${node.color} shadow-md relative min-h-[400px] flex flex-col justify-center transition-colors duration-500`;
+
+            // Reset animations
+            content.classList.remove('decision-node');
+            optionsContainer.classList.remove('decision-node');
+            void content.offsetWidth; // trigger reflow
+            content.classList.add('decision-node');
+            optionsContainer.classList.add('decision-node');
+
+            // Set Text
+            content.innerHTML = `<p class="text-gray-700 text-lg leading-relaxed">${node.text}</p>`;
+
+            // Set Options
+            optionsContainer.innerHTML = '';
+            if (node.options && node.options.length > 0) {
+                node.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = `btn-decision w-full text-left p-4 rounded-xl font-bold shadow-sm border border-transparent ${opt.class}`;
+                    btn.innerHTML = `<i class="fas fa-arrow-right mr-2 opacity-50"></i> ${opt.text}`;
+                    btn.onclick = () => makeDecision(opt.text, opt.target);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+
+            // Is End Node?
+            if (node.isEnd) {
+                document.getElementById('restart-btn-container').classList.remove('hidden');
+            }
+        }
+
+        function makeDecision(choiceText, targetNode) {
+            historyLog.push(choiceText);
+            updateHistoryUI();
+            renderNode(targetNode);
+        }
+
+        function updateHistoryUI() {
+            const historyDiv = document.getElementById('decision-history');
+            if (historyLog.length === 0) {
+                historyDiv.innerHTML = '<div class="text-center italic mt-10">Tus decisiones aparecerán aquí...</div>';
+                return;
+            }
+
+            historyDiv.innerHTML = '';
+            historyLog.forEach((item, index) => {
+                const step = document.createElement('div');
+                step.className = "history-item bg-gray-50 p-3 rounded border-l-4 border-gray-300 flex items-start gap-2";
+                step.innerHTML = `<span class="font-bold text-gray-400">${index + 1}.</span> <span class="text-sm">${item}</span>`;
+                historyDiv.appendChild(step);
+            });
+            
+            // Auto scroll history
+            historyDiv.scrollTop = historyDiv.scrollHeight;
+        }
+
+        // Solucionario Docente
+        function showTeacherGuide() {
+            const clave = prompt("Ingrese clave de acceso (Solo Docente):");
+            if (clave === "10001") {
+                alert("⚖️ GUÍA DOCENTE - CLASE 8 (Dilemas Éticos):\n\n1. Objetivo del Simulador: Mostrar a los estudiantes que en bioética no basta con 'aplicar la ley' de forma robótica. El 'cómo' se aplica la ley determina si hubo Maleficencia o Buena Praxis.\n\n2. Para la Socialización de Proyectos, exija a los grupos que sus resoluciones deontológicas no sean de 'opinión personal', sino fundamentadas en la Ley 1090 de 2006 y en la tensión entre los 4 Principios Bioéticos.\n\n3. Regla de Oro: El secreto profesional es inviolable EXCEPTO ante orden judicial o cuando existe riesgo inminente y comprobable contra la vida del paciente o de un tercero (incluyendo menores vulnerados).\n\n¡Felicidades por finalizar el Corte 2 con esta excelente propuesta interactiva y sus 5 casos prácticos!");
+            } else if (clave !== null && clave !== "") {
+                alert("Acceso denegado: Clave incorrecta.");
+            }
+        }
+
+        // Iniciar
+        window.addEventListener('DOMContentLoaded', () => {
+            switchDecisionCase(1); // Cargar Caso 1 por defecto
+        });
+    </script>
+</body>
+</html>
+```eof

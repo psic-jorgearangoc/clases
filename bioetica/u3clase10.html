@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 10: Ética en Investigación</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cuc-red': '#A3161A',
+                        'cuc-dark': '#1a1a1a',
+                        'cuc-gray': '#f4f4f4',
+                        'soft-red': '#ffebeb',
+                        'bio-blue': '#0d47a1',
+                        'law-gold': '#b8860b',
+                        'success-color': '#2e7d32',
+                        'alert-color': '#d32f2f',
+                        'science-purple': '#6b21a8'
+                    },
+                    fontFamily: {
+                        'sans': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slideIn {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+
+        /* --- FLIP CARDS 3D --- */
+        .flip-card {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .flip-card-front {
+            z-index: 2;
+            transform: rotateY(0deg);
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+            z-index: 1;
+        }
+
+        /* Tabs Interactivas */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Libreta de Laboratorio */
+        .legal-pad {
+            background-color: #fff;
+            background-image: 
+                linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+                linear-gradient(#eee .1em, transparent .1em);
+            background-size: 100% 1.2em;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 30px 30px 30px 100px;
+            position: relative;
+        }
+        .legal-pad::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            background-color: var(--cuc-red);
+            border-radius: 8px 0 0 8px;
+        }
+        @media screen and (max-width: 768px) {
+            .legal-pad { padding: 20px 20px 20px 60px; }
+            .legal-pad::before { width: 40px; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-cuc-dark font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER COMPACTO -->
+    <header class="bg-white border-b-4 border-cuc-red py-2 shadow-md relative md:sticky md:top-0 z-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-3 text-center">
+            
+            <div class="order-2 md:order-1 flex-col items-center hidden md:flex">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/bioetica/u3clase10.html" 
+                     alt="QR Clase" 
+                     class="h-12 border border-gray-200 rounded p-0.5 transition-transform hover:scale-110">
+                <span class="text-[0.55rem] text-gray-600 font-bold uppercase mt-1">Material Interactivo</span>
+            </div>
+
+            <div class="order-1 md:order-2 flex flex-col md:flex-row items-center gap-3 md:gap-4 max-w-3xl">
+                <img src="logocuc.png" alt="Logo Universidad de la Costa" class="h-12 md:h-14">
+                <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                    <h1 class="text-cuc-red text-lg md:text-xl font-black uppercase leading-tight">
+                        Bioética y Deontología
+                    </h1>
+                    <div class="text-xs md:text-sm text-gray-800 leading-tight mt-1">
+                        <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo 
+                        <span class="hidden md:inline"> | </span><br class="md:hidden">
+                        Mg. Dirección de Proyectos - Certificado PNL<br>
+                        <span class="text-cuc-red font-black">IG:</span> caminosdelser85 | 
+                        <span class="text-cuc-red font-black">Web:</span> www.caminosdelser.co
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-3 md:order-3 flex-col items-center hidden md:flex">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" 
+                     alt="QR Contacto" 
+                     class="h-12 border border-gray-200 rounded p-0.5 transition-transform hover:scale-110">
+                <span class="text-[0.55rem] text-gray-600 font-bold uppercase mt-1">Conectar (vCard)</span>
+            </div>
+
+            <div class="order-4 md:hidden flex justify-center gap-8 w-full mt-2 pt-2 border-t border-gray-100">
+                <div class="flex flex-col items-center">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/bioetica/u3clase10.html" alt="QR" class="h-10 border border-gray-200 rounded p-0.5">
+                    <span class="text-[0.5rem] text-gray-600 font-bold uppercase mt-1">Material</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" alt="vCard" class="h-10 border border-gray-200 rounded p-0.5">
+                    <span class="text-[0.5rem] text-gray-600 font-bold uppercase mt-1">vCard</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="bg-gray-100 border-b border-gray-300 py-3 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <a href="u1clase01.html" class="inline-flex items-center gap-2 font-bold text-cuc-dark hover:text-cuc-red transition-colors">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+            <span class="mx-3 text-gray-400">|</span>
+            <span class="text-gray-600 font-bold">Unidad 3: Análisis Ético Aplicado</span>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container mx-auto px-4 py-10 flex-grow max-w-6xl">
+        
+        <!-- INTRODUCCIÓN -->
+        <div class="text-center mb-16 animate-slideIn">
+            <span class="bg-science-purple text-white px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4 inline-block shadow-sm">Clase 10</span>
+            <h2 class="text-4xl md:text-5xl font-black text-cuc-dark mb-6">Ética en Investigación Científica</h2>
+            <div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-lg border-l-8 border-science-purple text-left flex items-center gap-6 relative overflow-hidden">
+                <i class="fas fa-microscope absolute -right-10 -bottom-10 text-9xl text-gray-100 opacity-50"></i>
+                <div class="relative z-10">
+                    <p class="text-xl text-gray-700 italic font-light mb-2">
+                        "La ciencia avanza sobre los hombros de gigantes, pero si esos gigantes pisotean la dignidad humana en nombre del 'progreso', el descubrimiento carece de valor moral. En investigación, el fin nunca justifica los medios."
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 1: EL LADO OSCURO DE LA CIENCIA (HISTORIA) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.1s;">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-cuc-dark mb-4"><i class="fas fa-book-dead text-cuc-red"></i> El Porqué de las Normas</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">Los estrictos comités de ética actuales no nacieron del capricho, nacieron de tragedias reales donde la ciencia cruzó el límite de la maleficencia.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Tuskegee -->
+                <div class="h-80 flip-card group">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-white border-t-8 border-cuc-red flex flex-col items-center justify-center p-6 text-center">
+                            <i class="fas fa-syringe text-5xl text-cuc-red mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Experimento Tuskegee</h4>
+                            <p class="text-gray-500 font-bold mt-2 uppercase tracking-widest text-xs">Sífilis (1932-1972)</p>
+                            <i class="fas fa-sync-alt text-gray-300 mt-4 opacity-40"></i>
+                        </div>
+                        <div class="flip-card-back bg-cuc-red text-white flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-white/30 pb-2 mb-3">La Gran Traición</h4>
+                            <p class="text-sm">Médicos estadounidenses estudiaron la progresión natural de la sífilis en 600 afroamericanos pobres. <strong>Se les ocultó su diagnóstico</strong> y, cuando se descubrió la penicilina (la cura), se les negó el tratamiento para no "arruinar el estudio". Murieron decenas.</p>
+                            <p class="text-xs font-bold mt-2 text-red-200">Resultado: Creación del Informe Belmont.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pequeño Albert -->
+                <div class="h-80 flip-card group">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-white border-t-8 border-science-purple flex flex-col items-center justify-center p-6 text-center">
+                            <i class="fas fa-baby text-5xl text-science-purple mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">El Pequeño Albert</h4>
+                            <p class="text-gray-500 font-bold mt-2 uppercase tracking-widest text-xs">Conductismo (1920)</p>
+                            <i class="fas fa-sync-alt text-gray-300 mt-4 opacity-40"></i>
+                        </div>
+                        <div class="flip-card-back bg-science-purple text-white flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-white/30 pb-2 mb-3">Trauma Inducido</h4>
+                            <p class="text-sm">John B. Watson condicionó a un bebé de 11 meses (hijo de una empleada vulnerable) para que le tuviera terror a las ratas blancas y objetos peludos, asustándolo con ruidos fuertes. <strong>El trauma nunca se revirtió</strong>.</p>
+                            <p class="text-xs font-bold mt-2 text-purple-200">Falta: Daño intencional a población vulnerable.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Milgram -->
+                <div class="h-80 flip-card group">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-white border-t-8 border-gray-800 flex flex-col items-center justify-center p-6 text-center">
+                            <i class="fas fa-bolt text-5xl text-gray-800 mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Experimento Milgram</h4>
+                            <p class="text-gray-500 font-bold mt-2 uppercase tracking-widest text-xs">Obediencia (1961)</p>
+                            <i class="fas fa-sync-alt text-gray-300 mt-4 opacity-40"></i>
+                        </div>
+                        <div class="flip-card-back bg-gray-800 text-white flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-gray-600 pb-2 mb-3">El Engaño Traumático</h4>
+                            <p class="text-sm">Se ordenó a voluntarios aplicar descargas eléctricas "letales" a otra persona (un actor). Los voluntarios creyeron haber matado a alguien. Aunque el descubrimiento científico fue inmenso, el nivel de <strong>estrés extremo y engaño</strong> violó la ética de investigación.</p>
+                            <p class="text-xs font-bold mt-2 text-gray-400">Falta: Engaño sin mitigación de daño.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: RIESGO/BENEFICIO Y CONSENTIMIENTO -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.3s;">
+            <div class="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden max-w-5xl mx-auto">
+                <div class="flex flex-col md:flex-row bg-gray-100 border-b border-gray-200">
+                    <button onclick="switchTab('consentimiento')" id="tab-consentimiento" class="tab-btn flex-1 py-4 px-6 font-bold text-sm uppercase tracking-wider bg-white border-t-4 border-bio-blue text-bio-blue shadow-sm transition-all">
+                        <i class="fas fa-file-signature mr-2"></i> Consentimiento Informado
+                    </button>
+                    <button onclick="switchTab('riesgo')" id="tab-riesgo" class="tab-btn flex-1 py-4 px-6 font-bold text-sm uppercase tracking-wider text-gray-500 border-t-4 border-transparent hover:bg-gray-200 transition-all">
+                        <i class="fas fa-balance-scale mr-2"></i> Riesgo / Beneficio
+                    </button>
+                </div>
+
+                <div class="p-8 md:p-10 relative min-h-[400px]">
+                    
+                    <!-- Consentimiento -->
+                    <div id="content-consentimiento" class="tab-content active">
+                        <h3 class="text-2xl font-black text-cuc-dark mb-4">El Consentimiento en Investigación</h3>
+                        <p class="text-gray-700 mb-6 leading-relaxed">No es lo mismo que el consentimiento clínico. En investigación, el participante dona su tiempo y datos para la ciencia, a menudo sin beneficio personal directo. Por ello, el documento debe garantizar:</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
+                                <h4 class="font-bold text-bio-blue mb-2"><i class="fas fa-door-open"></i> Voluntariedad y Retiro</h4>
+                                <p class="text-sm text-gray-700">El sujeto puede abandonar el estudio <strong>en cualquier momento</strong>, incluso a la mitad de una prueba, sin dar explicaciones y sin que existan represalias (ej. bajarle la nota a un alumno si no participa).</p>
+                            </div>
+                            <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
+                                <h4 class="font-bold text-bio-blue mb-2"><i class="fas fa-mask"></i> El Engaño Justificado</h4>
+                                <p class="text-sm text-gray-700">En psicología, a veces revelar la hipótesis altera la conducta del sujeto (Sesgo de reactividad). El engaño es permitido <strong>SÓLO SI</strong> el riesgo es mínimo, se aprueba por un comité y se realiza un <em>Debriefing</em> (aclaración total) al finalizar.</p>
+                            </div>
+                            <div class="bg-blue-50 p-5 rounded-xl border border-blue-100 md:col-span-2">
+                                <h4 class="font-bold text-bio-blue mb-2"><i class="fas fa-users-shield"></i> Poblaciones Vulnerables</h4>
+                                <p class="text-sm text-gray-700">Investigar con niños, prisioneros, personas con discapacidad cognitiva o subordinados (ej. los propios estudiantes del profesor) requiere protección extrema. Sus condiciones limitan su capacidad para decir "NO" libremente, lo que vicia la voluntariedad.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Riesgo / Beneficio -->
+                    <div id="content-riesgo" class="tab-content">
+                        <h3 class="text-2xl font-black text-cuc-dark mb-4">La Ecuación Riesgo / Beneficio</h3>
+                        <p class="text-gray-700 mb-6 leading-relaxed">El principio de Beneficencia y No Maleficencia obliga al investigador a realizar un cálculo utilitarista antes de ejecutar su diseño metodológico.</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4 bg-yellow-50 p-5 rounded-xl border border-yellow-200">
+                                <div class="bg-law-gold text-white p-3 rounded-full shrink-0"><i class="fas fa-exclamation-triangle"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">La Regla de Oro</h4>
+                                    <p class="text-sm text-gray-600 mt-1">El grado de riesgo para el sujeto (físico, psicológico o social) <strong>NUNCA</strong> debe exceder la importancia humanitaria o científica del problema a resolver. Ningún "gran descubrimiento" justifica traumatizar a un participante.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <div class="bg-gray-700 text-white p-3 rounded-full shrink-0"><i class="fas fa-heartbeat"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Estudios de Riesgo Mínimo</h4>
+                                    <p class="text-sm text-gray-600 mt-1">Son aquellos donde la probabilidad y magnitud de daño no son mayores a los que la persona enfrenta en su vida diaria o en pruebas psicológicas rutinarias (Ej. encuestas anónimas sobre hábitos de estudio).</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 bg-red-50 p-5 rounded-xl border border-red-200">
+                                <div class="bg-cuc-red text-white p-3 rounded-full shrink-0"><i class="fas fa-skull-crossbones"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Obligación de Suspensión</h4>
+                                    <p class="text-sm text-gray-600 mt-1">Si durante el transcurso del estudio se evidencia que el daño causado a los participantes es mayor al anticipado, el investigador principal o el Comité de Ética <strong>están obligados a detener la investigación inmediatamente</strong>.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: LOS PECADOS DE LA PUBLICACIÓN -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.5s;">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-cuc-dark mb-4"><i class="fas fa-file-alt text-law-gold"></i> Los Pecados de la Publicación</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">La ciencia avanza por la confianza. Cuando un psicólogo miente en un artículo científico, contamina el conocimiento que otros usarán para tratar pacientes.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div class="bg-white p-8 rounded-2xl border-t-8 border-cuc-red shadow-md hover:-translate-y-2 transition-transform">
+                    <h4 class="text-xl font-black text-cuc-red mb-3">Fraude Científico (FF)</h4>
+                    <p class="text-sm text-gray-600 mb-3"><strong>Fabricación:</strong> Inventar datos de encuestas o experimentos que nunca se realizaron.</p>
+                    <p class="text-sm text-gray-600"><strong>Falsificación:</strong> Manipular o alterar los datos reales (ej. borrar participantes atípicos) para que la hipótesis del investigador cuadre artificialmente.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl border-t-8 border-gray-800 shadow-md hover:-translate-y-2 transition-transform">
+                    <h4 class="text-xl font-black text-gray-800 mb-3">Salami Slicing</h4>
+                    <p class="text-sm text-gray-600">Publicación fragmentada. Ocurre cuando un investigador divide los datos de un solo estudio grande en 3 o 4 artículos pequeños (como tajadas de salami) para inflar artificialmente su número de publicaciones y su hoja de vida.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl border-t-8 border-law-gold shadow-md hover:-translate-y-2 transition-transform">
+                    <h4 class="text-xl font-black text-law-gold mb-3">Autorías Antiéticas</h4>
+                    <p class="text-sm text-gray-600 mb-3"><strong>Autoría Honoraria:</strong> Incluir al jefe o director que no hizo nada en la investigación, solo por su poder.</p>
+                    <p class="text-sm text-gray-600"><strong>Autoría Fantasma:</strong> Excluir a los estudiantes, pasantes o tesistas que hicieron el trabajo real para que el investigador principal se lleve todo el crédito.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: LABORATORIO INTERACTIVO (TALLER) -->
+        <section class="mb-10 animate-slideIn" style="animation-delay: 0.6s;">
+            <div class="bg-cuc-dark text-white rounded-3xl shadow-2xl border border-gray-700 overflow-hidden">
+                
+                <!-- Encabezado -->
+                <div class="p-8 border-b border-gray-600 text-center relative">
+                    <div class="absolute top-4 right-6 text-5xl opacity-10">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <span class="bg-science-purple text-white font-black px-3 py-1 rounded text-xs uppercase tracking-widest mb-3 inline-block shadow-sm">Taller en Aula</span>
+                    <h2 class="text-3xl font-black mb-2">Comité de Ética Científica</h2>
+                    <p class="text-purple-200 max-w-3xl mx-auto">Ustedes son el comité que debe aprobar o rechazar las siguientes investigaciones psicológicas. Lean los casos y debatan las fallas deontológicas.</p>
+                </div>
+
+                <div class="p-8 md:p-12 flex flex-col lg:flex-row gap-10">
+                    
+                    <!-- Casos -->
+                    <div class="lg:w-1/2">
+                        <div class="flex gap-2 mb-4 bg-gray-800 p-1 rounded-lg">
+                            <button onclick="changeLabCase(1)" id="btn-lab-1" class="lab-tab-btn flex-1 py-2 px-3 bg-white text-cuc-dark font-bold text-sm rounded shadow-sm transition-all">Caso A</button>
+                            <button onclick="changeLabCase(2)" id="btn-lab-2" class="lab-tab-btn flex-1 py-2 px-3 text-gray-400 font-bold text-sm rounded hover:bg-gray-700 transition-all">Caso B</button>
+                            <button onclick="changeLabCase(3)" id="btn-lab-3" class="lab-tab-btn flex-1 py-2 px-3 text-gray-400 font-bold text-sm rounded hover:bg-gray-700 transition-all">Caso C</button>
+                        </div>
+
+                        <!-- Caso 1 -->
+                        <div id="lab-case-1" class="lab-case-content block bg-gray-100 border border-gray-300 rounded-lg p-6 shadow-inner text-gray-800">
+                            <h3 class="text-xl font-bold text-science-purple mb-4 border-b-2 border-gray-300 pb-2">"Los puntos extra"</h3>
+                            <p class="text-sm leading-relaxed mb-4">Un profesor universitario de psicología clínica está realizando una investigación propia sobre niveles de estrés en adultos jóvenes.</p>
+                            <p class="text-sm leading-relaxed mb-4">Para conseguir muestra rápido, entra a su clase y le dice a sus alumnos: <em>"Quien llene esta encuesta de 200 preguntas sobre su salud mental tendrá +0.5 en el parcial final. Quien no lo haga, será evaluado sobre la nota normal"</em>. Todos los alumnos firman el consentimiento informado.</p>
+                        </div>
+
+                        <!-- Caso 2 -->
+                        <div id="lab-case-2" class="lab-case-content hidden bg-gray-100 border border-gray-300 rounded-lg p-6 shadow-inner text-gray-800">
+                            <h3 class="text-xl font-bold text-science-purple mb-4 border-b-2 border-gray-300 pb-2">"Maquillando la Tesis"</h3>
+                            <p class="text-sm leading-relaxed mb-4">Un tesista lleva un año aplicando un nuevo programa para reducir la depresión. Al procesar los datos, nota que la intervención funcionó en 95 pacientes, pero 5 pacientes empeoraron drásticamente, lo que arruina la significancia estadística de su tesis.</p>
+                            <p class="text-sm leading-relaxed mb-4">Para poder graduarse con honores, decide borrar la columna de esos 5 pacientes del Excel, publicando que la terapia tuvo una efectividad del 100%.</p>
+                        </div>
+
+                        <!-- Caso 3 -->
+                        <div id="lab-case-3" class="lab-case-content hidden bg-gray-100 border border-gray-300 rounded-lg p-6 shadow-inner text-gray-800">
+                            <h3 class="text-xl font-bold text-science-purple mb-4 border-b-2 border-gray-300 pb-2">"El Jefe Fantasma"</h3>
+                            <p class="text-sm leading-relaxed mb-4">Un grupo de estudiantes de semillero realiza toda la recolección de datos, marco teórico, diseño y análisis estadístico de una investigación fenomenal.</p>
+                            <p class="text-sm leading-relaxed mb-4">Al momento de enviarla a la revista científica, el decano del programa (que nunca participó en la investigación ni aportó ideas) exige ir como "Primer Autor" del artículo, ya que él prestó los laboratorios de la universidad. Los estudiantes van de segundos y terceros autores.</p>
+                        </div>
+                    </div>
+
+                    <!-- Resolución -->
+                    <div class="lg:w-1/2">
+                        <h3 class="text-xl font-bold text-white mb-4"><i class="fas fa-pen-nib text-law-gold"></i> Evaluación del Comité</h3>
+                        
+                        <div class="legal-pad text-sm text-gray-800 space-y-5">
+                            <div>
+                                <strong class="text-cuc-dark">1. Identificación del Problema:</strong>
+                                <p class="text-gray-500 mb-1">¿Qué norma ética específica (Consentimiento, Riesgo/Beneficio, o Publicación) se violó en este caso?</p>
+                                <div class="border-b border-gray-400 h-6"></div>
+                                <div class="border-b border-gray-400 h-6"></div>
+                            </div>
+
+                            <div>
+                                <strong class="text-cuc-dark">2. Justificación Deontológica:</strong>
+                                <p class="text-gray-500 mb-1">Argumente por qué esta acción daña la integridad científica o los derechos del participante.</p>
+                                <div class="border-b border-gray-400 h-6"></div>
+                                <div class="border-b border-gray-400 h-6"></div>
+                                <div class="border-b border-gray-400 h-6"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 text-right">
+                            <button onclick="showLabVerdict()" class="bg-gray-100 text-cuc-dark px-6 py-2 rounded-lg text-sm font-bold shadow hover:bg-white transition-colors flex items-center justify-center w-full sm:w-auto sm:ml-auto gap-2">
+                                <i class="fas fa-lock text-cuc-red"></i> Veredicto Docente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-cuc-dark text-white text-center py-8 mt-auto">
+        <div class="container mx-auto px-4">
+            <p class="text-sm md:text-base mb-2">Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+            <p class="text-xs text-gray-400">Material docente: Jorge Arango Castaño. Basado en directrices APA y normativa bioética de investigación.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Lógica de Tabs Riesgo/Beneficio
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-bio-blue', 'border-bio-blue', 'shadow-sm');
+                btn.classList.add('text-gray-500', 'border-transparent', 'hover:bg-gray-200');
+            });
+            
+            document.getElementById('content-' + tabId).classList.add('active');
+            const activeBtn = document.getElementById('tab-' + tabId);
+            activeBtn.classList.remove('text-gray-500', 'border-transparent', 'hover:bg-gray-200');
+            activeBtn.classList.add('bg-white', 'text-bio-blue', 'border-bio-blue', 'shadow-sm');
+        }
+
+        // Lógica de Tabs del Laboratorio
+        let currentLabCase = 1;
+        function changeLabCase(caseId) {
+            currentLabCase = caseId;
+            document.querySelectorAll('.lab-case-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block');
+            });
+            document.querySelectorAll('.lab-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-cuc-dark', 'shadow-sm');
+                btn.classList.add('text-gray-400', 'hover:bg-gray-700');
+            });
+            
+            document.getElementById('lab-case-' + caseId).classList.remove('hidden');
+            document.getElementById('lab-case-' + caseId).classList.add('block');
+            
+            const activeBtn = document.getElementById('btn-lab-' + caseId);
+            activeBtn.classList.remove('text-gray-400', 'hover:bg-gray-700');
+            activeBtn.classList.add('bg-white', 'text-cuc-dark', 'shadow-sm');
+        }
+
+        // Veredicto Docente
+        function showLabVerdict() {
+            const clave = prompt("Ingrese la clave de investigador (Solo Docente):");
+            if (clave === "10001") {
+                if (currentLabCase === 1) {
+                    alert("⚖️ VEREDICTO CASO A (COACCIÓN):\n\n1. FALTA: Violación de la Voluntariedad en el Consentimiento Informado.\n\n2. ARGUMENTO: Los alumnos son una 'población vulnerable' ante el profesor debido a la asimetría de poder. Ofrecer notas por participar constituye 'Coerción'. El consentimiento firmado pierde validez porque no fue libre, fue forzado por la conveniencia académica. El Comité de Ética rechazaría el estudio.");
+                } else if (currentLabCase === 2) {
+                    alert("⚖️ VEREDICTO CASO B (FALSIFICACIÓN):\n\n1. FALTA: Fraude Científico (Falsificación de datos).\n\n2. ARGUMENTO: Borrar participantes atípicos o desfavorables para lograr la 'significancia estadística' (p-hacking) contamina el conocimiento científico. Si la terapia se aprueba basada en esta mentira, futuros psicólogos la usarán pensando que es 100% efectiva, dañando potencialmente a pacientes reales (Maleficencia encubierta).");
+                } else if (currentLabCase === 3) {
+                    alert("⚖️ VEREDICTO CASO C (AUTORÍA HONORARIA):\n\n1. FALTA: Ética en Publicaciones (Autoría Honoraria / Fantasma).\n\n2. ARGUMENTO: El decano comete abuso de poder. Prestar un espacio físico no otorga derecho a autoría científica. El 'Primer Autor' debe ser quien lideró el diseño y ejecución intelectual del proyecto (los estudiantes). Esto es explotación académica y plagio institucional.");
+                }
+            } else if (clave !== null && clave !== "") {
+                alert("Acceso denegado: Clave incorrecta.");
+            }
+        }
+    </script>
+</body>
+</html>

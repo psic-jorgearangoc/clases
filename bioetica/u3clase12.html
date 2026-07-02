@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 12: Telepsicología y Cierre</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cuc-red': '#A3161A',
+                        'cuc-dark': '#1a1a1a',
+                        'cuc-gray': '#f4f4f4',
+                        'law-gold': '#b8860b',
+                        'bio-blue': '#0d47a1',
+                        'success-color': '#2e7d32',
+                        'alert-color': '#d32f2f',
+                        'digital-purple': '#6b21a8',
+                    },
+                    fontFamily: {
+                        'sans': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slideIn {
+            animation: slideIn 0.8s ease-out forwards;
+        }
+
+        /* Efecto de Pulso Dorado */
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(184, 134, 11, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0); }
+        }
+        .btn-glow-gold {
+            animation: pulse-gold 2s infinite;
+        }
+
+        /* --- FLIP CARDS 3D --- */
+        .flip-card {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Simulador VideoCall */
+        .videocall-container {
+            background-color: #0f172a;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        .cam-frame {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 2px solid #334155;
+            position: relative;
+        }
+        
+        .sim-btn {
+            transition: all 0.2s;
+            border-left: 4px solid transparent;
+        }
+        .sim-btn:hover {
+            transform: translateX(5px);
+            background-color: #334155;
+            border-color: #b8860b;
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-cuc-dark font-sans min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <!-- Lona para el Confeti -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- HEADER COMPACTO -->
+    <header class="bg-white border-b-4 border-cuc-red py-2 shadow-md relative md:sticky md:top-0 z-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-3 text-center">
+            
+            <div class="order-2 md:order-1 flex-col items-center hidden md:flex">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/bioetica/u3clase12.html" 
+                     alt="QR Clase" class="h-12 border border-gray-200 rounded p-0.5 transition-transform hover:scale-110">
+                <span class="text-[0.55rem] text-gray-600 font-bold uppercase mt-1">Material Interactivo</span>
+            </div>
+
+            <div class="order-1 md:order-2 flex flex-col md:flex-row items-center gap-3 md:gap-4 max-w-3xl">
+                <img src="logocuc.png" alt="Logo Universidad de la Costa" class="h-12 md:h-14">
+                <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                    <h1 class="text-cuc-red text-lg md:text-xl font-black uppercase leading-tight">
+                        Bioética y Deontología
+                    </h1>
+                    <div class="text-xs md:text-sm text-gray-800 leading-tight mt-1">
+                        <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo 
+                        <span class="hidden md:inline"> | </span><br class="md:hidden">
+                        Mg. Dirección de Proyectos - Certificado PNL<br>
+                        <span class="text-cuc-red font-black">IG:</span> caminosdelser85 | 
+                        <span class="text-cuc-red font-black">Web:</span> www.caminosdelser.co
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-3 md:order-3 flex-col items-center hidden md:flex">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" 
+                     alt="QR Contacto" class="h-12 border border-gray-200 rounded p-0.5 transition-transform hover:scale-110">
+                <span class="text-[0.55rem] text-gray-600 font-bold uppercase mt-1">Conectar (vCard)</span>
+            </div>
+
+            <!-- Barra móvil -->
+            <div class="order-4 md:hidden flex justify-center gap-8 w-full mt-2 pt-2 border-t border-gray-100">
+                <div class="flex flex-col items-center">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/bioetica/u3clase12.html" alt="QR" class="h-10 border border-gray-200 rounded p-0.5">
+                    <span class="text-[0.5rem] text-gray-600 font-bold uppercase mt-1">Material</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" alt="vCard" class="h-10 border border-gray-200 rounded p-0.5">
+                    <span class="text-[0.5rem] text-gray-600 font-bold uppercase mt-1">vCard</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="bg-gray-100 border-b border-gray-300 py-3 px-4">
+        <div class="container mx-auto max-w-6xl flex justify-between items-center">
+            <a href="u1clase01.html" class="inline-flex items-center gap-2 font-bold text-cuc-dark hover:text-cuc-red transition-colors">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+            <span class="text-law-gold font-black uppercase text-sm tracking-widest"><i class="fas fa-satellite-dish mr-1"></i> Sesión Final</span>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container mx-auto px-4 py-10 flex-grow max-w-6xl">
+        
+        <!-- INTRODUCCIÓN -->
+        <div class="text-center mb-16 animate-slideIn">
+            <span class="bg-law-gold text-white px-6 py-2 rounded-full text-sm font-black tracking-widest uppercase mb-6 inline-block shadow-lg border border-yellow-600">Clase 12: El Acto Final</span>
+            <h2 class="text-4xl md:text-5xl font-black text-cuc-dark mb-6 uppercase tracking-tight">Telepsicología y el Consultorio Global</h2>
+            <div class="max-w-4xl mx-auto text-lg text-gray-700 leading-relaxed bg-white p-8 rounded-2xl shadow-sm border border-gray-200 relative">
+                <i class="fas fa-globe-americas absolute -top-4 -left-4 text-4xl text-gray-200 bg-white p-2 rounded-full"></i>
+                <p class="mb-4">
+                    Las paredes del consultorio han desaparecido. Hoy, sus pacientes están a un clic de distancia. La tecnología ha democratizado la salud mental, pero ha multiplicado exponencialmente los riesgos deontológicos.
+                </p>
+                <p class="font-bold text-cuc-dark">
+                    La Ley 1090 no exime la responsabilidad por estar detrás de una pantalla. Entremos al <span class="text-digital-purple underline decoration-wavy">siglo XXI de la ética clínica.</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 1: LOS 4 MANDAMIENTOS (FLIP CARDS) -->
+        <section class="mb-24 animate-slideIn" style="animation-delay: 0.2s;">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-black text-cuc-dark mb-4"><i class="fas fa-shield-alt text-digital-purple"></i> Las 4 Fronteras Digitales</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">Según las directrices de la APA y el Colpsic para el ejercicio de la Telepsicología, existen 4 reglas de oro innegociables. (Gire las tarjetas).</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Regla 1 -->
+                <div class="h-64 flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-white border-t-8 border-bio-blue flex flex-col items-center justify-center p-6 text-center">
+                            <i class="fas fa-lock text-4xl text-bio-blue mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Encriptación</h4>
+                            <p class="text-xs font-bold text-gray-400 mt-2 uppercase tracking-widest">(Gira para leer)</p>
+                        </div>
+                        <div class="flip-card-back bg-bio-blue text-white flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-white/30 pb-2 mb-3">No todo software sirve</h4>
+                            <p class="text-sm">Usar Skype básico o videollamada de WhatsApp vulnera la custodia de datos médicos. Debe usar plataformas con encriptación <em>End-to-End</em> (E2EE) avaladas para salud (Ej. Zoom for Healthcare, Doxy.me).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regla 2 -->
+                <div class="h-64 flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-white border-t-8 border-law-gold flex flex-col items-center justify-center p-6 text-center">
+                            <i class="fas fa-passport text-4xl text-law-gold mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Jurisdicción</h4>
+                            <p class="text-xs font-bold text-gray-400 mt-2 uppercase tracking-widest">(Gira para leer)</p>
+                        </div>
+                        <div class="flip-card-back bg-law-gold text-white flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-white/30 pb-2 mb-3">¿Dónde ejerces?</h4>
+                            <p class="text-sm">Tu Tarjeta Profesional vale en Colombia. Si atiendes a un paciente en España y ocurre una crisis, puedes ser demandado por ejercicio ilegal de la medicina en la jurisdicción europea si no conoces sus normativas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regla 3 -->
+                <div class="h-64 flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-white border-t-8 border-cuc-red flex flex-col items-center justify-center p-6 text-center">
+                            <i class="fas fa-ambulance text-4xl text-cuc-red mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Riesgo a Distancia</h4>
+                            <p class="text-xs font-bold text-gray-400 mt-2 uppercase tracking-widest">(Gira para leer)</p>
+                        </div>
+                        <div class="flip-card-back bg-cuc-red text-white flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-white/30 pb-2 mb-3">El Protocolo Vital</h4>
+                            <p class="text-sm">Regla obligatoria: Antes de iniciar <strong>CADA</strong> sesión, debes pedir la dirección física exacta del paciente y el número de un contacto de emergencia local. Si la conexión falla en plena crisis suicida, debes saber a dónde enviar a la policía.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regla 4 -->
+                <div class="h-64 flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-white border-t-8 border-digital-purple flex flex-col items-center justify-center p-6 text-center">
+                            <i class="fas fa-laptop-house text-4xl text-digital-purple mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Encuadre Virtual</h4>
+                            <p class="text-xs font-bold text-gray-400 mt-2 uppercase tracking-widest">(Gira para leer)</p>
+                        </div>
+                        <div class="flip-card-back bg-digital-purple text-white flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-white/30 pb-2 mb-3">La Privacidad</h4>
+                            <p class="text-sm">El paciente no puede tomar la sesión en el supermercado o conduciendo. El psicólogo debe exigir un espacio privado y cerrado, y garantizar que no hayan terceros (familiares) escuchando fuera de cámara.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: SIMULADOR DE VIDEOCONSULTA -->
+        <section class="mb-24 animate-slideIn" style="animation-delay: 0.4s;">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-black text-cuc-dark mb-4"><i class="fas fa-video text-bio-blue"></i> Simulador: Conexión Ética</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">Eres el terapeuta. Estás en medio de una videollamada clínica y surgen imprevistos éticos. <strong>Selecciona la acción correcta.</strong></p>
+            </div>
+
+            <div class="videocall-container p-6 md:p-10 max-w-5xl mx-auto border-t-4 border-bio-blue">
+                
+                <!-- Interfaz de Videollamada Falsa -->
+                <div class="flex items-center justify-between border-b border-slate-700 pb-4 mb-6">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-shield-alt text-green-400"></i>
+                        <span class="text-xs text-gray-300 font-bold tracking-widest uppercase">E2E Encrypted Call</span>
+                    </div>
+                    <div class="text-red-500 animate-pulse font-bold text-sm">
+                        <i class="fas fa-circle text-[8px] align-middle mr-1"></i> REC
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Pantalla Principal (El Caso) -->
+                    <div class="lg:col-span-2 cam-frame rounded-xl p-6 flex flex-col justify-center min-h-[300px] shadow-inner">
+                        <div id="sim-content">
+                            <p class="text-law-gold font-bold mb-2">> ESTABLECIENDO CONEXIÓN...</p>
+                            <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                                Inicias la sesión con Carlos (paciente con ideación suicida moderada). Al encender su cámara, notas que está conectándose desde el asiento del conductor de su auto, conduciendo por una autopista lluviosa. Te dice: <em>"Doc, voy tarde para el trabajo, pero hablemos mientras manejo, lo escucho por el bluetooth".</em>
+                            </p>
+                            <p class="text-blue-400 font-bold mb-4">¿Cuál es tu reacción ética y clínica?</p>
+                        </div>
+                    </div>
+
+                    <!-- Panel Lateral (Opciones) -->
+                    <div class="bg-slate-800 rounded-xl p-4 border border-slate-700 h-full flex flex-col justify-center">
+                        <h4 class="text-white font-bold mb-4 border-b border-slate-600 pb-2 text-sm uppercase tracking-widest text-center">Toma de Decisión</h4>
+                        
+                        <div id="sim-options" class="flex flex-col gap-3">
+                            <button onclick="simStep(1, 'error1')" class="sim-btn text-left border border-slate-600 p-3 rounded-lg text-sm text-gray-300">
+                                A) Continuar la sesión, ya que lo importante es que el paciente no falte a la terapia y mantenga el vínculo.
+                            </button>
+                            <button onclick="simStep(1, 'correct')" class="sim-btn text-left border border-slate-600 p-3 rounded-lg text-sm text-gray-300">
+                                B) Detener la sesión inmediatamente. Exigirle que orille el auto de forma segura antes de hablar, o reprogramar por seguridad.
+                            </button>
+                            <button onclick="simStep(1, 'error2')" class="sim-btn text-left border border-slate-600 p-3 rounded-lg text-sm text-gray-300">
+                                C) Cobrarle la sesión pero colgarle de inmediato como "castigo conductual" por no respetar el encuadre.
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de Control Inferiores -->
+                <div class="mt-6 flex justify-center gap-6 text-2xl text-gray-400">
+                    <i class="fas fa-microphone hover:text-white cursor-pointer transition-colors"></i>
+                    <i class="fas fa-video hover:text-white cursor-pointer transition-colors"></i>
+                    <i class="fas fa-phone-slash text-red-500 hover:text-red-400 cursor-pointer transition-colors" onclick="simReset()"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: EL RITUAL DE CIERRE (INTERACTIVO) -->
+        <section class="mb-10 animate-slideIn" style="animation-delay: 0.6s;">
+            <div id="closing-container" class="bg-cuc-dark rounded-3xl p-10 md:p-16 shadow-2xl relative overflow-hidden text-center transition-all duration-700 border border-gray-700">
+                
+                <!-- ESTADO 1: Antes de Firmar -->
+                <div id="pre-signature">
+                    <i class="fas fa-laptop-medical text-6xl text-law-gold mb-6 opacity-80"></i>
+                    <h2 class="text-4xl font-black text-white mb-4">El Juramento del Siglo XXI</h2>
+                    <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                        No importa si la terapia ocurre en un diván de cuero o a través de fibra óptica. El deber de proteger la dignidad humana, garantizar la privacidad y buscar el bienestar (Beneficencia) es inalterable. Si están listos para portar la tarjeta profesional en esta era digital, presten juramento.
+                    </p>
+                    
+                    <div class="bg-gray-900 p-6 rounded-xl border border-gray-700 max-w-2xl mx-auto mb-10 text-left">
+                        <p class="text-gray-300 text-sm italic border-l-2 border-law-gold pl-4">
+                            "Prometo ejercer la Psicología con lealtad y rectitud, sin importar el canal o la tecnología. Protegeré la intimidad de los datos de mis pacientes con la mayor rigurosidad, no sucumbiré a la superficialidad del mundo digital, y mantendré intacta mi humanidad para el alivio del sufrimiento de quienes confíen en mí."
+                        </p>
+                    </div>
+
+                    <button onclick="triggerClosingRitual()" class="bg-law-gold text-cuc-dark px-10 py-4 rounded-full font-black text-xl btn-glow-gold hover:bg-white transition-colors flex items-center gap-3 mx-auto">
+                        <i class="fas fa-file-signature"></i> Firmar Encuadre Digital
+                    </button>
+                </div>
+
+                <!-- ESTADO 2: Después de Firmar (El Mensaje del Profe) -->
+                <div id="post-signature" class="hidden flex flex-col items-center">
+                    <div class="w-32 h-32 bg-law-gold rounded-full flex items-center justify-center border-4 border-white shadow-[0_0_40px_rgba(184,134,11,0.6)] mb-8 transform scale-0" id="badge-icon">
+                        <i class="fas fa-id-badge text-6xl text-cuc-dark"></i>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-law-gold/30 max-w-3xl w-full text-left opacity-0 translate-y-10" id="prof-message">
+                        <h3 class="text-2xl font-black text-law-gold mb-4 border-b border-law-gold/30 pb-2">Colegas, hemos terminado:</h3>
+                        <p class="text-gray-200 text-lg mb-4 leading-relaxed">
+                            A partir de hoy, la Bioética deja de ser una materia en su pensum para convertirse en el escudo que protegerá sus carreras y la vida de sus pacientes, ya sea presencial o en línea.
+                        </p>
+                        <p class="text-gray-200 text-lg mb-6 leading-relaxed">
+                            La tecnología cambiará, vendrán nuevas redes sociales y la Inteligencia Artificial avanzará, pero <strong>el dolor humano, la empatía y la necesidad de ser escuchado jamás serán automatizables.</strong> Sean impecables con la ley, dominen las herramientas, pero nunca pierdan el calor humano.
+                        </p>
+                        <p class="text-white font-bold text-xl mb-1">Ha sido un honor ser su profesor.</p>
+                        <p class="text-gray-400 mb-6">Nos vemos en el terreno profesional.</p>
+                        
+                        <div class="flex items-center gap-4 border-t border-gray-600 pt-4">
+                            <div class="w-12 h-12 bg-cuc-red rounded-full flex items-center justify-center text-white font-bold text-xl">JA</div>
+                            <div>
+                                <p class="text-law-gold font-black uppercase tracking-widest text-sm">Jorge Arango Castaño</p>
+                                <p class="text-xs text-gray-400">Psicólogo - Su Futuro Colega</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-300 text-center py-8 mt-auto">
+        <div class="container mx-auto px-4">
+            <p class="text-sm font-bold text-cuc-dark mb-1 uppercase tracking-widest">Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+            <p class="text-xs text-gray-500">Fin de la Unidad 3: Bioética, Deontología y Telepsicología.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // --- LÓGICA DEL SIMULADOR DE TELEPSICOLOGÍA ---
+        const simContent = document.getElementById('sim-content');
+        const simOptions = document.getElementById('sim-options');
+        
+        function simStep(step, result) {
+            if (step === 1) {
+                if (result === 'error1') {
+                    simContent.innerHTML = `
+                        <p class="text-red-400 font-bold mb-2">> MALA PRAXIS (IMPRUDENCIA Y NEGLIGENCIA)</p>
+                        <p class="text-gray-300 text-lg mb-6">Dar terapia a alguien que va conduciendo en la lluvia es extremadamente peligroso. La terapia genera carga cognitiva y emocional, aumentando dramáticamente el riesgo de un accidente automovilístico mortal. Has violado el principio de No Maleficencia.</p>
+                    `;
+                    simOptions.innerHTML = `<button onclick="simReset()" class="sim-btn w-full text-left border border-slate-600 p-3 rounded-lg text-sm text-law-gold"><i class="fas fa-undo"></i> Intentar de nuevo</button>`;
+                } else if (result === 'error2') {
+                    simContent.innerHTML = `
+                        <p class="text-red-400 font-bold mb-2">> IATROGENIA (ABANDONO Y HOSTILIDAD)</p>
+                        <p class="text-gray-300 text-lg mb-6">Colgar abruptamente a un paciente con ideación suicida, sin verificar su seguridad, es un acto de negligencia hostil. El encuadre debe protegerse, pero la vida prima sobre las reglas de cobro.</p>
+                    `;
+                    simOptions.innerHTML = `<button onclick="simReset()" class="sim-btn w-full text-left border border-slate-600 p-3 rounded-lg text-sm text-law-gold"><i class="fas fa-undo"></i> Intentar de nuevo</button>`;
+                } else {
+                    simContent.innerHTML = `
+                        <p class="text-green-400 font-bold mb-2">> DECISIÓN CORRECTA. AVANZANDO...</p>
+                        <p class="text-gray-300 text-lg mb-6">Le exiges que se detenga. Carlos orilla el auto. Se pone a llorar y dice: <em>"Tiene razón. Estoy a punto de colapsar. La verdad es que acabo de perder el trabajo y no sé cómo decírselo a mi familia..."</em>. De repente, ves una sombra en la cámara. Es la suegra de Carlos que acaba de subirse a la parte trasera del auto y está escuchando todo.</p>
+                        <p class="text-blue-400 font-bold mb-4">¿Qué haces ahora?</p>
+                    `;
+                    simOptions.innerHTML = `
+                        <button onclick="simStep(2, 'error')" class="sim-btn text-left border border-slate-600 p-3 rounded-lg text-sm text-gray-300">
+                            A) Ignorar a la suegra para no incomodar a Carlos y seguir hablando en "clave" para que ella no entienda.
+                        </button>
+                        <button onclick="simStep(2, 'correct')" class="sim-btn text-left border border-slate-600 p-3 rounded-lg text-sm text-gray-300">
+                            B) Pausar la sesión, pedirle a Carlos que se ponga audífonos o suspenderla si no se puede garantizar la privacidad absoluta del espacio.
+                        </button>
+                    `;
+                }
+            } else if (step === 2) {
+                if (result === 'error') {
+                    simContent.innerHTML = `
+                        <p class="text-red-400 font-bold mb-2">> RUPTURA DEL SECRETO (FALTA GRAVE)</p>
+                        <p class="text-gray-300 text-lg mb-6">Al permitir que un tercero (la suegra) escuche la confesión sobre su despido, eres cómplice de la violación de la confidencialidad. En telepsicología, el terapeuta es responsable de exigir y garantizar el encuadre privado.</p>
+                    `;
+                    simOptions.innerHTML = `<button onclick="simReset()" class="sim-btn w-full text-left border border-slate-600 p-3 rounded-lg text-sm text-law-gold"><i class="fas fa-undo"></i> Reiniciar Simulación</button>`;
+                } else {
+                    simContent.innerHTML = `
+                        <div class="bg-green-900/30 p-6 rounded-xl border border-green-500 h-full flex flex-col justify-center">
+                            <p class="text-green-400 font-black text-2xl mb-2">> ¡VEREDICTO ÉTICO ALCANZADO!</p>
+                            <p class="text-white text-lg mb-2">Protegiste la vida del paciente al detener el auto, y luego protegiste su confidencialidad al exigir el uso de audífonos. Has dominado las reglas de la Telepsicología clínica.</p>
+                            <p class="text-law-gold font-bold mt-4"><i class="fas fa-check-circle"></i> Excelente praxis profesional.</p>
+                        </div>
+                    `;
+                    simOptions.innerHTML = `<div class="text-center text-gray-500 font-bold p-4">Sesión Finalizada</div>`;
+                }
+            }
+        }
+
+        function simReset() {
+            simContent.innerHTML = `
+                <p class="text-law-gold font-bold mb-2">> ESTABLECIENDO CONEXIÓN...</p>
+                <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                    Inicias la sesión con Carlos (paciente con ideación suicida moderada). Al encender su cámara, notas que está conectándose desde el asiento del conductor de su auto, conduciendo por una autopista lluviosa. Te dice: <em>"Doc, voy tarde para el trabajo, pero hablemos mientras manejo, lo escucho por el bluetooth".</em>
+                </p>
+                <p class="text-blue-400 font-bold mb-4">¿Cuál es tu reacción ética y clínica?</p>
+            `;
+            simOptions.innerHTML = `
+                <button onclick="simStep(1, 'error1')" class="sim-btn text-left border border-slate-600 p-3 rounded-lg text-sm text-gray-300">
+                    A) Continuar la sesión, ya que lo importante es que el paciente no falte a la terapia y mantenga el vínculo.
+                </button>
+                <button onclick="simStep(1, 'correct')" class="sim-btn text-left border border-slate-600 p-3 rounded-lg text-sm text-gray-300">
+                    B) Detener la sesión inmediatamente. Exigirle que orille el auto de forma segura antes de hablar, o reprogramar por seguridad.
+                </button>
+                <button onclick="simStep(1, 'error2')" class="sim-btn text-left border border-slate-600 p-3 rounded-lg text-sm text-gray-300">
+                    C) Cobrarle la sesión pero colgarle de inmediato como "castigo conductual" por no respetar el encuadre.
+                </button>
+            `;
+        }
+
+        // --- LÓGICA DE LA CEREMONIA DE CIERRE Y CONFETI ---
+        function triggerClosingRitual() {
+            document.getElementById('pre-signature').classList.add('hidden');
+            const postSig = document.getElementById('post-signature');
+            postSig.classList.remove('hidden');
+            
+            // Animaciones
+            setTimeout(() => {
+                document.getElementById('badge-icon').classList.remove('scale-0');
+                document.getElementById('badge-icon').classList.add('scale-100', 'transition-transform', 'duration-500', 'ease-out');
+            }, 100);
+
+            setTimeout(() => {
+                document.getElementById('prof-message').classList.remove('opacity-0', 'translate-y-10');
+                document.getElementById('prof-message').classList.add('opacity-100', 'translate-y-0', 'transition-all', 'duration-1000', 'ease-out');
+            }, 600);
+
+            fireConfetti();
+        }
+
+        function fireConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#A3161A', '#b8860b', '#ffffff', '#0d47a1', '#1a1a1a'];
+
+            for (let i = 0; i < 150; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    w: Math.random() * 10 + 5,
+                    h: Math.random() * 10 + 5,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speed: Math.random() * 3 + 2,
+                    angle: Math.random() * 360,
+                    spin: Math.random() * 0.2 - 0.1
+                });
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                let isAnyVisible = false;
+
+                particles.forEach(p => {
+                    p.y += p.speed;
+                    p.angle += p.spin;
+
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.angle);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    ctx.restore();
+
+                    if (p.y < canvas.height) isAnyVisible = true;
+                });
+
+                if (!isAnyVisible) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+
+            animate();
+            
+            // Limpiar canvas después de 5 segundos
+            setTimeout(() => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                canvas.style.display = 'none';
+            }, 6000);
+        }
+    </script>
+</body>
+</html>

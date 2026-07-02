@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 7: Eutanasia y el Derecho a Morir</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cuc-red': '#A3161A',
+                        'cuc-dark': '#1a1a1a',
+                        'cuc-gray': '#f4f4f4',
+                        'soft-red': '#ffebeb',
+                        'bio-blue': '#0d47a1',
+                        'law-gold': '#b8860b',
+                        'alert-color': '#d32f2f',
+                        'success-color': '#2e7d32',
+                        'pro-color': '#0284c7', /* Azul para argumentos a favor */
+                        'con-color': '#b91c1c', /* Rojo oscuro para argumentos en contra */
+                    },
+                    fontFamily: {
+                        'sans': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slideIn {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+
+        /* --- FLIP CARDS 3D --- */
+        .flip-card {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* --- ESTILO LIBRETA PARA LA ACTIVIDAD --- */
+        .legal-pad {
+            background-color: #fff;
+            background-image: 
+                linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+                linear-gradient(#eee .1em, transparent .1em);
+            background-size: 100% 1.2em;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 30px 30px 30px 100px;
+            position: relative;
+        }
+        .legal-pad::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            background-color: var(--cuc-red);
+            border-radius: 8px 0 0 8px;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .legal-pad { padding: 20px 20px 20px 60px; }
+            .legal-pad::before { width: 40px; }
+        }
+
+        /* Acordeón Tablas */
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-cuc-dark font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER / BANNER -->
+    <header class="bg-white border-b-4 border-cuc-red py-5 shadow-md relative md:sticky md:top-0 z-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-center items-center gap-6 text-center">
+            
+            <div class="order-3 md:order-1 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/bioetica/u2clase07.html" 
+                     alt="QR Clase" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Ir a esta Clase</span>
+            </div>
+
+            <div class="order-1 md:order-2 flex flex-col items-center max-w-2xl">
+                <img src="logocuc.png" alt="Logo Universidad de la Costa" class="h-20 mb-2">
+                <h1 class="text-cuc-red text-2xl md:text-3xl font-black uppercase leading-tight mb-1">
+                    Bioética y Deontología
+                </h1>
+                <div class="text-sm md:text-base text-gray-800">
+                    <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                    Mg. Dirección de Proyectos - Certificado en PNL<br>
+                    <small class="block mt-1">
+                        <span class="text-cuc-red font-black">WhatsApp:</span> 3233796547 | 
+                        <span class="text-cuc-red font-black">IG:</span> caminosdelser85
+                    </small>
+                </div>
+            </div>
+
+            <div class="order-3 md:order-3 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" 
+                     alt="QR Contacto" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Guardar Contacto</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="bg-gray-100 border-b border-gray-300 py-3 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <a href="u1clase01.html" class="inline-flex items-center gap-2 font-bold text-cuc-dark hover:text-cuc-red transition-colors">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+            <span class="mx-3 text-gray-400">|</span>
+            <span class="text-gray-600 font-bold">Unidad 2: Deontología (Bioética)</span>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container mx-auto px-4 py-10 flex-grow max-w-6xl">
+        
+        <!-- INTRODUCCIÓN -->
+        <div class="text-center mb-16 animate-slideIn">
+            <span class="bg-cuc-dark text-white px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4 inline-block">Clase 7</span>
+            <h2 class="text-4xl font-black text-cuc-red mb-6">Eutanasia y el Derecho a Morir</h2>
+            <div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-lg border-l-8 border-cuc-dark text-left">
+                <p class="text-xl text-gray-700 italic font-light">
+                    "La medicina moderna nos ha dado el poder de prolongar la vida casi indefinidamente, pero ¿hemos confundido el deber de preservar la vida con la crueldad de alargar la agonía?"
+                </p>
+                <p class="text-right text-cuc-dark font-bold mt-2">— El Dilema del Fin de la Vida</p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 1: CONCEPTOS BÁSICOS (FLIP CARDS) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.1s;">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-cuc-dark mb-4"><i class="fas fa-book-medical text-bio-blue"></i> Glosario Bioético Fundamental</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">Antes de debatir, debemos hablar el mismo idioma técnico. Pasa el cursor sobre las tarjetas para conocer la diferencia legal y ética entre estos 4 términos.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Eutanasia -->
+                <div class="h-64 flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-white border-t-8 border-cuc-red flex flex-col items-center justify-center p-6">
+                            <i class="fas fa-procedures text-4xl text-cuc-red mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Eutanasia</h4>
+                            <p class="text-xs font-bold text-gray-400 mt-2 uppercase tracking-widest">(Gira para leer)</p>
+                        </div>
+                        <div class="flip-card-back bg-cuc-red text-white flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-white/30 pb-2 mb-3">La Muerte Buena</h4>
+                            <p class="text-sm">Intervención médica directa y deliberada para causar la muerte de un paciente que padece un sufrimiento irreversible, a petición expresa y consciente de este.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Suicidio Asistido -->
+                <div class="h-64 flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-white border-t-8 border-bio-blue flex flex-col items-center justify-center p-6">
+                            <i class="fas fa-pills text-4xl text-bio-blue mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark text-center">Suicidio Asistido</h4>
+                            <p class="text-xs font-bold text-gray-400 mt-2 uppercase tracking-widest">(Gira para leer)</p>
+                        </div>
+                        <div class="flip-card-back bg-bio-blue text-white flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-white/30 pb-2 mb-3">Auto-administración</h4>
+                            <p class="text-sm">El personal de salud proporciona los medios letales (ej. un medicamento) o la información, pero es el **paciente mismo** quien ejecuta la acción final que termina con su vida.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Distanasia -->
+                <div class="h-64 flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-white border-t-8 border-gray-800 flex flex-col items-center justify-center p-6">
+                            <i class="fas fa-heartbeat text-4xl text-gray-800 mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Distanasia</h4>
+                            <p class="text-xs font-bold text-gray-400 mt-2 uppercase tracking-widest">(Gira para leer)</p>
+                        </div>
+                        <div class="flip-card-back bg-gray-800 text-white flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-gray-600 pb-2 mb-3">Encarnizamiento</h4>
+                            <p class="text-sm">Prolongación artificial, dolorosa e inútil de la vida de una persona en fase terminal mediante tratamientos desproporcionados que no curan, solo alargan la agonía.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ortotanasia -->
+                <div class="h-64 flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-white border-t-8 border-success-color flex flex-col items-center justify-center p-6">
+                            <i class="fas fa-leaf text-4xl text-success-color mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Ortotanasia</h4>
+                            <p class="text-xs font-bold text-gray-400 mt-2 uppercase tracking-widest">(Gira para leer)</p>
+                        </div>
+                        <div class="flip-card-back bg-success-color text-white flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-white/30 pb-2 mb-3">Muerte Natural</h4>
+                            <p class="text-sm">Permitir que la muerte ocurra en su tiempo natural. Se suspenden tratamientos curativos inútiles y se aplican **cuidados paliativos** para garantizar confort y dignidad al final.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: EXPEDIENTE CLÍNICO (EL CASO) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.3s;">
+            <div class="bg-gray-100 rounded-3xl p-8 md:p-12 shadow-inner border border-gray-300 relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-red-600 text-white text-sm font-bold px-4 py-2 rounded-bl-xl uppercase tracking-widest">Expediente Reclasificado: Marzo 2026</div>
+                
+                <h3 class="text-3xl font-black text-cuc-dark mb-6 flex items-center gap-3">
+                    <i class="fas fa-folder-open text-gray-500"></i> El Caso de Noelia Castillo
+                </h3>
+                <p class="text-gray-600 mb-8 text-lg font-bold border-l-4 border-cuc-red pl-4">
+                    Este no es un caso hipotético. Noelia Castillo Ramos, española de 25 años, falleció por eutanasia el jueves 26 de marzo de 2026, tras una ardua batalla judicial no contra el Estado, sino contra su propio padre.
+                </p>
+
+                <!-- Acordeón del Caso -->
+                <div class="space-y-4">
+                    
+                    <!-- Contexto -->
+                    <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                        <button class="w-full text-left p-5 font-bold text-lg text-bio-blue flex justify-between items-center bg-blue-50 hover:bg-blue-100 transition-colors" onclick="toggleCaseTab('contexto')">
+                            <span><i class="fas fa-history mr-2"></i> 1. El Origen del Sufrimiento</span>
+                            <i class="fas fa-chevron-down" id="icon-contexto"></i>
+                        </button>
+                        <div id="content-contexto" class="tab-content bg-white p-6 text-gray-700 leading-relaxed border-t border-gray-100 active">
+                            <p class="mb-4">La historia de Noelia está marcada por la vulnerabilidad y el trauma. Durante su adolescencia y juventud temprana, fue víctima de abuso y agresión sexual, lo que desencadenó problemas severos de salud mental: <strong>Trastorno Límite de la Personalidad (TLP)</strong>, depresión profunda, TOC e ideación suicida recurrente.</p>
+                            <p>En el año 2022, el dolor psicológico fue tan abrumador que Noelia intentó suicidarse precipitándose desde un quinto piso. Sobrevivió, pero el impacto la dejó con una lesión medular irreversible: <strong>paraplejia (incapacidad del 75%)</strong>, atada a una silla de ruedas, con incontinencia crónica, espasmos y dolores neuropáticos severos que le impedían dormir.</p>
+                        </div>
+                    </div>
+
+                    <!-- La Solicitud -->
+                    <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                        <button class="w-full text-left p-5 font-bold text-lg text-law-gold flex justify-between items-center bg-yellow-50 hover:bg-yellow-100 transition-colors" onclick="toggleCaseTab('solicitud')">
+                            <span><i class="fas fa-file-signature mr-2"></i> 2. La Solicitud y la Batalla Legal</span>
+                            <i class="fas fa-chevron-down" id="icon-solicitud"></i>
+                        </button>
+                        <div id="content-solicitud" class="tab-content bg-white p-6 text-gray-700 leading-relaxed border-t border-gray-100">
+                            <p class="mb-4">Al dolor psíquico acumulado se sumó el dolor físico constante. En España, la eutanasia es legal desde 2021. Noelia, consciente y orientada, solicitó el procedimiento argumentando un padecimiento <em>"grave, crónico e imposibilitante"</em>. La Comisión Médica evaluó su caso y lo aprobó, determinando que su capacidad de decidir estaba intacta a pesar de sus diagnósticos psiquiátricos.</p>
+                            <p class="mb-4">Sin embargo, <strong>su padre interpuso demandas judiciales</strong> apoyado por la organización "Abogados Cristianos", logrando paralizar el procedimiento temporalmente. Él argumentaba que ella "no estaba en sus cabales" debido a su TLP y depresión, y que el sistema de salud en lugar de matarla debía ofrecerle mejor tratamiento psiquiátrico y social.</p>
+                            <div class="bg-gray-100 p-4 rounded-lg italic text-sm">
+                                "El sistema que había sido incapaz de ofrecerle una respuesta integral a su sufrimiento social y mental, se mostró súbitamente eficaz para garantizar su muerte" — Crítica de los opositores.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- El Desenlace -->
+                    <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                        <button class="w-full text-left p-5 font-bold text-lg text-cuc-red flex justify-between items-center bg-red-50 hover:bg-red-100 transition-colors" onclick="toggleCaseTab('desenlace')">
+                            <span><i class="fas fa-bed mr-2"></i> 3. La Resolución del Caso (Marzo 2026)</span>
+                            <i class="fas fa-chevron-down" id="icon-desenlace"></i>
+                        </button>
+                        <div id="content-desenlace" class="tab-content bg-white p-6 text-gray-700 leading-relaxed border-t border-gray-100">
+                            <p class="mb-4">Tanto el Tribunal Constitucional de España como el <strong>Tribunal Europeo de Derechos Humanos (TEDH)</strong> rechazaron los recursos del padre. Determinaron que la voluntad de Noelia primaba y que sus derechos fundamentales incluían decidir el fin de un sufrimiento inhumano.</p>
+                            <p class="mb-4">Días antes de morir, en una entrevista televisada, Noelia expresó:</p>
+                            <div class="border-l-4 border-cuc-red pl-4 italic text-gray-800 mb-4 bg-red-50 p-4 rounded-r">
+                                "Ninguno de mi familia está a favor... porque yo me voy y ustedes se quedan con el dolor. Pero yo pienso: ¿Y yo, todo el dolor que he sufrido durante todos estos años? Quiero irme ya en paz y dejar de sufrir y punto."
+                            </div>
+                            <p>Su padre le retiró el apoyo, negándose a pagar el entierro y diciéndole: <em>"Tú lo has empezado, tú lo terminas"</em>. El 26 de marzo de 2026, tras 601 días de espera, Noelia recibió la eutanasia acompañada únicamente por su madre y su abuela.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: ACTIVIDAD DE DEBATE EN CLASE -->
+        <section class="mb-10 animate-slideIn" style="animation-delay: 0.5s;">
+            <div class="bg-cuc-dark text-white rounded-3xl shadow-2xl border border-gray-700 overflow-hidden">
+                
+                <div class="p-8 text-center relative border-b border-gray-600">
+                    <div class="absolute top-4 right-6 text-5xl opacity-10">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <span class="bg-law-gold text-cuc-dark font-black px-4 py-1 rounded-full text-xs uppercase tracking-widest mb-4 inline-block shadow-sm">Práctica de Argumentación Bioética</span>
+                    <h2 class="text-3xl font-black mb-3">Debate: El Veredicto Final</h2>
+                    <p class="text-gray-300 max-w-3xl mx-auto">
+                        Dividiremos la clase en dos grandes grupos. Su objetivo no es atacar a la otra parte, sino estructurar la mejor defensa posible para su postura asignada utilizando los <strong>Principios Bioéticos (Beauchamp y Childress)</strong>.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    
+                    <!-- EQUIPO A (A FAVOR) -->
+                    <div class="bg-white text-gray-800 p-8 lg:p-12 border-r border-gray-200">
+                        <div class="w-16 h-16 bg-pro-color text-white rounded-full flex items-center justify-center text-3xl font-bold mb-6 shadow-md">A</div>
+                        <h3 class="text-2xl font-black text-pro-color mb-4 uppercase tracking-wide">La Defensa de Noelia</h3>
+                        <p class="font-bold text-gray-500 mb-6 text-sm">Postura: A FAVOR DE LA EUTANASIA (Centrado en la Autonomía)</p>
+                        
+                        <div class="space-y-4 text-sm text-gray-700">
+                            <div class="bg-sky-50 border border-sky-200 p-4 rounded-xl">
+                                <h4 class="font-bold text-pro-color mb-1"><i class="fas fa-user-check"></i> El Principio de Autonomía</h4>
+                                <p>Tener un diagnóstico psiquiátrico (TLP) no anula automáticamente la capacidad legal y cognitiva de un adulto para decidir sobre su cuerpo. Los peritos médicos confirmaron su lucidez. Imponerle la vida es una violación a su libertad.</p>
+                            </div>
+                            <div class="bg-sky-50 border border-sky-200 p-4 rounded-xl">
+                                <h4 class="font-bold text-pro-color mb-1"><i class="fas fa-shield-alt"></i> Prevención de Distanasia (No Maleficencia)</h4>
+                                <p>Forzarla a vivir décadas en una silla de ruedas, con dolores neuropáticos insoportables e insomnio crónico que no responden a tratamiento, constituye un trato cruel, inhumano y degradante.</p>
+                            </div>
+                            <div class="bg-sky-50 border border-sky-200 p-4 rounded-xl">
+                                <h4 class="font-bold text-pro-color mb-1"><i class="fas fa-times-circle"></i> Paternalismo Injustificado</h4>
+                                <p>El padre actuó desde un egoísmo emocional (no querer perder a su hija). El dolor de la familia no puede estar por encima del dolor crónico e irreversible de la paciente.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EQUIPO B (EN CONTRA) -->
+                    <div class="bg-gray-100 text-gray-800 p-8 lg:p-12">
+                        <div class="w-16 h-16 bg-con-color text-white rounded-full flex items-center justify-center text-3xl font-bold mb-6 shadow-md">B</div>
+                        <h3 class="text-2xl font-black text-con-color mb-4 uppercase tracking-wide">La Oposición</h3>
+                        <p class="font-bold text-gray-500 mb-6 text-sm">Postura: EN CONTRA / APELACIÓN AL ESTADO (Protección a la vida)</p>
+                        
+                        <div class="space-y-4 text-sm text-gray-700">
+                            <div class="bg-red-50 border border-red-200 p-4 rounded-xl">
+                                <h4 class="font-bold text-con-color mb-1"><i class="fas fa-brain"></i> Voluntad Viciada (Falta de Autonomía Real)</h4>
+                                <p>Noelia padecía Trastorno Límite, trauma severo y depresión. Su "deseo de morir" no era una decisión libre de una mente sana, sino un síntoma clínico de su enfermedad mental no curada. Su consentimiento estaba viciado por la patología.</p>
+                            </div>
+                            <div class="bg-red-50 border border-red-200 p-4 rounded-xl">
+                                <h4 class="font-bold text-con-color mb-1"><i class="fas fa-heart-broken"></i> Fracaso Sistémico (Beneficencia)</h4>
+                                <p>El Estado y la psiquiatría le fallaron. En lugar de ofrecerle rehabilitación psicosocial integral y cura para su depresión, el Estado optó por la vía fácil y "barata": ofrecerle una inyección letal. Es un hundimiento moral institucional.</p>
+                            </div>
+                            <div class="bg-red-50 border border-red-200 p-4 rounded-xl">
+                                <h4 class="font-bold text-con-color mb-1"><i class="fas fa-hands-helping"></i> Deber de Proteger (Paternalismo Justificado)</h4>
+                                <p>Ante una paciente con ideación suicida crónica, el deber del médico (y del padre) no es asistir el suicidio, sino prevenirlo a toda costa. La vida es un valor supremo que está por encima de las decisiones temporales de un paciente en crisis emocional.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- SECCIÓN DE DOCENTE -->
+                <div class="bg-cuc-red p-6 text-center border-t-4 border-[#8a1216]">
+                    <p class="text-white text-sm mb-4">¿Quién gana este complejo debate bioético? Material exclusivo para la moderación del docente.</p>
+                    <button onclick="showTeacherGuide()" class="bg-cuc-dark text-white hover:bg-black px-8 py-3 rounded-full font-bold shadow-lg transition-transform transform hover:-translate-y-1 flex items-center gap-2 mx-auto">
+                        <i class="fas fa-lock"></i> Guía Docente y Conclusiones
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-cuc-dark text-white text-center py-8 mt-auto">
+        <div class="container mx-auto px-4">
+            <p class="text-sm md:text-base mb-2">Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+            <p class="text-xs text-gray-400">Material docente: Jorge Arango Castaño. Casuística basada en eventos reales (Marzo 2026).</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Lógica de Tabs del Expediente
+        function toggleCaseTab(tabId) {
+            const content = document.getElementById('content-' + tabId);
+            const icon = document.getElementById('icon-' + tabId);
+            
+            // Ocultar todos los otros
+            const allContents = document.querySelectorAll('.tab-content');
+            const allIcons = document.querySelectorAll('.fa-chevron-up');
+            
+            allContents.forEach(c => {
+                if(c.id !== 'content-' + tabId) {
+                    c.classList.remove('active');
+                }
+            });
+            
+            allIcons.forEach(i => {
+                if(i.id !== 'icon-' + tabId) {
+                    i.classList.remove('fa-chevron-up');
+                    i.classList.add('fa-chevron-down');
+                }
+            });
+
+            // Toggle el actual
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            } else {
+                content.classList.add('active');
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            }
+        }
+
+        // Lógica de la Contraseña Docente
+        function showTeacherGuide() {
+            const clave = prompt("Ingrese la clave de moderador (Solo Docente):");
+            if (clave === "10001") {
+                alert("⚖️ GUÍA DE CIERRE PARA EL DOCENTE:\n\n1. Diferencie el Sufrimiento: Pregunte a la clase si Noelia pidió morir por su paraplejia (físico) o por su TLP/Trauma (psicológico). La bioética debate si el sufrimiento 'psíquico' intratable es causal válida para eutanasia.\n\n2. Consentimiento y Psiquiatría: El reto central. ¿Puede un paciente de salud mental dar un 'consentimiento informado y libre'? La justicia determinó que SÍ, sentando el precedente de que tener TLP no anula la racionalidad de por vida.\n\n3. Límite del Paternalismo: Resalte cómo el amor del padre se transformó en una imposición egoísta al querer forzarla a existir en agonía solo para evitar él el duelo.\n\n4. Conclusión: La bioética no busca finales felices, busca el 'menor daño posible'. Obligar a Noelia a vivir décadas en esas condiciones hubiera sido un acto de Distanasia y crueldad institucional.");
+            } else if (clave !== null && clave !== "") {
+                alert("Acceso denegado: Clave incorrecta.");
+            }
+        }
+    </script>
+</body>
+</html>
+```

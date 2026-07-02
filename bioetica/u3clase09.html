@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 9: Modelo de Tres Niveles (MTN)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cuc-red': '#A3161A',
+                        'cuc-dark': '#1a1a1a',
+                        'cuc-gray': '#f4f4f4',
+                        'soft-red': '#ffebeb',
+                        'bio-blue': '#0d47a1',
+                        'bio-light': '#f0fdf4',
+                        'law-gold': '#b8860b',
+                        'success-color': '#2e7d32',
+                    },
+                    fontFamily: {
+                        'sans': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slideIn {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+
+        /* Tabs Interactivas MTN */
+        .mtn-tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .mtn-tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mtn-step-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-cuc-dark font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER / BANNER -->
+    <header class="bg-white border-b-4 border-cuc-red py-5 shadow-md relative md:sticky md:top-0 z-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-center items-center gap-6 text-center">
+            
+            <div class="order-3 md:order-1 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/bioetica/u3clase09.html" 
+                     alt="QR Clase Bioética" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Ir a esta Clase</span>
+            </div>
+
+            <div class="order-1 md:order-2 flex flex-col items-center max-w-2xl">
+                <img src="logocuc.png" alt="Logo Universidad de la Costa" class="h-20 mb-2">
+                <h1 class="text-cuc-red text-2xl md:text-3xl font-black uppercase leading-tight mb-1">
+                    Bioética y Deontología
+                </h1>
+                <div class="text-sm md:text-base text-gray-800">
+                    <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                    Mg. Dirección de Proyectos - Certificado en PNL<br>
+                    <small class="block mt-1">
+                        <span class="text-cuc-red font-black">WhatsApp:</span> 3233796547 | 
+                        <span class="text-cuc-red font-black">IG:</span> caminosdelser85
+                    </small>
+                </div>
+            </div>
+
+            <div class="order-3 md:order-3 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" 
+                     alt="QR Contacto" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Guardar Contacto</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="bg-gray-100 border-b border-gray-300 py-3 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <a href="u1clase01.html" class="inline-flex items-center gap-2 font-bold text-cuc-dark hover:text-cuc-red transition-colors">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+            <span class="mx-3 text-gray-400">|</span>
+            <span class="text-gray-600 font-bold">Unidad 3: Análisis Ético Aplicado</span>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container mx-auto px-4 py-10 flex-grow max-w-6xl">
+        
+        <!-- INTRODUCCIÓN -->
+        <div class="text-center mb-16 animate-slideIn">
+            <span class="bg-cuc-dark text-white px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4 inline-block">Clase 9</span>
+            <h2 class="text-4xl font-black text-cuc-red mb-6">Modelo de Tres Niveles (MTN)</h2>
+            <div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-lg border-l-8 border-cuc-dark text-left flex items-center gap-6">
+                <i class="fas fa-balance-scale-right text-6xl text-gray-200 hidden md:block"></i>
+                <div>
+                    <p class="text-lg text-gray-700 italic font-light mb-2">
+                        "Resolver un dilema ético no es un acto de intuición o corazonada. Es un proceso sistemático, riguroso y argumentado. El MTN es la brújula oficial diseñada para que el psicólogo navegue la complejidad sin naufragar en la mala praxis."
+                    </p>
+                    <p class="text-sm font-bold text-cuc-red uppercase tracking-wider">— Propuesto por el Tribunal Deontológico de Psicología</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 1: ¿QUÉ ES EL MTN? -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.1s;">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="md:col-span-1 bg-bio-blue text-white p-8 rounded-3xl shadow-lg flex flex-col justify-center">
+                    <h3 class="text-3xl font-black mb-4">¿Qué es el MTN?</h3>
+                    <p class="text-blue-100 mb-6">Es la metodología oficial de toma de decisiones éticas diseñada por <strong>Amaya y Berrío-Acosta</strong>, adoptada por el Colegio Colombiano de Psicólogos (Colpsic).</p>
+                    <ul class="space-y-3 font-bold text-sm">
+                        <li><i class="fas fa-check-circle text-law-gold mr-2"></i> Evita decisiones basadas en la emoción.</li>
+                        <li><i class="fas fa-check-circle text-law-gold mr-2"></i> Sirve de defensa legal en un juicio.</li>
+                        <li><i class="fas fa-check-circle text-law-gold mr-2"></i> Estructura tu Proyecto de Aula.</li>
+                    </ul>
+                </div>
+                
+                <div class="md:col-span-2 bg-white p-8 rounded-3xl shadow-lg border border-gray-200">
+                    <h3 class="text-2xl font-bold text-cuc-dark mb-6">Estructura General del Modelo</h3>
+                    <div class="flex flex-col gap-4">
+                        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                            <div class="w-12 h-12 bg-cuc-red text-white rounded-full flex items-center justify-center font-black text-xl shrink-0">1</div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-lg uppercase tracking-wide">Sustentación</h4>
+                                <p class="text-sm text-gray-600">Limpiar el panorama. Es la recolección estricta de hechos objetivos, identificación de actores y delimitación exacta del choque de principios.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                            <div class="w-12 h-12 bg-law-gold text-white rounded-full flex items-center justify-center font-black text-xl shrink-0">2</div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-lg uppercase tracking-wide">Fundamentación</h4>
+                                <p class="text-sm text-gray-600">La iluminación teórica. Es el análisis a la luz de las fuentes éticas (Beauchamp, Kant, Bentham) y normativas (Ley 1090, Constitución).</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                            <div class="w-12 h-12 bg-success-color text-white rounded-full flex items-center justify-center font-black text-xl shrink-0">3</div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-lg uppercase tracking-wide">Proposición</h4>
+                                <p class="text-sm text-gray-600">La acción concreta. Planteamiento de alternativas, evaluación de riesgos y la elección del "Mal Menor" con su respectivo plan de seguimiento.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: DESGLOSE DEL MODELO (TABS INTERACTIVAS) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.3s;">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-black text-cuc-dark mb-4">Mapeo Profundo del MTN</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+                    Haz clic en cada uno de los tres niveles para comprender detalladamente los pasos exactos que exige el Tribunal para analizar un caso.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden">
+                
+                <!-- Botones de Navegación -->
+                <div class="flex flex-col md:flex-row p-4 gap-2 bg-gray-100 border-b border-gray-200">
+                    <button onclick="openMTNTab('nivel1')" id="btn-nivel1" class="mtn-step-btn flex-1 py-4 px-6 rounded-xl shadow-sm text-center transform scale-105 bg-bio-blue text-white border-2 border-bio-blue">
+                        <span id="span-nivel1" class="block text-xs uppercase tracking-widest mb-1 font-bold text-blue-200">Nivel 1</span>
+                        <i class="fas fa-search"></i> Sustentación
+                    </button>
+                    <button onclick="openMTNTab('nivel2')" id="btn-nivel2" class="mtn-step-btn flex-1 py-4 px-6 rounded-xl shadow-sm text-center bg-white text-gray-600 border-2 border-gray-200 hover:border-bio-blue transition-colors">
+                        <span id="span-nivel2" class="block text-xs uppercase tracking-widest mb-1 font-bold text-gray-400">Nivel 2</span>
+                        <i class="fas fa-gavel"></i> Fundamentación
+                    </button>
+                    <button onclick="openMTNTab('nivel3')" id="btn-nivel3" class="mtn-step-btn flex-1 py-4 px-6 rounded-xl shadow-sm text-center bg-white text-gray-600 border-2 border-gray-200 hover:border-bio-blue transition-colors">
+                        <span id="span-nivel3" class="block text-xs uppercase tracking-widest mb-1 font-bold text-gray-400">Nivel 3</span>
+                        <i class="fas fa-lightbulb"></i> Proposición
+                    </button>
+                </div>
+
+                <!-- Contenido de las Tabs -->
+                <div class="p-8 md:p-12 relative min-h-[500px]">
+                    
+                    <!-- NIVEL 1: SUSTENTACIÓN -->
+                    <div id="tab-nivel1" class="mtn-tab-content active">
+                        <h3 class="text-3xl font-black text-bio-blue mb-6 border-b-2 border-blue-100 pb-4">Nivel 1: Sustentación de los Hechos</h3>
+                        <p class="text-gray-700 mb-8 text-lg">El objetivo de esta fase es limpiar el caso de suposiciones y emociones. <em>"Sin hechos comprobables, la ética es solo especulación y chisme."</em> Se debe extraer únicamente lo que se puede probar en un estrado judicial.</p>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex gap-4 items-start">
+                                <div class="w-12 h-12 bg-bio-blue text-white rounded-full flex items-center justify-center font-bold shrink-0 text-xl">1.1</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-lg mb-2">Clarificación de Hechos (Percepción vs. Apercepción)</h4>
+                                    <p class="text-sm text-gray-700 leading-relaxed mb-2">Se deben separar las creencias subjetivas (apercepción) de los hechos fácticos. No redactes juicios de valor.</p>
+                                    <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside bg-white p-3 rounded">
+                                        <li><strong class="text-red-600">Incorrecto:</strong> "El paciente es un monstruo agresivo".</li>
+                                        <li><strong class="text-green-600">Correcto:</strong> "El paciente, diagnosticado con TLP, gritó durante 5 minutos y rompió un objeto en consulta".</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex gap-4 items-start">
+                                <div class="w-12 h-12 bg-bio-blue text-white rounded-full flex items-center justify-center font-bold shrink-0 text-xl">1.2</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-lg mb-2">Clarificación de Conceptos y Actores</h4>
+                                    <p class="text-sm text-gray-700 leading-relaxed">
+                                        Define clínica y legalmente los términos del caso. (Ej: Si hablas de "Abuso", ¿cumple los criterios del Código Penal y del DSM-5?). Identifica a todos los <strong>Actores</strong>: ¿Quién toma la decisión? ¿Quiénes son los afectados directos (paciente) e indirectos (familia, sociedad)?
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex gap-4 items-start">
+                                <div class="w-12 h-12 bg-bio-blue text-white rounded-full flex items-center justify-center font-bold shrink-0 text-xl">1.3</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-lg mb-2">Planteamiento del Dilema (Choque de Principios)</h4>
+                                    <p class="text-sm text-gray-700 leading-relaxed mb-2">
+                                        Un dilema no es una pregunta como <em>"¿Qué debo hacer?"</em>. En el MTN, un dilema se formula estrictamente como la colisión entre dos principios éticos correctos, donde uno debe ceder ante el otro.
+                                    </p>
+                                    <div class="bg-white p-3 rounded text-sm text-gray-800 border-l-4 border-cuc-red">
+                                        <i class="fas fa-balance-scale text-gray-400 mr-2"></i> <strong>Ejemplo:</strong> "El Principio de Autonomía y Confidencialidad del paciente" <strong>VERSUS</strong> "El Principio de Beneficencia y el deber de advertir para proteger la vida de un tercero".
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NIVEL 2: FUNDAMENTACIÓN -->
+                    <div id="tab-nivel2" class="mtn-tab-content">
+                        <h3 class="text-3xl font-black text-law-gold mb-6 border-b-2 border-yellow-100 pb-4">Nivel 2: Fundamentación</h3>
+                        <p class="text-gray-700 mb-8 text-lg">La fase de iluminación. No respondemos con nuestra "opinión personal o religiosa", sino cruzando los hechos del Nivel 1 con las teorías bioéticas y las leyes colombianas.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Fuentes Éticas -->
+                            <div class="bg-yellow-50 p-8 rounded-2xl border border-yellow-200 relative overflow-hidden h-full">
+                                <i class="fas fa-book-medical absolute -right-4 -bottom-4 text-7xl text-law-gold opacity-10"></i>
+                                <h4 class="text-xl font-black text-gray-800 mb-4 uppercase tracking-wider"><i class="fas fa-dna text-law-gold mr-2"></i> 2.1 Fuentes Éticas</h4>
+                                <ul class="space-y-4 text-sm text-gray-700">
+                                    <li class="bg-white p-3 rounded shadow-sm border-l-2 border-law-gold">
+                                        <strong class="block text-cuc-dark mb-1">Principialismo (Beauchamp & Childress)</strong>
+                                        Evaluar la Autonomía (Libertad), Beneficencia (Hacer el bien), No Maleficencia (No hacer daño) y Justicia (Equidad) aplicadas al caso.
+                                    </li>
+                                    <li class="bg-white p-3 rounded shadow-sm border-l-2 border-law-gold">
+                                        <strong class="block text-cuc-dark mb-1">Teorías Clásicas (Kant vs Bentham)</strong>
+                                        ¿Este caso exige respetar el Deber innegociable y los derechos (Deontología) o exige priorizar el resultado y la mayor utilidad social (Utilitarismo)?
+                                    </li>
+                                    <li class="bg-white p-3 rounded shadow-sm border-l-2 border-law-gold">
+                                        <strong class="block text-cuc-dark mb-1">Doctrina del Doble Efecto</strong>
+                                        Se analiza si el daño que se causará (ej. romper el secreto) es el medio <em>estrictamente necesario e inevitable</em> para lograr un bien supremo (ej. salvar una vida).
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Fuentes Normativas -->
+                            <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 text-white relative overflow-hidden h-full">
+                                <i class="fas fa-gavel absolute -right-4 -bottom-4 text-7xl text-white opacity-5"></i>
+                                <h4 class="text-xl font-black text-white mb-4 uppercase tracking-wider"><i class="fas fa-balance-scale text-law-gold mr-2"></i> 2.2 Fuentes Normativas</h4>
+                                <ul class="space-y-4 text-sm text-gray-300">
+                                    <li class="bg-gray-700 p-3 rounded border-l-2 border-cuc-red">
+                                        <strong class="block text-white mb-1">Constitución Política de 1991</strong>
+                                        ¿Qué derechos fundamentales chocan? (Ej. Derecho a la Intimidad vs. Derecho Fundamental a la Vida).
+                                    </li>
+                                    <li class="bg-gray-700 p-3 rounded border-l-2 border-cuc-red">
+                                        <strong class="block text-white mb-1">Leyes Específicas</strong>
+                                        La <strong class="text-law-gold">Ley 1090 de 2006</strong> (Deberes y excepciones del Secreto). Si hay menores, se debe citar la <strong>Ley 1098</strong> (Código de Infancia) donde los derechos de los niños prevalecen sobre todos los demás.
+                                    </li>
+                                    <li class="bg-gray-700 p-3 rounded border-l-2 border-cuc-red">
+                                        <strong class="block text-white mb-1">Jurisprudencia y Doctrina</strong>
+                                        Acuerdos doctrinales emitidos por el Tribunal Nacional del Colpsic y sentencias de la Corte Constitucional aplicables al tema.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NIVEL 3: PROPOSICIÓN -->
+                    <div id="tab-nivel3" class="mtn-tab-content">
+                        <h3 class="text-3xl font-black text-success-color mb-6 border-b-2 border-green-100 pb-4">Nivel 3: Proposición</h3>
+                        <p class="text-gray-700 mb-8 text-lg">La fase resolutiva. Aquí el terapeuta se compromete con una decisión. A la luz de los argumentos del Nivel 2, se elige el camino asumiendo la responsabilidad ética y legal.</p>
+                        
+                        <div class="space-y-5">
+                            <div class="flex items-start gap-4 p-5 bg-green-50 rounded-2xl border border-green-200">
+                                <div class="bg-success-color text-white p-3 rounded-full shrink-0 shadow"><i class="fas fa-code-branch text-xl"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-lg mb-2">3.1 Generación de Alternativas</h4>
+                                    <p class="text-sm text-gray-600 mb-2">Se deben plantear al menos 2 o 3 opciones reales (no dicotómicas). Por ejemplo:<br>
+                                    - <strong>Opción A:</strong> Guardar el secreto y contener en consulta.<br>
+                                    - <strong>Opción B:</strong> Llamar a las autoridades inmediatamente a espaldas del paciente.<br>
+                                    - <strong>Opción C:</strong> Persuadir al paciente para que él mismo advierta o se entregue, acompañándolo en el proceso.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4 p-5 bg-green-50 rounded-2xl border border-green-200">
+                                <div class="bg-success-color text-white p-3 rounded-full shrink-0 shadow"><i class="fas fa-balance-scale text-xl"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-lg mb-2">3.2 Análisis de Riesgos y "El Mal Menor"</h4>
+                                    <p class="text-sm text-gray-600">Se proyecta qué pasaría con cada opción (Cálculo Utilitarista). Toda decisión causará algún daño (iatrogenia residual). El objetivo es elegir la opción que constituya el <strong>Mal Menor</strong> (Principio de No Maleficencia priorizado).</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4 p-5 bg-green-50 rounded-2xl border border-green-200">
+                                <div class="bg-success-color text-white p-3 rounded-full shrink-0 shadow"><i class="fas fa-tasks text-xl"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-lg mb-2">3.3 Toma de Decisión y Plan de Acción</h4>
+                                    <p class="text-sm text-gray-600 mb-2">Redactar el paso a paso logístico y clínico. ¿A quién se notifica primero? ¿Cómo se mitigará el impacto en el paciente? ¿Cómo se dejará constancia blindada en la Historia Clínica?</p>
+                                    <div class="bg-white p-3 rounded border border-gray-200 text-sm italic text-gray-500">
+                                        "Finalmente, se debe agendar una <strong>Evaluación Posterior</strong> para verificar si la decisión mitigó el riesgo o si requiere ajustes."
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: LABORATORIO MULTICONTEXTO (LAS 4 ÁREAS) -->
+        <section class="mb-10 animate-slideIn" style="animation-delay: 0.5s;">
+            <div class="bg-cuc-dark text-white rounded-3xl shadow-2xl border-t-8 border-cuc-red overflow-hidden p-8 md:p-12">
+                
+                <div class="text-center mb-10">
+                    <span class="bg-cuc-red text-white font-black px-3 py-1 rounded text-xs uppercase tracking-widest mb-4 inline-block shadow-sm">Laboratorio Interactivo</span>
+                    <h2 class="text-3xl font-black mb-4">El MTN en las 4 Áreas de la Psicología</h2>
+                    <p class="text-gray-300 text-lg leading-relaxed max-w-4xl mx-auto">
+                        La ética no es exclusiva de la práctica clínica. Selecciona un área de aplicación, lee el dilema deontológico al que se enfrenta el psicólogo y despliega los niveles para descubrir cómo se estructura la solución oficial.
+                    </p>
+                </div>
+
+                <!-- Botones de Áreas -->
+                <div class="flex flex-wrap justify-center gap-3 mb-10">
+                    <button onclick="loadMtnArea('clinica')" id="btn-area-clinica" class="area-btn bg-bio-blue text-white px-6 py-3 rounded-xl font-bold shadow-lg transform scale-105 border-2 border-white transition-all flex items-center gap-2">
+                        <i class="fas fa-user-md"></i> Clínica
+                    </button>
+                    <button onclick="loadMtnArea('organizacional')" id="btn-area-organizacional" class="area-btn bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-bold shadow border-2 border-transparent hover:bg-gray-600 transition-all flex items-center gap-2">
+                        <i class="fas fa-building"></i> Organizacional
+                    </button>
+                    <button onclick="loadMtnArea('educativa')" id="btn-area-educativa" class="area-btn bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-bold shadow border-2 border-transparent hover:bg-gray-600 transition-all flex items-center gap-2">
+                        <i class="fas fa-school"></i> Educativa
+                    </button>
+                    <button onclick="loadMtnArea('social')" id="btn-area-social" class="area-btn bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-bold shadow border-2 border-transparent hover:bg-gray-600 transition-all flex items-center gap-2">
+                        <i class="fas fa-users"></i> Social
+                    </button>
+                </div>
+
+                <!-- Contenedor del Caso Dinámico -->
+                <div class="bg-white text-cuc-dark rounded-2xl p-6 md:p-8 shadow-inner border border-gray-200 min-h-[400px] flex flex-col">
+                    
+                    <div class="flex flex-col md:flex-row items-start gap-4 mb-6 pb-6 border-b border-gray-200">
+                        <div id="case-icon-container" class="w-16 h-16 bg-blue-100 text-bio-blue rounded-full flex items-center justify-center text-3xl shrink-0 shadow-inner">
+                            <i id="case-icon" class="fas fa-user-md"></i>
+                        </div>
+                        <div>
+                            <h3 id="case-title" class="text-2xl font-black text-gray-800 mb-2">Área Clínica: Confidencialidad vs. Vida</h3>
+                            <p id="case-dilemma" class="text-gray-600 text-lg italic border-l-4 border-gray-300 pl-3">"Atiendes a un joven con depresión severa. En la sesión de hoy, te confiesa que ha comprado veneno y tiene un plan estructurado para acabar con su vida esta misma noche. Te ruega llorando que guardes el secreto, afirmando que si hablas con su familia, sentirá que lo traicionaste."</p>
+                        </div>
+                    </div>
+
+                    <!-- Pasos del MTN (Acordeones) -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 flex-grow">
+                        <!-- Nivel 1 -->
+                        <div class="border border-gray-200 rounded-xl overflow-hidden h-max">
+                            <button onclick="toggleAreaStep('n1', this)" class="w-full bg-gray-50 p-4 text-left font-bold text-gray-800 flex justify-between items-center hover:bg-gray-100 transition-colors border-t-4 border-bio-blue">
+                                <span><i class="fas fa-search text-bio-blue mr-2"></i> 1. Sustentación</span>
+                                <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                            </button>
+                            <div id="case-n1" class="hidden p-5 text-sm text-gray-700 bg-white leading-relaxed border-t border-gray-100 shadow-inner">
+                                <strong class='text-bio-blue'>1.1 Hechos:</strong> Paciente con diagnóstico de depresión, verbaliza plan estructurado y letal para esta noche. Riesgo inminente comprobable.<br><br><strong class='text-bio-blue'>1.3 Dilema:</strong> El Principio de Autonomía (Respetar su privacidad y el secreto profesional) <strong>VS</strong> El Principio de Beneficencia/No Maleficencia (Proteger su vida interviniendo).
+                            </div>
+                        </div>
+                        
+                        <!-- Nivel 2 -->
+                        <div class="border border-gray-200 rounded-xl overflow-hidden h-max">
+                            <button onclick="toggleAreaStep('n2', this)" class="w-full bg-gray-50 p-4 text-left font-bold text-gray-800 flex justify-between items-center hover:bg-gray-100 transition-colors border-t-4 border-law-gold">
+                                <span><i class="fas fa-gavel text-law-gold mr-2"></i> 2. Fundamentación</span>
+                                <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                            </button>
+                            <div id="case-n2" class="hidden p-5 text-sm text-gray-700 bg-white leading-relaxed border-t border-gray-100 shadow-inner">
+                                <strong class='text-law-gold'>2.1 Fuentes Éticas:</strong> Doctrina del Doble Efecto (es justificable el daño menor de romper la confianza para lograr el bien mayor de preservar la vida).<br><br><strong class='text-law-gold'>2.2 Normativa:</strong> Ley 1090 de 2006, Artículo 14 (El secreto profesional debe levantarse cuando exista riesgo inminente contra la vida del consultante).
+                            </div>
+                        </div>
+
+                        <!-- Nivel 3 -->
+                        <div class="border border-gray-200 rounded-xl overflow-hidden h-max">
+                            <button onclick="toggleAreaStep('n3', this)" class="w-full bg-gray-50 p-4 text-left font-bold text-gray-800 flex justify-between items-center hover:bg-gray-100 transition-colors border-t-4 border-success-color">
+                                <span><i class="fas fa-lightbulb text-success-color mr-2"></i> 3. Proposición</span>
+                                <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                            </button>
+                            <div id="case-n3" class="hidden p-5 text-sm text-gray-700 bg-white leading-relaxed border-t border-gray-100 shadow-inner">
+                                <strong class='text-success-color'>3.1 Alternativas:</strong> A) Guardar silencio y priorizar la alianza. B) Romper el secreto e informar a urgencias/familia.<br><br><strong class='text-success-color'>3.2 Decisión (Mal Menor):</strong> Opción B. Se debe ejecutar la acción salvavidas, comunicándole asertivamente al paciente que la ley obliga a intervenir para protegerlo, documentando rigurosamente el artículo 14 en la historia clínica.
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-cuc-dark text-white text-center py-8 mt-auto">
+        <div class="container mx-auto px-4">
+            <p class="text-sm md:text-base mb-2">Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+            <p class="text-xs text-gray-400">Material docente: Jorge Arango Castaño. Basado en el Modelo de Tres Niveles del Tribunal Deontológico (Colpsic).</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Lógica de Tabs del MTN
+        function openMTNTab(tabId) {
+            document.querySelectorAll('.mtn-tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.mtn-step-btn').forEach(btn => {
+                btn.classList.remove('bg-bio-blue', 'text-white', 'border-bio-blue', 'transform', 'scale-105');
+                btn.classList.add('bg-white', 'text-gray-600', 'border-gray-200');
+                
+                const spanId = btn.id.replace('btn-', 'span-');
+                const span = document.getElementById(spanId);
+                if (span) {
+                    span.classList.remove('text-blue-200');
+                    span.classList.add('text-gray-400');
+                }
+            });
+            
+            document.getElementById('tab-' + tabId).classList.add('active');
+            
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.remove('bg-white', 'text-gray-600', 'border-gray-200');
+            activeBtn.classList.add('bg-bio-blue', 'text-white', 'border-bio-blue', 'transform', 'scale-105');
+            
+            const activeSpanId = activeBtn.id.replace('btn-', 'span-');
+            const activeSpan = document.getElementById(activeSpanId);
+            if (activeSpan) {
+                activeSpan.classList.remove('text-gray-400');
+                activeSpan.classList.add('text-blue-200');
+            }
+        }
+
+        // --- LÓGICA DEL SIMULADOR MTN EN 4 ÁREAS ---
+        const mtnAreasData = {
+            clinica: {
+                title: "Área Clínica: Confidencialidad vs. Vida",
+                icon: "fa-user-md",
+                colorClass: "bio-blue",
+                bgClass: "bg-blue-100",
+                textClass: "text-bio-blue",
+                dilemma: "\"Atiendes a un joven con depresión severa. En la sesión de hoy, te confiesa que ha comprado veneno y tiene un plan estructurado para acabar con su vida esta misma noche. Te ruega llorando que guardes el secreto, afirmando que si hablas con su familia, sentirá que lo traicionaste.\"",
+                n1: "<strong class='text-bio-blue'>1.1 Hechos:</strong> Paciente con diagnóstico de depresión, verbaliza plan estructurado y letal para esta noche. Riesgo inminente comprobable.<br><br><strong class='text-bio-blue'>1.3 Dilema:</strong> El Principio de Autonomía (Respetar privacidad y secreto profesional) <strong>VS</strong> El Principio de Beneficencia/No Maleficencia (Proteger su vida interviniendo).",
+                n2: "<strong class='text-law-gold'>2.1 Fuentes Éticas:</strong> Doctrina del Doble Efecto (es justificable el daño menor de romper la confianza para lograr el bien mayor de preservar la vida).<br><br><strong class='text-law-gold'>2.2 Normativa:</strong> Ley 1090 de 2006, Artículo 14 (El secreto profesional debe levantarse cuando exista riesgo inminente contra la vida del consultante).",
+                n3: "<strong class='text-success-color'>3.1 Alternativas:</strong> A) Guardar silencio y priorizar la alianza. B) Romper el secreto e informar a urgencias/familia.<br><br><strong class='text-success-color'>3.2 Decisión (Mal Menor):</strong> Opción B. Se debe ejecutar la acción salvavidas, comunicándole asertivamente al paciente que la ley obliga a intervenir para protegerlo, documentando rigurosamente el artículo 14 en la historia clínica."
+            },
+            organizacional: {
+                title: "Área Organizacional: Explotación y Lealtad",
+                icon: "fa-building",
+                colorClass: "cuc-red",
+                bgClass: "bg-red-100",
+                textClass: "text-cuc-red",
+                dilemma: "\"Eres el psicólogo de Selección y Desarrollo de una gran empresa. El Gerente General te exige que le entregues los resultados detallados y los dibujos de las pruebas proyectivas de los candidatos para 'reírse un rato en la junta directiva de los traumas de la gente'. Te amenaza con despedirte si te niegas.\"",
+                n1: "<strong class='text-cuc-red'>1.1 Hechos:</strong> Superior jerárquico no-psicólogo coacciona al profesional para vulnerar y divulgar material psicotécnico con fines de burla.<br><br><strong class='text-cuc-red'>1.3 Dilema:</strong> Justicia (Cumplir la orden de quien paga el salario) <strong>VS</strong> No Maleficencia y Autonomía (Proteger la dignidad, privacidad y material técnico de los evaluados).",
+                n2: "<strong class='text-law-gold'>2.1 Fuentes Éticas:</strong> Deontología Kantiana (Las personas y su intimidad son un fin en sí mismas, jamás deben usarse como medio de entretenimiento).<br><br><strong class='text-law-gold'>2.2 Normativa:</strong> Ley 1090, Artículo 9 (Derecho a la autonomía profesional e independencia) y deber de custodia estricta del material psicotécnico.",
+                n3: "<strong class='text-success-color'>3.1 Alternativas:</strong> A) Ceder al chantaje y entregar las pruebas. B) Negarse, protegiendo las pruebas.<br><br><strong class='text-success-color'>3.2 Decisión (Mal Menor):</strong> Opción B. El psicólogo debe negarse rotundamente. Entregar las pruebas constituye una Falta Gravísima y complicidad de abuso. Se debe levantar un acta formal denunciando la coacción."
+            },
+            educativa: {
+                title: "Área Educativa: Prestigio vs. Protección",
+                icon: "fa-school",
+                colorClass: "purple-600",
+                bgClass: "bg-purple-100",
+                textClass: "text-purple-800",
+                dilemma: "\"Como psicorientador del colegio, documentas un caso de abuso sexual continuado hacia una alumna de 8 años por parte del conserje. Informas a la rectora, pero ella te prohíbe llamar a las autoridades porque 'un escándalo así destruiría el buen nombre del colegio'. Te ordena manejarlo internamente.\"",
+                n1: "<strong class='text-purple-800'>1.1 Hechos:</strong> Menor de 8 años en riesgo comprobado de abuso sexual. Directriz institucional de encubrimiento.<br><br><strong class='text-purple-800'>1.3 Dilema:</strong> Justicia/Lealtad (Obediencia a la directiva del colegio) <strong>VS</strong> Beneficencia (Interés superior y protección absoluta de la menor vulnerada).",
+                n2: "<strong class='text-law-gold'>2.1 Fuentes Éticas:</strong> Principialismo (La No Maleficencia obliga a detener activamente el daño que está sufriendo la víctima).<br><br><strong class='text-law-gold'>2.2 Normativa:</strong> Código de Infancia y Adolescencia (Ley 1098, los derechos de los niños priman sobre cualquier otro), y Ley 1090 (Obligación irrenunciable de denunciar abuso a menores).",
+                n3: "<strong class='text-success-color'>3.1 Alternativas:</strong> A) Obedecer a la rectora y dar terapia en silencio. B) Denunciar ante el ICBF y Fiscalía.<br><br><strong class='text-success-color'>3.2 Decisión (Mal Menor):</strong> Opción B. Omitir la denuncia convierte al psicólogo en cómplice legal del abuso por omisión. Debe activarse la ruta de protección integral inmediatamente, ignorando la orden rectoral."
+            },
+            social: {
+                title: "Área Social: Coerción Comunitaria",
+                icon: "fa-users",
+                colorClass: "yellow-600",
+                bgClass: "bg-yellow-100",
+                textClass: "text-yellow-700",
+                dilemma: "\"Trabajas en un programa estatal de atención psicosocial para víctimas del conflicto armado en una zona rural. El líder político local que aprobó el presupuesto te exige que solo brindes terapia a las familias que coloquen el afiche de su campaña en la ventana de sus casas.\"",
+                n1: "<strong class='text-yellow-700'>1.1 Hechos:</strong> Condicionamiento político-corrupto de un servicio de salud mental dirigido a una población altamente vulnerable.<br><br><strong class='text-yellow-700'>1.3 Dilema:</strong> Justicia contractual (Cumplirle al patrocinador/político del proyecto) <strong>VS</strong> Justicia Distributiva (Garantizar equidad y no discriminación en el acceso a la salud mental).",
+                n2: "<strong class='text-law-gold'>2.1 Fuentes Éticas:</strong> Justicia Distributiva (Beauchamp y Childress: los recursos de salud deben repartirse según la necesidad clínica, jamás según filiación política).<br><br><strong class='text-law-gold'>2.2 Normativa:</strong> Ley 1090, Artículo 2 (El psicólogo prestará sus servicios sin discriminación de religión o política) y principios de transparencia.",
+                n3: "<strong class='text-success-color'>3.1 Alternativas:</strong> A) Filtrar a los pacientes según los afiches. B) Rechazar la orden y atender a todas las víctimas.<br><br><strong class='text-success-color'>3.2 Decisión (Mal Menor):</strong> Opción B. Brindar acceso universal. Subordinar la salud mental al chantaje político es una falta grave a la dignidad humana. El psicólogo debe documentar y reportar el constreñimiento."
+            }
+        };
+
+        function loadMtnArea(areaKey) {
+            // 1. Resetear todos los botones a gris inactivo
+            document.querySelectorAll('.area-btn').forEach(btn => {
+                btn.className = "area-btn bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-bold shadow border-2 border-transparent hover:bg-gray-600 transition-all flex items-center gap-2";
+            });
+
+            // 2. Activar el botón seleccionado con su color correspondiente
+            const activeBtn = document.getElementById(`btn-area-${areaKey}`);
+            const data = mtnAreasData[areaKey];
+            
+            // Colores por defecto para el botón activo (usando una clase genérica fuerte o el color del área)
+            let btnColorClass = "";
+            if(areaKey === 'clinica') btnColorClass = "bg-bio-blue";
+            if(areaKey === 'organizacional') btnColorClass = "bg-cuc-red";
+            if(areaKey === 'educativa') btnColorClass = "bg-purple-600";
+            if(areaKey === 'social') btnColorClass = "bg-yellow-600";
+            
+            activeBtn.className = `area-btn ${btnColorClass} text-white px-6 py-3 rounded-xl font-bold shadow-lg transform scale-105 border-2 border-white transition-all flex items-center gap-2`;
+
+            // 3. Llenar el contenido del caso
+            document.getElementById('case-title').innerText = data.title;
+            document.getElementById('case-dilemma').innerText = data.dilemma;
+            
+            const iconContainer = document.getElementById('case-icon-container');
+            iconContainer.className = `w-16 h-16 ${data.bgClass} ${data.textClass} rounded-full flex items-center justify-center text-3xl shrink-0 shadow-inner`;
+            document.getElementById('case-icon').className = `fas ${data.icon}`;
+
+            // Llenar textos de los acordeones
+            document.getElementById('case-n1').innerHTML = data.n1;
+            document.getElementById('case-n2').innerHTML = data.n2;
+            document.getElementById('case-n3').innerHTML = data.n3;
+
+            // 4. Cerrar todos los acordeones al cambiar de caso
+            document.querySelectorAll('.mtn-step-detail').forEach(content => {
+                content.classList.add('hidden');
+                // Restaurar el ícono a chevron-down
+                const icon = content.previousElementSibling.querySelector('i.fa-chevron-up');
+                if(icon) {
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                }
+            });
+        }
+
+        function toggleAreaStep(stepId, btnElement) {
+            const content = document.getElementById(`case-${stepId}`);
+            const icon = btnElement.querySelector('i.fa-chevron-down, i.fa-chevron-up');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                content.classList.add('animate-fadeIn');
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                content.classList.add('hidden');
+                content.classList.remove('animate-fadeIn');
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+    </script>
+</body>
+</html>

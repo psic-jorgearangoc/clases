@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 5: Ley 1090 de 2006</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cuc-red': '#A3161A',
+                        'cuc-dark': '#1a1a1a',
+                        'cuc-gray': '#f4f4f4',
+                        'soft-red': '#ffebeb',
+                        'bio-blue': '#0d47a1',
+                        'bio-light': '#e3f2fd',
+                        'success-color': '#2e7d32',
+                        'alert-color': '#d32f2f',
+                        'law-gold': '#b8860b'
+                    },
+                    fontFamily: {
+                        'sans': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slideIn {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+        
+        /* Distorsiones Flip Cards */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        
+        .flip-card-inner {
+            transition: transform 0.6s;
+        }
+        
+        .group:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Chat Scrollbar */
+        .chat-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-scroll::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05); 
+        }
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2); 
+            border-radius: 10px;
+        }
+        
+        @keyframes fadeInMsg {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeInMsg {
+            animation: fadeInMsg 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-cuc-dark font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER / BANNER (No fijo en móvil) -->
+    <header class="bg-white border-b-4 border-cuc-red py-5 shadow-md relative md:sticky md:top-0 z-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-center items-center gap-6 text-center">
+            
+            <!-- QR Navegación -->
+            <div class="order-3 md:order-1 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/bioetica/u2clase05.html" 
+                     alt="QR Clase" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Ir a esta Clase</span>
+            </div>
+
+            <!-- Logo & Info -->
+            <div class="order-1 md:order-2 flex flex-col items-center max-w-2xl">
+                <img src="logocuc.png" alt="Logo Universidad de la Costa" class="h-20 mb-2">
+                <h1 class="text-cuc-red text-2xl md:text-3xl font-black uppercase leading-tight mb-1">
+                    Bioética y Deontología
+                </h1>
+                <div class="text-sm md:text-base text-gray-800">
+                    <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                    Mg. Dirección de Proyectos - Certificado en PNL<br>
+                    <small class="block mt-1">
+                        <span class="text-cuc-red font-black">WhatsApp:</span> 3233796547 | 
+                        <span class="text-cuc-red font-black">IG:</span> caminosdelser85
+                    </small>
+                </div>
+            </div>
+
+            <!-- QR Contacto -->
+            <div class="order-3 md:order-3 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" 
+                     alt="QR Contacto" 
+                     class="h-20 border-2 border-gray-200 rounded p-1 transition-transform hover:scale-110">
+                <span class="text-[0.6rem] text-gray-600 font-bold uppercase mt-1">Guardar Contacto</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="bg-gray-100 border-b border-gray-300 py-3 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <a href="u1clase01.html" class="inline-flex items-center gap-2 font-bold text-cuc-dark hover:text-cuc-red transition-colors">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+            <span class="mx-3 text-gray-400">|</span>
+            <span class="text-gray-600 font-bold">Unidad 2: Deontología (Ley 1090 de 2006)</span>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container mx-auto px-4 py-10 flex-grow max-w-6xl">
+        
+        <div class="text-center mb-16 animate-slideIn">
+            <span class="bg-law-gold text-white px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4 inline-block">Clase 5</span>
+            <h2 class="text-4xl font-black text-cuc-dark mb-6">Ley 1090 de 2006: La Carta Magna</h2>
+            <div class="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow-lg border-l-8 border-law-gold text-left">
+                <p class="text-xl text-gray-700 italic font-light">
+                    "Por la cual se reglamenta el ejercicio de la profesión de Psicología, se dicta el Código Deontológico y Bioético y otras disposiciones."
+                </p>
+                <p class="text-right text-law-gold font-bold mt-2">— Congreso de la República de Colombia</p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 1: PRINCIPIOS RECTORES (Art. 2) -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.2s;">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-cuc-dark mb-4">Principios Generales (Artículo 2)</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+                    Los psicólogos colombianos guían su práctica por principios inquebrantables. Estos son los pilares éticos y legales fundamentales que rigen cualquier interacción profesional.
+                </p>
+                <p class="text-sm text-law-gold mt-2 font-bold">(Pasa el mouse sobre las tarjetas)</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Principio 1: Competencia -->
+                <div class="group h-64 perspective-1000">
+                    <div class="flip-card-inner relative w-full h-full text-center transform-style-3d shadow-lg rounded-xl">
+                        <!-- Frente -->
+                        <div class="absolute w-full h-full backface-hidden bg-white border-2 border-gray-200 rounded-xl flex flex-col justify-center items-center p-6">
+                            <i class="fas fa-certificate text-4xl text-bio-blue mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Competencia</h4>
+                        </div>
+                        <!-- Reverso -->
+                        <div class="absolute w-full h-full backface-hidden bg-bio-blue text-white rounded-xl rotate-y-180 flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-blue-400 pb-2 mb-3">Límites del Saber:</h4>
+                            <p class="text-sm">El psicólogo solo prestará servicios y utilizará técnicas para las cuales se encuentre debidamente capacitado por su formación y experiencia. (¡Evitar la impericia!)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Principio 2: Anuncios -->
+                <div class="group h-64 perspective-1000">
+                    <div class="flip-card-inner relative w-full h-full text-center transform-style-3d shadow-lg rounded-xl">
+                        <!-- Frente -->
+                        <div class="absolute w-full h-full backface-hidden bg-white border-2 border-gray-200 rounded-xl flex flex-col justify-center items-center p-6">
+                            <i class="fas fa-bullhorn text-4xl text-cuc-red mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Anuncios Públicos</h4>
+                        </div>
+                        <!-- Reverso -->
+                        <div class="absolute w-full h-full backface-hidden bg-cuc-red text-white rounded-xl rotate-y-180 flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-red-400 pb-2 mb-3">Publicidad Ética:</h4>
+                            <p class="text-sm">La promoción de servicios debe ser objetiva y veraz. Está estrictamente prohibido garantizar o prometer resultados milagrosos (ej. "Curo la depresión en 3 días").</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Principio 3: Bienestar -->
+                <div class="group h-64 perspective-1000">
+                    <div class="flip-card-inner relative w-full h-full text-center transform-style-3d shadow-lg rounded-xl">
+                        <!-- Frente -->
+                        <div class="absolute w-full h-full backface-hidden bg-white border-2 border-gray-200 rounded-xl flex flex-col justify-center items-center p-6">
+                            <i class="fas fa-hands-helping text-4xl text-green-700 mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Bienestar del Usuario</h4>
+                        </div>
+                        <!-- Reverso -->
+                        <div class="absolute w-full h-full backface-hidden bg-green-700 text-white rounded-xl rotate-y-180 flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-green-500 pb-2 mb-3">Protección Integral:</h4>
+                            <p class="text-sm">Respetar la integridad física y moral de los usuarios. Evitar relaciones duales (ser terapeuta y amigo/pareja) o conflictos de intereses que exploten al paciente.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Principio 4: Estándares -->
+                <div class="group h-64 perspective-1000">
+                    <div class="flip-card-inner relative w-full h-full text-center transform-style-3d shadow-lg rounded-xl">
+                        <!-- Frente -->
+                        <div class="absolute w-full h-full backface-hidden bg-white border-2 border-gray-200 rounded-xl flex flex-col justify-center items-center p-6">
+                            <i class="fas fa-balance-scale-left text-4xl text-law-gold mb-4"></i>
+                            <h4 class="text-xl font-bold text-cuc-dark">Estándares Morales</h4>
+                        </div>
+                        <!-- Reverso -->
+                        <div class="absolute w-full h-full backface-hidden bg-law-gold text-white rounded-xl rotate-y-180 flex flex-col justify-center p-6 text-left">
+                            <h4 class="font-bold border-b border-yellow-500 pb-2 mb-3">Conducta Intachable:</h4>
+                            <p class="text-sm">La conducta moral y ética del psicólogo en su vida personal no debe comprometer sus responsabilidades profesionales ni reducir la confianza del público en la psicología.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: DERECHOS Y DEBERES -->
+        <section class="mb-20 animate-slideIn" style="animation-delay: 0.4s;">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Derechos del Psicólogo -->
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-md">
+                    <h3 class="text-2xl font-black text-bio-blue mb-6 flex items-center gap-3">
+                        <i class="fas fa-shield-alt"></i> Derechos del Profesional
+                    </h3>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex gap-3">
+                            <i class="fas fa-check text-success-color mt-1"></i>
+                            <span>Ser respetado y reconocido como profesional científico.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <i class="fas fa-check text-success-color mt-1"></i>
+                            <span>Recibir protección especial por parte del Estado cuando el ejercicio de su profesión implique un riesgo para su vida o integridad.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <i class="fas fa-check text-success-color mt-1"></i>
+                            <span>Ejercer la profesión con <strong>autonomía e independencia clínica</strong> (ningún jefe no-psicólogo puede obligarlo a cambiar un diagnóstico).</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <i class="fas fa-check text-success-color mt-1"></i>
+                            <span>Proponer innovaciones al Sistema General de Seguridad Social en Salud.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Deberes del Psicólogo -->
+                <div class="bg-gray-800 p-8 rounded-3xl border border-gray-700 shadow-md text-white">
+                    <h3 class="text-2xl font-black text-law-gold mb-6 flex items-center gap-3">
+                        <i class="fas fa-clipboard-list"></i> Deberes Fundamentales
+                    </h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex gap-3">
+                            <i class="fas fa-arrow-right text-law-gold mt-1"></i>
+                            <span>Guardar estricta reserva profesional sobre cualquier información obtenida (Secreto Profesional).</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <i class="fas fa-arrow-right text-law-gold mt-1"></i>
+                            <span>Llevar registro escrito en la <strong>Historia Clínica</strong> (o archivo profesional) que debe conservarse por 15 años.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <i class="fas fa-arrow-right text-law-gold mt-1"></i>
+                            <span>Evitar la práctica de la psicología usando metodologías o procedimientos que no tengan <strong>sustento científico</strong>.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <i class="fas fa-arrow-right text-law-gold mt-1"></i>
+                            <span>Cumplir las normas vigentes sobre presentación de servicios en las áreas de salud y trabajo.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: SIMULADOR DE DILEMAS (MULTICASE) -->
+        <section class="mb-10 animate-slideIn" style="animation-delay: 0.6s;">
+            <div class="bg-cuc-dark text-white rounded-2xl shadow-2xl overflow-hidden border border-gray-700">
+                
+                <div class="p-8 border-b border-gray-700 relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 text-9xl text-white opacity-5">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h2 class="text-3xl font-black text-law-gold mb-2 relative z-10 flex items-center gap-3">
+                        <i class="fas fa-gavel"></i> Laboratorio Ley 1090
+                    </h2>
+                    <p class="text-gray-300 text-md max-w-3xl relative z-10">
+                        Seleccione un caso. Escriba siempre el comando <strong class="text-white bg-cuc-red px-2 py-0.5 rounded uppercase">adelante</strong> para avanzar la simulación. Identifique cómo aplicar correctamente los principios legales y cuándo ocurre una falta disciplinaria ante el tribunal.
+                    </p>
+                </div>
+
+                <!-- TABS DE CASOS -->
+                <div class="flex flex-wrap bg-gray-800 border-b border-gray-600">
+                    <button class="case-tab-btn active px-6 py-4 font-bold text-sm uppercase tracking-wider flex-1 md:flex-none hover:bg-gray-700 transition-colors border-b-4 border-law-gold text-white" onclick="switchCase(1)">
+                        1. Límite de Competencia
+                    </button>
+                    <button class="case-tab-btn px-6 py-4 font-bold text-sm uppercase tracking-wider flex-1 md:flex-none hover:bg-gray-700 transition-colors border-b-4 border-transparent text-gray-400" onclick="switchCase(2)">
+                        2. Relaciones Duales
+                    </button>
+                    <button class="case-tab-btn px-6 py-4 font-bold text-sm uppercase tracking-wider flex-1 md:flex-none hover:bg-gray-700 transition-colors border-b-4 border-transparent text-gray-400" onclick="switchCase(3)">
+                        3. Autonomía Clínica
+                    </button>
+                    <button class="case-tab-btn px-6 py-4 font-bold text-sm uppercase tracking-wider flex-1 md:flex-none hover:bg-red-900 transition-colors border-b-4 border-transparent text-red-400 bg-red-950/30" onclick="switchCase(4)">
+                        <i class="fas fa-skull-crossbones mr-1"></i> 4. Mala Praxis (Publicidad)
+                    </button>
+                </div>
+
+                <div class="bg-gray-50 flex flex-col h-[450px] md:h-[500px] relative">
+                    
+                    <!-- Chat Header Dinámico -->
+                    <div id="chat-header" class="bg-white text-cuc-dark p-4 flex items-center justify-between shadow-sm z-10 border-b border-gray-200">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-yellow-100 text-law-gold rounded-full flex items-center justify-center font-bold" id="header-icon">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg leading-tight text-law-gold" id="header-title">Caso 1: Límite de Competencia</h3>
+                                <span class="text-xs text-gray-500 font-bold tracking-widest uppercase" id="header-subtitle">Dilema: Solicitud Fuera de Experiencia</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Messages Area -->
+                    <div id="chat-messages" class="chat-scroll flex-1 overflow-y-auto p-6 space-y-6 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
+                        <!-- Messages render here -->
+                    </div>
+
+                    <!-- Chat Input Area -->
+                    <div class="bg-white p-4 border-t border-gray-200 flex items-center gap-3">
+                        <input type="text" id="trigger-input" placeholder="Escribe 'adelante'..." 
+                               class="flex-1 bg-gray-100 border border-gray-300 text-gray-800 text-lg rounded-full px-6 py-3 focus:outline-none focus:ring-2 focus:ring-law-gold transition-all"
+                               onkeypress="handleChatInput(event)">
+                        <button onclick="checkAndAdvance()" 
+                                class="bg-law-gold text-white px-6 py-3 rounded-full font-bold hover:bg-yellow-700 transition-all shadow-md flex items-center gap-2">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-cuc-dark text-white text-center py-8 mt-auto">
+        <div class="container mx-auto px-4">
+            <p class="text-sm md:text-base mb-2">Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+            <p class="text-xs text-gray-400">Material docente: Jorge Arango Castaño. Enfoque: Deontología (Ley 1090) y Principios Bioéticos.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS DE SIMULACIÓN MULTICASE -->
+    <script>
+        // --- DATA DE LOS CASOS LEY 1090 ---
+        const casesData = {
+            1: {
+                title: "Caso 1: Límite de Competencia",
+                subtitle: "Dilema: Solicitud Fuera de Experiencia",
+                themeColor: "law-gold",
+                isError: false,
+                script: [
+                    { role: 'paciente', name: 'Abogado (Cliente)', text: "Doctor, sé que usted es un excelente psicólogo clínico. Necesito que le haga una evaluación pericial forense a mi cliente para determinar su custodia. Le pagaré el triple de su tarifa habitual por la urgencia." },
+                    { role: 'interventor', name: 'Psicólogo Clínico', text: "Le agradezco mucho la confianza y la oferta económica. Sin embargo, toda mi especialización y práctica es estrictamente clínica, no tengo formación ni credenciales en psicología forense." },
+                    { role: 'system', name: 'Ley 1090 - Art. 2 (Competencia)', text: "<strong>[Principio de Competencia]</strong> El psicólogo reconocerá los límites de su competencia y las limitaciones de sus técnicas. Solamente prestará sus servicios tras recibir la formación adecuada." },
+                    { role: 'paciente', name: 'Abogado (Cliente)', text: "Pero es solo aplicar unos tests de personalidad, usted sabe de eso. Nadie tiene por qué enterarse de su especialidad, solo fírmelo como psicólogo. ¡Es urgente!" },
+                    { role: 'interventor', name: 'Psicólogo Clínico', text: "Aplicar pruebas en un contexto jurídico requiere un rigor metodológico forense que no poseo. Si lo hago, cometería una falta de 'Impericia', poniendo en riesgo el futuro legal de los niños implicados. Debo declinar su caso." },
+                    { role: 'paciente', name: 'Abogado (Cliente)', text: "Es una pena que deje pasar esta oportunidad, pero entiendo su postura ética." },
+                    { role: 'interventor', name: 'Psicólogo Clínico', text: "Con gusto puedo remitirle el contacto de dos colegas especialistas en psicología jurídica y forense que están plenamente capacitados para este proceso pericial." },
+                    { role: 'system_success', name: 'Resultado', text: "<strong>[BUENA PRAXIS]</strong> - El profesional priorizó el principio ético sobre el incentivo económico. Al negarse a actuar con impericia y derivar el caso, protegió su licencia y garantizó el bienestar de los usuarios." }
+                ]
+            },
+            2: {
+                title: "Caso 2: Relaciones Duales",
+                subtitle: "Dilema: Bienestar del Usuario",
+                themeColor: "law-gold",
+                isError: false,
+                script: [
+                    { role: 'paciente', name: 'Paciente (Ana)', text: "Doc, llevamos 8 meses en terapia y me ha ayudado tanto a superar mi divorcio... Este fin de semana es mi fiesta de cumpleaños. Quiero invitarlo, me haría mucha ilusión que fuera." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Ana, agradezco muchísimo la invitación y me alegra ver los avances que has tenido. Sin embargo, no podré asistir a tu fiesta." },
+                    { role: 'system', name: 'Ley 1090 - Art. 2 (Bienestar del Usuario)', text: "<strong>[Relaciones Duales]</strong> Los psicólogos deben evitar relaciones que puedan disminuir su distancia profesional o conducir a la explotación o conflicto de intereses con el paciente." },
+                    { role: 'paciente', name: 'Paciente (Ana)', text: "¿Hice algo malo? Pensé que teníamos una buena relación de confianza." },
+                    { role: 'interventor', name: 'Psicólogo', text: "No has hecho nada malo, al contrario. Nuestra relación de confianza funciona precisamente porque es un espacio terapéutico neutral y exclusivo para tu sanación. Si empezamos a interactuar como amigos fuera de aquí, esa objetividad clínica se rompe." },
+                    { role: 'paciente', name: 'Paciente (Ana)', text: "Entiendo... supongo que tiene razón. Sería raro verlo tomando en una fiesta y luego venir a llorar aquí el lunes." },
+                    { role: 'interventor', name: 'Psicólogo', text: "Exactamente. Mi mayor muestra de respeto y cuidado hacia tu proceso es mantener estos límites profesionales claros. ¡Pero te deseo que tengas un cumpleaños maravilloso con tu familia y amigos!" },
+                    { role: 'system_success', name: 'Resultado', text: "<strong>[BUENA PRAXIS]</strong> - El psicólogo protege el encuadre terapéutico evitando la relación dual (terapeuta/amigo) que podría generar dependencia o confusión de roles, asegurando la no maleficencia." }
+                ]
+            },
+            3: {
+                title: "Caso 3: Autonomía Clínica",
+                subtitle: "Derechos del Profesional",
+                themeColor: "law-gold",
+                isError: false,
+                script: [
+                    { role: 'paciente', name: 'Gerente (Jefe directo)', text: "Jorge, leí tu informe de evaluación de clima laboral sobre el empleado Gutiérrez. Pusiste que su bajo rendimiento es por burnout y acoso laboral por parte de su supervisor." },
+                    { role: 'interventor', name: 'Psicólogo Organizacional', text: "Sí, señor. Los resultados de las pruebas de estrés y las entrevistas de diagnóstico apuntan claramente a un síndrome de burnout avanzado producto de la dinámica del departamento." },
+                    { role: 'paciente', name: 'Gerente (Jefe directo)', text: "Mira, necesitamos despedir a Gutiérrez sin pagarle indemnización. Necesito que cambies el informe y digas que tiene un 'trastorno de personalidad conflictivo' y que él es el problema. Te lo exijo como tu jefe." },
+                    { role: 'system', name: 'Ley 1090 - Derechos (Art. 9)', text: "<strong>[Independencia y Autonomía]</strong> El psicólogo tiene derecho a ejercer su profesión con autonomía y no puede ser coaccionado por superiores no psicólogos para alterar criterios técnicos o científicos." },
+                    { role: 'interventor', name: 'Psicólogo Organizacional', text: "Comprendo la necesidad administrativa de la empresa, pero como profesional de la salud amparado por la Ley 1090, mi evaluación clínica se basa en evidencia objetiva y científica. Falsificar un diagnóstico es un delito grave." },
+                    { role: 'paciente', name: 'Gerente (Jefe directo)', text: "¡Yo soy el que firma tu cheque! Si no haces ese pequeño cambio en el papel, voy a tener que buscar un psicólogo que sí trabaje a favor de la empresa." },
+                    { role: 'interventor', name: 'Psicólogo Organizacional', text: "Tiene el derecho de contratar a otro profesional si así lo desea. Pero mi firma, mi tarjeta profesional y mi criterio ético no son negociables. El informe original se mantiene tal como fue radicado." },
+                    { role: 'system_success', name: 'Resultado', text: "<strong>[BUENA PRAXIS]</strong> - El psicólogo ejerció su derecho a la autonomía profesional. Falsificar una historia clínica u ocultar acoso laboral constituye una falta gravísima (falsedad en documento y maleficencia)." }
+                ]
+            },
+            4: {
+                title: "Caso 4: Publicidad Engañosa",
+                subtitle: "Ley 1090 - Anuncios Públicos (ERROR)",
+                themeColor: "alert-color",
+                isError: true,
+                script: [
+                    { role: 'paciente', name: 'Publicación en Instagram', text: "<strong>[Anuncio Patrocinado]</strong>: '¿Cansado de la Depresión y la Ansiedad? Como Psicólogo Holístico Clínico, te GARANTIZO resultados definitivos. En solo 3 sesiones reprogramaré tu mente subconsciente. ¡Agenda hoy!'" },
+                    { role: 'system_error', name: 'Análisis de Error', text: "<strong>[LEY 1090 - ART. 2: ANUNCIOS PÚBLICOS]</strong> Prohibición absoluta. En psicología NO se pueden garantizar resultados, ya que el comportamiento humano es multicausal. Es publicidad falsa y sensacionalista." },
+                    { role: 'interventor_malo', name: 'Seguidor (Mensaje)', text: "Doc, estoy muy mal. Llevo años con ataques de pánico. Vi su garantía de 3 sesiones, pero no tengo tanto dinero. ¿De verdad me cura rápido?" },
+                    { role: 'paciente', name: 'Psicólogo (Mal Praxis)', text: "¡Claro que sí! Mis técnicas cuánticas son infalibles. Consigue el dinero como sea, te prometo que en un mes estarás curado. Los psicólogos tradicionales solo te sacan plata por años." },
+                    { role: 'system_error', name: 'Análisis de Error', text: "<strong>[VIOLACIÓN A ESTÁNDARES MORALES]</strong> El psicólogo utiliza una base no científica ('cuántica') en la práctica psicológica y denigra a sus colegas de profesión para lucrarse explotando la vulnerabilidad del paciente." },
+                    { role: 'interventor_malo', name: 'Tribunal Deontológico (Colpsic)', text: "<strong>[Notificación]</strong>: Hemos recibido una denuncia formal por estafa y mala praxis. El paciente se endeudó, asistió a las 3 sesiones y luego intentó suicidarse al ver que no estaba 'curado garantizado'." },
+                    { role: 'paciente', name: 'Psicólogo (Mal Praxis)', text: "¡Pero es marketing! Todo el mundo en redes sociales exagera un poco para conseguir clientes." },
+                    { role: 'system_error', name: 'Sanción Disciplinaria', text: "<strong>[RESULTADO]</strong> Suspensión de la tarjeta profesional. Prometer curas mágicas atenta contra la lealtad y el bienestar del usuario, generando falsas expectativas que pueden ser letales en pacientes psiquiátricos." }
+                ]
+            }
+        };
+
+        // --- ESTADO DE LA APLICACIÓN ---
+        let currentCaseId = 1;
+        let progressState = { 1: 0, 2: 0, 3: 0, 4: 0 };
+
+        // --- INICIALIZACIÓN ---
+        window.onload = () => {
+            renderInitialMessage();
+        };
+
+        function switchCase(caseId) {
+            currentCaseId = caseId;
+            
+            // Actualizar UI de los botones de pestañas
+            const tabs = document.querySelectorAll('.case-tab-btn');
+            tabs.forEach((tab, index) => {
+                const isErrorTab = (index === 3); // La pestaña 4 es error
+                
+                // Reset states
+                tab.classList.remove('active', 'border-law-gold', 'text-white', 'border-alert-color');
+                tab.classList.add('border-transparent');
+                
+                if (isErrorTab) {
+                    tab.classList.remove('text-red-100');
+                    tab.classList.add('text-red-400');
+                } else {
+                    tab.classList.remove('text-white');
+                    tab.classList.add('text-gray-400');
+                }
+
+                // Active states
+                if (index + 1 === caseId) {
+                    tab.classList.add('active', 'text-white');
+                    tab.classList.remove('text-gray-400', 'text-red-400');
+                    
+                    if (isErrorTab) {
+                        tab.classList.add('border-alert-color');
+                    } else {
+                        tab.classList.add('border-law-gold');
+                    }
+                }
+            });
+
+            // Actualizar Header
+            const caseData = casesData[caseId];
+            document.getElementById('header-title').innerText = caseData.title;
+            document.getElementById('header-subtitle').innerText = caseData.subtitle;
+            
+            const headerIcon = document.getElementById('header-icon');
+            if (caseData.isError) {
+                headerIcon.className = "w-10 h-10 bg-red-900 text-white rounded-full flex items-center justify-center font-bold";
+                headerIcon.innerHTML = '<i class="fas fa-times"></i>';
+                document.getElementById('chat-header').className = "bg-alert-color text-white p-4 flex items-center justify-between shadow-sm z-10 border-b border-red-900";
+                document.getElementById('header-title').className = "font-bold text-lg leading-tight text-white";
+                document.getElementById('header-subtitle').className = "text-xs text-red-200 font-bold tracking-widest uppercase";
+                
+                // Cambiar input btn
+                const sendBtn = document.querySelector('.fa-paper-plane').parentElement;
+                sendBtn.className = "bg-alert-color text-white px-6 py-3 rounded-full font-bold hover:bg-red-800 transition-all shadow-md flex items-center gap-2";
+            } else {
+                headerIcon.className = "w-10 h-10 bg-yellow-100 text-law-gold rounded-full flex items-center justify-center font-bold";
+                headerIcon.innerHTML = '<i class="fas fa-certificate"></i>';
+                document.getElementById('chat-header').className = "bg-white text-cuc-dark p-4 flex items-center justify-between shadow-sm z-10 border-b border-gray-200";
+                document.getElementById('header-title').className = "font-bold text-lg leading-tight text-law-gold";
+                document.getElementById('header-subtitle').className = "text-xs text-gray-500 font-bold tracking-widest uppercase";
+                
+                const sendBtn = document.querySelector('.fa-paper-plane').parentElement;
+                sendBtn.className = "bg-law-gold text-white px-6 py-3 rounded-full font-bold hover:bg-yellow-700 transition-all shadow-md flex items-center gap-2";
+            }
+
+            rebuildChatHistory();
+        }
+
+        function renderInitialMessage() {
+            const chatContainer = document.getElementById('chat-messages');
+            chatContainer.innerHTML = `
+                <div class="text-center text-gray-500 text-sm font-bold bg-white px-6 py-2 rounded-full mx-auto w-max shadow-sm border border-gray-200">
+                    Escriba la palabra <span class="text-cuc-red">adelante</span> para iniciar.
+                </div>
+            `;
+        }
+
+        function rebuildChatHistory() {
+            const chatContainer = document.getElementById('chat-messages');
+            chatContainer.innerHTML = ''; // Clear
+            
+            const currentStep = progressState[currentCaseId];
+            
+            if (currentStep === 0) {
+                renderInitialMessage();
+                return;
+            }
+
+            const script = casesData[currentCaseId].script;
+            for (let i = 0; i < currentStep; i++) {
+                renderBubbleHTML(script[i], casesData[currentCaseId].isError);
+            }
+            scrollToBottom();
+        }
+
+        function handleChatInput(e) {
+            if (e.key === 'Enter') {
+                checkAndAdvance();
+            }
+        }
+
+        function checkAndAdvance() {
+            const inputEl = document.getElementById('trigger-input');
+            const val = inputEl.value.trim().toLowerCase();
+            
+            if (val === 'adelante') {
+                advanceCurrentCase();
+                inputEl.value = ''; 
+            } else {
+                alert("COMANDO INVÁLIDO.\n\nPara evitar saltos en el análisis, el único comando permitido es la palabra: adelante\n\nPor favor, intente nuevamente.");
+            }
+        }
+
+        function advanceCurrentCase() {
+            const script = casesData[currentCaseId].script;
+            const step = progressState[currentCaseId];
+
+            if (step === 0) {
+                document.getElementById('chat-messages').innerHTML = ''; 
+            }
+
+            if (step < script.length) {
+                renderBubbleHTML(script[step], casesData[currentCaseId].isError);
+                progressState[currentCaseId]++;
+                scrollToBottom();
+            } else {
+                alert("El análisis de este caso deontológico ha finalizado. Seleccione otra pestaña superior.");
+            }
+        }
+
+        function renderBubbleHTML(message, isErrorCase) {
+            const chatContainer = document.getElementById('chat-messages');
+            const bubbleDiv = document.createElement('div');
+            
+            if (message.role === 'interventor') {
+                bubbleDiv.className = "flex flex-col items-end animate-fadeInMsg";
+                bubbleDiv.innerHTML = `
+                    <span class="text-xs text-law-gold font-bold mb-1 mr-1">${message.name}</span>
+                    <div class="max-w-[85%] bg-yellow-50 border border-yellow-200 text-yellow-900 rounded-2xl rounded-tr-none p-4 shadow-sm text-lg">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'interventor_malo') {
+                bubbleDiv.className = "flex flex-col items-end animate-fadeInMsg";
+                bubbleDiv.innerHTML = `
+                    <span class="text-xs text-alert-color font-bold mb-1 mr-1">${message.name}</span>
+                    <div class="max-w-[85%] bg-red-100 border border-red-300 text-red-900 rounded-2xl rounded-tr-none p-4 shadow-sm text-lg">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'paciente') {
+                bubbleDiv.className = "flex flex-col items-start animate-fadeInMsg";
+                bubbleDiv.innerHTML = `
+                    <span class="text-xs text-gray-500 font-bold mb-1 ml-1">${message.name}</span>
+                    <div class="max-w-[85%] bg-white border border-gray-300 text-gray-800 rounded-2xl rounded-tl-none p-4 shadow-sm text-lg">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'system') {
+                bubbleDiv.className = "flex flex-col items-center animate-fadeInMsg mt-4";
+                bubbleDiv.innerHTML = `
+                    <div class="bg-gray-800 text-yellow-400 border border-gray-600 rounded-lg p-4 shadow-sm text-sm text-left w-full max-w-xl">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'system_success') {
+                bubbleDiv.className = "flex flex-col items-center animate-fadeInMsg mt-4";
+                bubbleDiv.innerHTML = `
+                    <div class="bg-green-100 border border-green-300 text-green-800 rounded-lg p-4 shadow-sm text-sm text-center w-full max-w-xl font-bold">
+                        ${message.text}
+                    </div>
+                `;
+            } else if (message.role === 'system_error') {
+                bubbleDiv.className = "flex flex-col items-center animate-fadeInMsg mt-4";
+                bubbleDiv.innerHTML = `
+                    <div class="bg-red-200 border border-red-400 text-red-900 rounded-lg p-4 shadow-sm text-sm text-left w-full max-w-xl font-bold">
+                        ${message.text}
+                    </div>
+                `;
+            }
+
+            chatContainer.appendChild(bubbleDiv);
+        }
+
+        function scrollToBottom() {
+            const chatContainer = document.getElementById('chat-messages');
+            chatContainer.scrollTo({
+                top: chatContainer.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>
