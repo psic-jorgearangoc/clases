@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 12 - El Informe Final | Eureka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --soft-red: #ffebeb;
+            --blue-accent: #2b78e4;
+            --green-accent: #2e7d32;
+            --orange-accent: #e65100;
+            --purple-accent: #7b1fa2;
+            --teal-accent: #00897b;
+            --gold-accent: #FFD700;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* --- HEADER / BANNER CON QR --- */
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .qr-code img {
+            max-height: 80px;
+            border: 2px solid var(--cuc-gray);
+            border-radius: 5px;
+            padding: 2px;
+            transition: transform 0.3s;
+        }
+
+        .qr-code img:hover {
+            transform: scale(1.1);
+            border-color: var(--cuc-red);
+        }
+
+        .qr-label {
+            display: block;
+            font-size: 0.6rem;
+            color: #666;
+            margin-top: 3px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .header-logo img {
+            max-height: 90px;
+            background-color: transparent; 
+        }
+
+        .header-info {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .course-title {
+            color: var(--cuc-red);
+            font-size: 1.6rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            line-height: 1.1;
+        }
+
+        .prof-info {
+            font-size: 0.90rem;
+            color: #333;
+        }
+
+        .prof-info strong {
+            color: var(--cuc-red);
+        }
+
+        .contact-label {
+            color: var(--cuc-red);
+            font-weight: 900;
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .top-nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn-return {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-return:hover {
+            background-color: var(--cuc-red);
+            transform: translateX(-5px);
+            box-shadow: 0 6px 12px rgba(163, 22, 26, 0.2);
+        }
+
+        /* --- ESTILOS DEL DESARROLLO DE LA CLASE --- */
+        .class-content-wrapper {
+            background-color: #fbfbfb;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--cuc-red);
+            margin-bottom: 50px;
+        }
+
+        .class-badge {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #fff8e1;
+            color: #00695c;
+            border: 1px solid #00897b;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .class-header-title {
+            text-align: center;
+            color: var(--cuc-red);
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .class-subtitle {
+            text-align: center;
+            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .topic-section {
+            margin-bottom: 60px;
+        }
+
+        .topic-title {
+            color: var(--cuc-dark);
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--cuc-gray);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .topic-title i {
+            color: var(--cuc-red);
+        }
+
+        .quote-box {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #555;
+            border-left: 5px solid var(--cuc-red);
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .quote-box::before {
+            content: "\f10d";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 15px;
+            left: -15px;
+            color: var(--cuc-red);
+            background: #fbfbfb;
+            padding: 5px;
+            font-size: 1.5rem;
+        }
+
+        /* --- TABS INTERACTIVOS (IMRyD) --- */
+        .tabs-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+
+        .tabs-header {
+            display: flex;
+            background: var(--cuc-dark);
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 20px 10px;
+            background: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 4px solid transparent;
+        }
+
+        .tab-btn i {
+            font-size: 1.5rem;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .tab-btn.active {
+            background: var(--cuc-red);
+            border-bottom: 4px solid var(--gold-accent);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content h3 {
+            color: var(--cuc-red);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .tab-content ul {
+            padding-left: 20px;
+            margin-top: 15px;
+            color: #444;
+        }
+        
+        .tab-content li {
+            margin-bottom: 10px;
+        }
+
+        /* --- COMPARADOR RESULTADOS VS DISCUSIÓN --- */
+        .vs-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            align-items: stretch;
+            flex-wrap: wrap;
+        }
+
+        .vs-card {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .vs-card.resultados {
+            border-top: 5px solid var(--blue-accent);
+        }
+
+        .vs-card.discusion {
+            border-top: 5px solid var(--orange-accent);
+        }
+
+        .vs-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .resultados h3 { color: var(--blue-accent); }
+        .discusion h3 { color: var(--orange-accent); }
+
+        .vs-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            background: var(--cuc-gray);
+            border-radius: 50%;
+            margin: auto 0;
+            font-size: 1.2rem;
+            color: var(--cuc-dark);
+            font-weight: bold;
+        }
+
+        /* --- PROGRESS CHECKLIST (GAMIFICADO) --- */
+        .progress-wrapper {
+            background-color: var(--cuc-dark);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-top: 50px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .progress-header h3 {
+            color: var(--gold-accent);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        /* Barra de Progreso */
+        .progress-bar-container {
+            width: 100%;
+            height: 25px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--cuc-red), var(--gold-accent));
+            border-radius: 20px;
+            transition: width 0.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--cuc-dark);
+        }
+
+        .check-list-gamified {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .check-label {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.05);
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .check-label:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+
+        .check-label input {
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border: 2px solid #aaa;
+            border-radius: 5px;
+            margin-right: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+
+        .check-label input:checked {
+            background-color: var(--green-accent);
+            border-color: var(--green-accent);
+        }
+
+        .check-label input:checked::after {
+            content: '\f00c';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: white;
+            font-size: 14px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .check-text {
+            font-size: 1.05rem;
+        }
+
+        .check-label input:checked + .check-text {
+            color: #888;
+            text-decoration: line-through;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(46, 125, 50, 0.2);
+            border: 2px solid var(--green-accent);
+            border-radius: 10px;
+            animation: fadeIn 0.5s;
+        }
+
+        .success-message h4 {
+            color: var(--green-accent);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Video */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* RESPONSIVE */
+        @media screen and (max-width: 900px) {
+            header {
+                position: relative;
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+            .course-title { font-size: 1.3rem; }
+            .class-content-wrapper { padding: 25px 15px; }
+            .header-logo img { max-height: 70px; }
+            .qr-code img { max-height: 60px; }
+            .tab-btn span { font-size: 0.8rem; }
+            .vs-container { flex-direction: column; }
+            .vs-icon { display: none; }
+        }
+
+        footer {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=www.caminosdelser.co/Clases/eureka/u3clase12.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa">
+        </div>
+        <div class="header-info">
+            <div class="course-title">Electiva Eureka: Ciencia, Tecnología e Innovación</div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> caminosdelser85 | 
+                    <span class="contact-label">Web:</span> www.caminosdelser.co
+                </small>
+            </div>
+        </div>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="top-nav-buttons">
+            <a href="u1clase01.html" class="btn-return">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática Principal
+            </a>
+        </div>
+
+        <div class="class-content-wrapper">
+            
+            <div style="text-align: center;">
+                <span class="class-badge"><i class="fas fa-flag-checkered"></i> Cierre del Curso: Eureka</span>
+            </div>
+            
+            <h1 class="class-header-title">Clase 12: El Informe Final</h1>
+            <p class="class-subtitle">La consolidación del proyecto. Estructura, redacción de resultados y discusión científica.</p>
+
+            <!-- 1. INTRODUCCIÓN -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-book-open"></i> 1. El Propósito del Informe Final</h2>
+                
+                <div class="quote-box">
+                    "La investigación que no se publica, no existe. El informe final es el puente entre el investigador y la comunidad científica o social que necesita esos resultados."
+                    <span style="display:block; text-align:right; font-weight:bold; margin-top:10px; font-size:1rem;">— Campou (2012)</span>
+                </div>
+
+                <p style="margin-bottom: 20px;">Después de formular el problema, diseñar la metodología y analizar los datos, el paso definitivo es comunicar los hallazgos. A nivel internacional, las revistas científicas y las tesis de grado exigen una estructura estandarizada conocida como el <strong>Formato IMRyD</strong>.</p>
+            </div>
+
+            <!-- 2. ESTRUCTURA IMRYD (TABS) -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-layer-group"></i> 2. La Estructura Universal (IMRyD)</h2>
+                <p style="margin-bottom: 25px;">Navega por las pestañas para descubrir qué debe contener cada capítulo de tu documento final según el estándar internacional.</p>
+
+                <div class="tabs-container">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" onclick="openTab(event, 'tab-I')">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Introducción</span>
+                        </button>
+                        <button class="tab-btn" onclick="openTab(event, 'tab-M')">
+                            <i class="fas fa-cogs"></i>
+                            <span>Método</span>
+                        </button>
+                        <button class="tab-btn" onclick="openTab(event, 'tab-R')">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Resultados</span>
+                        </button>
+                        <button class="tab-btn" onclick="openTab(event, 'tab-D')">
+                            <i class="fas fa-comments"></i>
+                            <span>Discusión</span>
+                        </button>
+                    </div>
+
+                    <!-- Introducción -->
+                    <div id="tab-I" class="tab-content active">
+                        <h3><i class="fas fa-info-circle"></i> Introducción (¿Qué se estudió y por qué?)</h3>
+                        <p>Es la puerta de entrada. En las revistas modernas, la introducción suele agrupar lo que en una tesis son los tres primeros capítulos. Debe contener:</p>
+                        <ul>
+                            <li><strong>El Planteamiento del Problema:</strong> Contexto (Macro, Meso, Micro) y formulación de la pregunta.</li>
+                            <li><strong>La Justificación:</strong> Por qué es importante (social, teórica y metodológicamente).</li>
+                            <li><strong>Los Objetivos:</strong> General y Específicos.</li>
+                            <li><strong>El Marco Teórico / Antecedentes:</strong> Resumen del estado del arte y definición de las variables principales.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Método -->
+                    <div id="tab-M" class="tab-content">
+                        <h3><i class="fas fa-cogs"></i> Método (¿Cómo se estudió?)</h3>
+                        <p>Debe estar redactado con tal nivel de detalle que otro investigador pueda leerlo y replicar tu estudio exactamente igual. Incluye:</p>
+                        <ul>
+                            <li><strong>Enfoque, Alcance y Diseño:</strong> Ej. "Enfoque cuantitativo, nivel correlacional, diseño no experimental transversal".</li>
+                            <li><strong>Población y Muestra:</strong> Cantidad de participantes, criterios de inclusión/exclusión y tipo de muestreo utilizado.</li>
+                            <li><strong>Instrumentos:</strong> Qué test o encuesta se utilizó, indicando su validez, confiabilidad y cómo califica.</li>
+                            <li><strong>Procedimiento:</strong> El paso a paso de cómo se recolectaron los datos en campo.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Resultados -->
+                    <div id="tab-R" class="tab-content">
+                        <h3><i class="fas fa-chart-pie"></i> Resultados (¿Qué se encontró?)</h3>
+                        <p>Es el corazón empírico del documento. Aquí se presentan los datos crudos y procesados. No se opina, solo se muestra la evidencia:</p>
+                        <ul>
+                            <li><strong>Estadística Descriptiva:</strong> Tablas, gráficos circulares o de barras con las frecuencias y promedios de la muestra.</li>
+                            <li><strong>Estadística Inferencial:</strong> Los resultados de las pruebas de hipótesis (Ej. "Se halló una correlación significativa de r=0.75, p < 0.05...").</li>
+                            <li><strong>Texto de apoyo:</strong> Párrafos que guían al lector a entender qué dice cada tabla o gráfica.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Discusión -->
+                    <div id="tab-D" class="tab-content">
+                        <h3><i class="fas fa-comments"></i> Discusión (¿Qué significa lo hallado?)</h3>
+                        <p>Es la sección más intelectual del informe. Aquí interpretas los resultados fríos y los pones a dialogar con la teoría:</p>
+                        <ul>
+                            <li><strong>Interpretación:</strong> ¿Se cumplió la hipótesis o no? ¿Por qué crees que ocurrió esto?</li>
+                            <li><strong>Contraste:</strong> Comparar tus hallazgos con los antecedentes del Marco Teórico (Ej. "Al igual que Pérez (2020), este estudio encontró que...").</li>
+                            <li><strong>Limitaciones:</strong> Reconocer con honestidad qué falló o qué le faltó a tu estudio.</li>
+                            <li><strong>Conclusiones y Recomendaciones:</strong> El cierre final del proyecto.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. RESULTADOS VS DISCUSIÓN -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-balance-scale"></i> 3. El error más común: Resultados vs. Discusión</h2>
+                <p style="margin-bottom: 20px;">Uno de los errores más frecuentes en los estudiantes es confundir la sección de Resultados con la Discusión. Observa la diferencia radical en el lenguaje:</p>
+
+                <div class="vs-container">
+                    <div class="vs-card resultados">
+                        <h3><i class="fas fa-table"></i> Resultados</h3>
+                        <p style="color: #666; margin-bottom: 15px;">Objetivo, directo, numérico. Se limita a describir lo que arrojó el software (SPSS, Excel) sin opinar.</p>
+                        <div style="background: var(--cuc-gray); padding: 15px; border-radius: 8px; font-style: italic; border-left: 3px solid var(--blue-accent);">
+                            "Como se observa en la Tabla 2, el 65% de la muestra reportó un nivel 'Alto' de estrés, obteniendo una media de 45 puntos (DS=5.2)."
+                        </div>
+                    </div>
+
+                    <div class="vs-icon">VS</div>
+
+                    <div class="vs-card discusion">
+                        <h3><i class="fas fa-brain"></i> Discusión</h3>
+                        <p style="color: #666; margin-bottom: 15px;">Interpretativo, analítico, teórico. Busca explicar el *por qué* de esos números usando la literatura.</p>
+                        <div style="background: var(--cuc-gray); padding: 15px; border-radius: 8px; font-style: italic; border-left: 3px solid var(--orange-accent);">
+                            "El alto nivel de estrés hallado (65%) concuerda con lo propuesto por Hernández (2022), quien señala que la sobrecarga académica detona respuestas ansiógenas..."
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Complementario -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-video"></i> Video Complementario: Redacción de Informes</h2>
+                <p style="margin-bottom: 20px;">Refuerza cómo estructurar tu informe de investigación y cómo redactar los apartados del formato IMRyD con este excelente recurso:</p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/rK2qUeY_W60" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- 4. CHECKLIST FINAL (CORTE 3) -->
+            <div class="progress-wrapper">
+                <div class="progress-header">
+                    <h3><i class="fas fa-trophy"></i> Sustentación Final - Corte 3</h3>
+                    <p>Has llegado a la recta final. Selecciona los componentes que ya has consolidado en tu documento de Word para ver tu progreso. ¡Asegúrate de llegar al 100% para tu entrega final!</p>
+                </div>
+
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progressFill">0%</div>
+                </div>
+
+                <div class="check-list-gamified">
+                    <label class="check-label">
+                        <input type="checkbox" class="final-check" onclick="updateProgress()">
+                        <span class="check-text"><strong>1. Título y Problema:</strong> Mi documento tiene un título claro, los síntomas, causas y la formulación en pregunta.</span>
+                    </label>
+
+                    <label class="check-label">
+                        <input type="checkbox" class="final-check" onclick="updateProgress()">
+                        <span class="check-text"><strong>2. Justificación y Objetivos:</strong> Redacté la importancia del estudio y los objetivos usan verbos en infinitivo (Analizar, Describir).</span>
+                    </label>
+
+                    <label class="check-label">
+                        <input type="checkbox" class="final-check" onclick="updateProgress()">
+                        <span class="check-text"><strong>3. Marco Teórico (APA 7):</strong> Definí mis variables y referencié correctamente los antecedentes sin plagio.</span>
+                    </label>
+
+                    <label class="check-label">
+                        <input type="checkbox" class="final-check" onclick="updateProgress()">
+                        <span class="check-text"><strong>4. Capítulo Metodológico:</strong> Definí el Enfoque, Alcance, Diseño, Población, Muestra e Instrumento (Operacionalización).</span>
+                    </label>
+
+                    <label class="check-label">
+                        <input type="checkbox" class="final-check" onclick="updateProgress()">
+                        <span class="check-text"><strong>5. Plan de Análisis de Datos:</strong> Incluí mi matriz de Excel/hipótesis y determiné qué prueba estadística usaré.</span>
+                    </label>
+                </div>
+
+                <div class="success-message" id="successMsg">
+                    <h4><i class="fas fa-medal"></i> ¡Felicidades, Investigador!</h4>
+                    <p>Has completado el 100% de la estructura de tu proyecto de aula Eureka. Tu documento está listo para la revisión final y sustentación. ¡Mucho éxito!</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p>Material diseñado para la asignatura Electiva Eureka.</p>
+    </footer>
+
+    <script>
+        // Lógica de Pestañas (Tabs)
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            
+            // Ocultar todos los contenidos
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            // Quitar clase active de los botones
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            // Mostrar la pestaña actual y activar el botón
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Lógica de la Barra de Progreso (Gamificación)
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.final-check');
+            const total = checkboxes.length;
+            let checkedCount = 0;
+
+            checkboxes.forEach((box) => {
+                if(box.checked) {
+                    checkedCount++;
+                }
+            });
+
+            const percentage = Math.round((checkedCount / total) * 100);
+            const fillBar = document.getElementById('progressFill');
+            const successMsg = document.getElementById('successMsg');
+
+            fillBar.style.width = percentage + '%';
+            
+            // Mostrar texto solo si es mayor a 0 para que quepa visualmente
+            if(percentage > 5) {
+                fillBar.innerText = percentage + '%';
+            } else {
+                fillBar.innerText = '';
+            }
+
+            // Cambiar color si llega al 100% y mostrar mensaje
+            if (percentage === 100) {
+                fillBar.style.background = "linear-gradient(90deg, var(--green-accent), #4CAF50)";
+                fillBar.style.color = "white";
+                successMsg.style.display = "block";
+            } else {
+                fillBar.style.background = "linear-gradient(90deg, var(--cuc-red), var(--gold-accent))";
+                fillBar.style.color = "var(--cuc-dark)";
+                successMsg.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

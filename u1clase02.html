@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 9 - Población y Muestra | Eureka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --soft-red: #ffebeb;
+            --blue-accent: #2b78e4;
+            --green-accent: #2e7d32;
+            --orange-accent: #e65100;
+            --purple-accent: #7b1fa2;
+            --teal-accent: #00897b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* --- HEADER / BANNER CON QR --- */
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .qr-code img {
+            max-height: 80px;
+            border: 2px solid var(--cuc-gray);
+            border-radius: 5px;
+            padding: 2px;
+            transition: transform 0.3s;
+        }
+
+        .qr-code img:hover {
+            transform: scale(1.1);
+            border-color: var(--cuc-red);
+        }
+
+        .qr-label {
+            display: block;
+            font-size: 0.6rem;
+            color: #666;
+            margin-top: 3px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .header-logo img {
+            max-height: 90px;
+            background-color: transparent; 
+        }
+
+        .header-info {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .course-title {
+            color: var(--cuc-red);
+            font-size: 1.6rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            line-height: 1.1;
+        }
+
+        .prof-info {
+            font-size: 0.90rem;
+            color: #333;
+        }
+
+        .prof-info strong {
+            color: var(--cuc-red);
+        }
+
+        .contact-label {
+            color: var(--cuc-red);
+            font-weight: 900;
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .top-nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn-return {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-return:hover {
+            background-color: var(--cuc-red);
+            transform: translateX(-5px);
+            box-shadow: 0 6px 12px rgba(163, 22, 26, 0.2);
+        }
+
+        /* --- ESTILOS DEL DESARROLLO DE LA CLASE --- */
+        .class-content-wrapper {
+            background-color: #fbfbfb;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--cuc-red);
+            margin-bottom: 50px;
+        }
+
+        .class-badge {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #e0f7fa;
+            color: #006064;
+            border: 1px solid #00acc1;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .class-header-title {
+            text-align: center;
+            color: var(--cuc-red);
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .class-subtitle {
+            text-align: center;
+            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .topic-section {
+            margin-bottom: 50px;
+        }
+
+        .topic-title {
+            color: var(--cuc-dark);
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--cuc-gray);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .topic-title i {
+            color: var(--cuc-red);
+        }
+
+        .quote-box {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #555;
+            border-left: 5px solid var(--cuc-red);
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .quote-box::before {
+            content: "\f10d";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 15px;
+            left: -15px;
+            color: var(--cuc-red);
+            background: #fbfbfb;
+            padding: 5px;
+            font-size: 1.5rem;
+        }
+
+        /* FLIP CARDS PARA CONCEPTOS */
+        .flip-card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .flip-card {
+            background-color: transparent;
+            height: 280px;
+            perspective: 1000px;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-radius: 12px;
+        }
+        
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .flip-card-front {
+            background-color: white;
+            color: var(--cuc-dark);
+            border: 2px solid var(--cuc-gray);
+        }
+        
+        .flip-card-front i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .flip-card-back {
+            color: white;
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-back p {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            margin-top: 10px;
+        }
+
+        /* GRIDS DE MUESTREO */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .sampling-group {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .sampling-group h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed #eee;
+        }
+
+        .s-card {
+            background: var(--cuc-gray);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid;
+            transition: transform 0.2s;
+        }
+        
+        .s-card:hover {
+            transform: translateX(5px);
+        }
+
+        .s-card h4 {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .s-card p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* WIZARD INTERACTIVO (GENERADOR DE MUESTREO) */
+        .wizard-container {
+            background: var(--cuc-dark);
+            border-radius: 15px;
+            padding: 40px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .wizard-step {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .wizard-step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .wizard-question {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .wizard-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .wizard-btn {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
+            max-width: 300px;
+        }
+
+        .wizard-btn i {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .wizard-btn:hover {
+            background: var(--cuc-red);
+            border-color: var(--cuc-red);
+            transform: scale(1.05);
+        }
+
+        .wizard-result {
+            background: white;
+            color: var(--cuc-dark);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .wizard-result h3 {
+            color: var(--cuc-red);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-reset {
+            margin-top: 20px;
+            background: transparent;
+            color: #888;
+            border: none;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-reset:hover {
+            color: white;
+        }
+
+        /* RESPONSIVE */
+        @media screen and (max-width: 900px) {
+            header {
+                position: relative;
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+            .course-title { font-size: 1.3rem; }
+            .class-content-wrapper { padding: 25px 15px; }
+            .header-logo img { max-height: 70px; }
+            .qr-code img { max-height: 60px; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .wizard-container { padding: 30px 20px; }
+        }
+
+        /* Footer Centrado */
+        footer {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=www.caminosdelser.co/Clases/eureka/u3clase09.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa">
+        </div>
+        <div class="header-info">
+            <div class="course-title">Electiva Eureka: Ciencia, Tecnología e Innovación</div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> caminosdelser85 | 
+                    <span class="contact-label">Web:</span> www.caminosdelser.co
+                </small>
+            </div>
+        </div>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="top-nav-buttons">
+            <a href="u1clase01.html" class="btn-return">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática Principal
+            </a>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- DESARROLLO DE LA CLASE 9                   -->
+        <!-- ========================================== -->
+        <div class="class-content-wrapper">
+            
+            <div style="text-align: center;">
+                <span class="class-badge" style="background-color: #fff3e0; color: #00695c; border-color: #00897b;"><i class="fas fa-users"></i> Unidad 3: Recogida de Datos</span>
+            </div>
+            
+            <h1 class="class-header-title">Clase 9: Población y Muestra</h1>
+            <p class="class-subtitle">¿A quiénes mediremos? Estrategias probabilísticas y no probabilísticas para seleccionar a los sujetos de estudio.</p>
+
+            <!-- 1. CONCEPTOS BÁSICOS -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-bullseye"></i> 1. Delimitando nuestro objetivo</h2>
+                
+                <div class="quote-box">
+                    "La muestra es, en esencia, un subgrupo de la población. Digamos que es un subconjunto de elementos que pertenecen a ese conjunto definido en sus características al que llamamos población."
+                    <span style="display:block; text-align:right; font-weight:bold; margin-top:10px; font-size:1rem;">— Hernández Sampieri (2014)</span>
+                </div>
+
+                <p style="margin-bottom: 20px;">Antes de aplicar un cuestionario o hacer un experimento, debemos definir claramente quiénes nos proporcionarán los datos. Pasa el cursor por las tarjetas para entender la diferencia:</p>
+
+                <div class="flip-card-container">
+                    <!-- Población -->
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front" style="border-bottom: 4px solid var(--cuc-red);">
+                                <i class="fas fa-globe" style="color: var(--cuc-red);"></i>
+                                <h3>Población (Universo)</h3>
+                            </div>
+                            <div class="flip-card-back" style="background-color: var(--cuc-red);">
+                                <h4>El Todo</h4>
+                                <p>Conjunto total de todos los casos que concuerdan con determinadas especificaciones o características.</p>
+                                <p style="font-size:0.85rem; margin-top:10px; background:rgba(0,0,0,0.2); padding:10px; border-radius:5px;"><em>Ej: Todos los estudiantes universitarios de Barranquilla en 2026.</em></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Muestra -->
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front" style="border-bottom: 4px solid var(--blue-accent);">
+                                <i class="fas fa-users" style="color: var(--blue-accent);"></i>
+                                <h3>Muestra</h3>
+                            </div>
+                            <div class="flip-card-back" style="background-color: var(--blue-accent);">
+                                <h4>El Subgrupo</h4>
+                                <p>Es una parte representativa de la población sobre la cual se recolectarán físicamente los datos de la investigación.</p>
+                                <p style="font-size:0.85rem; margin-top:10px; background:rgba(0,0,0,0.2); padding:10px; border-radius:5px;"><em>Ej: 300 estudiantes seleccionados de 3 universidades específicas.</em></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Unidad de Análisis -->
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front" style="border-bottom: 4px solid var(--green-accent);">
+                                <i class="fas fa-user" style="color: var(--green-accent);"></i>
+                                <h3>Unidad de Análisis</h3>
+                            </div>
+                            <div class="flip-card-back" style="background-color: var(--green-accent);">
+                                <h4>El Individuo</h4>
+                                <p>Se refiere a los casos o elementos individuales. ¿Quiénes o qué van a ser medidos?</p>
+                                <p style="font-size:0.85rem; margin-top:10px; background:rgba(0,0,0,0.2); padding:10px; border-radius:5px;"><em>Ej: Un estudiante universitario (la persona a la que le doy la encuesta).</em></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. TIPOS DE MUESTREO -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-filter"></i> 2. Tipos de Muestreo</h2>
+                <p style="margin-bottom: 30px;">Una vez definida la población, debemos elegir cómo extraer a las personas que formarán nuestra muestra. Existen dos grandes familias metodológicas:</p>
+
+                <div class="grid-2">
+                    <!-- Probabilístico -->
+                    <div class="sampling-group" style="border-top: 5px solid var(--blue-accent);">
+                        <h3 style="color: var(--blue-accent);"><i class="fas fa-dice"></i> Probabilístico (Con Azar)</h3>
+                        <p style="margin-bottom: 15px; font-size: 0.95rem;">Todos los elementos de la población tienen la <strong>misma probabilidad</strong> de ser escogidos. Requiere conocer el tamaño total de la población (marco muestral). Es el único que permite extrapolar resultados (validez externa fuerte).</p>
+                        
+                        <div class="s-card" style="border-color: var(--blue-accent);">
+                            <h4 style="color: var(--cuc-dark);"><i class="fas fa-random"></i> Aleatorio Simple</h4>
+                            <p>Sorteo básico (ej. meter todos los nombres en un software o tómbola y sacar "n" sujetos).</p>
+                        </div>
+                        <div class="s-card" style="border-color: var(--blue-accent);">
+                            <h4 style="color: var(--cuc-dark);"><i class="fas fa-layer-group"></i> Estratificado</h4>
+                            <p>Divide a la población en subgrupos (estratos) relevantes (ej. Hombres/Mujeres, Semestres) y extrae muestras aleatorias proporcionales de cada uno.</p>
+                        </div>
+                        <div class="s-card" style="border-color: var(--blue-accent);">
+                            <h4 style="color: var(--cuc-dark);"><i class="fas fa-cubes"></i> Por Conglomerados (Clusters)</h4>
+                            <p>Útil para grandes áreas geográficas. En lugar de sortear personas, sortea colegios, cuadras o empresas enteras, y luego evalúa a todos allí dentro.</p>
+                        </div>
+                        <div class="s-card" style="border-color: var(--blue-accent);">
+                            <h4 style="color: var(--cuc-dark);"><i class="fas fa-list-ol"></i> Sistemático</h4>
+                            <p>Se elige el primer individuo al azar y luego se selecciona a los demás mediante una fórmula o intervalo fijo (ej. encuestar al paciente número 5 de cada lista).</p>
+                        </div>
+                    </div>
+
+                    <!-- No Probabilístico -->
+                    <div class="sampling-group" style="border-top: 5px solid var(--orange-accent);">
+                        <h3 style="color: var(--orange-accent);"><i class="fas fa-hand-pointer"></i> No Probabilístico (Sin Azar)</h3>
+                        <p style="margin-bottom: 15px; font-size: 0.95rem;">La elección de los elementos <strong>no depende de la probabilidad</strong>, sino de causas relacionadas con las características de la investigación o decisiones del investigador. Muy común en estudios cualitativos o cuasiexperimentos.</p>
+                        
+                        <div class="s-card" style="border-color: var(--orange-accent);">
+                            <h4 style="color: var(--cuc-dark);"><i class="fas fa-hands-helping"></i> Por Conveniencia</h4>
+                            <p>Se elige a los participantes simplemente porque son accesibles, están disponibles en el momento y lugar (ej. encuestar a tus propios compañeros de clase).</p>
+                        </div>
+                        <div class="s-card" style="border-color: var(--orange-accent);">
+                            <h4 style="color: var(--cuc-dark);"><i class="fas fa-snowflake"></i> Bola de Nieve</h4>
+                            <p>Un sujeto evaluado contacta e invita a otros sujetos con sus mismas características. Vital para poblaciones de difícil acceso (ej. víctimas de un delito específico).</p>
+                        </div>
+                        <div class="s-card" style="border-color: var(--orange-accent);">
+                            <h4 style="color: var(--cuc-dark);"><i class="fas fa-crosshairs"></i> Intencional (Juicio / Criterio)</h4>
+                            <p>El investigador selecciona deliberadamente a los sujetos porque cumplen con el "perfil experto" o los criterios exactos que el estudio requiere.</p>
+                        </div>
+                        <div class="s-card" style="border-color: var(--orange-accent);">
+                            <h4 style="color: var(--cuc-dark);"><i class="fas fa-chart-bar"></i> Por Cuotas</h4>
+                            <p>Similar al estratificado (se buscan proporciones como "50% hombres"), pero al final el investigador rellena la cuota a su conveniencia, sin sorteo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. WIZARD INTERACTIVO -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-magic"></i> 3. Selector de Muestreo Eureka</h2>
+                <p style="margin-bottom: 20px;">¿No sabes cómo seleccionar la muestra para tu proyecto? Contesta estas preguntas interactivas y el sistema diagnosticará qué técnica de muestreo encaja mejor con tu propuesta metodológica.</p>
+
+                <div class="wizard-container">
+                    
+                    <!-- Paso 1 -->
+                    <div id="step-1" class="wizard-step active">
+                        <div class="wizard-question">¿Tienes acceso a una lista con los nombres o registros de absolutamente TODOS los individuos que conforman tu población? (Marco muestral)</div>
+                        <div class="wizard-options">
+                            <button class="wizard-btn" onclick="goToStep('step-2-prob')">
+                                <i class="fas fa-clipboard-list"></i>
+                                SÍ <small>(Tengo la lista de todos)</small>
+                            </button>
+                            <button class="wizard-btn" onclick="goToStep('step-2-noprob')">
+                                <i class="fas fa-times-circle"></i>
+                                NO <small>(Es imposible listarlos a todos)</small>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Paso 2 (Ruta Probabilística) -->
+                    <div id="step-2-prob" class="wizard-step">
+                        <div class="wizard-question">¡Genial, puedes usar azar! Ahora, ¿tu población tiene subgrupos (ej. estratos socioeconómicos, carreras) que obligatoriamente deben estar representados en sus proporciones exactas?</div>
+                        <div class="wizard-options">
+                            <button class="wizard-btn" onclick="showResult('estratificado')">
+                                <i class="fas fa-layer-group"></i>
+                                SÍ <small>(Deben estar divididos)</small>
+                            </button>
+                            <button class="wizard-btn" onclick="goToStep('step-3-prob')">
+                                <i class="fas fa-users"></i>
+                                NO <small>(Todos son una sola gran masa)</small>
+                            </button>
+                        </div>
+                        <button class="btn-reset" onclick="resetWizard()">Volver a empezar</button>
+                    </div>
+
+                    <!-- Paso 3 (Ruta Probabilística Continuación) -->
+                    <div id="step-3-prob" class="wizard-step">
+                        <div class="wizard-question">¿Están las personas agrupadas geográficamente o en "bloques" naturales muy grandes (ej. escuelas, hospitales, ciudades)?</div>
+                        <div class="wizard-options">
+                            <button class="wizard-btn" onclick="showResult('conglomerados')">
+                                <i class="fas fa-building"></i>
+                                SÍ <small>(Sortearé los edificios primero)</small>
+                            </button>
+                            <button class="wizard-btn" onclick="showResult('aleatorio')">
+                                <i class="fas fa-dice"></i>
+                                NO <small>(Sortearé a las personas directo)</small>
+                            </button>
+                        </div>
+                        <button class="btn-reset" onclick="resetWizard()">Volver a empezar</button>
+                    </div>
+
+                    <!-- Paso 2 (Ruta No Probabilística) -->
+                    <div id="step-2-noprob" class="wizard-step">
+                        <div class="wizard-question">Entendido. ¿Vas a encuestar simplemente a las personas que tengas más a la mano o que acepten voluntariamente participar (tus conocidos, tu aula)?</div>
+                        <div class="wizard-options">
+                            <button class="wizard-btn" onclick="showResult('conveniencia')">
+                                <i class="fas fa-handshake"></i>
+                                SÍ <small>(Por accesibilidad rápida)</small>
+                            </button>
+                            <button class="wizard-btn" onclick="goToStep('step-3-noprob')">
+                                <i class="fas fa-search"></i>
+                                NO <small>(Busco un perfil muy particular)</small>
+                            </button>
+                        </div>
+                        <button class="btn-reset" onclick="resetWizard()">Volver a empezar</button>
+                    </div>
+
+                    <!-- Paso 3 (Ruta No Probabilística Continuación) -->
+                    <div id="step-3-noprob" class="wizard-step">
+                        <div class="wizard-question">¿Ese perfil particular es de muy difícil acceso (ej. adictos recuperados, sectas) y necesitas que los primeros que evalúes te "recomienden" o presenten a los demás?</div>
+                        <div class="wizard-options">
+                            <button class="wizard-btn" onclick="showResult('bolanieve')">
+                                <i class="fas fa-snowflake"></i>
+                                SÍ <small>(Necesito que me contacten entre ellos)</small>
+                            </button>
+                            <button class="wizard-btn" onclick="showResult('intencional')">
+                                <i class="fas fa-crosshairs"></i>
+                                NO <small>(Yo mismo elegiré a los "expertos")</small>
+                            </button>
+                        </div>
+                        <button class="btn-reset" onclick="resetWizard()">Volver a empezar</button>
+                    </div>
+
+
+                    <!-- RESULTADOS -->
+                    <div id="res-aleatorio" class="wizard-step">
+                        <div class="wizard-result">
+                            <h3><i class="fas fa-dice"></i> Muestreo Aleatorio Simple (Probabilístico)</h3>
+                            <p>¡El más clásico! Tienes la lista completa. Puedes usar un software (como Excel) o una tómbola virtual para seleccionar al azar al número exacto de sujetos que indique tu fórmula estadística. Te garantiza total neutralidad.</p>
+                        </div>
+                        <button class="btn-reset" onclick="resetWizard()">Volver a empezar</button>
+                    </div>
+
+                    <div id="res-estratificado" class="wizard-step">
+                        <div class="wizard-result">
+                            <h3><i class="fas fa-layer-group"></i> Muestreo Estratificado (Probabilístico)</h3>
+                            <p>Perfecto para no perder representatividad. Debes calcular qué porcentaje de tu población es de cada estrato (ej. 60% mujeres, 40% hombres) y aplicar un sorteo aleatorio *dentro* de cada grupo para que la muestra respete esos mismos porcentajes exactos.</p>
+                        </div>
+                        <button class="btn-reset" onclick="resetWizard()">Volver a empezar</button>
+                    </div>
+
+                    <div id="res-conglomerados" class="wizard-step">
+                        <div class="wizard-result">
+                            <h3><i class="fas fa-cubes"></i> Muestreo por Conglomerados (Probabilístico)</h3>
+                            <p>Ideal para estudios a gran escala. Si no puedes sortear a 1000 ciudadanos sueltos, sorteas los barrios o las empresas primero. Y a los que salgan ganadores en ese sorteo de bloques, vas y los encuestas en su totalidad.</p>
+                        </div>
+                        <button class="btn-reset" onclick="resetWizard()">Volver a empezar</button>
+                    </div>
+
+                    <div id="res-conveniencia" class="wizard-step">
+                        <div class="wizard-result">
+                            <h3><i class="fas fa-hand-pointer"></i> Muestreo por Conveniencia (No Probabilístico)</h3>
+                            <p>Es la opción más práctica y rápida. Se usa cuando los recursos o el tiempo son limitados. Encuestarás a los sujetos que estén fácilmente a tu disposición (ej. tus compañeros de clase o personas que caminan por el pasillo). Ojo: no podrás generalizar resultados a toda la ciudad.</p>
+                        </div>
+                        <button class="btn-reset" onclick="resetWizard()">Volver a empezar</button>
+                    </div>
+
+                    <div id="res-bolanieve" class="wizard-step">
+                        <div class="wizard-result">
+                            <h3><i class="fas fa-snowflake"></i> Muestreo Bola de Nieve (No Probabilístico)</h3>
+                            <p>La estrategia perfecta para poblaciones ocultas o estigmatizadas. Logras evaluar a una o dos personas con el perfil que buscas, y ellas, debido a su red de contactos y confianza, te consiguen las entrevistas con el resto de la muestra. La muestra "crece al rodar".</p>
+                        </div>
+                        <button class="btn-reset" onclick="resetWizard()">Volver a empezar</button>
+                    </div>
+
+                    <div id="res-intencional" class="wizard-step">
+                        <div class="wizard-result">
+                            <h3><i class="fas fa-crosshairs"></i> Muestreo Intencional o de Criterio (No Probabilístico)</h3>
+                            <p>Tú, como investigador experto, vas "a dedo" a buscar a los perfiles que aportan información rica a tu estudio. No usas azar ni encuestas a cualquiera; buscas características muy precisas (ej. entrevistar solo a directores de colegios con más de 10 años de experiencia).</p>
+                        </div>
+                        <button class="btn-reset" onclick="resetWizard()">Volver a empezar</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Video Complementario -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-video"></i> Video Complementario: Muestreo</h2>
+                <p style="margin-bottom: 20px;">Refuerza las diferencias entre población, muestra y las técnicas de muestreo probabilístico y no probabilístico con esta explicación visual:</p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/Q4RZqKLZ8zU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- Actividad Evaluativa Unidad 3 / Clase 9 -->
+            <div style="background-color: var(--teal-accent); color: white; border-left: 4px solid #004d40; padding: 30px; border-radius: 10px; text-align: left; margin-top: 50px; box-shadow: 0 10px 20px rgba(0,0,0,0.15);">
+                <h3 style="color: white; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px;">
+                    <i class="fas fa-laptop-code"></i> Actividad Práctica: Delimitando la Muestra
+                </h3>
+                <p style="font-size: 0.95rem; margin-bottom: 15px; color: #e0f2f1;">Comenzamos la fase metodológica práctica de tu proyecto. Responde los siguientes puntos basados en tu investigación de aula:</p>
+                
+                <ul style="list-style: none; padding: 0; color: #fff; font-size: 1rem;">
+                    <li style="margin-bottom: 10px;"><strong>1. Universo/Población:</strong> Describe formalmente quién conforma tu población total de estudio (ej. "Todos los docentes del colegio San José en el año 2026").</li>
+                    <li style="margin-bottom: 10px;"><strong>2. Unidad de Análisis:</strong> Define a quién o a qué le vas a aplicar el instrumento exactamente (ej. "Un docente").</li>
+                    <li style="margin-bottom: 10px;"><strong>3. Selección del Muestreo:</strong> Utilizando el resultado del <em>Selector Eureka</em> de arriba, declara qué tipo de muestreo utilizarás y justifica por qué es la mejor opción dadas las limitaciones de tu proyecto.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p>Material diseñado para la asignatura Electiva Eureka.</p>
+    </footer>
+
+    <script>
+        // Lógica del Selector Metodológico (Wizard)
+        function goToStep(stepId) {
+            document.querySelectorAll('.wizard-step').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById(stepId).classList.add('active');
+        }
+
+        function showResult(resultId) {
+            document.querySelectorAll('.wizard-step').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById('res-' + resultId).classList.add('active');
+        }
+
+        function resetWizard() {
+            document.querySelectorAll('.wizard-step').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById('step-1').classList.add('active');
+        }
+    </script>
+
+</body>
+</html>

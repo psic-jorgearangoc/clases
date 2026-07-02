@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 11 - Análisis de Datos | Eureka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --soft-red: #ffebeb;
+            --blue-accent: #2b78e4;
+            --green-accent: #2e7d32;
+            --orange-accent: #e65100;
+            --purple-accent: #7b1fa2;
+            --teal-accent: #00897b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* --- HEADER / BANNER CON QR --- */
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .qr-code img {
+            max-height: 80px;
+            border: 2px solid var(--cuc-gray);
+            border-radius: 5px;
+            padding: 2px;
+            transition: transform 0.3s;
+        }
+
+        .qr-code img:hover {
+            transform: scale(1.1);
+            border-color: var(--cuc-red);
+        }
+
+        .qr-label {
+            display: block;
+            font-size: 0.6rem;
+            color: #666;
+            margin-top: 3px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .header-logo img {
+            max-height: 90px;
+            background-color: transparent; 
+        }
+
+        .header-info {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .course-title {
+            color: var(--cuc-red);
+            font-size: 1.6rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            line-height: 1.1;
+        }
+
+        .prof-info {
+            font-size: 0.90rem;
+            color: #333;
+        }
+
+        .prof-info strong {
+            color: var(--cuc-red);
+        }
+
+        .contact-label {
+            color: var(--cuc-red);
+            font-weight: 900;
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .top-nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn-return {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-return:hover {
+            background-color: var(--cuc-red);
+            transform: translateX(-5px);
+            box-shadow: 0 6px 12px rgba(163, 22, 26, 0.2);
+        }
+
+        /* --- ESTILOS DEL DESARROLLO DE LA CLASE --- */
+        .class-content-wrapper {
+            background-color: #fbfbfb;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--cuc-red);
+            margin-bottom: 50px;
+        }
+
+        .class-badge {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #e0f7fa;
+            color: #006064;
+            border: 1px solid #00897b;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .class-header-title {
+            text-align: center;
+            color: var(--cuc-red);
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .class-subtitle {
+            text-align: center;
+            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .topic-section {
+            margin-bottom: 50px;
+        }
+
+        .topic-title {
+            color: var(--cuc-dark);
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--cuc-gray);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .topic-title i {
+            color: var(--cuc-red);
+        }
+
+        .quote-box {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #555;
+            border-left: 5px solid var(--cuc-red);
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .quote-box::before {
+            content: "\f10d";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 15px;
+            left: -15px;
+            color: var(--cuc-red);
+            background: #fbfbfb;
+            padding: 5px;
+            font-size: 1.5rem;
+        }
+
+        /* FLIP CARDS PARA CONCEPTOS ESTADÍSTICOS */
+        .flip-card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .flip-card {
+            background-color: transparent;
+            height: 280px;
+            perspective: 1000px;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-radius: 12px;
+        }
+        
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .flip-card-front {
+            background-color: white;
+            color: var(--cuc-dark);
+            border: 2px solid var(--cuc-gray);
+        }
+        
+        .flip-card-front i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .flip-card-back {
+            color: white;
+            transform: rotateY(180deg);
+            padding: 25px;
+        }
+        
+        .flip-card-back p {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            margin-top: 10px;
+        }
+
+        .flip-card-back .formula {
+            background: rgba(0,0,0,0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        /* ACORDEONES (ESTADÍSTICA INFERENCIAL) */
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .step-item {
+            border: 2px solid var(--cuc-gray);
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .step-header {
+            padding: 20px;
+            cursor: pointer;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+        }
+
+        .step-header:hover {
+            background-color: var(--soft-red);
+        }
+
+        .step-header.active {
+            background-color: var(--cuc-red);
+            color: white;
+            border-color: var(--cuc-red);
+        }
+
+        .step-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            background-color: white;
+            color: #444;
+        }
+
+        .step-content.open {
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        /* WIZARD INTERACTIVO (SELECTOR DE PRUEBAS) */
+        .wizard-container {
+            background: var(--cuc-dark);
+            border-radius: 15px;
+            padding: 40px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .wizard-step {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .wizard-step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .wizard-question {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .wizard-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .wizard-btn {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 15px 25px;
+            font-size: 1.05rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 220px;
+            max-width: 300px;
+        }
+
+        .wizard-btn i {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .wizard-btn:hover {
+            background: var(--cuc-red);
+            border-color: var(--cuc-red);
+            transform: scale(1.05);
+        }
+
+        .wizard-result {
+            background: white;
+            color: var(--cuc-dark);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .wizard-result h3 {
+            color: var(--blue-accent);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-reset {
+            margin-top: 20px;
+            background: transparent;
+            color: #aaa;
+            border: none;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-reset:hover {
+            color: white;
+        }
+
+        /* RESPONSIVE */
+        @media screen and (max-width: 900px) {
+            header {
+                position: relative;
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+            .course-title { font-size: 1.3rem; }
+            .class-content-wrapper { padding: 25px 15px; }
+            .header-logo img { max-height: 70px; }
+            .qr-code img { max-height: 60px; }
+            .wizard-container { padding: 30px 15px; }
+            .wizard-options { flex-direction: column; align-items: center; }
+            .wizard-btn { width: 100%; max-width: 100%; }
+        }
+
+        /* Footer Centrado */
+        footer {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=www.caminosdelser.co/Clases/eureka/u3clase11.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa">
+        </div>
+        <div class="header-info">
+            <div class="course-title">Electiva Eureka: Ciencia, Tecnología e Innovación</div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> caminosdelser85 | 
+                    <span class="contact-label">Web:</span> www.caminosdelser.co
+                </small>
+            </div>
+        </div>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="top-nav-buttons">
+            <a href="u1clase01.html" class="btn-return">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática Principal
+            </a>
+        </div>
+
+        <div class="class-content-wrapper">
+            
+            <div style="text-align: center;">
+                <span class="class-badge" style="background-color: #e0f2f1; color: #00695c; border-color: #00897b;"><i class="fas fa-chart-line"></i> Unidad 3: Recogida y Análisis de Datos</span>
+            </div>
+            
+            <h1 class="class-header-title">Clase 11: Análisis de Datos Cuantitativos</h1>
+            <p class="class-subtitle">De las encuestas a los resultados: Estadística Descriptiva e Inferencial aplicadas a la investigación.</p>
+
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-database"></i> 1. La Matriz de Datos</h2>
+                
+                <div class="quote-box">
+                    "Una vez que los datos se han codificado, transferido a una matriz, guardado en un archivo y limpiado de errores, el investigador procede a analizarlos mediante programas estadísticos computacionales (SPSS, Excel, JASP)."
+                    <span style="display:block; text-align:right; font-weight:bold; margin-top:10px; font-size:1rem;">— Hernández Sampieri (2014)</span>
+                </div>
+
+                <p style="margin-bottom: 20px;">Antes de calcular cualquier fórmula, tus encuestas deben convertirse en números. Cada fila de tu Excel representará a <strong>un participante (Unidad de análisis)</strong> y cada columna representará <strong>una variable o pregunta</strong>. A este proceso de transformar respuestas textuales ("Totalmente de acuerdo") a valores numéricos ("5") se le llama <em>Codificación</em>.</p>
+            </div>
+
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-chart-bar"></i> 2. Estadística Descriptiva</h2>
+                <p style="margin-bottom: 25px;">El primer paso en todo análisis es <strong>describir</strong> a nuestra muestra. ¿Cuáles son sus características demográficas? ¿Cómo se distribuyen sus puntajes? Para ello utilizamos las medidas de tendencia central y de dispersión.</p>
+
+                <div class="flip-card-container">
+                    
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front" style="border-bottom: 4px solid var(--blue-accent);">
+                                <i class="fas fa-balance-scale" style="color: var(--blue-accent);"></i>
+                                <h3>Media (Promedio)</h3>
+                            </div>
+                            <div class="flip-card-back" style="background-color: var(--blue-accent);">
+                                <h4>El punto de equilibrio</h4>
+                                <p>Es la suma de todos los valores dividida por el número total de casos. Es la medida más utilizada, pero es muy sensible a valores extremos (datos atípicos).</p>
+                                <span class="formula">Ej: Edad prom = 22.5 años</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front" style="border-bottom: 4px solid var(--orange-accent);">
+                                <i class="fas fa-bullseye" style="color: var(--orange-accent);"></i>
+                                <h3>Mediana y Moda</h3>
+                            </div>
+                            <div class="flip-card-back" style="background-color: var(--orange-accent);">
+                                <h4>El centro y lo común</h4>
+                                <p><strong>Mediana:</strong> El valor que divide a la muestra exactamente por la mitad (50% arriba, 50% abajo).<br><strong>Moda:</strong> El valor que más se repite en la muestra.</p>
+                                <span class="formula">Ej: Moda = Semestre 4</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front" style="border-bottom: 4px solid var(--cuc-red);">
+                                <i class="fas fa-expand-arrows-alt" style="color: var(--cuc-red);"></i>
+                                <h3>Desviación Estándar</h3>
+                            </div>
+                            <div class="flip-card-back" style="background-color: var(--cuc-red);">
+                                <h4>¿Qué tan dispersos están?</h4>
+                                <p>Nos indica, en promedio, qué tanto se alejan los datos respecto a la Media. Una desviación alta significa que hay mucha diferencia o heterogeneidad entre los participantes.</p>
+                                <span class="formula">S = ± 3.2 puntos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-search-plus"></i> 3. Estadística Inferencial y Prueba de Hipótesis</h2>
+                <p style="margin-bottom: 20px;">Una vez descrita la muestra, queremos dar el salto mayor: <strong>generalizar los resultados a la población</strong> y probar si nuestras hipótesis son estadísticamente ciertas. Para esto usamos la inferencia.</p>
+
+                <div class="steps-container">
+                    <div class="step-item">
+                        <div class="step-header" onclick="toggleStep(this)">
+                            <i class="fas fa-vial" style="margin-right: 15px; color: var(--cuc-red); font-size: 1.5rem;"></i>
+                            <span>La Prueba de Hipótesis</span>
+                            <i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+                        </div>
+                        <div class="step-content">
+                            <p style="margin-top: 15px;">En la investigación cuantitativa, siempre buscamos rechazar la <strong>Hipótesis Nula (Ho)</strong>. La Ho es la "aguafiestas" que dice que tu tratamiento no funcionó o que no existe relación entre tus variables.</p>
+                            <p style="margin-top: 10px; padding: 10px; background: #f9f9f9; border-left: 3px solid #ccc;"><em>Ejemplo Ho: "No existe diferencia significativa en el nivel de ansiedad entre los que recibieron terapia y los que no."</em></p>
+                        </div>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-header" onclick="toggleStep(this)">
+                            <i class="fas fa-percentage" style="margin-right: 15px; color: var(--blue-accent); font-size: 1.5rem;"></i>
+                            <span>El P-Valor (Nivel de Significancia)</span>
+                            <i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+                        </div>
+                        <div class="step-content">
+                            <p style="margin-top: 15px;">¿Cómo sabemos si ganamos y rechazamos a la Ho? Mirando el <strong>p-valor (p)</strong> que arroja el software (SPSS, JASP). En ciencias sociales, nuestro margen de error permitido es del 5% (0.05).</p>
+                            <ul style="margin-top: 10px; margin-bottom: 10px; color: #444;">
+                                <li>Si <strong>p &lt; 0.05</strong>: ¡Éxito! El resultado es <em>estadísticamente significativo</em>. Rechazamos la Ho y comprobamos nuestra teoría.</li>
+                                <li>Si <strong>p &gt; 0.05</strong>: Fracaso estadístico. No podemos rechazar la Ho. El cambio fue producto de la casualidad.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-magic"></i> 4. Asistente: ¿Qué prueba estadística debo usar?</h2>
+                <p style="margin-bottom: 20px;">Existen decenas de pruebas estadísticas (T de Student, ANOVA, Pearson...). La elección depende del diseño de tu proyecto y del nivel de medición de tus variables. Responde a continuación para hallar tu prueba ideal:</p>
+
+                <div class="wizard-container">
+                    
+                    <div id="wz-step-1" class="wizard-step active">
+                        <div class="wizard-question">1. ¿Cuál es el objetivo principal de tu análisis de datos?</div>
+                        <div class="wizard-options">
+                            <button class="wizard-btn" onclick="goToWizard('wz-step-2-comparar')">
+                                <i class="fas fa-balance-scale-left"></i>
+                                COMPARAR GRUPOS<br><small>(Ej. Ver si el Grupo Experimental sacó mejor nota que el Grupo Control)</small>
+                            </button>
+                            <button class="wizard-btn" onclick="goToWizard('wz-step-2-asociar')">
+                                <i class="fas fa-link"></i>
+                                ASOCIAR / CORRELACIONAR<br><small>(Ej. Ver si el Estrés sube al mismo tiempo que bajan las Notas)</small>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="wz-step-2-comparar" class="wizard-step">
+                        <div class="wizard-question">2. Para comparar, ¿cuántos grupos tienes en tu investigación?</div>
+                        <div class="wizard-options">
+                            <button class="wizard-btn" onclick="showWizardResult('tstudent')">
+                                <i class="fas fa-user-friends"></i>
+                                SOLO 2 GRUPOS<br><small>(Ej. Hombres vs Mujeres, o Control vs Experimental)</small>
+                            </button>
+                            <button class="wizard-btn" onclick="showWizardResult('anova')">
+                                <i class="fas fa-users"></i>
+                                3 O MÁS GRUPOS<br><small>(Ej. Terapia A vs Terapia B vs Placebo)</small>
+                            </button>
+                        </div>
+                        <button class="btn-reset" onclick="resetWz()">Empezar de nuevo</button>
+                    </div>
+
+                    <div id="wz-step-2-asociar" class="wizard-step">
+                        <div class="wizard-question">2. Para asociar variables, ¿cómo mediste esos datos?</div>
+                        <div class="wizard-options">
+                            <button class="wizard-btn" onclick="showWizardResult('pearson')">
+                                <i class="fas fa-sort-numeric-up"></i>
+                                SON PUNTUACIONES CONTINUAS<br><small>(Ej. Puntaje de test de ansiedad del 0 al 100 vs Nivel de ingresos en $)</small>
+                            </button>
+                            <button class="wizard-btn" onclick="showWizardResult('chi')">
+                                <i class="fas fa-tags"></i>
+                                SON CATEGORÍAS (NOMINALES)<br><small>(Ej. Género vs Preferencia política: Izquierda/Derecha)</small>
+                            </button>
+                        </div>
+                        <button class="btn-reset" onclick="resetWz()">Empezar de nuevo</button>
+                    </div>
+
+                    <div id="res-tstudent" class="wizard-step">
+                        <div class="wizard-result">
+                            <h3><i class="fas fa-check-circle"></i> Prueba T de Student (para muestras independientes)</h3>
+                            <p style="font-size: 1.1rem; color: #333;">Es la prueba paramétrica ideal para evaluar si dos grupos difieren de manera significativa entre sí respecto a sus medias en una variable continua.</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem; color: #777;"><em>Nota: Si los 2 grupos no son distintos, sino que es EL MISMO grupo evaluado en un "Antes" y un "Después", debes usar la "T de Student para muestras relacionadas".</em></p>
+                        </div>
+                        <button class="btn-reset" onclick="resetWz()">Empezar de nuevo</button>
+                    </div>
+
+                    <div id="res-anova" class="wizard-step">
+                        <div class="wizard-result">
+                            <h3><i class="fas fa-check-circle"></i> Análisis de Varianza (ANOVA unidireccional)</h3>
+                            <p style="font-size: 1.1rem; color: #333;">Es la prueba estadística requerida para analizar si más de dos grupos difieren significativamente entre sí en cuanto a sus promedios y varianzas.</p>
+                        </div>
+                        <button class="btn-reset" onclick="resetWz()">Empezar de nuevo</button>
+                    </div>
+
+                    <div id="res-pearson" class="wizard-step">
+                        <div class="wizard-result">
+                            <h3><i class="fas fa-check-circle"></i> Coeficiente de Correlación de Pearson (r)</h3>
+                            <p style="font-size: 1.1rem; color: #333;">Es la prueba perfecta para analizar la relación lineal entre dos variables medidas en un nivel cuantitativo continuo.</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem; color: #777;"><em>Indica qué tan fuerte es la relación (de -1.00 a +1.00). Si las variables fueran ordinales (escalas o rangos), la alternativa ideal sería la "Correlación de Spearman".</em></p>
+                        </div>
+                        <button class="btn-reset" onclick="resetWz()">Empezar de nuevo</button>
+                    </div>
+
+                    <div id="res-chi" class="wizard-step">
+                        <div class="wizard-result">
+                            <h3><i class="fas fa-check-circle"></i> Prueba Chi-cuadrada (χ²)</h3>
+                            <p style="font-size: 1.1rem; color: #333;">Es la prueba estadística no paramétrica para evaluar hipótesis acerca de la relación entre dos variables categóricas o nominales.</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem; color: #777;"><em>Se utiliza evaluando una "Tabla de contingencias", contando frecuencias (cuántos cayeron en la categoría A y cuántos en la B).</em></p>
+                        </div>
+                        <button class="btn-reset" onclick="resetWz()">Empezar de nuevo</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-video"></i> Video Complementario: Estadística en Investigación</h2>
+                <p style="margin-bottom: 20px;">Refuerza cómo procesar y elegir correctamente las pruebas en el software estadístico para respaldar tus conclusiones metodológicas:</p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/yRDmGI63EsA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div style="background-color: var(--teal-accent); color: white; border-left: 4px solid #004d40; padding: 30px; border-radius: 10px; text-align: left; margin-top: 50px; box-shadow: 0 10px 20px rgba(0,0,0,0.15);">
+                <h3 style="color: white; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px;">
+                    <i class="fas fa-laptop-code"></i> Plan de Análisis de Datos (Entrega Corte 3)
+                </h3>
+                <p style="font-size: 0.95rem; margin-bottom: 15px; color: #e0f2f1;">Para finalizar la matriz de tu proyecto de aula, debes estipular con claridad la ruta estadística que emplearías si ejecutas tu investigación en la vida real. Responde:</p>
+                
+                <ul style="list-style: none; padding: 0; color: #fff; font-size: 1rem;">
+                    <li style="margin-bottom: 10px;"><strong>1. Hipótesis Estadística:</strong> Redacta claramente cuál sería tu Hipótesis Alternativa (H1) y tu Hipótesis Nula (Ho).</li>
+                    <li style="margin-bottom: 10px;"><strong>2. Estadística Descriptiva:</strong> Menciona brevemente qué software usarías (ej. JASP, SPSS, Excel) y qué medidas descriptivas extraerás (ej. promedios de edad, desviación estándar de puntajes del test).</li>
+                    <li style="margin-bottom: 10px;"><strong>3. Selección de Prueba Inferencial:</strong> Utilizando el resultado del <em>Asistente Eureka</em> de esta clase, declara explícitamente qué prueba paramétrica o no paramétrica usarás para probar tu hipótesis (T de Student, Pearson, etc.) y justifica por qué esa es la correcta según las variables que mediste.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p>Material diseñado para la asignatura Electiva Eureka.</p>
+    </footer>
+
+    <script>
+        // Lógica general de Acordeones
+        function toggleStep(element) {
+            element.classList.toggle("active");
+            var content = element.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                content.classList.remove("open");
+            } else {
+                content.classList.add("open");
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+
+        // Lógica del Asistente Estadístico (Wizard)
+        function goToWizard(stepId) {
+            document.querySelectorAll('.wizard-step').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById(stepId).classList.add('active');
+        }
+
+        function showWizardResult(resultId) {
+            document.querySelectorAll('.wizard-step').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById('res-' + resultId).classList.add('active');
+        }
+
+        function resetWz() {
+            document.querySelectorAll('.wizard-step').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById('wz-step-1').classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
