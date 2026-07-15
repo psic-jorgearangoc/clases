@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mitos y Realidades sobre la IA en la Formulación de Proyectos</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+:root{
+  --cuc-red:#A3161A;
+  --cuc-red-dark:#7a1013;
+  --cuc-dark:#1a1a1a;
+  --cuc-gray:#f4f4f4;
+  --white:#ffffff;
+  --soft-red:#ffebeb;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Roboto',sans-serif;
+  background:var(--white);
+  color:var(--cuc-dark);
+  line-height:1.6;
+}
+
+/* HEADER */
+header{
+  background:var(--white);
+  border-bottom:4px solid var(--cuc-red);
+  padding:18px 20px;
+  box-shadow:0 4px 6px rgba(0,0,0,.1);
+  position:sticky;
+  top:0;
+  z-index:1000;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:16px;
+  text-align:center;
+}
+.header-logo{
+  width:56px;height:56px;border-radius:50%;
+  background:var(--cuc-red);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:1.3rem;flex-shrink:0;
+}
+.header-info{max-width:640px;}
+.course-title{
+  color:var(--cuc-red);
+  font-size:1.35rem;
+  font-weight:900;
+  text-transform:uppercase;
+  line-height:1.15;
+  margin-bottom:4px;
+}
+.prof-info{font-size:.9rem;color:#333;}
+.prof-info strong{color:var(--cuc-red);}
+.badge-time{
+  background:var(--cuc-dark);color:#fff;
+  font-size:.75rem;font-weight:700;
+  padding:5px 12px;border-radius:20px;
+  white-space:nowrap;
+}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,var(--cuc-red) 0%,var(--cuc-red-dark) 100%);
+  color:#fff;
+  padding:50px 20px 60px;
+  text-align:center;
+}
+.hero-eyebrow{
+  font-size:.8rem;letter-spacing:2px;text-transform:uppercase;
+  opacity:.85;font-weight:700;margin-bottom:14px;
+}
+.hero h1{
+  font-size:2.1rem;font-weight:900;max-width:780px;margin:0 auto 18px;line-height:1.2;
+}
+.hero p{
+  max-width:640px;margin:0 auto;font-size:1.05rem;opacity:.95;
+}
+.hero-stats{
+  display:flex;justify-content:center;gap:30px;margin-top:30px;flex-wrap:wrap;
+}
+.hero-stat{text-align:center;}
+.hero-stat .num{font-size:1.9rem;font-weight:900;display:block;}
+.hero-stat .lbl{font-size:.75rem;text-transform:uppercase;letter-spacing:1px;opacity:.85;}
+
+/* CONTAINER */
+.container{max-width:1100px;margin:0 auto;padding:60px 20px;}
+.section-title{
+  color:var(--cuc-red);
+  font-size:1.6rem;font-weight:900;
+  text-align:center;margin-bottom:8px;
+}
+.section-sub{
+  text-align:center;color:#666;max-width:600px;margin:0 auto 40px;font-size:1rem;
+}
+
+/* GANCHO */
+.gancho-box{
+  background:var(--soft-red);
+  border-left:6px solid var(--cuc-red);
+  border-radius:8px;
+  padding:26px 30px;
+  max-width:800px;margin:0 auto 60px;
+  font-size:1.15rem;font-style:italic;color:var(--cuc-dark);
+  position:relative;
+}
+.gancho-box i{color:var(--cuc-red);margin-right:10px;}
+
+/* FLIP CARDS */
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+  margin-bottom:20px;
+}
+.flip-card{
+  perspective:1200px;
+  height:230px;
+  cursor:pointer;
+}
+.flip-inner{
+  position:relative;width:100%;height:100%;
+  transition:transform .6s;
+  transform-style:preserve-3d;
+}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+.flip-front,.flip-back{
+  position:absolute;width:100%;height:100%;
+  backface-visibility:hidden;
+  border-radius:14px;
+  padding:24px;
+  display:flex;flex-direction:column;justify-content:center;
+  box-shadow:0 6px 16px rgba(0,0,0,.1);
+}
+.flip-front{
+  background:var(--cuc-dark);color:#fff;
+  text-align:center;
+}
+.flip-front .tag{
+  font-size:.7rem;letter-spacing:1px;text-transform:uppercase;
+  color:#ff9a9d;font-weight:700;margin-bottom:10px;
+}
+.flip-front i{font-size:1.6rem;color:var(--cuc-red);margin-bottom:12px;}
+.flip-front p{font-size:1.05rem;font-weight:700;line-height:1.35;}
+.flip-front .tap-hint{
+  margin-top:14px;font-size:.7rem;opacity:.6;font-weight:400;text-transform:none;
+}
+.flip-back{
+  background:var(--cuc-red);color:#fff;
+  transform:rotateY(180deg);
+  text-align:center;
+}
+.flip-back .tag{
+  font-size:.7rem;letter-spacing:1px;text-transform:uppercase;
+  color:#ffd8d9;font-weight:700;margin-bottom:10px;
+}
+.flip-back p{font-size:.95rem;line-height:1.4;}
+.flip-back i{font-size:1.4rem;margin-bottom:10px;}
+
+.reset-hint{
+  text-align:center;color:#999;font-size:.85rem;margin-bottom:60px;
+}
+.reset-hint i{margin-right:6px;}
+
+/* AGENDA STRIP */
+.agenda{
+  display:flex;flex-wrap:wrap;
+  border-radius:14px;overflow:hidden;
+  margin-bottom:70px;
+  box-shadow:0 4px 14px rgba(0,0,0,.08);
+}
+.agenda-block{
+  flex:1;min-width:200px;
+  padding:24px 20px;
+  color:#fff;text-align:center;
+}
+.agenda-block:nth-child(1){background:var(--cuc-dark);}
+.agenda-block:nth-child(2){background:var(--cuc-red);}
+.agenda-block:nth-child(3){background:#555;}
+.agenda-block .mins{font-size:1.6rem;font-weight:900;display:block;}
+.agenda-block .desc{font-size:.85rem;opacity:.9;}
+
+/* EJERCICIO */
+.exercise-intro{
+  background:var(--cuc-gray);
+  border-radius:14px;
+  padding:30px;
+  margin-bottom:40px;
+}
+.exercise-steps{
+  list-style:none;counter-reset:step;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+.exercise-steps li{
+  counter-increment:step;
+  background:#fff;border-radius:10px;padding:18px 18px 18px 50px;
+  position:relative;font-size:.9rem;box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+.exercise-steps li::before{
+  content:counter(step);
+  position:absolute;left:14px;top:16px;
+  background:var(--cuc-red);color:#fff;
+  width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.85rem;
+}
+
+/* MISSION CARDS */
+.missions-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:26px;
+  margin-bottom:50px;
+}
+.mission-card{
+  border:2px solid var(--cuc-gray);
+  border-radius:16px;
+  overflow:hidden;
+  transition:transform .3s,border-color .3s;
+  background:#fff;
+}
+.mission-card:hover{transform:translateY(-4px);border-color:var(--cuc-red);}
+.mission-head{
+  background:var(--cuc-dark);color:#fff;
+  padding:14px 18px;
+  display:flex;align-items:center;gap:10px;
+}
+.mission-head i{color:var(--cuc-red);font-size:1.2rem;}
+.mission-head .grupo-num{
+  font-size:.7rem;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;
+}
+.mission-head .grupo-name{font-weight:900;font-size:1.05rem;}
+.mission-body{padding:20px;text-align:center;}
+.mission-body img{
+  width:150px;height:150px;border-radius:10px;
+  border:2px solid var(--cuc-gray);padding:4px;margin-bottom:14px;
+}
+.mission-task{
+  display:inline-block;background:var(--soft-red);color:var(--cuc-red);
+  font-size:.75rem;font-weight:700;padding:5px 12px;border-radius:20px;
+  margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;
+}
+.mission-body p.ctx{font-size:.85rem;color:#555;}
+.scan-hint{font-size:.7rem;color:#999;margin-top:10px;}
+.scan-hint i{margin-right:4px;color:var(--cuc-red);}
+
+/* CHECKLIST */
+.checklist-box{
+  background:var(--cuc-dark);color:#fff;
+  border-radius:16px;padding:34px;margin-bottom:70px;
+}
+.checklist-box h3{color:#fff;font-size:1.25rem;margin-bottom:6px;text-align:center;}
+.checklist-box .sub{text-align:center;color:#bbb;font-size:.9rem;margin-bottom:24px;}
+.checklist-items{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+}
+.checklist-item{
+  background:rgba(255,255,255,.06);
+  border-left:4px solid var(--cuc-red);
+  border-radius:8px;padding:14px 18px;font-size:.88rem;
+}
+.checklist-item i{color:var(--cuc-red);margin-right:8px;}
+
+/* CIERRE */
+.cierre{
+  background:var(--soft-red);
+  border-radius:16px;padding:40px;text-align:center;margin-bottom:20px;
+}
+.cierre i{font-size:2rem;color:var(--cuc-red);margin-bottom:16px;}
+.cierre p{
+  font-size:1.2rem;font-weight:700;color:var(--cuc-dark);
+  max-width:700px;margin:0 auto;font-style:italic;
+}
+.cierre .firma{margin-top:20px;font-size:.9rem;color:#555;font-style:normal;}
+.cierre .firma strong{color:var(--cuc-red);}
+
+footer{
+  background:var(--cuc-dark);color:#ccc;
+  text-align:center;padding:24px;font-size:.8rem;
+}
+footer strong{color:#fff;}
+
+@media(max-width:600px){
+  .hero h1{font-size:1.5rem;}
+  .course-title{font-size:1.1rem;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-logo">CUC</div>
+  <div class="header-info">
+    <div class="course-title">Mitos y Realidades sobre la IA en la Formulación de Proyectos</div>
+    <div class="prof-info">Ponente: <strong>Mg. Jorge Arango Castaño</strong> · Bootcamp en Gestión y Formulación de Proyectos</div>
+  </div>
+  <div class="badge-time"><i class="fa-solid fa-clock"></i> 10:45 a.m. – 12:15 p.m.</div>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">Universidad de la Costa — CUC · Barranquilla</div>
+  <h1>¿La IA formula proyectos por ti, o contigo?</h1>
+  <p>Una lectura crítica y práctica del rol real de la inteligencia artificial en la formulación de proyectos: sus alcances concretos y sus límites frecuentemente malentendidos.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="num">20</span><span class="lbl">min exposición</span></div>
+    <div class="hero-stat"><span class="num">50</span><span class="lbl">min taller práctico</span></div>
+    <div class="hero-stat"><span class="num">5</span><span class="lbl">mitos a desmontar</span></div>
+    <div class="hero-stat"><span class="num">4</span><span class="lbl">misiones grupales</span></div>
+  </div>
+</section>
+
+<div class="container">
+
+  <div class="gancho-box">
+    <i class="fa-solid fa-quote-left"></i>¿Cuántos de ustedes ya han usado ChatGPT, Gemini o Claude para redactar un objetivo específico o justificar un problema? No venimos a decirles que dejen de hacerlo — venimos a mostrarles cómo hacerlo con criterio profesional y rigor técnico.
+  </div>
+
+  <h2 class="section-title">Mito o Realidad</h2>
+  <p class="section-sub">Toca cada tarjeta para descubrir la realidad detrás de cada mito.</p>
+
+  <div class="cards-grid" id="cardsGrid">
+
+    <div class="flip-card">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <span class="tag">Mito</span>
+          <i class="fa-solid fa-robot"></i>
+          <p>"La IA formula el proyecto por mí"</p>
+          <span class="tap-hint">Toca para ver la realidad</span>
+        </div>
+        <div class="flip-back">
+          <span class="tag">Realidad</span>
+          <i class="fa-solid fa-user-check"></i>
+          <p>Es copiloto, no piloto automático. El juicio sobre pertinencia territorial, viabilidad y necesidad social sigue siendo humano.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <span class="tag">Mito</span>
+          <i class="fa-solid fa-lightbulb"></i>
+          <p>"Si lo redactó la IA, ya es innovador"</p>
+          <span class="tap-hint">Toca para ver la realidad</span>
+        </div>
+        <div class="flip-back">
+          <span class="tag">Realidad</span>
+          <i class="fa-solid fa-map-location-dot"></i>
+          <p>La originalidad y el ajuste al contexto (Montes de María, Atlántico, San Andrés) los pone quien conoce el territorio.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <span class="tag">Mito</span>
+          <i class="fa-solid fa-stamp"></i>
+          <p>"La IA garantiza que apruebe la convocatoria"</p>
+          <span class="tap-hint">Toca para ver la realidad</span>
+        </div>
+        <div class="flip-back">
+          <span class="tag">Realidad</span>
+          <i class="fa-solid fa-scale-balanced"></i>
+          <p>Los evaluadores buscan coherencia metodológica y conocimiento del contexto que la IA no puede validar por sí sola.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <span class="tag">Mito</span>
+          <i class="fa-solid fa-ban"></i>
+          <p>"Usar IA es 'hacer trampa' o falta de rigor"</p>
+          <span class="tap-hint">Toca para ver la realidad</span>
+        </div>
+        <div class="flip-back">
+          <span class="tag">Realidad</span>
+          <i class="fa-solid fa-magnifying-glass-chart"></i>
+          <p>Bien usada, es herramienta de rigor: revisar coherencia entre árbol de problemas, objetivos e indicadores.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <span class="tag">Mito</span>
+          <i class="fa-solid fa-dollar-sign"></i>
+          <p>"Solo las versiones pagas sirven para formular proyectos"</p>
+          <span class="tap-hint">Toca para ver la realidad</span>
+        </div>
+        <div class="flip-back">
+          <span class="tag">Realidad</span>
+          <i class="fa-solid fa-layer-group"></i>
+          <p>Lo que importa no es pago vs. gratis, sino modelo liviano vs. robusto (Flash/Haiku vs. Pro/Sonnet). El robusto rinde mejor sosteniendo coherencia en documentos largos.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="reset-hint"><i class="fa-solid fa-arrow-rotate-left"></i>Vuelve a tocar una tarjeta para verla de nuevo</p>
+
+  <div class="agenda">
+    <div class="agenda-block">
+      <span class="mins">20 min</span>
+      <span class="desc">Exposición magistral — lectura crítica de mitos y realidades</span>
+    </div>
+    <div class="agenda-block">
+      <span class="mins">50 min</span>
+      <span class="desc">Ejercicio práctico en grupos — misión con IA + checklist</span>
+    </div>
+    <div class="agenda-block">
+      <span class="mins">Cierre</span>
+      <span class="desc">Plenaria: hallazgos, aciertos y alucinaciones de la IA</span>
+    </div>
+  </div>
+
+  <h2 class="section-title">Ejercicio Práctico</h2>
+  <p class="section-sub">Cada grupo escanea su código QR y recibe una misión distinta de formulación.</p>
+
+  <div class="exercise-intro">
+    <ul class="exercise-steps">
+      <li>Formen grupos pequeños (3-4 personas) y escaneen su QR asignado.</li>
+      <li>Usen una IA (gratis o paga, la que tengan a mano) para resolver la tarea de formulación de su misión.</li>
+      <li>Apliquen la checklist crítica a lo que generó la IA: ¿es coherente? ¿hay datos inventados?</li>
+      <li>Preparen un hallazgo de 1 minuto para compartir en plenaria: un acierto y una alucinación.</li>
+    </ul>
+  </div>
+
+  <div class="missions-grid">
+
+    <div class="mission-card">
+      <div class="mission-head">
+        <i class="fa-solid fa-heart-pulse"></i>
+        <div><span class="grupo-num">Grupo 1</span><span class="grupo-name">Bienestar Docente Rural</span></div>
+      </div>
+      <div class="mission-body">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=A3161A&bgcolor=ffffff&data=MISION%20GRUPO%201%20-%20BIENESTAR%20DOCENTE%20RURAL%0A%0AContexto%3A%20Alta%20rotacion%20y%20agotamiento%20emocional%20en%20docentes%20de%20zonas%20rurales%20del%20Atlantico%2C%20con%20poco%20acceso%20a%20apoyo%20psicologico.%0A%0AIdea%3A%20Plataforma%20de%20acompanamiento%20psicosocial%20via%20WhatsApp%2C%20con%20un%20primer%20contacto%20asistido%20por%20IA%20y%20derivacion%20a%20psicologos%20cuando%20se%20detecten%20senales%20de%20riesgo.%0A%0ATAREA%3A%20Usen%20una%20IA%20para%20redactar%20el%20arbol%20de%20problemas%20(problema%20central%2C%202%20causas%2C%202%20efectos)%20y%202%20objetivos%20especificos.%20Luego%20apliquen%20la%20checklist%20critica." alt="QR Misión Grupo 1">
+        <div class="mission-task"><i class="fa-solid fa-diagram-project"></i> Árbol de problemas + objetivos</div>
+        <p class="ctx">Docentes rurales del Atlántico, agotamiento emocional y falta de acompañamiento psicosocial.</p>
+        <p class="scan-hint"><i class="fa-solid fa-qrcode"></i>Escanea para ver el detalle completo</p>
+      </div>
+    </div>
+
+    <div class="mission-card">
+      <div class="mission-head">
+        <i class="fa-solid fa-recycle"></i>
+        <div><span class="grupo-num">Grupo 2</span><span class="grupo-name">Raíces Circulares</span></div>
+      </div>
+      <div class="mission-body">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=A3161A&bgcolor=ffffff&data=MISION%20GRUPO%202%20-%20RAICES%20CIRCULARES%0A%0AContexto%3A%20Residuos%20agroindustriales%20(cascaras%20de%20yuca%2C%20name%2C%20platano)%20sin%20aprovechamiento%20en%20pequenos%20productores%20del%20Caribe.%0A%0AIdea%3A%20Centro%20de%20acopio%20y%20transformacion%20de%20estos%20residuos%20en%20bioinsumos%20(abono%20organico%2C%20harina%20para%20alimentacion%20animal).%0A%0ATAREA%3A%20Usen%20una%20IA%20para%20plantear%202%20indicadores%20de%20resultado%20y%202%20indicadores%20de%20producto%2C%20medibles%20y%20verificables.%20Luego%20apliquen%20la%20checklist%20critica." alt="QR Misión Grupo 2">
+        <div class="mission-task"><i class="fa-solid fa-chart-line"></i> Indicadores de resultado y producto</div>
+        <p class="ctx">Residuos agroindustriales del Caribe sin aprovechamiento en pequeños productores.</p>
+        <p class="scan-hint"><i class="fa-solid fa-qrcode"></i>Escanea para ver el detalle completo</p>
+      </div>
+    </div>
+
+    <div class="mission-card">
+      <div class="mission-head">
+        <i class="fa-solid fa-water"></i>
+        <div><span class="grupo-num">Grupo 3</span><span class="grupo-name">Ciénaga Viva</span></div>
+      </div>
+      <div class="mission-body">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=A3161A&bgcolor=ffffff&data=MISION%20GRUPO%203%20-%20CIENAGA%20VIVA%0A%0AContexto%3A%20Comunidades%20pesqueras%20de%20la%20Cienaga%20de%20la%20Virgen%20dependen%20de%20un%20ecosistema%20degradado%20por%20contaminacion%20y%20sobrepesca.%0A%0AIdea%3A%20Ruta%20de%20ecoturismo%20comunitario%20gestionada%20por%20asociaciones%20de%20pescadores%2C%20con%20protocolos%20de%20conservacion%20del%20ecosistema.%0A%0ATAREA%3A%20Usen%20una%20IA%20para%20construir%20un%20presupuesto%20general%20por%20rubros%20(3%20a%205%20rubros%20con%20montos%20aproximados).%20Luego%20apliquen%20la%20checklist%20critica." alt="QR Misión Grupo 3">
+        <div class="mission-task"><i class="fa-solid fa-sack-dollar"></i> Presupuesto general por rubros</div>
+        <p class="ctx">Comunidades pesqueras de la Ciénaga de la Virgen y un ecosistema degradado.</p>
+        <p class="scan-hint"><i class="fa-solid fa-qrcode"></i>Escanea para ver el detalle completo</p>
+      </div>
+    </div>
+
+    <div class="mission-card">
+      <div class="mission-head">
+        <i class="fa-solid fa-people-arrows"></i>
+        <div><span class="grupo-num">Grupo 4</span><span class="grupo-name">Puentes Digitales</span></div>
+      </div>
+      <div class="mission-body">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=A3161A&bgcolor=ffffff&data=MISION%20GRUPO%204%20-%20PUENTES%20DIGITALES%0A%0AContexto%3A%20Brecha%20digital%20marcada%20en%20adultos%20mayores%20de%20barrios%20populares%20de%20Barranquilla.%0A%0AIdea%3A%20Programa%20de%20alfabetizacion%20digital%20basica%20y%20uso%20responsable%20de%20IA%20para%20adultos%20mayores%2C%20con%20apoyo%20de%20jovenes%20voluntarios.%0A%0ATAREA%3A%20Usen%20una%20IA%20para%20redactar%20la%20justificacion%20del%20proyecto%20(maximo%20150%20palabras%2C%20con%20datos%20de%20contexto).%20Luego%20apliquen%20la%20checklist%20critica." alt="QR Misión Grupo 4">
+        <div class="mission-task"><i class="fa-solid fa-file-lines"></i> Justificación del proyecto</div>
+        <p class="ctx">Brecha digital en adultos mayores de barrios populares de Barranquilla.</p>
+        <p class="scan-hint"><i class="fa-solid fa-qrcode"></i>Escanea para ver el detalle completo</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="checklist-box">
+    <h3><i class="fa-solid fa-clipboard-check"></i> Checklist Crítica</h3>
+    <p class="sub">Aplíquenla a lo que generó la IA en su misión, sin importar el grupo</p>
+    <div class="checklist-items">
+      <div class="checklist-item"><i class="fa-solid fa-magnifying-glass"></i>¿El contenido es coherente con el contexto real (territorio, población, problema)?</div>
+      <div class="checklist-item"><i class="fa-solid fa-ruler"></i>¿Los indicadores propuestos son medibles y verificables?</div>
+      <div class="checklist-item"><i class="fa-solid fa-triangle-exclamation"></i>¿Hay cifras, fuentes o datos que parecen inventados (alucinaciones)?</div>
+      <div class="checklist-item"><i class="fa-solid fa-link"></i>¿Existe coherencia lógica entre problema, objetivo e indicador?</div>
+    </div>
+  </div>
+
+  <div class="cierre">
+    <i class="fa-solid fa-compass"></i>
+    <p>"La IA responde bien preguntas técnicas, pero no reemplaza el conocimiento del problema real."</p>
+    <div class="firma">Mg. <strong>Jorge Arango Castaño</strong> · Psicólogo, Magíster en Dirección de Proyectos</div>
+  </div>
+
+</div>
+
+<footer>
+  <p><strong>Universidad de la Costa CUC</strong> — Bootcamp en Gestión y Formulación de Proyectos © 2026</p>
+  <p>Material diseñado para uso exclusivo académico.</p>
+</footer>
+
+<script>
+document.querySelectorAll('.flip-card').forEach(function(card){
+  card.addEventListener('click', function(){
+    card.classList.toggle('flipped');
+  });
+});
+</script>
+
+</body>
+</html>
