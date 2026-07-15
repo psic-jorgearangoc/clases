@@ -473,24 +473,24 @@ footer strong{color:#fff;}
   </div>
 
   <h2 class="section-title">Ejercicio Práctico</h2>
-  <p class="section-sub">Los 4 grupos organizan la IA alrededor de un <strong>TDR simulado</strong> — la misma convocatoria para todos, cada uno con un modelo distinto.</p>
+  <p class="section-sub">Cada mesa elige, por título, la convocatoria real que quiere trabajar con su IA.</p>
 
   <div class="exercise-intro">
-    <p style="font-size:.88rem;color:#555;margin-bottom:18px;"><i class="fa-solid fa-circle-info" style="color:var(--cuc-red);margin-right:6px;"></i>Este ejercicio es la demostración en vivo del <strong>mito 6</strong>: la IA no conoce los requisitos vigentes de una convocatoria a menos que se los den. Los 4 grupos reciben el <strong>mismo TDR simulado</strong> (términos de referencia de una convocatoria ficticia) escaneando su QR, pero cada grupo lo trabaja con un modelo de IA distinto — así se compara en plenaria si el modelo cambia el resultado.</p>
+    <p style="font-size:.88rem;color:#555;margin-bottom:18px;"><i class="fa-solid fa-circle-info" style="color:var(--cuc-red);margin-right:6px;"></i>Este ejercicio es la demostración en vivo del <strong>mito 6</strong>: la IA no conoce los requisitos vigentes de una convocatoria a menos que se los den. Escaneen el QR de la convocatoria que les interese, abran el link, y copien el texto clave (objetivo, población o entidades elegibles, monto, plazo, requisitos) para pegarlo en su IA — la mayoría de las IA gratuitas no navegan por sí solas un link, así que el link es para leer, y el texto copiado es lo que se pega.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px;">
-      <div style="background:#fff;border-radius:8px;padding:10px 12px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.06);"><span style="display:block;font-weight:900;color:var(--cuc-red);font-size:1.05rem;">5 min</span><span style="font-size:.72rem;color:#666;">Grupos + escanear TDR</span></div>
-      <div style="background:#fff;border-radius:8px;padding:10px 12px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.06);"><span style="display:block;font-weight:900;color:var(--cuc-red);font-size:1.05rem;">10 min</span><span style="font-size:.72rem;color:#666;">Resumen ejecutivo del TDR</span></div>
-      <div style="background:#fff;border-radius:8px;padding:10px 12px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.06);"><span style="display:block;font-weight:900;color:var(--cuc-red);font-size:1.05rem;">10 min</span><span style="font-size:.72rem;color:#666;">Auditoría vs. TDR real</span></div>
+      <div style="background:#fff;border-radius:8px;padding:10px 12px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.06);"><span style="display:block;font-weight:900;color:var(--cuc-red);font-size:1.05rem;">5 min</span><span style="font-size:.72rem;color:#666;">Elegir + abrir convocatoria</span></div>
+      <div style="background:#fff;border-radius:8px;padding:10px 12px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.06);"><span style="display:block;font-weight:900;color:var(--cuc-red);font-size:1.05rem;">10 min</span><span style="font-size:.72rem;color:#666;">Resumen ejecutivo</span></div>
+      <div style="background:#fff;border-radius:8px;padding:10px 12px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.06);"><span style="display:block;font-weight:900;color:var(--cuc-red);font-size:1.05rem;">10 min</span><span style="font-size:.72rem;color:#666;">Auditoría vs. convocatoria real</span></div>
       <div style="background:#fff;border-radius:8px;padding:10px 12px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.06);"><span style="display:block;font-weight:900;color:var(--cuc-red);font-size:1.05rem;">10 min</span><span style="font-size:.72rem;color:#666;">Cronograma por fases</span></div>
       <div style="background:#fff;border-radius:8px;padding:10px 12px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.06);"><span style="display:block;font-weight:900;color:var(--cuc-red);font-size:1.05rem;">10 min</span><span style="font-size:.72rem;color:#666;">Árbol de problemas + objetivos</span></div>
       <div style="background:#fff;border-radius:8px;padding:10px 12px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.06);"><span style="display:block;font-weight:900;color:var(--cuc-red);font-size:1.05rem;">5 min</span><span style="font-size:.72rem;color:#666;">Preparar hallazgo</span></div>
     </div>
-    <p style="font-size:.85rem;color:#555;margin-bottom:10px;"><strong>Secuencia de prompts</strong> (cópienlos en orden, pegando primero el TDR que escanearon):</p>
+    <p style="font-size:.85rem;color:#555;margin-bottom:10px;"><strong>Secuencia de prompts</strong> (abran el link, copien el texto clave del documento, y péguenlo en su IA antes del primer prompt):</p>
     <ul class="exercise-steps">
-      <li><strong>1. Organizar:</strong> peguen el TDR completo en su IA como primer mensaje, sin pedir nada más todavía.</li>
-      <li><strong>2. Resumen ejecutivo:</strong> "Con el TDR anterior, hazme un resumen ejecutivo de máximo 150 palabras: objetivo de la convocatoria, población objetivo, monto máximo, duración y requisitos obligatorios." — Luego audítenlo contra el TDR real: ¿omitió algo? ¿inventó una cifra o fecha?</li>
-      <li><strong>3. Cronograma:</strong> "Con base en ese TDR y una duración de 12 meses, genera un cronograma general por fases (diagnóstico, ejecución, cierre) con los meses aproximados de cada fase."</li>
-      <li><strong>4. Árbol de problemas y objetivos:</strong> "Con base en el problema que motiva esta convocatoria, construye un árbol de problemas (problema central, 2 causas, 2 efectos) y un objetivo general y específico coherentes con los requisitos del TDR."</li>
+      <li><strong>1. Organizar:</strong> peguen el texto clave de la convocatoria en su IA como primer mensaje, sin pedir nada más todavía.</li>
+      <li><strong>2. Resumen ejecutivo:</strong> "Con el texto anterior, hazme un resumen ejecutivo de máximo 150 palabras: objetivo de la convocatoria, población o entidades elegibles, monto máximo, plazos y requisitos obligatorios." — Luego audítenlo contra el documento real: ¿omitió algo? ¿inventó una cifra o fecha?</li>
+      <li><strong>3. Cronograma:</strong> "Con base en esa convocatoria y sus plazos reales, genera un cronograma general por fases (diagnóstico, ejecución, cierre) con fechas o meses aproximados."</li>
+      <li><strong>4. Árbol de problemas y objetivos:</strong> "Con base en el problema que motiva esta convocatoria, construye un árbol de problemas (problema central, 2 causas, 2 efectos) y un objetivo general y específico coherentes con los requisitos reales del documento."</li>
     </ul>
   </div>
 
@@ -499,52 +499,52 @@ footer strong{color:#fff;}
     <div class="mission-card">
       <div class="mission-head">
         <i class="fa-solid fa-file-contract"></i>
-        <div><span class="grupo-num">Grupo 1 · Modelo liviano gratuito</span><span class="grupo-name">Ej. ChatGPT free / Gemini Flash</span></div>
+        <div><span class="grupo-num">Convocatoria internacional · en inglés</span><span class="grupo-name">Advanced Technological Education (NSF 24-584)</span></div>
       </div>
       <div class="mission-body">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=A3161A&bgcolor=ffffff&data=TDR%20SIMULADO%20%28uso%20academico%29%20-%20Convocatoria%20Fortalecimiento%20de%20Economia%20Circular%20en%20el%20Caribe%0A%0AEntidad%3A%20Fondo%20ficticio%20de%20Ciencia%2C%20Tecnologia%20e%20Innovacion%20Regional.%0AObjetivo%20de%20la%20convocatoria%3A%20financiar%20proyectos%20que%20promuevan%20el%20aprovechamiento%20de%20residuos%20agroindustriales%20en%20comunidades%20del%20Caribe%20colombiano.%0APoblacion%20objetivo%3A%20pequenos%20productores%20agricolas%20y%20asociaciones%20comunitarias%20del%20Atlantico%2C%20Bolivar%20y%20Magdalena.%0AMonto%20maximo%20por%20proyecto%3A%20450%20millones%20de%20pesos%20COP.%0ADuracion%20maxima%3A%2012%20meses.%0ARubros%20financiables%3A%20talento%20humano%2C%20infraestructura%20y%20dotacion%2C%20capacitacion%2C%20produccion%20piloto.%20No%20se%20financia%20compra%20de%20vehiculos%20ni%20gastos%20recurrentes%20de%20operacion%20posteriores%20al%20proyecto.%0ARequisitos%20obligatorios%3A%20arbol%20de%20problemas%2C%20objetivo%20general%20y%20especificos%2C%20cronograma%20de%20actividades%20por%20fases%2C%20presupuesto%20por%20rubros%2C%20y%20analisis%20de%20riesgos.%0AFecha%20limite%20de%20presentacion%3A%2030%20de%20septiembre%20de%202026." alt="QR TDR Grupo 1">
-        <div class="mission-task"><i class="fa-solid fa-scroll"></i> TDR simulado — Convocatoria Economía Circular Caribe</div>
-        <p class="ctx">Usen todo el ejercicio con un modelo gratuito y liviano, para comparar en plenaria.</p>
-        <p class="scan-hint"><i class="fa-solid fa-qrcode"></i>Escanea para ver el TDR completo</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=A3161A&bgcolor=ffffff&data=https%3A%2F%2Fwww.nsf.gov%2Ffunding%2Fopportunities%2Fate-advanced-technological-education%2Fnsf24-584%2Fsolicitation" alt="QR NSF ATE">
+        <div class="mission-task"><i class="fa-solid fa-scroll"></i> National Science Foundation (EE.UU.)</div>
+        <p class="ctx">Bono extra: como el documento está en inglés, revisen también si la IA tradujo bien los requisitos técnicos.</p>
+        <p class="scan-hint"><i class="fa-solid fa-qrcode"></i>Escanea para abrir la convocatoria</p>
       </div>
     </div>
 
     <div class="mission-card">
       <div class="mission-head">
         <i class="fa-solid fa-file-contract"></i>
-        <div><span class="grupo-num">Grupo 2 · Modelo liviano gratuito</span><span class="grupo-name">Ej. Claude free / Copilot</span></div>
+        <div><span class="grupo-num">Material de apoyo</span><span class="grupo-name">Documento de referencia (Canva)</span></div>
       </div>
       <div class="mission-body">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=A3161A&bgcolor=ffffff&data=TDR%20SIMULADO%20%28uso%20academico%29%20-%20Convocatoria%20Fortalecimiento%20de%20Economia%20Circular%20en%20el%20Caribe%0A%0AEntidad%3A%20Fondo%20ficticio%20de%20Ciencia%2C%20Tecnologia%20e%20Innovacion%20Regional.%0AObjetivo%20de%20la%20convocatoria%3A%20financiar%20proyectos%20que%20promuevan%20el%20aprovechamiento%20de%20residuos%20agroindustriales%20en%20comunidades%20del%20Caribe%20colombiano.%0APoblacion%20objetivo%3A%20pequenos%20productores%20agricolas%20y%20asociaciones%20comunitarias%20del%20Atlantico%2C%20Bolivar%20y%20Magdalena.%0AMonto%20maximo%20por%20proyecto%3A%20450%20millones%20de%20pesos%20COP.%0ADuracion%20maxima%3A%2012%20meses.%0ARubros%20financiables%3A%20talento%20humano%2C%20infraestructura%20y%20dotacion%2C%20capacitacion%2C%20produccion%20piloto.%20No%20se%20financia%20compra%20de%20vehiculos%20ni%20gastos%20recurrentes%20de%20operacion%20posteriores%20al%20proyecto.%0ARequisitos%20obligatorios%3A%20arbol%20de%20problemas%2C%20objetivo%20general%20y%20especificos%2C%20cronograma%20de%20actividades%20por%20fases%2C%20presupuesto%20por%20rubros%2C%20y%20analisis%20de%20riesgos.%0AFecha%20limite%20de%20presentacion%3A%2030%20de%20septiembre%20de%202026." alt="QR TDR Grupo 2">
-        <div class="mission-task"><i class="fa-solid fa-scroll"></i> TDR simulado — Convocatoria Economía Circular Caribe</div>
-        <p class="ctx">Usen todo el ejercicio con otro modelo gratuito y liviano, para comparar en plenaria.</p>
-        <p class="scan-hint"><i class="fa-solid fa-qrcode"></i>Escanea para ver el TDR completo</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=A3161A&bgcolor=ffffff&data=https%3A%2F%2Fwww.canva.com%2Fdesign%2FDAHEab5NmzU%2FaH2t52P8_RNDjTONWVKThQ%2Fedit" alt="QR Documento Canva">
+        <div class="mission-task"><i class="fa-solid fa-scroll"></i> Preparado por Jorge Arango Castaño</div>
+        <p class="ctx">Nota: este link es de edición — verifica que tenga permiso público antes del taller.</p>
+        <p class="scan-hint"><i class="fa-solid fa-qrcode"></i>Escanea para abrir el documento</p>
       </div>
     </div>
 
     <div class="mission-card">
       <div class="mission-head">
         <i class="fa-solid fa-file-contract"></i>
-        <div><span class="grupo-num">Grupo 3 · Modelo robusto de pago</span><span class="grupo-name">Ej. ChatGPT Plus / Claude Sonnet</span></div>
+        <div><span class="grupo-num">Convocatoria 48 · SGR Minciencias</span><span class="grupo-name">Biodiversidad y Bioeconomía Territorial</span></div>
       </div>
       <div class="mission-body">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=A3161A&bgcolor=ffffff&data=TDR%20SIMULADO%20%28uso%20academico%29%20-%20Convocatoria%20Fortalecimiento%20de%20Economia%20Circular%20en%20el%20Caribe%0A%0AEntidad%3A%20Fondo%20ficticio%20de%20Ciencia%2C%20Tecnologia%20e%20Innovacion%20Regional.%0AObjetivo%20de%20la%20convocatoria%3A%20financiar%20proyectos%20que%20promuevan%20el%20aprovechamiento%20de%20residuos%20agroindustriales%20en%20comunidades%20del%20Caribe%20colombiano.%0APoblacion%20objetivo%3A%20pequenos%20productores%20agricolas%20y%20asociaciones%20comunitarias%20del%20Atlantico%2C%20Bolivar%20y%20Magdalena.%0AMonto%20maximo%20por%20proyecto%3A%20450%20millones%20de%20pesos%20COP.%0ADuracion%20maxima%3A%2012%20meses.%0ARubros%20financiables%3A%20talento%20humano%2C%20infraestructura%20y%20dotacion%2C%20capacitacion%2C%20produccion%20piloto.%20No%20se%20financia%20compra%20de%20vehiculos%20ni%20gastos%20recurrentes%20de%20operacion%20posteriores%20al%20proyecto.%0ARequisitos%20obligatorios%3A%20arbol%20de%20problemas%2C%20objetivo%20general%20y%20especificos%2C%20cronograma%20de%20actividades%20por%20fases%2C%20presupuesto%20por%20rubros%2C%20y%20analisis%20de%20riesgos.%0AFecha%20limite%20de%20presentacion%3A%2030%20de%20septiembre%20de%202026." alt="QR TDR Grupo 3">
-        <div class="mission-task"><i class="fa-solid fa-scroll"></i> TDR simulado — Convocatoria Economía Circular Caribe</div>
-        <p class="ctx">Usen todo el ejercicio con un modelo robusto y de pago, para comparar en plenaria.</p>
-        <p class="scan-hint"><i class="fa-solid fa-qrcode"></i>Escanea para ver el TDR completo</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=A3161A&bgcolor=ffffff&data=https%3A%2F%2Fminciencias.gov.co%2Fconvocatorias%2Fplan-convocatorias-asctei-2025-2026%2Fconvocatoria-la-asignacion-para-la-ciencia" alt="QR Convocatoria 48 Minciencias">
+        <div class="mission-task"><i class="fa-solid fa-scroll"></i> Aprovechamiento sostenible de la biodiversidad</div>
+        <p class="ctx">Convocatoria real y actualmente <strong>abierta</strong> — buen caso para ver si la IA sabe que sigue vigente.</p>
+        <p class="scan-hint"><i class="fa-solid fa-qrcode"></i>Escanea para abrir la convocatoria</p>
       </div>
     </div>
 
     <div class="mission-card">
       <div class="mission-head">
         <i class="fa-solid fa-file-contract"></i>
-        <div><span class="grupo-num">Grupo 4 · Modelo robusto de pago</span><span class="grupo-name">Ej. Gemini Pro / GPT-4</span></div>
+        <div><span class="grupo-num">Convocatoria 47 · SGR Minciencias</span><span class="grupo-name">Agro por la Vida y por la Tierra</span></div>
       </div>
       <div class="mission-body">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=A3161A&bgcolor=ffffff&data=TDR%20SIMULADO%20%28uso%20academico%29%20-%20Convocatoria%20Fortalecimiento%20de%20Economia%20Circular%20en%20el%20Caribe%0A%0AEntidad%3A%20Fondo%20ficticio%20de%20Ciencia%2C%20Tecnologia%20e%20Innovacion%20Regional.%0AObjetivo%20de%20la%20convocatoria%3A%20financiar%20proyectos%20que%20promuevan%20el%20aprovechamiento%20de%20residuos%20agroindustriales%20en%20comunidades%20del%20Caribe%20colombiano.%0APoblacion%20objetivo%3A%20pequenos%20productores%20agricolas%20y%20asociaciones%20comunitarias%20del%20Atlantico%2C%20Bolivar%20y%20Magdalena.%0AMonto%20maximo%20por%20proyecto%3A%20450%20millones%20de%20pesos%20COP.%0ADuracion%20maxima%3A%2012%20meses.%0ARubros%20financiables%3A%20talento%20humano%2C%20infraestructura%20y%20dotacion%2C%20capacitacion%2C%20produccion%20piloto.%20No%20se%20financia%20compra%20de%20vehiculos%20ni%20gastos%20recurrentes%20de%20operacion%20posteriores%20al%20proyecto.%0ARequisitos%20obligatorios%3A%20arbol%20de%20problemas%2C%20objetivo%20general%20y%20especificos%2C%20cronograma%20de%20actividades%20por%20fases%2C%20presupuesto%20por%20rubros%2C%20y%20analisis%20de%20riesgos.%0AFecha%20limite%20de%20presentacion%3A%2030%20de%20septiembre%20de%202026." alt="QR TDR Grupo 4">
-        <div class="mission-task"><i class="fa-solid fa-scroll"></i> TDR simulado — Convocatoria Economía Circular Caribe</div>
-        <p class="ctx">Usen todo el ejercicio con otro modelo robusto y de pago, para comparar en plenaria.</p>
-        <p class="scan-hint"><i class="fa-solid fa-qrcode"></i>Escanea para ver el TDR completo</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=A3161A&bgcolor=ffffff&data=https%3A%2F%2Fminciencias.gov.co%2Fconvocatorias%2Fplan-convocatorias-asctei-2025-2026%2Fagro-por-la-vida-y-por-la-tierra-garantizar-el" alt="QR Convocatoria 47 Minciencias">
+        <div class="mission-task"><i class="fa-solid fa-scroll"></i> Derecho Humano a la Alimentación y Soberanía Alimentaria</div>
+        <p class="ctx">Convocatoria real, actualmente <strong>en evaluación</strong> — buen caso para ver si la IA distingue que ya cerró.</p>
+        <p class="scan-hint"><i class="fa-solid fa-qrcode"></i>Escanea para abrir la convocatoria</p>
       </div>
     </div>
 
@@ -552,12 +552,12 @@ footer strong{color:#fff;}
 
   <div class="checklist-box">
     <h3><i class="fa-solid fa-clipboard-check"></i> Checklist de Auditoría</h3>
-    <p class="sub">Úsenla al comparar el resumen ejecutivo de la IA contra el TDR real (10 min), sin importar el grupo</p>
+    <p class="sub">Úsenla al comparar el resumen ejecutivo de la IA contra la convocatoria real (10 min), sin importar el grupo</p>
     <div class="checklist-items">
-      <div class="checklist-item"><i class="fa-solid fa-magnifying-glass"></i>¿El resumen incluyó los 4 datos clave: objetivo, población, monto y duración?</div>
+      <div class="checklist-item"><i class="fa-solid fa-magnifying-glass"></i>¿El resumen incluyó los datos clave: objetivo, elegibilidad, monto y plazos?</div>
       <div class="checklist-item"><i class="fa-solid fa-ruler"></i>¿Mencionó los requisitos obligatorios reales, o se los inventó?</div>
-      <div class="checklist-item"><i class="fa-solid fa-triangle-exclamation"></i>¿Alguna cifra, fecha o rubro no coincide con el TDR que escanearon?</div>
-      <div class="checklist-item"><i class="fa-solid fa-map-pin"></i>¿El cronograma y el árbol de problemas son coherentes con lo que exige el TDR, o con otra cosa?</div>
+      <div class="checklist-item"><i class="fa-solid fa-triangle-exclamation"></i>¿Alguna cifra, fecha o requisito no coincide con el documento que abrieron?</div>
+      <div class="checklist-item"><i class="fa-solid fa-map-pin"></i>¿El cronograma y el árbol de problemas son coherentes con lo que exige la convocatoria real?</div>
     </div>
   </div>
 
