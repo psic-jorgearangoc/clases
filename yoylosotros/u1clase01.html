@@ -38,7 +38,7 @@
         .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
 
         .class-view {
-            max-width: 1200px; /* Ampliado para acomodar las 4 tarjetas en línea */
+            max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
             animation: fadeIn 0.5s ease;
@@ -80,7 +80,7 @@
         }
         
         .class-header-card::after {
-            content: '\f0c0'; /* Ícono usuarios FontAwesome */
+            content: '\f0c0';
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
             position: absolute;
@@ -105,7 +105,7 @@
 
         .class-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 Columnas fijas en escritorio */
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             margin-bottom: 40px;
         }
@@ -115,6 +115,7 @@
         }
         @media screen and (max-width: 768px) {
             .class-grid { grid-template-columns: 1fr; }
+            .authors-grid { grid-template-columns: 1fr; }
         }
 
         .detail-card {
@@ -153,43 +154,126 @@
             font-style: italic;
         }
 
-        /* Tarjetas interactivas de autores */
         .authors-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
         }
 
-        .author-card {
-            background: var(--white);
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
+        .flip-card {
+            background-color: transparent;
+            height: 260px;
+            perspective: 1000px;
             cursor: pointer;
         }
 
-        .author-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--cuc-red);
-            transform: translateY(100%);
-            transition: transform 0.4s ease;
-            z-index: 0;
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        .author-card:hover::before { transform: translateY(0); }
-        .author-card:hover h4, .author-card:hover p { color: white; position: relative; z-index: 1; }
-        
-        .author-card h4 { color: var(--cuc-red); margin-bottom: 10px; font-size: 1.2rem; transition: color 0.3s; position: relative; z-index: 1; }
-        .author-card p { color: #555; font-size: 0.9rem; transition: color 0.3s; position: relative; z-index: 1; }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
 
-        /* Contenedores de Video */
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .flip-card-front {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            border: 2px solid var(--cuc-gray);
+        }
+
+        .flip-card-front h4 {
+            color: var(--cuc-red);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .flip-card-front i {
+            font-size: 2.5rem;
+            color: var(--cuc-gold);
+            margin-bottom: 15px;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 0.95rem;
+        }
+
+        .history-container {
+            margin-bottom: 40px;
+        }
+
+        .history-item {
+            background-color: var(--white);
+            border: 1px solid #ddd;
+            border-left: 5px solid var(--cuc-gold);
+            margin-bottom: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .history-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: var(--cuc-dark);
+            transition: background-color 0.3s;
+        }
+
+        .history-header:hover {
+            background-color: var(--cuc-gray);
+        }
+
+        .history-header i {
+            transition: transform 0.3s;
+        }
+
+        .history-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            background-color: #fafafa;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .history-item.open .history-content {
+            padding: 15px 20px;
+            max-height: 500px;
+            border-top: 1px solid #eee;
+        }
+        
+        .history-item.open .history-header i {
+            transform: rotate(180deg);
+        }
+
         .videos-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -199,7 +283,7 @@
 
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* Ratio 16:9 */
+            padding-bottom: 56.25%;
             height: 0;
             background: #000;
             border-radius: 10px;
@@ -212,29 +296,12 @@
             top: 0; left: 0; width: 100%; height: 100%; border: 0;
         }
 
-        /* Diseño de la Actividad en Aula */
         .activity-box {
             background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
             border: 2px dashed var(--cuc-gold);
             border-radius: 15px;
             padding: 30px;
             margin-top: 30px;
-        }
-
-        .group-badges {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin: 20px 0;
-        }
-
-        .badge {
-            background: var(--cuc-dark);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
         }
 
         footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
@@ -245,7 +312,6 @@
     </style>
 </head>
 <body>
-
     <header>
         <div class="qr-code">
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/yoylosotros/u1clase01.html" alt="QR Clase">
@@ -257,8 +323,21 @@
         </div>
 
         <div class="header-info">
-            <div class="course-title">Yo y los Otros</div>
-            <div class="prof-info">Docente: Jorge Arango Castaño</div>
+            <div class="course-title">Yo y los Otros:<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">De la identidad a la relación</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com
+                </small>
+            </div>
+        </div>
+
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
         </div>
     </header>
 
@@ -277,7 +356,6 @@
         </div>
 
         <div class="class-grid">
-            <!-- Saberes Integradores -->
             <div class="detail-card">
                 <h3><i class="fas fa-book-open"></i> Saberes</h3>
                 <p>Fundamentos que cimentan nuestra disciplina:</p>
@@ -289,19 +367,17 @@
                 </ul>
             </div>
 
-            <!-- Trabajo Presencial -->
             <div class="detail-card" style="border-top-color: #2196F3;">
                 <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
                 <p><strong>Actividad en aula:</strong></p>
                 <ul>
-                    <li>Organización grupal (32 estudiantes).</li>
+                    <li>Organización grupal.</li>
                     <li>Mapa conceptual grupal.</li>
                     <li>Panel de expertos.</li>
                     <li>Conversatorio guiado.</li>
                 </ul>
             </div>
 
-            <!-- Trabajo Independiente -->
             <div class="detail-card" style="border-top-color: #FF9800;">
                 <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
                 <p><strong>Preparación:</strong></p>
@@ -312,7 +388,6 @@
                 </ul>
             </div>
 
-            <!-- Evaluación -->
             <div class="detail-card" style="border-top-color: #4CAF50;">
                 <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
                 <p><strong>Estrategias:</strong></p>
@@ -333,60 +408,144 @@
                 "No estudiamos al individuo aislado, ni a la sociedad en abstracto; estudiamos la tensión constante entre el individuo y la sociedad."
             </div>
 
-            <h3 class="theme-subtitle">2. Autores y Conceptos Fundamentales</h3>
-            <p style="margin-bottom: 20px;">Explora los pioneros que dieron forma a nuestra disciplina:</p>
+            <h3 class="theme-subtitle">2. Autores Fundamentales</h3>
+            <p style="margin-bottom: 20px;">Pasa el cursor sobre cada tarjeta para descubrir los aportes teóricos de estos pioneros:</p>
             
             <div class="authors-grid">
-                <div class="author-card">
-                    <h4>Kurt Lewin</h4>
-                    <p>Teoría de Campo. "La conducta es función de la persona y su ambiente".</p>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-project-diagram"></i>
+                            <h4>Kurt Lewin</h4>
+                            <p>(1890 - 1947)</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Teoría de Campo</h4>
+                            <p>Afirmó que la conducta es función de la interacción entre la persona y su entorno. Es considerado el padre de la psicología social moderna y pionero en el estudio de dinámicas de grupo y liderazgo.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="author-card">
-                    <h4>Gordon Allport</h4>
-                    <p>La naturaleza del prejuicio. Definió conceptualmente la disciplina.</p>
+                
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-theater-masks"></i>
+                            <h4>Gordon Allport</h4>
+                            <p>(1897 - 1967)</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">La Naturaleza del Prejuicio</h4>
+                            <p>Definió conceptualmente la disciplina en 1954. Sus investigaciones sobre el prejuicio demostraron cómo la cognición normal, al categorizar, puede derivar en estereotipos y actitudes hostiles, proponiendo la hipótesis del contacto.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="author-card">
-                    <h4>Martín-Baró</h4>
-                    <p>Psicología de la Liberación. Contextualizó la disciplina en América Latina.</p>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-hands-helping"></i>
+                            <h4>Martín-Baró</h4>
+                            <p>(1942 - 1989)</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Psicología de la Liberación</h4>
+                            <p>Contextualizó la psicología social a la realidad de América Latina. Criticó la psicología tradicional por su perspectiva individualista y abogó por una ciencia comprometida con las mayorías oprimidas y el cambio social.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="author-card">
-                    <h4>Solomon Asch</h4>
-                    <p>Estudios sobre la Conformidad. ¿Cómo el grupo presiona al individuo?</p>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-users"></i>
+                            <h4>Solomon Asch</h4>
+                            <p>(1907 - 1996)</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Estudios de Conformidad</h4>
+                            <p>Demostró empíricamente el poder de la influencia normativa grupal. Sus célebres experimentos de estimación de líneas revelaron cómo los individuos ceden a la presión de la mayoría, aun cuando ésta se equivoca flagrantemente.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <h3 class="theme-subtitle">3. Recursos Audiovisuales</h3>
-            <p style="margin-bottom: 20px;">A continuación, analizaremos los siguientes videos como base para nuestra discusión (Reemplazar con links de YouTube en clase):</p>
+            <p style="margin-bottom: 20px;">A continuación, analizaremos los siguientes videos como base para nuestra discusión:</p>
             
             <div class="videos-container">
-                <!-- Video 1 -->
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/Sc6XN3iRjC8?rel=0" title="Historia de la Psicología Social" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/cdn7ChQNq0o?rel=0" title="¿Qué es la PSICOLOGÍA SOCIAL y qué estudia?" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <!-- Video 2 -->
                 <div class="video-wrapper">
-                    <!-- Espacio para un segundo video, usando un color plano o un embed genérico temporal -->
-                    <iframe src="https://www.youtube.com/embed/jZ_7O6MstFk?rel=0" title="Conceptos Claves" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/jTuZlxpSL9Y?rel=0" title="El mejor vídeo para entender la PSICOLOGÍA SOCIAL" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
 
             <div class="activity-box">
-                <h3 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-users-cog"></i> Actividad en Aula: "Mapeando la Mente Social"</h3>
-                <p><strong>Dinámica para 32 estudiantes:</strong> Nos dividiremos en <strong>8 grupos de 4 personas</strong>.</p>
+                <h3 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-users-cog"></i> Actividad en Aula: "Mapeando la Historia Social"</h3>
+                <p><strong>Dinámica:</strong> Nos organizaremos en <strong>Grupos de 4</strong>.</p>
                 
-                <div class="group-badges">
-                    <span class="badge"><i class="fas fa-user-tag"></i> 1 Relator</span>
-                    <span class="badge"><i class="fas fa-pencil-ruler"></i> 1 Diseñador Gráfico</span>
-                    <span class="badge"><i class="fas fa-book-reader"></i> 2 Investigadores</span>
-                </div>
-
                 <p><strong>Instrucciones:</strong></p>
-                <ol style="margin-left: 20px; line-height: 1.8; color: #444;">
-                    <li>Cada grupo recibirá un hito histórico o un autor fundamental por parte del docente.</li>
-                    <li>Deberán utilizar pliegos de papel, marcadores (o herramientas digitales como Miro/Canva) para crear un <strong>Organizador Gráfico</strong> de ese concepto.</li>
-                    <li>Tendrán 30 minutos para el diseño.</li>
-                    <li>Posteriormente, pasaremos a la etapa de <strong>Panel de Expertos</strong> donde cada Relator tendrá 3 minutos para socializar su organizador al resto del salón.</li>
+                <ol style="margin-left: 20px; line-height: 1.8; color: #444; margin-bottom: 25px;">
+                    <li>Desplieguen y analicen cuidadosamente uno de los <strong>Hitos Históricos</strong> que el docente asignará a su grupo.</li>
+                    <li>Utilicen esta información específica y los conceptos clave de los videos para construir un <strong>Mapa Conceptual</strong> detallado.</li>
+                    <li>Tendrán un tiempo determinado en clase para el diseño gráfico y la síntesis de la información.</li>
+                    <li>Prepárense para la etapa de <strong>Panel de Expertos</strong>, donde cada grupo socializará su organizador frente al salón.</li>
                 </ol>
+
+                <h4 style="color: var(--cuc-red); margin-bottom: 15px; font-size: 1.2rem; border-bottom: 1px solid #ddd; padding-bottom: 5px;"><i class="fas fa-landmark"></i> Hitos y Experimentos Históricos para el Análisis Grupal</h4>
+
+                <div class="history-container" style="margin-bottom: 0;">
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>1897 - El Primer Experimento (Norman Triplett)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p>Considerado el primer experimento formal en Psicología Social. Triplett observó que los ciclistas pedaleaban más rápido en presencia de otros competidores que cuando corrían solos contra el reloj. Para comprobarlo en el laboratorio, pidió a niños que enrollaran hilo de pescar en carretes, demostrando el efecto de <strong>Facilitación Social</strong>: la mera presencia de otros altera nuestro rendimiento.</p>
+                        </div>
+                    </div>
+
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>1930s-1940s - Éxodo y la II Guerra Mundial</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p>El ascenso del fascismo en Europa provocó que muchos psicólogos de la Gestalt (como Kurt Lewin) emigraran a Estados Unidos. La II Guerra Mundial obligó a los psicólogos sociales a aplicar sus conocimientos en el mundo real: estudiaron la moral de las tropas, cómo combatir la propaganda enemiga, fomentar el ahorro y cambiar los hábitos alimenticios (consumo de vísceras) para apoyar el esfuerzo bélico.</p>
+                        </div>
+                    </div>
+
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>1950s - La era de los Grandes Experimentos Clásicos</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p>Buscando entender los horrores del Holocausto y la conformidad de las masas, surgieron estudios revolucionarios. Solomon Asch investigó la <strong>conformidad</strong> ante presiones grupales evidentes, mientras que Leon Festinger introdujo su influyente teoría de la <strong>Disonancia Cognitiva</strong>, explicando cómo justificamos comportamientos que chocan con nuestras creencias previas.</p>
+                        </div>
+                    </div>
+
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>1961 - El Experimento de Obediencia (Stanley Milgram)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p>A la sombra del juicio del nazi Adolf Eichmann, Milgram diseñó un controvertido experimento en Yale. Demostró que un porcentaje alarmantemente alto de personas comunes (alrededor del 65%) estaban dispuestas a administrar "descargas eléctricas" mortales a un extraño simplemente porque una figura de autoridad (un experimentador con bata) se lo ordenaba, revelando el asombroso poder de la <strong>obediencia a la autoridad</strong>.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>1980s - Surgimiento de la Psicología Social Latinoamericana</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p>Ante la crisis teórica y de relevancia del modelo estadounidense (centrado en el laboratorio), figuras como Ignacio Martín-Baró impulsan una psicología orientada a los graves problemas sociales, políticos y económicos de América Latina. Nace una disciplina crítica, comunitaria y enfocada en la praxis emancipadora, marcando una profunda identidad regional.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -396,5 +555,16 @@
         <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
     </footer>
 
+    <script>
+        function toggleHistory(element) {
+            var allItems = document.querySelectorAll('.history-item');
+            allItems.forEach(function(item) {
+                if (item !== element && item.classList.contains('open')) {
+                    item.classList.remove('open');
+                }
+            });
+            element.classList.toggle('open');
+        }
+    </script>
 </body>
 </html>
