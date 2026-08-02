@@ -495,6 +495,7 @@
         /* Responsive */
         @media screen and (max-width: 900px) {
             header {
+                position: static;
                 flex-direction: column;
                 gap: 15px;
             }
@@ -506,10 +507,10 @@
                 margin-bottom: 20px;
             }
             .header-info {
-                order: 3;
+                order: 3; /* Asegura que la info baje en móviles */
             }
             .qr-code {
-                order: 1;
+                display: none;
             }
             .header-logo {
                 order: 2;
@@ -529,7 +530,7 @@
 
         <!-- LOGO CUC -->
         <div class="header-logo">
-            <img src="https://www.cuc.edu.co/wp-content/uploads/2020/08/Logo-CUC-2020.png" alt="Logo Universidad de la Costa" onerror="this.src='https://placehold.co/200x90/ffffff/A3161A?text=Universidad+de+la+Costa'">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa">
         </div>
 
         <!-- INFO DOCENTE -->
@@ -540,15 +541,15 @@
                 Mg. Dirección de Proyectos - Certificado en PNL<br>
                 <small>
                     <span class="contact-label">WhatsApp:</span> 3233796547 | 
-                    <span class="contact-label">IG:</span> caminosdelser85 | 
-                    <span class="contact-label">Web:</span> www.caminosdelser.co
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com
                 </small>
             </div>
         </div>
 
         <!-- QR CONTACTO (Derecha) -->
         <div class="qr-code">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" alt="QR Contacto">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
             <span class="qr-label">Guardar Contacto</span>
         </div>
     </header>
@@ -760,6 +761,7 @@
                     <ul>
                         <li>Estructura de las actitudes (cognitivo, afectivo, conductual).</li>
                         <li>Formación y cambio de actitudes.</li>
+                        <li>Prejuicio, estereotipo y discriminación.</li>
                         <li>Teorías explicativas: aprendizaje social, conflicto realista, identidad social.</li>
                     </ul>
                     <a href="https://clases.jorgearangoc.com/yoylosotros/u2clase07.html" class="btn-go-class">Ir a la Clase 7 ➜</a>
@@ -769,9 +771,8 @@
                 <div class="panel">
                     <p><strong>Temas:</strong></p>
                     <ul>
-                        <li>Implementación de talleres de simulación.</li>
-                        <li>Creación de laboratorios sociales sobre los temas asignados.</li>
-                        <li>Cierre de unidad y socialización.</li>
+                        <li>Laboratorios sobre las bases del comportamiento social.</li>
+                        <li>Taller de simulación sobre los temas vistos.</li>
                     </ul>
                     <a href="https://clases.jorgearangoc.com/yoylosotros/u2clase08.html" class="btn-go-class">Ir a la Clase 8 ➜</a>
                 </div>
