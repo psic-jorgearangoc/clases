@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase 1 - Intervención en Crisis</title>
+    <title>Clase 1 - Eureka: Descubriendo Algo Nuevo</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -18,7 +18,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
 
-        /* HEADER (Manteniendo el de Intervención en Crisis) */
         header {
             background-color: var(--white);
             border-bottom: 4px solid var(--cuc-red);
@@ -32,9 +31,9 @@
             text-align: center;
         }
         .header-logo img { max-height: 80px; }
-        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; margin-bottom: 5px;}
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; }
         .prof-info { font-size: 0.9rem; color: #555; }
-        .prof-info strong, .contact-label { color: var(--cuc-red); font-weight: 900; }
+        .contact-label { color: var(--cuc-red); font-weight: 900; }
         
         .qr-code img { max-height: 70px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; }
         .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
@@ -82,7 +81,7 @@
         }
         
         .class-header-card::after {
-            content: '\f0eb'; /* Icono de idea/propósito */
+            content: '\f0c0';
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
             position: absolute;
@@ -117,6 +116,7 @@
         }
         @media screen and (max-width: 768px) {
             .class-grid { grid-template-columns: 1fr; }
+            .authors-grid { grid-template-columns: 1fr; }
         }
 
         .detail-card {
@@ -155,7 +155,108 @@
             font-style: italic;
         }
 
-        /* Contenedores de Video */
+        .authors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 260px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .flip-card-front {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            border: 2px solid var(--cuc-gray);
+        }
+
+        .flip-card-front h4 { color: var(--cuc-red); font-size: 1.5rem; margin-bottom: 10px; }
+        .flip-card-front i { font-size: 2.5rem; color: var(--cuc-gold); margin-bottom: 15px; }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 0.95rem;
+        }
+
+        .history-container { margin-bottom: 40px; }
+
+        .history-item {
+            background-color: var(--white);
+            border: 1px solid #ddd;
+            border-left: 5px solid var(--cuc-gold);
+            margin-bottom: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .history-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: var(--cuc-dark);
+            transition: background-color 0.3s;
+        }
+
+        .history-header:hover { background-color: var(--cuc-gray); }
+        .history-header i { transition: transform 0.3s; }
+
+        .history-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            background-color: #fafafa;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .history-item.open .history-content {
+            padding: 15px 20px;
+            max-height: 500px;
+            border-top: 1px solid #eee;
+        }
+        
+        .history-item.open .history-header i { transform: rotate(180deg); }
+
         .videos-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -189,140 +290,233 @@
         footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
 
         @media screen and (max-width: 900px) {
-            header { flex-direction: column; gap: 15px; }
             .qr-code { display: none; }
-            .header-info { order: 3; }
-            .header-logo { order: 2; }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="qr-code">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.caminosdelser.co/Clases/int-crisis/u1clase01.html" alt="QR Clase">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/eureka/u1clase01.html" alt="QR Clase">
             <span class="qr-label">Ir a esta Clase</span>
         </div>
 
         <div class="header-logo">
-            <img src="logocuc.png" alt="Logo Universidad de la Costa">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://placehold.co/200x80/ffffff/A3161A?text=CUC+Logo'">
         </div>
 
         <div class="header-info">
-            <div class="course-title">Intervención en Crisis</div>
+            <div class="course-title">Eureka:<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Descubriendo Algo Nuevo</span></div>
             <div class="prof-info">
                 <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
                 Mg. Dirección de Proyectos - Certificado en PNL<br>
                 <small>
                     <span class="contact-label">WhatsApp:</span> 3233796547 | 
-                    <span class="contact-label">IG:</span> caminosdelser85 | 
-                    <span class="contact-label">Web:</span> www.caminosdelser.co
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com
                 </small>
             </div>
         </div>
 
         <div class="qr-code">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.caminosdelser.co%0ANOTE%3AIG%3A%20caminosdelser85%0AEND%3AVCARD" alt="QR Contacto">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
             <span class="qr-label">Guardar Contacto</span>
         </div>
     </header>
 
     <div class="class-view">
-        <a href="https://www.caminosdelser.co/Clases/int-crisis/u1clase00.html" class="btn-back">
+        <a href="https://clases.jorgearangoc.com/eureka/u1clase00.html" class="btn-back">
             <i class="fas fa-arrow-left"></i> Volver al Mapa del Curso
         </a>
         
         <div class="class-header-card">
             <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 1 • Sesión 1</span>
-            <h1>Taller Propósito y Proyecto de Vida</h1>
+            <h1>Introducción a la investigación y las rutas en psicología</h1>
             <div class="class-indicator">
-                <strong><i class="fas fa-bullseye"></i> Objetivo Principal:</strong><br>
-                Establecer la brújula personal (Propósito) como base fundamental para el autocuidado del terapeuta en situaciones de crisis.
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Identifica las rutas de investigación en la psicología, reconociendo el momento epistémico inicial.
             </div>
         </div>
 
         <div class="class-grid">
             <div class="detail-card">
                 <h3><i class="fas fa-book-open"></i> Saberes</h3>
-                <p>Fundamentos personales del terapeuta:</p>
+                <p><strong>Temas centrales:</strong></p>
                 <ul>
-                    <li>El concepto de "Primero Yo".</li>
-                    <li>Diferencia entre Propósito y Proyecto de vida.</li>
-                    <li>Método HALCÓN.</li>
-                    <li>La Libertad de Ser (May/Frankl).</li>
+                    <li>Introducción a la investigación.</li>
+                    <li>Qué implica investigar en psicología.</li>
+                    <li>Rutas de investigación (Cualitativa, Cuantitativa, Mixta).</li>
+                    <li>Momentos epistémicos.</li>
                 </ul>
             </div>
 
             <div class="detail-card" style="border-top-color: #2196F3;">
                 <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
-                <p><strong>Actividad en aula:</strong></p>
+                <p><strong>Trabajo directo (Sincrónico):</strong></p>
                 <ul>
-                    <li>Análisis de los videos sugeridos.</li>
-                    <li>Reflexión guiada sobre el rol del terapeuta.</li>
-                    <li>Aplicación práctica del Método HALCÓN en el aula.</li>
+                    <li>Bienvenida a los estudiantes.</li>
+                    <li>Introducción a la estrategia ABP.</li>
+                    <li>Seminario de profundización sobre qué es investigar.</li>
+                    <li>Explicación de las rutas.</li>
                 </ul>
             </div>
 
             <div class="detail-card" style="border-top-color: #FF9800;">
                 <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
-                <p><strong>Preparación:</strong></p>
+                <p><strong>Trabajo Asincrónico:</strong></p>
                 <ul>
-                    <li>Revisión de los materiales audiovisuales.</li>
-                    <li>Lectura sobre los conceptos básicos de Victor Frankl (La voluntad de sentido).</li>
-                    <li>Reflexión personal sobre motivaciones intrínsecas.</li>
+                    <li>Lectura de textos orientadores.</li>
+                    <li>Revisión de bases de datos científicas.</li>
+                    <li><strong>Entregable:</strong> Construcción de un Cuadro Comparativo.</li>
                 </ul>
             </div>
 
             <div class="detail-card" style="border-top-color: #4CAF50;">
                 <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
-                <p><strong>Estrategias:</strong></p>
+                <p><strong>Estrategias de medición:</strong></p>
                 <ul>
-                    <li>Formativa: Participación activa en las reflexiones del aula.</li>
-                    <li>Autoevaluación del ejercicio del Método HALCÓN.</li>
+                    <li><strong>Formativa:</strong> Participación en el seminario introductorio.</li>
+                    <li><strong>Instrumento:</strong> Lista de Chequeo.</li>
+                    <li><strong>Evidencia:</strong> Valoración del Cuadro Comparativo.</li>
                 </ul>
             </div>
         </div>
 
         <div class="theme-section">
-            <h2 class="theme-title"><i class="fas fa-brain"></i> Desarrollo Temático: La Brújula del Terapeuta</h2>
+            <h2 class="theme-title"><i class="fas fa-microscope"></i> Desarrollo Temático: Fundamentos Epistémicos</h2>
             
-            <h3 class="theme-subtitle">1. El Autocuidado: "Primero Yo"</h3>
-            <p>Antes de poder intervenir eficazmente en la crisis de otra persona, el terapeuta debe estar anclado en su propio sentido vital. La intervención en crisis exige una alta cuota de empatía y desgaste emocional; sin un propósito claro, el riesgo de <em>burnout</em> (desgaste profesional) y fatiga por compasión es altísimo.</p>
+            <h3 class="theme-subtitle">1. ¿Qué es Investigar en Psicología?</h3>
+            <p>La ciencia es una forma especial del conocimiento. La investigación nos permite abordar la realidad psicológica y social de manera sistemática y sistematizada, dotándonos de herramientas para entender, predecir y modificar el comportamiento humano mediante un profundo soporte metodológico y conceptual.</p>
             <div class="concept-box">
-                "Quien tiene un 'porqué' para vivir, puede soportar casi cualquier 'cómo'." - Friedrich Nietzsche (Citado frecuentemente por Viktor Frankl).
+                "La investigación formativa es una base sólida para asumir una postura autónoma, científica y de rigor académico frente a la estructura disciplinar orientada a la solución de problemas."
             </div>
 
-            <h3 class="theme-subtitle">2. Recursos Audiovisuales: Encontrando el Sentido</h3>
-            <p style="margin-bottom: 20px;">Analizaremos los siguientes videos como base para nuestra reflexión sobre el propósito vital y la dirección:</p>
+            <h3 class="theme-subtitle">2. Rutas de Investigación</h3>
+            <p style="margin-bottom: 20px;">Pasa el cursor sobre cada tarjeta para descubrir la esencia de los enfoques metodológicos en la ciencia:</p>
+            
+            <div class="authors-grid">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-chart-bar"></i>
+                            <h4>Ruta Cuantitativa</h4>
+                            <p>Medición y Control</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Enfoque Cuantitativo</h4>
+                            <p>Basado en el paradigma positivista. Busca la objetividad, utiliza la recolección de datos para probar hipótesis con base en la medición numérica y el análisis estadístico. Es el núcleo de las próximas unidades de nuestro curso Eureka.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-comments"></i>
+                            <h4>Ruta Cualitativa</h4>
+                            <p>Comprensión y Contexto</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Enfoque Cualitativo</h4>
+                            <p>Anclado en paradigmas interpretativos. Se enfoca en comprender fenómenos explorándolos desde la perspectiva de los participantes en su ambiente natural y en relación con su contexto. Es inductivo y flexible.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-project-diagram"></i>
+                            <h4>Ruta Mixta</h4>
+                            <p>Integración Prismática</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Enfoque Mixto</h4>
+                            <p>Implica la recolección y el análisis de datos tanto cuantitativos como cualitativos, así como su integración y discusión conjunta, para realizar inferencias cruzadas y lograr un mayor entendimiento del fenómeno estudiado.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-lightbulb"></i>
+                            <h4>Estrategia ABP</h4>
+                            <p>El Método del Curso</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Aprendizaje Basado en Problemas</h4>
+                            <p>A lo largo de este semestre aplicaremos el ABP (Etapa de Conocer). En lugar de recibir primero la teoría, iniciaremos identificando un problema real, para luego investigar los saberes cuantitativos que nos permitan darle una solución científica.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle">3. Recursos Audiovisuales</h3>
+            <p style="margin-bottom: 20px;">A continuación, analizaremos los siguientes videos como base para nuestra discusión metodológica:</p>
             
             <div class="videos-container">
                 <div class="video-wrapper">
-                    <!-- Video 1 -->
-                    <iframe src="https://www.youtube.com/embed/pFajobv4Ocs?rel=0" title="Video 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/gwaWKvBvAVg?rel=0" title="Video de apoyo 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div class="video-wrapper">
-                    <!-- Video 2 -->
-                    <iframe src="https://www.youtube.com/embed/frtoxKN5Mvk?rel=0" title="Video 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/w8UD6lRAF0E?rel=0" title="Video de apoyo 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
 
-            <h3 class="theme-subtitle">3. Propósito vs. Proyecto de Vida</h3>
-            <p>A menudo confundimos metas con propósito. Entender la diferencia es crucial para la estabilidad emocional del interventor:</p>
-            <ul style="margin-left: 20px; line-height: 1.8; color: #444; margin-bottom: 25px;">
-                <li><strong>El Proyecto (Las metas):</strong> Es el mapa. Son los objetivos específicos, medibles y temporales (ej. graduarse, abrir un consultorio). Pueden frustrarse o cambiar debido a crisis externas.</li>
-                <li><strong>El Propósito (El sentido):</strong> Es la brújula. Es la motivación subyacente, el valor inquebrantable que da significado a la acción (ej. aliviar el sufrimiento humano). El propósito se mantiene, incluso cuando el proyecto fracasa.</li>
-            </ul>
-
             <div class="activity-box">
-                <h3 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-pen-fancy"></i> Actividad en Aula: Método HALCÓN</h3>
-                <p><strong>Dinámica:</strong> Trabajo individual y reflexión compartida.</p>
+                <h3 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-users-cog"></i> Actividad Central: Construcción del Cuadro Comparativo</h3>
+                <p><strong>Dinámica:</strong> Trabajo Independiente y Grupal.</p>
                 
-                <p><strong>Instrucciones:</strong></p>
+                <p><strong>Instrucciones de Trabajo:</strong></p>
                 <ol style="margin-left: 20px; line-height: 1.8; color: #444; margin-bottom: 25px;">
-                    <li>Basados en los videos observados, cada estudiante aplicará el Método HALCÓN para explorar sus propias motivaciones.</li>
-                    <li>Identifica tus <strong>Habilidades</strong> y compáralas con tus <strong>Aspiraciones</strong>.</li>
-                    <li>¿Cómo estructurar de manera <strong>Lógica</strong> la <strong>Construcción</strong> de tu rol como terapeuta?</li>
-                    <li>Compartiremos las reflexiones en pequeños grupos para retroalimentación.</li>
+                    <li>A partir del seminario introductorio, diríjanse a las <strong>bases de datos institucionales</strong> (Science Direct, Scopus, Web of Science).</li>
+                    <li>Busquen los textos orientadores sugeridos en la bibliografía sobre metodología de la investigación.</li>
+                    <li>Analicen los fundamentos epistemológicos que soportan las distintas rutas.</li>
+                    <li>Construyan un <strong>Cuadro Comparativo</strong> que sintetice las principales características (Ontología, Epistemología, Metodología) de las rutas cuantitativa y cualitativa.</li>
+                    <li>Este producto será evaluado mediante una <strong>Lista de Chequeo</strong>.</li>
                 </ol>
+
+                <h4 style="color: var(--cuc-red); margin-bottom: 15px; font-size: 1.2rem; border-bottom: 1px solid #ddd; padding-bottom: 5px;"><i class="fas fa-landmark"></i> Glosario Epistémico de Apoyo</h4>
+
+                <div class="history-container" style="margin-bottom: 0;">
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>Paradigma Positivista (Fundamento Cuantitativo)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p style="margin-bottom: 10px;">Sostiene que existe una realidad objetiva externa y libre de valores que puede ser conocida a través de la observación empírica y la medición precisa.</p>
+                            <p><strong>Implicación para tu Cuadro:</strong> En este paradigma, el investigador busca causas y efectos, estableciendo leyes generales a través de hipótesis que deben ser puestas a prueba estadísticamente (enfoque deductivo).</p>
+                        </div>
+                    </div>
+
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>Paradigma Interpretativo (Fundamento Cualitativo)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p style="margin-bottom: 10px;">Afirma que la realidad es socialmente construida y múltiple. No hay una única verdad objetiva, sino múltiples perspectivas de los individuos en un contexto específico.</p>
+                            <p><strong>Implicación para tu Cuadro:</strong> El investigador y el sujeto interactúan; los valores del investigador están implícitos. Se busca comprender los significados profundos (enfoque inductivo).</p>
+                        </div>
+                    </div>
+
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>Bases de Datos Científicas (El Laboratorio del Psicólogo)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p style="margin-bottom: 10px;">En esta etapa (Momento epistémico), la revisión de literatura es fundamental. No buscamos en Google estándar, utilizamos motores académicos validados para garantizar el rigor científico, como demanda el sílabo de la materia.</p>
+                            <ul style="margin-left: 20px; margin-bottom: 10px; color: #555;">
+                                <li><strong>Scopus / Web of Science:</strong> Bases de datos referenciales de alto impacto mundial.</li>
+                                <li><strong>Science Direct:</strong> Fuente de textos completos en ciencias de la salud y sociales.</li>
+                                <li><strong>Normas APA 7ma:</strong> Esencial para referenciar los hallazgos en nuestro proyecto de investigación (ABP).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -330,7 +524,19 @@
 
     <footer>
         <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p>Asignatura: Electiva en Ciencia, Tecnología e Innovación</p>
     </footer>
 
+    <script>
+        function toggleHistory(element) {
+            var allItems = document.querySelectorAll('.history-item');
+            allItems.forEach(function(item) {
+                if (item !== element && item.classList.contains('open')) {
+                    item.classList.remove('open');
+                }
+            });
+            element.classList.toggle('open');
+        }
+    </script>
 </body>
 </html>
