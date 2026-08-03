@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase 1 - Eureka: Descubriendo Algo Nuevo</title>
+    <title>Clase 1 - Discurso, Acción y Conocimiento</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -31,7 +31,7 @@
             text-align: center;
         }
         .header-logo img { max-height: 80px; }
-        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; }
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; margin-bottom: 5px; }
         .prof-info { font-size: 0.9rem; color: #555; }
         .contact-label { color: var(--cuc-red); font-weight: 900; }
         
@@ -204,8 +204,17 @@
             border: 2px solid var(--cuc-gray);
         }
 
-        .flip-card-front h4 { color: var(--cuc-red); font-size: 1.5rem; margin-bottom: 10px; }
-        .flip-card-front i { font-size: 2.5rem; color: var(--cuc-gold); margin-bottom: 15px; }
+        .flip-card-front h4 {
+            color: var(--cuc-red);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .flip-card-front i {
+            font-size: 2.5rem;
+            color: var(--cuc-gold);
+            margin-bottom: 15px;
+        }
 
         .flip-card-back {
             background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
@@ -214,7 +223,9 @@
             font-size: 0.95rem;
         }
 
-        .history-container { margin-bottom: 40px; }
+        .history-container {
+            margin-bottom: 40px;
+        }
 
         .history-item {
             background-color: var(--white);
@@ -236,8 +247,13 @@
             transition: background-color 0.3s;
         }
 
-        .history-header:hover { background-color: var(--cuc-gray); }
-        .history-header i { transition: transform 0.3s; }
+        .history-header:hover {
+            background-color: var(--cuc-gray);
+        }
+
+        .history-header i {
+            transition: transform 0.3s;
+        }
 
         .history-content {
             padding: 0 20px;
@@ -255,7 +271,9 @@
             border-top: 1px solid #eee;
         }
         
-        .history-item.open .history-header i { transform: rotate(180deg); }
+        .history-item.open .history-header i {
+            transform: rotate(180deg);
+        }
 
         .videos-container {
             display: grid;
@@ -297,16 +315,16 @@
 <body>
     <header>
         <div class="qr-code">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/eureka/u1clase01.html" alt="QR Clase">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/discurso/u1clase01.html" alt="QR Clase">
             <span class="qr-label">Ir a esta Clase</span>
         </div>
 
         <div class="header-logo">
-            <img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://placehold.co/200x80/ffffff/A3161A?text=CUC+Logo'">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa">
         </div>
 
         <div class="header-info">
-            <div class="course-title">Eureka:<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Descubriendo Algo Nuevo</span></div>
+            <div class="course-title">Discurso, Acción y Conocimiento<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Investigación Cualitativa en Psicología</span></div>
             <div class="prof-info">
                 <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
                 Mg. Dirección de Proyectos - Certificado en PNL<br>
@@ -325,114 +343,98 @@
     </header>
 
     <div class="class-view">
-        <a href="https://clases.jorgearangoc.com/eureka/u1clase00.html" class="btn-back">
+        <a href="https://clases.jorgearangoc.com/discurso/u1clase00.html" class="btn-back">
             <i class="fas fa-arrow-left"></i> Volver al Mapa del Curso
         </a>
         
         <div class="class-header-card">
-            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 1 • Sesión 1</span>
-            <h1>Introducción a la investigación y las rutas en psicología</h1>
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 1 • Semana 1</span>
+            <h1>La Lógica de la Investigación Cualitativa</h1>
             <div class="class-indicator">
                 <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
-                Identifica las rutas de investigación en la psicología, reconociendo el momento epistémico inicial.
+                Reconoce los fundamentos teóricos y epistemológicos de la investigación cualitativa y su valor en la comprensión de la realidad socio-humana.
             </div>
         </div>
 
         <div class="class-grid">
             <div class="detail-card">
                 <h3><i class="fas fa-book-open"></i> Saberes</h3>
-                <p><strong>Temas centrales:</strong></p>
+                <p>Ejes integradores de la sesión:</p>
                 <ul>
-                    <li>Introducción a la investigación.</li>
-                    <li>Qué implica investigar en psicología.</li>
-                    <li>Rutas de investigación (Cualitativa, Cuantitativa, Mixta).</li>
-                    <li>Momentos epistémicos.</li>
+                    <li><strong>Investigación cualitativa:</strong> Lógica y fundamentación.</li>
+                    <li><strong>Momento epistémico:</strong> ¿Cómo conocemos?</li>
+                    <li><strong>Momento metodológico:</strong> ¿Cómo investigamos?</li>
                 </ul>
             </div>
 
             <div class="detail-card" style="border-top-color: #2196F3;">
                 <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
-                <p><strong>Trabajo directo (Sincrónico):</strong></p>
+                <p><strong>Actividades en aula:</strong></p>
                 <ul>
-                    <li>Bienvenida a los estudiantes.</li>
-                    <li>Introducción a la estrategia ABP.</li>
-                    <li>Seminario de profundización sobre qué es investigar.</li>
-                    <li>Explicación de las rutas.</li>
+                    <li>Presentación del modelo CIA.</li>
+                    <li>Exposición magistral: Fundamentos teóricos.</li>
+                    <li>Construcción de organizador gráfico grupal.</li>
+                    <li>Aprendizajes y compromisos.</li>
                 </ul>
             </div>
 
             <div class="detail-card" style="border-top-color: #FF9800;">
                 <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
-                <p><strong>Trabajo Asincrónico:</strong></p>
+                <p><strong>Preparación asincrónica:</strong></p>
                 <ul>
-                    <li>Lectura de textos orientadores.</li>
-                    <li>Revisión de bases de datos científicas.</li>
-                    <li><strong>Entregable:</strong> Construcción de un Cuadro Comparativo.</li>
+                    <li><strong>Lectura Crítica:</strong> Textos sugeridos sobre diseños interpretativos.</li>
+                    <li><strong>Revisión:</strong> Literatura asignada para la próxima clase.</li>
                 </ul>
             </div>
 
             <div class="detail-card" style="border-top-color: #4CAF50;">
                 <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
-                <p><strong>Estrategias de medición:</strong></p>
+                <p><strong>Estrategia de evaluación:</strong></p>
                 <ul>
-                    <li><strong>Formativa:</strong> Participación en el seminario introductorio.</li>
-                    <li><strong>Instrumento:</strong> Lista de Chequeo.</li>
-                    <li><strong>Evidencia:</strong> Valoración del Cuadro Comparativo.</li>
+                    <li><strong>Estrategia:</strong> Valoración del organizador gráfico construido.</li>
+                    <li><strong>Técnica:</strong> Análisis de documento.</li>
+                    <li><strong>Instrumento:</strong> Lista de chequeo.</li>
                 </ul>
             </div>
         </div>
 
         <div class="theme-section">
-            <h2 class="theme-title"><i class="fas fa-microscope"></i> Desarrollo Temático: Fundamentos Epistémicos</h2>
+            <h2 class="theme-title"><i class="fas fa-brain"></i> Desarrollo Temático: Fundamentos Cualitativos</h2>
             
-            <h3 class="theme-subtitle">1. ¿Qué es Investigar en Psicología?</h3>
-            <p>La ciencia es una forma especial del conocimiento. La investigación nos permite abordar la realidad psicológica y social de manera sistemática y sistematizada, dotándonos de herramientas para entender, predecir y modificar el comportamiento humano mediante un profundo soporte metodológico y conceptual.</p>
+            <h3 class="theme-subtitle">1. El Enfoque Cualitativo</h3>
+            <p>A diferencia de la medición estricta y estadística, la investigación cualitativa se enfoca en comprender los fenómenos sociales desde la perspectiva de quienes los experimentan. Busca profundizar en significados, discursos, experiencias y contextos situados.</p>
             <div class="concept-box">
-                "La investigación formativa es una base sólida para asumir una postura autónoma, científica y de rigor académico frente a la estructura disciplinar orientada a la solución de problemas."
+                "No buscamos medir cuántas veces ocurre un fenómeno, sino comprender qué significa ese fenómeno para las personas que lo viven y cómo construyen su realidad."
             </div>
 
-            <h3 class="theme-subtitle">2. Rutas de Investigación</h3>
-            <p style="margin-bottom: 20px;">Pasa el cursor sobre cada tarjeta para descubrir la esencia de los enfoques metodológicos en la ciencia:</p>
+            <h3 class="theme-subtitle">2. Pilares Filosóficos: El Momento Epistémico</h3>
+            <p style="margin-bottom: 20px;">Toda investigación cualitativa se sostiene sobre preguntas filosóficas profundas. Pasa el cursor sobre las tarjetas para conocer los 4 ejes rectores:</p>
             
             <div class="authors-grid">
                 <div class="flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <i class="fas fa-chart-bar"></i>
-                            <h4>Ruta Cuantitativa</h4>
-                            <p>Medición y Control</p>
+                            <i class="fas fa-globe"></i>
+                            <h4>Ontología</h4>
+                            <p>¿Cuál es la naturaleza de la realidad?</p>
                         </div>
                         <div class="flip-card-back">
-                            <h4 style="margin-bottom: 8px;">Enfoque Cuantitativo</h4>
-                            <p>Basado en el paradigma positivista. Busca la objetividad, utiliza la recolección de datos para probar hipótesis con base en la medición numérica y el análisis estadístico. Es el núcleo de las próximas unidades de nuestro curso Eureka.</p>
+                            <h4 style="margin-bottom: 8px;">Múltiples realidades</h4>
+                            <p>Desde lo cualitativo, se asume que no existe una única realidad objetiva externa. La realidad es construida social, cultural e históricamente por los individuos. Existen tantas realidades como interpretaciones de la misma.</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <i class="fas fa-comments"></i>
-                            <h4>Ruta Cualitativa</h4>
-                            <p>Comprensión y Contexto</p>
-                        </div>
-                        <div class="flip-card-back">
-                            <h4 style="margin-bottom: 8px;">Enfoque Cualitativo</h4>
-                            <p>Anclado en paradigmas interpretativos. Se enfoca en comprender fenómenos explorándolos desde la perspectiva de los participantes en su ambiente natural y en relación con su contexto. Es inductivo y flexible.</p>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
                             <i class="fas fa-project-diagram"></i>
-                            <h4>Ruta Mixta</h4>
-                            <p>Integración Prismática</p>
+                            <h4>Epistemología</h4>
+                            <p>¿Relación entre el que investiga y lo investigado?</p>
                         </div>
                         <div class="flip-card-back">
-                            <h4 style="margin-bottom: 8px;">Enfoque Mixto</h4>
-                            <p>Implica la recolección y el análisis de datos tanto cuantitativos como cualitativos, así como su integración y discusión conjunta, para realizar inferencias cruzadas y lograr un mayor entendimiento del fenómeno estudiado.</p>
+                            <h4 style="margin-bottom: 8px;">Interdependencia</h4>
+                            <p>El investigador no es un agente "neutral" e "invisible". Es parte del mundo que estudia. La interacción entre el investigador y los participantes influye mutuamente en la co-construcción del conocimiento.</p>
                         </div>
                     </div>
                 </div>
@@ -440,80 +442,112 @@
                 <div class="flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <i class="fas fa-lightbulb"></i>
-                            <h4>Estrategia ABP</h4>
-                            <p>El Método del Curso</p>
+                            <i class="fas fa-balance-scale"></i>
+                            <h4>Axiología</h4>
+                            <p>¿Cuál es el papel de los valores?</p>
                         </div>
                         <div class="flip-card-back">
-                            <h4 style="margin-bottom: 8px;">Aprendizaje Basado en Problemas</h4>
-                            <p>A lo largo de este semestre aplicaremos el ABP (Etapa de Conocer). En lugar de recibir primero la teoría, iniciaremos identificando un problema real, para luego investigar los saberes cuantitativos que nos permitan darle una solución científica.</p>
+                            <h4 style="margin-bottom: 8px;">Valores explícitos</h4>
+                            <p>Se reconoce que toda investigación está impregnada de los valores, sesgos y posicionamientos éticos y políticos del investigador. En lugar de negarlos, se deben declarar y reflexionar sobre ellos (reflexividad).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-route"></i>
+                            <h4>Metodología</h4>
+                            <p>¿Cómo se obtiene el conocimiento?</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Lógica Inductiva</h4>
+                            <p>El diseño es emergente, flexible e iterativo. Se parte de los datos particulares y empíricos en el contexto natural para, paulatinamente, construir patrones, categorías y, finalmente, teoría general fundamentada.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <h3 class="theme-subtitle">3. Recursos Audiovisuales</h3>
-            <p style="margin-bottom: 20px;">A continuación, analizaremos los siguientes videos como base para nuestra discusión metodológica:</p>
+            <h3 class="theme-subtitle">3. Recursos Audiovisuales Complementarios</h3>
+            <p style="margin-bottom: 20px;">Analizaremos los siguientes videos como base para nuestra discusión (Los enlaces finales serán asignados por el docente):</p>
             
             <div class="videos-container">
+                <!-- Estos iframes sirven como marcadores de posición hasta tener los videos oficiales -->
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/gwaWKvBvAVg?rel=0" title="Video de apoyo 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <!-- Placeholder Video 1 -->
+                    <iframe src="https://www.youtube.com/embed/n4aOq5r_vXY?rel=0" title="Video Complementario 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/w8UD6lRAF0E?rel=0" title="Video de apoyo 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <!-- Placeholder Video 2 -->
+                    <iframe src="https://www.youtube.com/embed/2_d1502rYTo?rel=0" title="Video Complementario 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
 
             <div class="activity-box">
-                <h3 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-users-cog"></i> Actividad Central: Construcción del Cuadro Comparativo</h3>
-                <p><strong>Dinámica:</strong> Trabajo Independiente y Grupal.</p>
+                <h3 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-project-diagram"></i> Actividad en Aula: "Organizador Gráfico Epistemológico"</h3>
+                <p><strong>Dinámica de Trabajo:</strong></p>
                 
-                <p><strong>Instrucciones de Trabajo:</strong></p>
                 <ol style="margin-left: 20px; line-height: 1.8; color: #444; margin-bottom: 25px;">
-                    <li>A partir del seminario introductorio, diríjanse a las <strong>bases de datos institucionales</strong> (Science Direct, Scopus, Web of Science).</li>
-                    <li>Busquen los textos orientadores sugeridos en la bibliografía sobre metodología de la investigación.</li>
-                    <li>Analicen los fundamentos epistemológicos que soportan las distintas rutas.</li>
-                    <li>Construyan un <strong>Cuadro Comparativo</strong> que sintetice las principales características (Ontología, Epistemología, Metodología) de las rutas cuantitativa y cualitativa.</li>
-                    <li>Este producto será evaluado mediante una <strong>Lista de Chequeo</strong>.</li>
+                    <li>Tras la exposición magistral, nos organizaremos en pequeños grupos de trabajo.</li>
+                    <li>Utilizando la información compartida en clase y las secciones desplegables a continuación, <strong>diseñarán un organizador gráfico (mapa conceptual, mental o cuadro sinóptico)</strong>.</li>
+                    <li>El mapa debe sintetizar de forma clara los <strong>fundamentos teóricos y epistemológicos</strong> de la investigación cualitativa.</li>
+                    <li>Al finalizar, presentarán su documento al docente. Recuerden que este será evaluado mediante una <strong>Lista de Chequeo</strong> (Evaluación Formativa/Sumativa).</li>
                 </ol>
 
-                <h4 style="color: var(--cuc-red); margin-bottom: 15px; font-size: 1.2rem; border-bottom: 1px solid #ddd; padding-bottom: 5px;"><i class="fas fa-landmark"></i> Glosario Epistémico de Apoyo</h4>
+                <h4 style="color: var(--cuc-red); margin-bottom: 15px; font-size: 1.2rem; border-bottom: 1px solid #ddd; padding-bottom: 5px;"><i class="fas fa-lightbulb"></i> Apoyo Teórico para la Actividad</h4>
 
                 <div class="history-container" style="margin-bottom: 0;">
                     <div class="history-item" onclick="toggleHistory(this)">
                         <div class="history-header">
-                            <span>Paradigma Positivista (Fundamento Cuantitativo)</span>
+                            <span>1. El Paradigma Constructivista / Interpretativo</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="history-content">
-                            <p style="margin-bottom: 10px;">Sostiene que existe una realidad objetiva externa y libre de valores que puede ser conocida a través de la observación empírica y la medición precisa.</p>
-                            <p><strong>Implicación para tu Cuadro:</strong> En este paradigma, el investigador busca causas y efectos, estableciendo leyes generales a través de hipótesis que deben ser puestas a prueba estadísticamente (enfoque deductivo).</p>
-                        </div>
-                    </div>
-
-                    <div class="history-item" onclick="toggleHistory(this)">
-                        <div class="history-header">
-                            <span>Paradigma Interpretativo (Fundamento Cualitativo)</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="history-content">
-                            <p style="margin-bottom: 10px;">Afirma que la realidad es socialmente construida y múltiple. No hay una única verdad objetiva, sino múltiples perspectivas de los individuos en un contexto específico.</p>
-                            <p><strong>Implicación para tu Cuadro:</strong> El investigador y el sujeto interactúan; los valores del investigador están implícitos. Se busca comprender los significados profundos (enfoque inductivo).</p>
-                        </div>
-                    </div>
-
-                    <div class="history-item" onclick="toggleHistory(this)">
-                        <div class="history-header">
-                            <span>Bases de Datos Científicas (El Laboratorio del Psicólogo)</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="history-content">
-                            <p style="margin-bottom: 10px;">En esta etapa (Momento epistémico), la revisión de literatura es fundamental. No buscamos en Google estándar, utilizamos motores académicos validados para garantizar el rigor científico, como demanda el sílabo de la materia.</p>
+                            <p style="margin-bottom: 10px;">En oposición al Positivismo (que busca leyes universales y objetividad), la investigación cualitativa se ampara fuertemente en el Constructivismo.</p>
                             <ul style="margin-left: 20px; margin-bottom: 10px; color: #555;">
-                                <li><strong>Scopus / Web of Science:</strong> Bases de datos referenciales de alto impacto mundial.</li>
-                                <li><strong>Science Direct:</strong> Fuente de textos completos en ciencias de la salud y sociales.</li>
-                                <li><strong>Normas APA 7ma:</strong> Esencial para referenciar los hallazgos en nuestro proyecto de investigación (ABP).</li>
+                                <li>Asume que el conocimiento no es algo "descubierto" en el mundo externo, sino <strong>"construido"</strong> socialmente por las personas en su interacción diaria.</li>
+                                <li>El objetivo de la ciencia bajo este paradigma es <strong>comprender (Verstehen)</strong> el significado profundo de los fenómenos humanos, no necesariamente predecirlos o controlarlos.</li>
                             </ul>
+                        </div>
+                    </div>
+
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>2. La Fenomenología</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p style="margin-bottom: 10px;">Fundada por Edmund Husserl, es una corriente filosófica clave para la cualitativa.</p>
+                            <p style="margin-bottom: 10px;">Se centra en el estudio de las <strong>experiencias vividas</strong> por el ser humano respecto a un concepto o fenómeno (ej. ¿qué significa vivir con una enfermedad crónica? ¿cómo se experimenta el duelo?).</p>
+                            <p>Requiere que el investigador practique la <em>Epojé</em> o "puesta entre paréntesis", es decir, que intente suspender sus juicios previos y preconcepciones para poder acceder a la esencia de la experiencia del participante tal y como él la vive.</p>
+                        </div>
+                    </div>
+
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>3. La Hermenéutica</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p style="margin-bottom: 10px;">Es la teoría y metodología de la <strong>interpretación</strong> (de textos, lenguaje y acciones humanas).</p>
+                            <p style="margin-bottom: 10px;">Establece que para entender una parte de la información (por ejemplo, una frase en una entrevista), debemos entender el todo (el contexto de vida de esa persona), y viceversa. A esto se le llama el <strong>"Círculo Hermenéutico"</strong>.</p>
+                            <p>En investigación cualitativa, la hermenéutica nos recuerda que el análisis de datos nunca es literal; es una tarea de descifrar discursos ocultos e intenciones subyacentes.</p>
+                        </div>
+                    </div>
+
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>4. Interaccionismo Simbólico</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p style="margin-bottom: 10px;">Es un marco sociológico (promovido por Blumer y Mead) que postula premisas fundamentales:</p>
+                            <ol style="margin-left: 20px; margin-bottom: 10px; color: #555;">
+                                <li>El ser humano orienta sus actos hacia las cosas en función de lo que estas significan para él.</li>
+                                <li>El significado de esas cosas surge como consecuencia de la interacción social con los demás.</li>
+                                <li>Los significados se manipulan y modifican mediante un proceso interpretativo desarrollado por la persona.</li>
+                            </ol>
+                            <p><strong>Impacto:</strong> Fundamenta métodos como la Teoría Fundada y la Observación Participante.</p>
                         </div>
                     </div>
                 </div>
@@ -524,7 +558,6 @@
 
     <footer>
         <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
-        <p>Asignatura: Electiva en Ciencia, Tecnología e Innovación</p>
     </footer>
 
     <script>
