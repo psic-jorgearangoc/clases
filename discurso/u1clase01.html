@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 1 - Discurso, Acción y Conocimiento</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --cuc-gold: #cba052;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+        .header-logo img { max-height: 80px; }
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; margin-bottom: 5px; }
+        .prof-info { font-size: 0.9rem; color: #555; }
+        .contact-label { color: var(--cuc-red); font-weight: 900; }
+        
+        .qr-code img { max-height: 70px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
+
+        .class-view {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-back {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .btn-back:hover {
+            background-color: var(--cuc-gray);
+            border-color: var(--cuc-red);
+            transform: translateX(-5px);
+        }
+
+        .class-header-card {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .class-header-card::after {
+            content: '\f0c0';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-size: 10rem;
+            color: rgba(255,255,255,0.1);
+        }
+
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        
+        .class-indicator {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 1.05rem;
+            border-left: 4px solid var(--cuc-gold);
+            position: relative;
+            z-index: 2;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        @media screen and (max-width: 1024px) {
+            .class-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media screen and (max-width: 768px) {
+            .class-grid { grid-template-columns: 1fr; }
+            .authors-grid { grid-template-columns: 1fr; }
+        }
+
+        .detail-card {
+            background: white;
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--cuc-red);
+            transition: transform 0.3s;
+        }
+
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .theme-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-top: 4px solid var(--cuc-dark);
+        }
+
+        .theme-title { color: var(--cuc-red); margin-bottom: 25px; font-size: 1.8rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .theme-subtitle { color: var(--cuc-dark); margin: 25px 0 15px; font-size: 1.3rem; }
+
+        .concept-box {
+            background-color: var(--cuc-gray);
+            padding: 20px;
+            border-left: 4px solid var(--cuc-red);
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .authors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 260px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .flip-card-front {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            border: 2px solid var(--cuc-gray);
+        }
+
+        .flip-card-front h4 {
+            color: var(--cuc-red);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .flip-card-front i {
+            font-size: 2.5rem;
+            color: var(--cuc-gold);
+            margin-bottom: 15px;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 0.95rem;
+        }
+
+        .history-container {
+            margin-bottom: 40px;
+        }
+
+        .history-item {
+            background-color: var(--white);
+            border: 1px solid #ddd;
+            border-left: 5px solid var(--cuc-gold);
+            margin-bottom: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .history-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: var(--cuc-dark);
+            transition: background-color 0.3s;
+        }
+
+        .history-header:hover {
+            background-color: var(--cuc-gray);
+        }
+
+        .history-header i {
+            transition: transform 0.3s;
+        }
+
+        .history-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            background-color: #fafafa;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .history-item.open .history-content {
+            padding: 15px 20px;
+            max-height: 500px;
+            border-top: 1px solid #eee;
+        }
+        
+        .history-item.open .history-header i {
+            transform: rotate(180deg);
+        }
+
+        .videos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            border: 2px dashed var(--cuc-gold);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
+
+        @media screen and (max-width: 900px) {
+            .qr-code { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <!-- URL Actualizada a la nueva ruta -->
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/discurso/u1clase01.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://via.placeholder.com/150x50/ffffff/A3161A?text=CUC+Logo'">
+        </div>
+
+        <div class="header-info">
+            <!-- Título actualizado según el syllabus -->
+            <div class="course-title">Discurso, Acción y Conocimiento<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Investigación Cualitativa en Psicología</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com
+                </small>
+            </div>
+        </div>
+
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <!-- Enlace de regreso al mapa u1clase00 -->
+        <a href="https://clases.jorgearangoc.com/discurso/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa del Curso
+        </a>
+        
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 1 • Semana 1</span>
+            <h1>La Lógica de la Investigación Cualitativa</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Reconoce los fundamentos teóricos y epistemológicos de la investigación cualitativa y su valor en la comprensión de la realidad socio-humana.
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <p>Ejes integradores de la sesión:</p>
+                <ul>
+                    <li><strong>Investigación cualitativa:</strong> Lógica y fundamentación.</li>
+                    <li><strong>Momento epistémico:</strong> ¿Cómo conocemos?</li>
+                    <li><strong>Momento metodológico:</strong> ¿Cómo investigamos?</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #2196F3;">
+                <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
+                <p><strong>Actividades en aula:</strong></p>
+                <ul>
+                    <li>Presentación del modelo CIA.</li>
+                    <li>Exposición magistral: Fundamentos teóricos.</li>
+                    <li>Construcción de organizador gráfico grupal.</li>
+                    <li>Aprendizajes y compromisos.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <p><strong>Preparación asincrónica:</strong></p>
+                <ul>
+                    <li><strong>Lectura Crítica:</strong> Textos sugeridos sobre diseños interpretativos.</li>
+                    <li><strong>Revisión:</strong> Literatura asignada para la próxima clase.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <p><strong>Estrategia de evaluación:</strong></p>
+                <ul>
+                    <li><strong>Estrategia:</strong> Valoración del organizador gráfico construido.</li>
+                    <li><strong>Técnica:</strong> Análisis de documento.</li>
+                    <li><strong>Instrumento:</strong> Lista de chequeo.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2 class="theme-title"><i class="fas fa-brain"></i> Desarrollo Temático: Fundamentos Cualitativos</h2>
+            
+            <h3 class="theme-subtitle">1. El Enfoque Cualitativo</h3>
+            <p>A diferencia de la medición estricta y estadística, la investigación cualitativa se enfoca en comprender los fenómenos sociales desde la perspectiva de quienes los experimentan. Busca profundizar en significados, discursos, experiencias y contextos situados.</p>
+            <div class="concept-box">
+                "No buscamos medir cuántas veces ocurre un fenómeno, sino comprender qué significa ese fenómeno para las personas que lo viven y cómo construyen su realidad."
+            </div>
+
+            <h3 class="theme-subtitle">2. Pilares Filosóficos: El Momento Epistémico</h3>
+            <p style="margin-bottom: 20px;">Toda investigación cualitativa se sostiene sobre preguntas filosóficas profundas. Pasa el cursor sobre las tarjetas para conocer los 4 ejes rectores:</p>
+            
+            <div class="authors-grid">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-globe"></i>
+                            <h4>Ontología</h4>
+                            <p>¿Cuál es la naturaleza de la realidad?</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Múltiples realidades</h4>
+                            <p>Desde lo cualitativo, se asume que no existe una única realidad objetiva externa. La realidad es construida social, cultural e históricamente por los individuos. Existen tantas realidades como interpretaciones de la misma.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-project-diagram"></i>
+                            <h4>Epistemología</h4>
+                            <p>¿Relación entre el que investiga y lo investigado?</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Interdependencia</h4>
+                            <p>El investigador no es un agente "neutral" e "invisible". Es parte del mundo que estudia. La interacción entre el investigador y los participantes influye mutuamente en la co-construcción del conocimiento.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-balance-scale"></i>
+                            <h4>Axiología</h4>
+                            <p>¿Cuál es el papel de los valores?</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Valores explícitos</h4>
+                            <p>Se reconoce que toda investigación está impregnada de los valores, sesgos y posicionamientos éticos y políticos del investigador. En lugar de negarlos, se deben declarar y reflexionar sobre ellos (reflexividad).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-route"></i>
+                            <h4>Metodología</h4>
+                            <p>¿Cómo se obtiene el conocimiento?</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Lógica Inductiva</h4>
+                            <p>El diseño es emergente, flexible e iterativo. Se parte de los datos particulares y empíricos en el contexto natural para, paulatinamente, construir patrones, categorías y, finalmente, teoría general fundamentada.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle">3. Recursos Audiovisuales Complementarios</h3>
+            <p style="margin-bottom: 20px;">Analizaremos los siguientes videos como base para nuestra discusión (Los enlaces finales serán asignados por el docente):</p>
+            
+            <div class="videos-container">
+                <!-- Estos iframes sirven como marcadores de posición hasta tener los videos oficiales -->
+                <div class="video-wrapper">
+                    <!-- Placeholder Video 1 -->
+                    <iframe src="https://www.youtube.com/embed/n4aOq5r_vXY?rel=0" title="Video Complementario 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-wrapper">
+                    <!-- Placeholder Video 2 -->
+                    <iframe src="https://www.youtube.com/embed/2_d1502rYTo?rel=0" title="Video Complementario 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-project-diagram"></i> Actividad en Aula: "Organizador Gráfico Epistemológico"</h3>
+                <p><strong>Dinámica de Trabajo:</strong></p>
+                
+                <ol style="margin-left: 20px; line-height: 1.8; color: #444; margin-bottom: 25px;">
+                    <li>Tras la exposición magistral, nos organizaremos en pequeños grupos de trabajo.</li>
+                    <li>Utilizando la información compartida en clase y las secciones desplegables a continuación, <strong>diseñarán un organizador gráfico (mapa conceptual, mental o cuadro sinóptico)</strong>.</li>
+                    <li>El mapa debe sintetizar de forma clara los <strong>fundamentos teóricos y epistemológicos</strong> de la investigación cualitativa.</li>
+                    <li>Al finalizar, presentarán su documento al docente. Recuerden que este será evaluado mediante una <strong>Lista de Chequeo</strong> (Evaluación Formativa/Sumativa).</li>
+                </ol>
+
+                <h4 style="color: var(--cuc-red); margin-bottom: 15px; font-size: 1.2rem; border-bottom: 1px solid #ddd; padding-bottom: 5px;"><i class="fas fa-lightbulb"></i> Apoyo Teórico para la Actividad</h4>
+
+                <div class="history-container" style="margin-bottom: 0;">
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>1. El Paradigma Constructivista / Interpretativo</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p style="margin-bottom: 10px;">En oposición al Positivismo (que busca leyes universales y objetividad), la investigación cualitativa se ampara fuertemente en el Constructivismo.</p>
+                            <ul style="margin-left: 20px; margin-bottom: 10px; color: #555;">
+                                <li>Asume que el conocimiento no es algo "descubierto" en el mundo externo, sino <strong>"construido"</strong> socialmente por las personas en su interacción diaria.</li>
+                                <li>El objetivo de la ciencia bajo este paradigma es <strong>comprender (Verstehen)</strong> el significado profundo de los fenómenos humanos, no necesariamente predecirlos o controlarlos.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>2. La Fenomenología</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p style="margin-bottom: 10px;">Fundada por Edmund Husserl, es una corriente filosófica clave para la cualitativa.</p>
+                            <p style="margin-bottom: 10px;">Se centra en el estudio de las <strong>experiencias vividas</strong> por el ser humano respecto a un concepto o fenómeno (ej. ¿qué significa vivir con una enfermedad crónica? ¿cómo se experimenta el duelo?).</p>
+                            <p>Requiere que el investigador practique la <em>Epojé</em> o "puesta entre paréntesis", es decir, que intente suspender sus juicios previos y preconcepciones para poder acceder a la esencia de la experiencia del participante tal y como él la vive.</p>
+                        </div>
+                    </div>
+
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>3. La Hermenéutica</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p style="margin-bottom: 10px;">Es la teoría y metodología de la <strong>interpretación</strong> (de textos, lenguaje y acciones humanas).</p>
+                            <p style="margin-bottom: 10px;">Establece que para entender una parte de la información (por ejemplo, una frase en una entrevista), debemos entender el todo (el contexto de vida de esa persona), y viceversa. A esto se le llama el <strong>"Círculo Hermenéutico"</strong>.</p>
+                            <p>En investigación cualitativa, la hermenéutica nos recuerda que el análisis de datos nunca es literal; es una tarea de descifrar discursos ocultos e intenciones subyacentes.</p>
+                        </div>
+                    </div>
+
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>4. Interaccionismo Simbólico</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p style="margin-bottom: 10px;">Es un marco sociológico (promovido por Blumer y Mead) que postula premisas fundamentales:</p>
+                            <ol style="margin-left: 20px; margin-bottom: 10px; color: #555;">
+                                <li>El ser humano orienta sus actos hacia las cosas en función de lo que estas significan para él.</li>
+                                <li>El significado de esas cosas surge como consecuencia de la interacción social con los demás.</li>
+                                <li>Los significados se manipulan y modifican mediante un proceso interpretativo desarrollado por la persona.</li>
+                            </ol>
+                            <p><strong>Impacto:</strong> Fundamenta métodos como la Teoría Fundada y la Observación Participante.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+    </footer>
+
+    <script>
+        function toggleHistory(element) {
+            var allItems = document.querySelectorAll('.history-item');
+            allItems.forEach(function(item) {
+                if (item !== element && item.classList.contains('open')) {
+                    item.classList.remove('open');
+                }
+            });
+            element.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
