@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Temática - De la Adolescencia al Envejecer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --soft-red: #ffebeb;
+            --cuc-gold: #cba052;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .qr-code img {
+            max-height: 80px;
+            border: 2px solid var(--cuc-gray);
+            border-radius: 5px;
+            padding: 2px;
+            transition: transform 0.3s;
+        }
+
+        .qr-code img:hover {
+            transform: scale(1.1);
+            border-color: var(--cuc-red);
+        }
+
+        .qr-label {
+            display: block;
+            font-size: 0.6rem;
+            color: #666;
+            margin-top: 3px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .header-logo img {
+            max-height: 90px;
+            background-color: transparent; 
+        }
+
+        .header-info {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .course-title {
+            color: var(--cuc-red);
+            font-size: 1.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            line-height: 1.1;
+        }
+
+        .prof-info {
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .prof-info strong {
+            color: var(--cuc-red);
+        }
+
+        .contact-label {
+            color: var(--cuc-red);
+            font-weight: 900;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .intro-text {
+            margin-bottom: 50px;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .timeline-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            position: relative;
+            gap: 20px;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 4px;
+            background: #e0e0e0;
+            z-index: 0;
+            transform: translateY(-50%);
+        }
+
+        .unit-wrapper {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .unit-card {
+            background: var(--white);
+            border: 2px solid var(--cuc-gray);
+            border-radius: 15px;
+            width: 300px;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .unit-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--cuc-red);
+            box-shadow: 0 15px 30px rgba(163, 22, 26, 0.15);
+        }
+
+        .unit-number {
+            background-color: var(--cuc-red);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 0 auto 15px;
+        }
+
+        .unit-title {
+            color: var(--cuc-red);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .unit-desc {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .btn-ver-mas {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+
+        .unit-card:hover .btn-ver-mas {
+            background-color: var(--cuc-red);
+        }
+
+        .exam-marker {
+            margin-top: 25px;
+            display: inline-block;
+            padding: 8px 20px;
+            border: 2px dashed var(--cuc-red);
+            color: var(--cuc-red);
+            font-weight: bold;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background-color: #fff5f5;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from {top: -100px; opacity: 0;}
+            to {top: 0; opacity: 1;}
+        }
+
+        .modal-header {
+            background-color: var(--cuc-red);
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-btn {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #ddd;
+        }
+
+        .modal-body {
+            padding: 30px;
+            text-align: left;
+        }
+
+        .accordion {
+            background-color: #f9f9f9;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            transition: 0.4s;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .active, .accordion:hover {
+            background-color: #eee;
+            color: var(--cuc-red);
+        }
+
+        .accordion:after {
+            content: '\002B';
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2212";
+        }
+
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            border-left: 4px solid var(--cuc-red);
+        }
+
+        .panel p, .panel ul {
+            margin: 15px 0;
+        }
+
+        .panel ul {
+            padding-left: 20px;
+        }
+        
+        .btn-go-class {
+            display: inline-block;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding: 10px 20px;
+            background-color: var(--cuc-red);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-go-class:hover {
+            background-color: #8a1216;
+        }
+
+        footer {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 0.8rem;
+        }
+
+        @media screen and (max-width: 900px) {
+            header {
+                position: static;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .qr-code {
+                display: none;
+            }
+            .timeline-container::before {
+                display: none;
+            }
+            .unit-card {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .header-info {
+                order: 3;
+            }
+            .header-logo {
+                order: 2;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/adolescencia/u1clase01.html" alt="QR Clase">
+            <span class="qr-label">Ir a este Mapa</span>
+        </div>
+
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://placehold.co/200x80/ffffff/a3161a?text=CUC'">
+        </div>
+
+        <div class="header-info">
+            <div class="course-title">De la Adolescencia al Envejecer<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Desarrollo en la Segunda Mitad del Ciclo Vital</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com
+                </small>
+            </div>
+        </div>
+
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="intro-text">
+            <h1 style="color: var(--cuc-red); margin-bottom: 10px;">Mapa de Navegación del Curso</h1>
+            <p>Bienvenidos al semestre. Esta ruta interactiva te guiará a través del estudio científico del desarrollo humano desde la adolescencia hasta la vejez. Haz clic en cada unidad para descubrir el desglose temático y metodológico (ABP) del curso.</p>
+        </div>
+
+        <div class="timeline-container">
+            <!-- UNIDAD 1 -->
+            <div class="unit-wrapper">
+                <div class="unit-card" onclick="openModal('modal1')">
+                    <div class="unit-number">1</div>
+                    <h3 class="unit-title">Adolescencia: identidad y transición</h3>
+                    <p class="unit-desc">Desarrollo físico, cognoscitivo y psicosocial del adolescente integrado al modelo ecológico multinivel.</p>
+                    <span class="btn-ver-mas">Explorar Clases 1-4</span>
+                </div>
+                <div class="exam-marker">Semana de Evaluación</div>
+            </div>
+
+            <!-- UNIDAD 2 -->
+            <div class="unit-wrapper">
+                <div class="unit-card" onclick="openModal('modal2')">
+                    <div class="unit-number">2</div>
+                    <h3 class="unit-title">Adultez temprana e intermedia</h3>
+                    <p class="unit-desc">Proyectos de vida, participación social, pensamiento posformal y formulación de trayectorias.</p>
+                    <span class="btn-ver-mas">Explorar Clases 5-8</span>
+                </div>
+                <div class="exam-marker">Semana de Evaluación</div>
+            </div>
+
+            <!-- UNIDAD 3 -->
+            <div class="unit-wrapper">
+                <div class="unit-card" onclick="openModal('modal3')">
+                    <div class="unit-number">3</div>
+                    <h3 class="unit-title">Adultez tardía y envejecimiento</h3>
+                    <p class="unit-desc">Adaptación, longevidad, integridad del yo y proyección de escenarios preventivos del desarrollo.</p>
+                    <span class="btn-ver-mas">Explorar Clases 9-12</span>
+                </div>
+                <div class="exam-marker">Evaluación Final</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Unidad 1: Adolescencia: identidad y transición</h2>
+                <span class="close-btn" onclick="closeModal('modal1')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><strong>Objetivo:</strong> Comprender el desarrollo integral del adolescente desde referentes clásicos y contemporáneos, empleando el modelo ecológico de Bronfenbrenner para identificar factores de riesgo y protección.</p>
+                <hr style="border:0; border-top:1px solid #eee; margin: 20px 0;">
+
+                <button class="accordion">Clase 1: Perspectivas Históricas y Ecológicas</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Construcción histórica y políticas públicas de adolescencia.</li>
+                        <li>El modelo ecológico de Bronfenbrenner (los 5 sistemas).</li>
+                        <li>Perspectivas psicológicas (psicodinámicas, cognitivas, socioculturales y del aprendizaje social).</li>
+                    </ul>
+                    <a href="https://clases.jorgearangoc.com/adolescencia/u1clase01.html" class="btn-go-class">Ir a la Clase 1 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 2: Desarrollo Neuroanatómico y Físico</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Neurodesarrollo y funciones ejecutivas (Steinberg, Casey, Diamond).</li>
+                        <li>Desarrollo cognoscitivo (Piaget), egocentrismo (Elkind) y razonamiento moral (Kohlberg).</li>
+                        <li>Pubertad, identidad de género, salud sexual e imagen corporal.</li>
+                    </ul>
+                    <a href="https://clases.jorgearangoc.com/adolescencia/u1clase02.html" class="btn-go-class">Ir a la Clase 2 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 3: Desarrollo Psicosocial y Entorno</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Identidad y estados de identidad (Erikson, Marcia).</li>
+                        <li>Autoconcepto, relaciones familiares y de pares.</li>
+                        <li>Articulación con el modelo ecológico: factores de riesgo y protección.</li>
+                    </ul>
+                    <a href="https://clases.jorgearangoc.com/adolescencia/u1clase03.html" class="btn-go-class">Ir a la Clase 3 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 4: Integración ABP - Fase Conocer</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Trayectorias de vida y participación social.</li>
+                        <li><strong>ABP (Entrega 1):</strong> Construcción y socialización del mapa ecológico multinivel del caso longitudinal.</li>
+                    </ul>
+                    <a href="https://clases.jorgearangoc.com/adolescencia/u1clase04.html" class="btn-go-class">Ir a la Clase 4 ➜</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Unidad 2: Adultez temprana e intermedia</h2>
+                <span class="close-btn" onclick="closeModal('modal2')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><strong>Objetivo:</strong> Analizar los procesos físicos, cognoscitivos y psicosociales integrando el pensamiento posformal y los modelos psicosociales para formular trayectorias de vida preventivas.</p>
+                <hr style="border:0; border-top:1px solid #eee; margin: 20px 0;">
+
+                <button class="accordion">Clase 5: Perspectivas y Desarrollo Cognitivo</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Adultez emergente (Arnett) y curso de vida (Elder).</li>
+                        <li>Neuroplasticidad y pensamiento posformal (Schaie, Sinnott, Sternberg).</li>
+                        <li>Inteligencia fluida/cristalizada y aprendizaje permanente.</li>
+                    </ul>
+                    <a href="https://clases.jorgearangoc.com/adolescencia/u2clase05.html" class="btn-go-class">Ir a la Clase 5 ➜</a>
+                </div>
+                
+                <button class="accordion">Clase 6: Cambios Físicos y Modelos Psicosociales</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Cambios físicos, salud integral, climaterio y menopausia.</li>
+                        <li>Intimidad, relaciones y generatividad (Erikson, Sternberg, McAdams).</li>
+                        <li>Modelos psicosociales (Neugarten) y bienestar psicológico (Ryff).</li>
+                    </ul>
+                    <a href="https://clases.jorgearangoc.com/adolescencia/u2clase06.html" class="btn-go-class">Ir a la Clase 6 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 7: Desarrollo Ocupacional e Historia Clínica</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Desarrollo ocupacional y trayectoria profesional.</li>
+                        <li>Construcción guiada de la historia clínica retrospectiva (Parte 1: Anamnesis y antecedentes).</li>
+                    </ul>
+                    <a href="https://clases.jorgearangoc.com/adolescencia/u2clase07.html" class="btn-go-class">Ir a la Clase 7 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 8: Integración ABP - Fase Analizar</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Aplicación de referentes en la formulación clínica.</li>
+                        <li><strong>ABP (Entrega 2):</strong> Identificación de puntos de quiebre evitables y profundización del mapa ecológico.</li>
+                    </ul>
+                    <a href="https://clases.jorgearangoc.com/adolescencia/u2clase08.html" class="btn-go-class">Ir a la Clase 8 ➜</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Unidad 3: Adultez tardía y envejecimiento</h2>
+                <span class="close-btn" onclick="closeModal('modal3')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><strong>Objetivo:</strong> Evaluar y proyectar escenarios de desarrollo en la vejez integrando la teoría de la integridad del yo, modelos de afrontamiento y evidencia sobre longevidad.</p>
+                <hr style="border:0; border-top:1px solid #eee; margin: 20px 0;">
+
+                <button class="accordion">Clase 9: Edadismo y Envejecimiento Cognitivo</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Construcción histórica, edadismo y derechos de personas mayores.</li>
+                        <li>Envejecimiento cognitivo y factores protectores (OMS).</li>
+                        <li>Reserva cognitiva (Stern) y sabiduría (Baltes).</li>
+                    </ul>
+                    <a href="https://clases.jorgearangoc.com/adolescencia/u3clase09.html" class="btn-go-class">Ir a la Clase 9 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 10: Salud Integral y Desarrollo Psicosocial</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Funcionalidad, autonomía y envejecimiento saludable (OMS).</li>
+                        <li>Integridad del yo vs. desesperanza (Erikson).</li>
+                        <li>Selectividad socioemocional (Carstensen) y modelos de afrontamiento.</li>
+                    </ul>
+                    <a href="https://clases.jorgearangoc.com/adolescencia/u3clase10.html" class="btn-go-class">Ir a la Clase 10 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 11: Adaptación y Final de la Vida</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Adaptación a pérdidas, duelo y redefinición de roles (Worden).</li>
+                        <li>Envejecimiento activo y jubilación (Atchley).</li>
+                        <li>El proceso de morir, muerte y pérdida. Proyección de escenarios contrastantes.</li>
+                    </ul>
+                    <a href="https://clases.jorgearangoc.com/adolescencia/u3clase11.html" class="btn-go-class">Ir a la Clase 11 ➜</a>
+                </div>
+
+                <button class="accordion">Clase 12: Integración ABP - Fase Cierre</button>
+                <div class="panel">
+                    <p><strong>Temas:</strong></p>
+                    <ul>
+                        <li>Reflexión ética sobre trayectorias de vida y prevención.</li>
+                        <li><strong>ABP (Cierre):</strong> Presentación del informe comparativo de escenarios de envejecimiento e infografía.</li>
+                    </ul>
+                    <a href="https://clases.jorgearangoc.com/adolescencia/u3clase12.html" class="btn-go-class">Ir a la Clase 12 ➜</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p>Material diseñado para uso exclusivo académico.</p>
+    </footer>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+    </script>
+</body>
+</html>
