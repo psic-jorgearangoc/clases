@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 2 - Discurso, Acción y Conocimiento</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --cuc-gold: #cba052;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+        .header-logo img { max-height: 80px; }
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; margin-bottom: 5px; }
+        .prof-info { font-size: 0.9rem; color: #555; }
+        .contact-label { color: var(--cuc-red); font-weight: 900; }
+        
+        .qr-code img { max-height: 70px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
+
+        .class-view {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-back {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .btn-back:hover {
+            background-color: var(--cuc-gray);
+            border-color: var(--cuc-red);
+            transform: translateX(-5px);
+        }
+
+        .class-header-card {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .class-header-card::after {
+            content: '\f0c0';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-size: 10rem;
+            color: rgba(255,255,255,0.1);
+        }
+
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        
+        .class-indicator {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 1.05rem;
+            border-left: 4px solid var(--cuc-gold);
+            position: relative;
+            z-index: 2;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        @media screen and (max-width: 1024px) {
+            .class-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media screen and (max-width: 768px) {
+            .class-grid { grid-template-columns: 1fr; }
+            .authors-grid { grid-template-columns: 1fr; }
+        }
+
+        .detail-card {
+            background: white;
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--cuc-red);
+            transition: transform 0.3s;
+        }
+
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .theme-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-top: 4px solid var(--cuc-dark);
+        }
+
+        .theme-title { color: var(--cuc-red); margin-bottom: 25px; font-size: 1.8rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .theme-subtitle { color: var(--cuc-dark); margin: 25px 0 15px; font-size: 1.3rem; }
+
+        .concept-box {
+            background-color: var(--cuc-gray);
+            padding: 20px;
+            border-left: 4px solid var(--cuc-red);
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .timeline-box {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .timeline-box::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            bottom: -5px;
+            width: 4px;
+            background-color: var(--cuc-red);
+            border-radius: 2px;
+        }
+
+        .timeline-step {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .timeline-step::before {
+            content: '';
+            position: absolute;
+            left: -37px;
+            top: 5px;
+            width: 18px;
+            height: 18px;
+            background-color: white;
+            border: 4px solid var(--cuc-gold);
+            border-radius: 50%;
+            z-index: 2;
+        }
+        
+        .timeline-step h4 { color: var(--cuc-dark); font-size: 1.1rem; margin-bottom: 8px; }
+        .timeline-step p { color: #555; font-size: 0.95rem; line-height: 1.5; }
+
+        .accordion-content {
+            background-color: #f9f9f9;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            transition: 0.4s;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .active-acc, .accordion-content:hover {
+            background-color: #eee;
+            color: var(--cuc-red);
+        }
+
+        .accordion-content:after {
+            content: '\002B';
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active-acc:after {
+            content: "\2212";
+        }
+
+        .panel-content {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            border-left: 4px solid var(--cuc-red);
+        }
+
+        .panel-content p, .panel-content ul {
+            margin: 15px 0;
+            color: #555;
+        }
+
+        .panel-content ul {
+            padding-left: 20px;
+        }
+
+        .authors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 260px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .flip-card-front {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            border: 2px solid var(--cuc-gray);
+        }
+
+        .flip-card-front h4 {
+            color: var(--cuc-red);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .flip-card-front i {
+            font-size: 2.5rem;
+            color: var(--cuc-gold);
+            margin-bottom: 15px;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 0.95rem;
+        }
+
+        .case-card {
+            background: #fff;
+            border: 2px solid var(--cuc-gold);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .case-title {
+            color: var(--cuc-red);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .videos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            border: 2px dashed var(--cuc-gold);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
+
+        @media screen and (max-width: 900px) {
+            .qr-code { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/discurso/u1clase02.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://via.placeholder.com/150x50/ffffff/A3161A?text=CUC+Logo'">
+        </div>
+
+        <div class="header-info">
+            <div class="course-title">Discurso, Acción y Conocimiento<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Investigación Cualitativa en Psicología</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com
+                </small>
+            </div>
+        </div>
+
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/discurso/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa del Curso
+        </a>
+        
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 1 • Semana 2</span>
+            <h1>Diseños Interpretativos en la Investigación Cualitativa</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Comprende la lógica, flexibilidad y rigurosidad del proceso cualitativo dentro del marco de la investigación científica contemporánea.
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <p>Ejes integradores de la sesión:</p>
+                <ul>
+                    <li><strong>Diseños Cualitativos:</strong> Conceptos claves.</li>
+                    <li><strong>Proceso de investigación:</strong> Flexibilidad y rigor metodológico.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #2196F3;">
+                <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
+                <p><strong>Actividades en aula:</strong></p>
+                <ul>
+                    <li>Control de lectura y presentación del indicador.</li>
+                    <li>Explicación de conceptos claves del proceso.</li>
+                    <li>Elaboración de línea de tiempo/mapa mental.</li>
+                    <li>Lectura del caso: Víctimas del conflicto.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <p><strong>Preparación asincrónica:</strong></p>
+                <ul>
+                    <li><strong>Caso Víctimas:</strong> Lectura profunda.</li>
+                    <li><strong>Fundamentación:</strong> Revisión del referente teórico que comprenda el caso Víctimas del conflicto.</li>
+                    <li>Revisión de literatura para la próxima clase.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <p><strong>Estrategia de evaluación:</strong></p>
+                <ul>
+                    <li><strong>Estrategia:</strong> Valoración de la línea de tiempo o mapa mental construido.</li>
+                    <li><strong>Técnica:</strong> Análisis del documento gráfico.</li>
+                    <li><strong>Instrumento:</strong> Lista de chequeo.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2 class="theme-title"><i class="fas fa-brain"></i> Desarrollo Temático: Explorando el Proceso Cualitativo</h2>
+            
+            <h3 class="theme-subtitle">1. La Naturaleza del Diseño Cualitativo (Timeline)</h3>
+            <p style="margin-bottom: 25px;">A diferencia del enfoque cuantitativo (que sigue un diseño estructurado, secuencial y cerrado), el proceso de investigación cualitativa se caracteriza por su naturaleza <strong>emergente, interactiva y circular</strong>. Observa sus fases iterativas:</p>
+            
+            <div class="timeline-box">
+                <div class="timeline-step">
+                    <h4>Fase Preparatoria</h4>
+                    <p>Implica la reflexión inicial, la elección del tema y el diseño preliminar. No es un plan rígido, sino una guía que anticipa los pasos a seguir. Aquí se establecen los marcos referenciales iniciales (sin sesgar la mirada del investigador).</p>
+                </div>
+                <div class="timeline-step">
+                    <h4>Trabajo de Campo (Inmersión)</h4>
+                    <p>El investigador se sumerge en el contexto natural del fenómeno (la comunidad, la escuela, el hospital). Aquí se produce la recolección de datos progresiva mediante observación, entrevistas, y se negocia el acceso con los "porteros" de la comunidad.</p>
+                </div>
+                <div class="timeline-step">
+                    <h4>Fase Analítica (Iterativa)</h4>
+                    <p>La recolección y el análisis ocurren <em>simultáneamente</em>. A medida que se obtienen datos (ej. transcripciones de entrevistas), se codifican y categorizan. Si emergen nuevas dudas, el diseño permite volver al campo a buscar más información (Muestreo teórico).</p>
+                </div>
+                <div class="timeline-step">
+                    <h4>Fase Informativa</h4>
+                    <p>Consolidación de los hallazgos en un informe narrativo y reflexivo que da voz a los participantes y aporta al sistema teórico-conceptual contemporáneo.</p>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 40px;">2. Rigor Científico y Exigencias Metodológicas</h3>
+            <p>Es un error común pensar que la "flexibilidad" cualitativa es sinónimo de falta de rigor. Por el contrario, la investigación cualitativa en psicología exige el cumplimiento de criterios de calidad y transparencia muy estrictos.</p>
+
+            <button class="accordion-content">Criterios de Confiabilidad y Validez (Guba & Lincoln)</button>
+            <div class="panel-content">
+                <p>En la investigación cualitativa, los términos estadísticos tradicionales se transforman en criterios de rigor interpretativo:</p>
+                <ul>
+                    <li><strong>Credibilidad (Validez Interna):</strong> ¿Los hallazgos son reconocidos como verdaderos por las personas estudiadas? Se logra mediante triangulación (de métodos, fuentes, teóricos) y comprobación con los participantes.</li>
+                    <li><strong>Transferibilidad (Validez Externa):</strong> ¿Pueden los resultados aplicarse a otros contextos similares? Se logra mediante descripciones densas y detalladas del contexto, permitiendo que otro investigador evalúe si las condiciones son extrapolables.</li>
+                    <li><strong>Dependencia (Confiabilidad):</strong> ¿El proceso fue lógico, rastreable y documentado? Implica llevar una "auditoría" detallada de las decisiones metodológicas tomadas durante el estudio.</li>
+                    <li><strong>Confirmabilidad (Objetividad):</strong> ¿Los hallazgos se derivan de los datos y no de los prejuicios del investigador? Requiere un ejercicio profundo de "reflexividad", donde el investigador declara sus valores y sesgos desde el inicio.</li>
+                </ul>
+            </div>
+
+            <button class="accordion-content">Competencias del Psicólogo Investigador</button>
+            <div class="panel-content">
+                <p>El profesional de la psicología de la Universidad de la Costa (alineado a los estándares APA 7ma Ed.) debe dominar:</p>
+                <ul>
+                    <li><strong>Manejo Tecnológico (TIC):</strong> Uso avanzado de software de análisis de datos cualitativos (ej. Atlas.ti) para la sistematización del gran volumen de información discursiva.</li>
+                    <li><strong>Competencias Comunicativas:</strong> Habilidades avanzadas de lecto-escritura (argumentativa y expositiva) para comunicar de forma asertiva hallazgos complejos.</li>
+                    <li><strong>Ética Colectiva:</strong> Respeto incondicional por la dignidad, privacidad y bienestar psicológico de las comunidades investigadas, asumiendo el rol de transformador social.</li>
+                </ul>
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 40px;">3. Tipos de Diseños Interpretativos (Enfoques)</h3>
+            <p style="margin-bottom: 20px;">Pasa el cursor sobre las tarjetas para repasar los principales diseños cualitativos, los cuales nos servirán de base para analizar problemas como los presentados en nuestro caso de estudio:</p>
+            
+            <div class="authors-grid">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-users"></i>
+                            <h4>Etnografía</h4>
+                            <p>Estudiando la cultura</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Inmersión Cultural</h4>
+                            <p>Se centra en describir y analizar ideas, creencias, significados, conocimientos y prácticas de grupos, culturas y comunidades. Requiere inmersión prolongada del investigador en el contexto (trabajo de campo).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-history"></i>
+                            <h4>Narrativo-Biográfico</h4>
+                            <p>Historias de vida</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">La experiencia a través del relato</h4>
+                            <p>Busca comprender la experiencia humana a través de las historias que las personas cuentan sobre sus vidas (autobiografías, entrevistas narrativas). Analiza cómo construyen significado a través de la narrativa.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-search-plus"></i>
+                            <h4>Estudio de Caso</h4>
+                            <p>Profundidad y particularidad</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Análisis exhaustivo</h4>
+                            <p>Estudio detallado y profundo de un "caso" específico (un individuo, grupo, organización, evento). Busca comprender su complejidad y particularidad en su contexto natural, utilizando múltiples fuentes de datos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-comments"></i>
+                            <h4>Fenomenología</h4>
+                            <p>La esencia de la experiencia</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">El significado vivido</h4>
+                            <p>Como vimos en la sesión anterior, su objetivo es explorar, describir y comprender la esencia de la experiencia humana vivida frente a un fenómeno particular, desde la perspectiva de quienes la experimentan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle">4. Recurso Audiovisual de Apoyo</h3>
+            <p style="margin-bottom: 20px;">Revisa este material audiovisual (TeoCom) que sintetiza y ejemplifica visualmente los principales diseños de investigación cualitativa:</p>
+            
+            <div class="videos-container">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/0YyyyT38mo4?rel=0" title="Diseños de Investigación Cualitativa | Metodología de la Investigación" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-project-diagram"></i> Actividad en Aula: "El Proceso Cualitativo y nuestro Caso de Estudio"</h3>
+                <p><strong>Dinámica de Trabajo:</strong></p>
+                
+                <ol style="margin-left: 20px; line-height: 1.8; color: #444; margin-bottom: 25px;">
+                    <li><strong>Parte 1 (Construcción Gráfica):</strong> A partir de la explicación del docente y la lectura previa, elaboren en equipos una <strong>línea de tiempo o mapa mental</strong>. Este organizador debe reflejar la secuencia (y flexibilidad) de un estudio cualitativo dentro del marco de la investigación científica contemporánea. (Evaluado con Lista de Chequeo).</li>
+                    <li><strong>Parte 2 (Inmersión en el Caso):</strong> Procederemos a la lectura grupal y análisis preliminar del caso asignado, el cual servirá como hilo conductor para nuestras prácticas investigativas en las siguientes sesiones.</li>
+                    <li><strong>Cierre:</strong> Discutiremos los aprendizajes y prepararemos los compromisos de trabajo independiente: <em>Revisión del referente teórico que comprenda el caso de estudio</em>.</li>
+                </ol>
+
+                <!-- NUEVO CASO INTEGRADO AQUÍ -->
+                <div class="case-card">
+                    <h4 class="case-title"><i class="fas fa-dove"></i> Caso de Estudio: Víctimas del conflicto</h4>
+                    <p style="margin-bottom: 10px; font-weight: bold; color: #444;">Enfoque: Resiliencia y perdón.</p>
+                    <div style="background-color: var(--soft-red); padding: 15px; border-left: 4px solid var(--cuc-red); border-radius: 5px; margin-top: 10px;">
+                        <p style="font-style: italic; color: var(--cuc-dark);"><strong>Pregunta de Investigación:</strong> ¿Existe relación entre los factores personales de resiliencia y la disposición a perdonar a exvictimarios, en mujeres adultas víctimas radicadas en el Atlántico?</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+    </footer>
+
+    <script>
+        // Script para los acordeones dinámicos de los criterios de rigor
+        var acc = document.getElementsByClassName("accordion-content");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active-acc");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+    </script>
+</body>
+</html>
