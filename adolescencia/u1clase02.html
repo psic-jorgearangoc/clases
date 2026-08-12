@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 2 - Desarrollo Neuroanatómico y Físico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --cuc-gold: #cba052;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+        .header-logo img { max-height: 80px; }
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; }
+        .prof-info { font-size: 0.9rem; color: #555; }
+        
+        .qr-code img { max-height: 70px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
+
+        .class-view {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-back {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .btn-back:hover {
+            background-color: var(--cuc-gray);
+            border-color: var(--cuc-red);
+            transform: translateX(-5px);
+        }
+
+        .class-header-card {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .class-header-card::after {
+            content: '\f5fc'; /* FontAwesome DNA icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-size: 10rem;
+            color: rgba(255,255,255,0.1);
+        }
+
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        
+        .class-indicator {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 1.05rem;
+            border-left: 4px solid var(--cuc-gold);
+            position: relative;
+            z-index: 2;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        @media screen and (max-width: 1024px) {
+            .class-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media screen and (max-width: 768px) {
+            .class-grid { grid-template-columns: 1fr; }
+            .authors-grid { grid-template-columns: 1fr; }
+        }
+
+        .detail-card {
+            background: white;
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--cuc-red);
+            transition: transform 0.3s;
+        }
+
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .theme-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-top: 4px solid var(--cuc-dark);
+        }
+
+        .theme-title { color: var(--cuc-red); margin-bottom: 25px; font-size: 1.8rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .theme-subtitle { color: var(--cuc-dark); margin: 25px 0 15px; font-size: 1.3rem; }
+
+        .concept-box {
+            background-color: var(--cuc-gray);
+            padding: 20px;
+            border-left: 4px solid var(--cuc-red);
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .authors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 260px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .flip-card-front {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            border: 2px solid var(--cuc-gray);
+        }
+
+        .flip-card-front h4 {
+            color: var(--cuc-red);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .flip-card-front i {
+            font-size: 2.5rem;
+            color: var(--cuc-gold);
+            margin-bottom: 15px;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 0.95rem;
+        }
+
+        .history-container { margin-bottom: 40px; }
+
+        .history-item {
+            background-color: var(--white);
+            border: 1px solid #ddd;
+            border-left: 5px solid var(--cuc-gold);
+            margin-bottom: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .history-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: var(--cuc-dark);
+            transition: background-color 0.3s;
+        }
+
+        .history-header:hover { background-color: var(--cuc-gray); }
+        .history-header i { transition: transform 0.3s; }
+
+        .history-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            background-color: #fafafa;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .history-item.open .history-content {
+            padding: 15px 20px;
+            max-height: 500px;
+            border-top: 1px solid #eee;
+        }
+        
+        .history-item.open .history-header i { transform: rotate(180deg); }
+
+        .videos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+
+        .brain-widget { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 40px; background: white; border-radius: 15px; border: 1px solid #ddd; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .brain-menu { flex: 1; min-width: 250px; background: var(--cuc-dark); padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .brain-btn { background: rgba(255,255,255,0.05); color: #ccc; border: 1px solid rgba(255,255,255,0.1); padding: 15px 20px; text-align: left; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 1.05rem; font-weight: bold; display: flex; align-items: center; gap: 12px; }
+        .brain-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+        .brain-btn.active { background: var(--cuc-red); color: white; border-color: var(--cuc-red); transform: translateX(8px); box-shadow: -5px 5px 15px rgba(0,0,0,0.2); }
+        .brain-display { flex: 2.5; min-width: 300px; padding: 40px; background: #fff; }
+        .brain-content { display: none; animation: fadeInRight 0.4s ease; }
+        .brain-content.active { display: block; }
+        .brain-content h4 { color: var(--cuc-red); font-size: 1.8rem; margin-bottom: 15px; border-bottom: 2px solid var(--cuc-gold); padding-bottom: 10px; display: inline-block; }
+        .brain-content p { color: #444; font-size: 1.05rem; line-height: 1.7; margin-bottom: 15px; }
+        .brain-highlight { background: var(--cuc-gray); border-left: 4px solid var(--cuc-gold); padding: 20px; border-radius: 0 10px 10px 0; font-style: italic; margin-top: 20px; color: #333;}
+        @keyframes fadeInRight { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+
+        .theorist-dashboard { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 40px; border-radius: 15px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 1px solid #ddd; }
+        .theorist-tabs { flex: 1; min-width: 250px; background: #f8f9fa; border-right: 1px solid #ddd; }
+        .t-tab { width: 100%; text-align: left; padding: 25px 20px; background: none; border: none; border-bottom: 1px solid #ddd; font-size: 1.1rem; font-weight: bold; color: #666; cursor: pointer; transition: 0.3s; display: flex; justify-content: space-between; align-items: center; }
+        .t-tab:hover { background: #eee; color: var(--cuc-dark); }
+        .t-tab.active { background: white; color: var(--cuc-red); border-left: 5px solid var(--cuc-red); box-shadow: inset 5px 0 10px rgba(0,0,0,0.02); }
+        .theorist-panels { flex: 2.5; min-width: 300px; background: white; padding: 40px; }
+        .t-panel { display: none; animation: fadeIn 0.5s ease; }
+        .t-panel.active { display: block; }
+        .t-panel h4 { color: var(--cuc-dark); font-size: 1.8rem; margin-bottom: 25px; }
+        .t-panel h4 span { color: var(--cuc-red); }
+        .t-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 25px; }
+        .t-card { background: var(--cuc-gray); padding: 25px; border-radius: 10px; border-top: 4px solid var(--cuc-gold); box-shadow: 0 4px 6px rgba(0,0,0,0.03); }
+        .t-card h5 { color: var(--cuc-red); margin-bottom: 12px; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
+        .t-card p { font-size: 0.95rem; color: #555; }
+        .t-list { margin-top: 15px; padding-left: 20px; color: #444; font-size: 0.95rem; }
+        .t-list li { margin-bottom: 8px; }
+
+        .activity-box {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            border: 2px dashed var(--cuc-gold);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
+
+        @media screen and (max-width: 900px) { .qr-code { display: none; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/adolescencia/u1clase02.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://placehold.co/200x80/ffffff/a3161a?text=CUC'">
+        </div>
+
+        <div class="header-info">
+            <div class="course-title">De la Adolescencia al Envejecer:<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Desarrollo en la Segunda Mitad del Ciclo Vital</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com
+                </small>
+            </div>
+        </div>
+
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/adolescencia/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa del Curso
+        </a>
+        
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 1 • Sesión 2</span>
+            <h1>Desarrollo Neuroanatómico, Físico y Sexual</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Explica los procesos de desarrollo físico, cognoscitivo y psicosocial de la adolescencia, diferenciando las principales perspectivas teóricas.
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <p>Temas centrales de la sesión:</p>
+                <ul>
+                    <li>Neurodesarrollo y Funciones Ejecutivas.</li>
+                    <li>Pubertad y Maduración Física (Tanner).</li>
+                    <li>Identidad de Género y Orientación (APA).</li>
+                    <li>Salud Sexual y Conductas (OMS).</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #2196F3;">
+                <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
+                <p><strong>Actividad en aula:</strong></p>
+                <ul>
+                    <li>Socialización y debate guiado.</li>
+                    <li>Mesa redonda sobre diversidad.</li>
+                    <li><strong>Galería Gráfica (MEME)</strong> sobre perspectivas psicológicas.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <p><strong>Preparación:</strong></p>
+                <ul>
+                    <li>Lectura de los recursos base.</li>
+                    <li>Creación de un <strong>Cuadro Comparativo</strong> de los 4 enfoques psicológicos principales.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <p><strong>Estrategias:</strong></p>
+                <ul>
+                    <li>Valoración del cuadro comparativo.</li>
+                    <li>Participación en la mesa redonda (MEMEs).</li>
+                    <li><strong>Instrumento:</strong> Lista de Chequeo y Observación.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2 class="theme-title"><i class="fas fa-dna"></i> Desarrollo Temático: El Cuerpo y el Cerebro en Transición</h2>
+            
+            <h3 class="theme-subtitle">1. La Revolución Biológica y el Neurodesarrollo</h3>
+            <p style="margin-bottom: 25px;">La adolescencia trae consigo una remodelación profunda y silenciosa en la arquitectura cerebral. Interactúa con el siguiente panel para comprender los cuatro procesos neuroanatómicos clave que explican la conducta de riesgo y el desarrollo cognitivo:</p>
+            
+            <div class="brain-widget">
+                <div class="brain-menu">
+                    <button class="brain-btn active" onclick="openBrain(event, 'b-dual')"><i class="fas fa-car-crash"></i> Modelo Dual (Steinberg)</button>
+                    <button class="brain-btn" onclick="openBrain(event, 'b-poda')"><i class="fas fa-cut"></i> Poda Sináptica</button>
+                    <button class="brain-btn" onclick="openBrain(event, 'b-mielina')"><i class="fas fa-bolt"></i> Mielinización</button>
+                    <button class="brain-btn" onclick="openBrain(event, 'b-ejecutivas')"><i class="fas fa-cogs"></i> Funciones Ejecutivas</button>
+                </div>
+                <div class="brain-display">
+                    
+                    <div id="b-dual" class="brain-content active">
+                        <h4>El Modelo de Sistemas Duales</h4>
+                        <p>Propuesto por Laurence Steinberg y B.J. Casey, este modelo explica por qué los adolescentes son propensos a tomar riesgos a pesar de entender lógicamente el peligro.</p>
+                        <p>Existe una <strong>brecha de maduración</strong> entre dos sistemas cerebrales:</p>
+                        <ul style="margin-left: 20px; color: #444; margin-bottom: 15px;">
+                            <li><strong>El Sistema Socioemocional (Amígdala y Estriado):</strong> Es el "acelerador". Madura tempranamente con la pubertad, volviendo al adolescente hiper-sensible a las recompensas, las emociones intensas y la validación de sus pares.</li>
+                            <li><strong>El Sistema de Control Cognitivo (Córtex Prefrontal):</strong> Es el "freno". Madura lentamente hasta mediados de los 20 años. Es responsable de la planificación a largo plazo y el control de impulsos.</li>
+                        </ul>
+                        <div class="brain-highlight">
+                            "Un motor potente (emociones) sin un sistema de frenos completamente instalado (control cognitivo) genera la típica vulnerabilidad adolescente ante la presión de pares."
+                        </div>
+                    </div>
+
+                    <div id="b-poda" class="brain-content">
+                        <h4>Poda Sináptica (Use it or lose it)</h4>
+                        <p>Durante la niñez, el cerebro crea una sobreabundancia de conexiones neuronales (materia gris). Al llegar a la adolescencia, el cerebro entra en una fase de optimización radical.</p>
+                        <p>La <strong>poda sináptica</strong> es el proceso de eliminación masiva de las sinapsis (conexiones) que no se utilizan, fortaleciendo aquellas que sí se emplean de manera constante.</p>
+                        <div class="brain-highlight">
+                            <i class="fas fa-lightbulb" style="color: var(--cuc-gold); margin-right: 10px;"></i>
+                            <strong>Implicación clínica:</strong> El ambiente del adolescente moldea literalmente su cerebro. Si invierte su tiempo en deportes, música o estudio, esas redes se fortalecen. Si lo invierte en conductas pasivas, se pierden oportunidades críticas de desarrollo.
+                        </div>
+                    </div>
+
+                    <div id="b-mielina" class="brain-content">
+                        <h4>La Mielinización</h4>
+                        <p>Mientras la materia gris disminuye (por la poda), la <strong>materia blanca</strong> aumenta significativamente. Esto se debe a la mielinización.</p>
+                        <p>La mielina es una capa aislante de grasa que recubre los axones de las neuronas, similar al plástico que recubre un cable eléctrico. Este recubrimiento permite que los impulsos nerviosos viajen hasta <strong>100 veces más rápido</strong>.</p>
+                        <div class="brain-highlight">
+                            <i class="fas fa-tachometer-alt" style="color: var(--cuc-gold); margin-right: 10px;"></i>
+                            <strong>Resultado:</strong> El procesamiento de la información se vuelve mucho más eficiente y coordinado, sentando las bases neurofisiológicas para el pensamiento abstracto complejo (operaciones formales).
+                        </div>
+                    </div>
+
+                    <div id="b-ejecutivas" class="brain-content">
+                        <h4>Funciones Ejecutivas (Adele Diamond)</h4>
+                        <p>Alojadas principalmente en la corteza prefrontal, las funciones ejecutivas son las "habilidades de un director de orquesta" mental. En la adolescencia, estas habilidades están en pleno entrenamiento.</p>
+                        <p>Las tres funciones ejecutivas centrales que el adolescente debe dominar son:</p>
+                        <ul style="margin-left: 20px; color: #444; line-height: 1.8;">
+                            <li><strong>Control Inhibitorio:</strong> La capacidad de resistir una fuerte tentación, ignorar distracciones y "pensar antes de actuar".</li>
+                            <li><strong>Memoria de Trabajo:</strong> Retener información en la mente y manipularla (vital para matemáticas, debates y resolución de problemas).</li>
+                            <li><strong>Flexibilidad Cognitiva:</strong> La capacidad de cambiar de perspectiva, admitir errores y adaptarse a nuevas reglas sociales.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle">2. Referentes Teóricos: Desarrollo Físico, Cognoscitivo y Psicosocial</h3>
+            <p style="margin-bottom: 25px;">Navega por las pestañas laterales para profundizar en los postulados de los principales autores y lineamientos (Piaget, Elkind, Kohlberg, Tanner, APA, OMS) que estructuran el desarrollo integral en la adolescencia:</p>
+            
+            <div class="theorist-dashboard">
+                <div class="theorist-tabs">
+                    <button class="t-tab active" onclick="openTheorist(event, 't-fisico')">Desarrollo Físico (Tanner) <i class="fas fa-chevron-right"></i></button>
+                    <button class="t-tab" onclick="openTheorist(event, 't-cognitivo')">Cognición y Moral <i class="fas fa-chevron-right"></i></button>
+                    <button class="t-tab" onclick="openTheorist(event, 't-identidad')">Identidad y Género (APA) <i class="fas fa-chevron-right"></i></button>
+                    <button class="t-tab" onclick="openTheorist(event, 't-salud')">Salud Sexual (OMS) <i class="fas fa-chevron-right"></i></button>
+                </div>
+                
+                <div class="theorist-panels">
+                    
+                    <div id="t-fisico" class="t-panel active">
+                        <h4>Pubertad y Maduración <span>(James Tanner & Papalia)</span></h4>
+                        <p>La pubertad es el proceso biológico que conduce a la madurez sexual y a la capacidad de reproducción. James Tanner estandarizó la medición de estos cambios (Estadios de Tanner del I al V).</p>
+                        
+                        <div class="t-grid">
+                            <div class="t-card">
+                                <h5><i class="fas fa-venus-mars"></i> Caracteres Sexuales Primarios</h5>
+                                <p>Órganos involucrados directamente en la reproducción.</p>
+                                <ul class="t-list">
+                                    <li><strong>Mujeres:</strong> Ovarios, trompas de Falopio, útero. Hito principal: <em>Menarquia</em> (primera menstruación).</li>
+                                    <li><strong>Hombres:</strong> Testículos, pene, vesículas seminales. Hito principal: <em>Espermarquia</em> (primera eyaculación).</li>
+                                </ul>
+                            </div>
+                            <div class="t-card">
+                                <h5><i class="fas fa-child"></i> Caracteres Sexuales Secundarios</h5>
+                                <p>Signos fisiológicos de maduración que no involucran directamente a los órganos reproductores.</p>
+                                <ul class="t-list">
+                                    <li>Crecimiento de senos (telarquia).</li>
+                                    <li>Crecimiento de vello (pubarquia).</li>
+                                    <li>Cambios en la voz, piel (acné) y el "estirón" de crecimiento.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="t-cognitivo" class="t-panel">
+                        <h4>Desarrollo Cognoscitivo y Moral <span>(Piaget, Elkind, Kohlberg)</span></h4>
+                        <p>El pensamiento adolescente abandona lo concreto y se adentra en el mundo de las posibilidades, las hipótesis y los dilemas éticos complejos.</p>
+                        
+                        <div class="t-grid">
+                            <div class="t-card" style="grid-column: span 2;">
+                                <h5><i class="fas fa-project-diagram"></i> Operaciones Formales (Jean Piaget)</h5>
+                                <p>El adolescente desarrolla el <strong>razonamiento hipotético-deductivo</strong>. Ya no está limitado al "aquí y ahora". Puede imaginar situaciones ideales, pensar en abstracto (libertad, justicia) y evaluar variables sistemáticamente para resolver problemas.</p>
+                            </div>
+                            <div class="t-card">
+                                <h5><i class="fas fa-mask"></i> Egocentrismo (David Elkind)</h5>
+                                <ul class="t-list" style="margin-top: 0;">
+                                    <li><strong>Audiencia Imaginaria:</strong> La creencia obsesiva de que todos los demás están tan pendientes de su apariencia y conducta como él mismo.</li>
+                                    <li><strong>Fábula Personal:</strong> La convicción de que es único, incomprendido y totalmente invulnerable a los riesgos (ej. embarazos, accidentes).</li>
+                                </ul>
+                            </div>
+                            <div class="t-card">
+                                <h5><i class="fas fa-balance-scale"></i> Moralidad (L. Kohlberg)</h5>
+                                <p>Transición crítica del Nivel Preconvencional (obedecer para evitar castigo) al <strong>Nivel Convencional</strong> (interiorización de normas para mantener el orden social y ser un "buen miembro" de la comunidad).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="t-identidad" class="t-panel">
+                        <h4>Identidad y Diversidad <span>(Lineamientos APA)</span></h4>
+                        <p>La Asociación Americana de Psicología establece la necesidad clínica de diferenciar cuatro dimensiones del desarrollo sexual y de identidad para evitar patologizar la diversidad:</p>
+                        
+                        <div class="t-grid">
+                            <div class="t-card">
+                                <h5><i class="fas fa-dna"></i> Sexo Biológico</h5>
+                                <p>Asignado al nacer basado en cromosomas (XX, XY), anatomía y hormonas (Macho, Hembra, Intersexual).</p>
+                            </div>
+                            <div class="t-card">
+                                <h5><i class="fas fa-brain"></i> Identidad de Género</h5>
+                                <p>La vivencia interna, profunda e individual del género. Cómo se percibe la persona a sí misma en su mente (Cisgénero, Transgénero, No binario).</p>
+                            </div>
+                            <div class="t-card">
+                                <h5><i class="fas fa-tshirt"></i> Expresión de Género</h5>
+                                <p>Cómo se comunica el género al mundo a través de la vestimenta, el comportamiento, el peinado o la voz (Masculino, Femenino, Andrógino).</p>
+                            </div>
+                            <div class="t-card">
+                                <h5><i class="fas fa-heart"></i> Orientación Sexual</h5>
+                                <p>La capacidad de sentir atracción afectiva, romántica y/o sexual persistente hacia otras personas (Heterosexual, Homosexual, Bisexual, Asexual).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="t-salud" class="t-panel">
+                        <h4>Salud Sexual Integral <span>(Directrices OMS)</span></h4>
+                        <p>Históricamente, la salud sexual adolescente se limitaba a la "prevención del embarazo y enfermedades". Hoy, la OMS propone un modelo ecológico y positivo.</p>
+                        
+                        <div class="t-grid">
+                            <div class="t-card" style="grid-column: span 2;">
+                                <h5><i class="fas fa-shield-alt"></i> Más allá de la prevención de riesgos</h5>
+                                <p>La salud sexual es "un estado de bienestar físico, emocional, mental y social en relación con la sexualidad; no es meramente la ausencia de enfermedad, disfunción o debilidad". Requiere un enfoque positivo y respetuoso de la sexualidad, libre de coerción, discriminación y violencia.</p>
+                            </div>
+                            <div class="t-card">
+                                <h5><i class="fas fa-exclamation-triangle"></i> Conductas de Riesgo Biopsicosocial</h5>
+                                <p>Prácticas sexuales sin protección, multiplicidad de parejas bajo efecto de sustancias (influidas por el Modelo Dual de Steinberg) y presiones del exosistema y macrosistema.</p>
+                            </div>
+                            <div class="t-card">
+                                <h5><i class="fas fa-user-check"></i> Imagen Corporal</h5>
+                                <p>La satisfacción o insatisfacción con el propio cuerpo, fuertemente influenciada por la maduración (Tanner), los pares (microsistema) y los estándares irreales de belleza (macrosistema).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle">3. Recurso Audiovisual</h3>
+            <p style="margin-bottom: 20px;">Reflexionemos sobre la neurociencia detrás del comportamiento adolescente:</p>
+            
+            <div class="videos-container" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto 30px;">
+                <div class="video-wrapper">
+                    <!-- Placeholder using a widely known educational video on the teenage brain -->
+                    <iframe src="https://www.youtube.com/embed/6zVS8HIPUng?rel=0" title="Recurso Audiovisual: El Cerebro Adolescente" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-palette"></i> Actividad en Aula: "Galería de Memes y Cuadro Comparativo"</h3>
+                <p><strong>Dinámica:</strong> Trabajo Independiente + Mesa Redonda Presencial.</p>
+                
+                <p><strong>Instrucciones para la sesión:</strong></p>
+                <ol style="margin-left: 20px; line-height: 1.8; color: #444; margin-bottom: 25px;">
+                    <li><strong>Trabajo Previo:</strong> Traer elaborado el <em>Cuadro Comparativo</em> que contrasta cómo las cuatro perspectivas (Psicodinámica, Cognitiva, Sociocultural y Aprendizaje Social) explican los cambios en la adolescencia.</li>
+                    <li><strong>Creación Gráfica:</strong> En clase, diseñaremos "MEMEs" psicológicos que resuman satírica o críticamente estos enfoques y los retos de la diversidad cultural/sexual.</li>
+                    <li><strong>Mesa Redonda:</strong> Proyectaremos la galería y usaremos la lista de chequeo para evaluar la sustentación teórica que hay detrás de cada producto gráfico.</li>
+                </ol>
+
+                <h4 style="color: var(--cuc-red); margin-bottom: 15px; font-size: 1.2rem; border-bottom: 1px solid #ddd; padding-bottom: 5px;"><i class="fas fa-search-plus"></i> Profundización: Conceptos Biológicos Clave</h4>
+
+                <div class="history-container" style="margin-bottom: 0;">
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>1. Poda Sináptica y Mielinización</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p style="margin-bottom: 10px;">Durante la pubertad, el cerebro experimenta un proceso de <strong>"poda sináptica"</strong> (use it or lose it), donde las conexiones neuronales no utilizadas se eliminan para hacer el cerebro más eficiente.</p>
+                            <p>Simultáneamente, la <strong>mielinización</strong> (recubrimiento de los axones con grasa) se acelera, aumentando enormemente la velocidad de transmisión de la información. Esto marca el inicio de una cognición más rápida, pero aún inestable.</p>
+                        </div>
+                    </div>
+
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>2. Funciones Ejecutivas (Adele Diamond)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p style="margin-bottom: 10px;">Localizadas en el lóbulo frontal, incluyen el control inhibitorio (pensar antes de actuar), la memoria de trabajo y la flexibilidad cognitiva.</p>
+                            <p>Al ser esta el área cerebral que más tarda en madurar (hasta mediados de los 20 años), explica por qué los adolescentes, aunque muy inteligentes, a menudo fallan en la toma de decisiones bajo alta carga emocional o presión de pares.</p>
+                        </div>
+                    </div>
+
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>3. Características Sexuales (Primarias y Secundarias)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p style="margin-bottom: 10px;"><strong>Primarias:</strong> Órganos involucrados directamente en la reproducción (ovarios, útero, testículos). Su maduración se evidencia con la <em>menarquia</em> (primera menstruación) y la <em>espermarquia</em> (primera eyaculación).</p>
+                            <p><strong>Secundarias:</strong> Señales fisiológicas de maduración que no involucran directamente los órganos sexuales (crecimiento de senos, ensanchamiento de hombros, vello púbico/axilar, cambios en la voz).</p>
+                        </div>
+                    </div>
+
+                    <div class="history-item" onclick="toggleHistory(this)">
+                        <div class="history-header">
+                            <span>4. Orientación vs. Identidad vs. Expresión (APA)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="history-content">
+                            <p style="margin-bottom: 10px;">Para un análisis clínico adecuado, el psicólogo debe diferenciar:</p>
+                            <ul style="margin-left: 20px; color: #555;">
+                                <li><strong>Identidad de Género:</strong> El sentido profundo, interno e individual de ser hombre, mujer, ambos o ninguno.</li>
+                                <li><strong>Orientación Sexual:</strong> La capacidad de sentir profunda atracción emocional, afectiva y sexual hacia personas de un género diferente, del mismo o de más de un género.</li>
+                                <li><strong>Expresión de Género:</strong> La forma en que una persona comunica su género al exterior a través de la ropa, apariencia y comportamiento.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+    </footer>
+
+    <script>
+        // Funciones para el Panel de Neurodesarrollo
+        function openBrain(evt, brainId) {
+            var i, content, btns;
+            content = document.getElementsByClassName("brain-content");
+            for (i = 0; i < content.length; i++) {
+                content[i].classList.remove("active");
+            }
+            btns = document.getElementsByClassName("brain-btn");
+            for (i = 0; i < btns.length; i++) {
+                btns[i].classList.remove("active");
+            }
+            document.getElementById(brainId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Funciones para el Dashboard Teórico
+        function openTheorist(evt, theoristId) {
+            var i, panels, tabs;
+            panels = document.getElementsByClassName("t-panel");
+            for (i = 0; i < panels.length; i++) {
+                panels[i].classList.remove("active");
+            }
+            tabs = document.getElementsByClassName("t-tab");
+            for (i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            document.getElementById(theoristId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        function toggleHistory(element) {
+            var allItems = document.querySelectorAll('.history-item');
+            allItems.forEach(function(item) {
+                if (item !== element && item.classList.contains('open')) {
+                    item.classList.remove('open');
+                }
+            });
+            element.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
