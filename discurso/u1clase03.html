@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 3 - Discurso, Acción y Conocimiento</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --cuc-gold: #cba052;
+            --soft-red: #ffebeb;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+        .header-logo img { max-height: 80px; }
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; margin-bottom: 5px; }
+        .prof-info { font-size: 0.9rem; color: #555; }
+        .contact-label { color: var(--cuc-red); font-weight: 900; }
+        
+        .qr-code img { max-height: 70px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
+
+        .class-view {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-back {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .btn-back:hover {
+            background-color: var(--cuc-gray);
+            border-color: var(--cuc-red);
+            transform: translateX(-5px);
+        }
+
+        .class-header-card {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .class-header-card::after {
+            content: '\f0c0';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-size: 10rem;
+            color: rgba(255,255,255,0.1);
+        }
+
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        
+        .class-indicator {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 1.05rem;
+            border-left: 4px solid var(--cuc-gold);
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge-eval {
+            display: inline-block;
+            background-color: var(--cuc-gold);
+            color: var(--cuc-dark);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        @media screen and (max-width: 1024px) {
+            .class-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media screen and (max-width: 768px) {
+            .class-grid { grid-template-columns: 1fr; }
+            .authors-grid { grid-template-columns: 1fr; }
+        }
+
+        .detail-card {
+            background: white;
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--cuc-red);
+            transition: transform 0.3s;
+        }
+
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .theme-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-top: 4px solid var(--cuc-dark);
+        }
+
+        .theme-title { color: var(--cuc-red); margin-bottom: 25px; font-size: 1.8rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .theme-subtitle { color: var(--cuc-dark); margin: 25px 0 15px; font-size: 1.3rem; }
+
+        .concept-box {
+            background-color: var(--cuc-gray);
+            padding: 20px;
+            border-left: 4px solid var(--cuc-red);
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .timeline-box {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .timeline-box::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            bottom: -5px;
+            width: 4px;
+            background-color: var(--cuc-red);
+            border-radius: 2px;
+        }
+
+        .timeline-step {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .timeline-step::before {
+            content: '';
+            position: absolute;
+            left: -37px;
+            top: 5px;
+            width: 18px;
+            height: 18px;
+            background-color: white;
+            border: 4px solid var(--cuc-gold);
+            border-radius: 50%;
+            z-index: 2;
+        }
+        
+        .timeline-step h4 { color: var(--cuc-dark); font-size: 1.1rem; margin-bottom: 8px; }
+        .timeline-step p { color: #555; font-size: 0.95rem; line-height: 1.5; }
+
+        .authors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 260px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .flip-card-front {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            border: 2px solid var(--cuc-gray);
+        }
+
+        .flip-card-front h4 {
+            color: var(--cuc-red);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .flip-card-front i {
+            font-size: 2.5rem;
+            color: var(--cuc-gold);
+            margin-bottom: 15px;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 0.95rem;
+        }
+
+        .accordion-content {
+            background-color: #f9f9f9;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            transition: 0.4s;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .active-acc, .accordion-content:hover {
+            background-color: #eee;
+            color: var(--cuc-red);
+        }
+
+        .accordion-content:after {
+            content: '\002B';
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active-acc:after {
+            content: "\2212";
+        }
+
+        .panel-content {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            border-left: 4px solid var(--cuc-red);
+        }
+
+        .panel-content p, .panel-content ul {
+            margin: 15px 0;
+            color: #555;
+        }
+
+        .panel-content ul {
+            padding-left: 20px;
+        }
+
+        .videos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            border: 2px dashed var(--cuc-gold);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .case-card {
+            background: #fff;
+            border: 2px solid var(--cuc-gold);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .case-title {
+            color: var(--cuc-red);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
+
+        @media screen and (max-width: 900px) {
+            .qr-code { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/discurso/u1clase03.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://via.placeholder.com/150x50/ffffff/A3161A?text=CUC+Logo'">
+        </div>
+
+        <div class="header-info">
+            <div class="course-title">Discurso, Acción y Conocimiento<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Investigación Cualitativa en Psicología</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com
+                </small>
+            </div>
+        </div>
+
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/discurso/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa del Curso
+        </a>
+        
+        <div class="class-header-card">
+            <span class="badge-eval"><i class="fas fa-star"></i> Sumativa Corte 1</span><br>
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 1 • Semana 3</span>
+            <h1>La Investigación Acción-Participativa (IAP)</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Analiza los diferentes diseños cualitativos para evaluar su coherencia al abordar un problema.
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <p>Ejes integradores de la sesión:</p>
+                <ul>
+                    <li><strong>Diseño IAP:</strong> La investigación acción-participativa.</li>
+                    <li><strong>Conceptos claves:</strong> Acción, transformación y reflexión crítica.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #2196F3;">
+                <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
+                <p><strong>Actividades en aula:</strong></p>
+                <ul>
+                    <li><strong>Sumativa Corte 1.</strong></li>
+                    <li>Control de lectura.</li>
+                    <li>Explicación de los conceptos claves de la IAP.</li>
+                    <li>Selección de un problema de investigación psicosocial en el caso de la rúbrica y búsqueda de referentes teóricos.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <p><strong>Preparación asincrónica:</strong></p>
+                <ul>
+                    <li>Elaboración de un documento breve sobre el análisis del problema escogido a la luz de los referentes teóricos.</li>
+                    <li>Revisión de la literatura para la próxima clase.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <p><strong>Semana de Evaluación:</strong></p>
+                <ul>
+                    <li><strong>Estrategia:</strong> Valoración del documento analítico breve sobre el problema escogido y sus referentes.</li>
+                    <li><strong>Técnica:</strong> Análisis de documento.</li>
+                    <li><strong>Instrumento:</strong> Rúbrica.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2 class="theme-title"><i class="fas fa-brain"></i> Desarrollo Temático: La Investigación Acción-Participativa (IAP)</h2>
+            
+            <h3 class="theme-subtitle">1. ¿Qué es la IAP?</h3>
+            <p>La Investigación Acción-Participativa (IAP) es un enfoque metodológico profundamente ligado a la <strong>Psicología Social Comunitaria y Latinoamericana</strong> (cuyo gran exponente en Colombia fue el sociólogo Orlando Fals Borda). Se aleja radicalmente de los métodos tradicionales donde el investigador es un "experto externo" que extrae datos de una comunidad "objeto".</p>
+            <div class="concept-box">
+                "En la IAP, no se investiga PARA la comunidad, se investiga CON la comunidad. El objetivo final no es solo producir conocimiento académico (papers), sino generar una <strong>transformación social concreta</strong> que empodere a los participantes."
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 40px;">2. Los Tres Pilares de la IAP</h3>
+            <p style="margin-bottom: 20px;">Pasa el cursor sobre las tarjetas para descubrir cómo se articulan las siglas de este modelo metodológico:</p>
+            
+            <div class="authors-grid">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-search"></i>
+                            <h4>Investigación</h4>
+                            <p>El rigor en el descubrimiento</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Conocimiento Sistemático</h4>
+                            <p>Implica un procedimiento reflexivo, sistemático, controlado y crítico que tiene por finalidad estudiar algún aspecto de la realidad. Mantiene el rigor científico, pero acepta la multicausalidad y la complejidad social.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-hammer"></i>
+                            <h4>Acción</h4>
+                            <p>Modificación de la realidad</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Praxis Transformadora</h4>
+                            <p>El conocimiento se obtiene para intervenir. No basta con comprender por qué una comunidad sufre un problema (ej. violencia); la investigación debe desencadenar planes operativos y acciones para solucionarlo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-users"></i>
+                            <h4>Participación</h4>
+                            <p>Democratización del saber</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Co-investigadores</h4>
+                            <p>La comunidad deja de ser el "objeto" pasivo de estudio. Los sujetos afectados por el problema se convierten en investigadores activos de su propia realidad, tomando decisiones en todas las fases del proyecto.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-lightbulb"></i>
+                            <h4>Concientización</h4>
+                            <p>El eje transversal</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="margin-bottom: 8px;">Despertar Crítico</h4>
+                            <p>Inspirado en Paulo Freire. A través del proceso de IAP, los participantes comprenden de forma crítica las causas estructurales (políticas, económicas) de sus problemas, superando la "alienación" o el conformismo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle">3. Ciclo o Fases de la IAP</h3>
+            <p style="margin-bottom: 25px;">A diferencia del método lineal tradicional, la IAP sigue una espiral de ciclos (reflexión-acción-reflexión). Las fases generales son:</p>
+            
+            <div class="timeline-box">
+                <div class="timeline-step">
+                    <h4>1. Diagnóstico Participativo (Observación)</h4>
+                    <p>El investigador se inserta en la comunidad. Mediante asambleas, cartografía social o grupos focales, la propia comunidad identifica, prioriza y analiza el problema central que desean investigar y resolver.</p>
+                </div>
+                <div class="timeline-step">
+                    <h4>2. Planificación de la Acción (Programación)</h4>
+                    <p>Una vez diagnosticado el problema (las causas y consecuencias), el grupo (investigadores externos + comunidad) diseña de manera horizontal un plan de acción estratégico y táctico. ¿Qué vamos a hacer? ¿Con qué recursos?</p>
+                </div>
+                <div class="timeline-step">
+                    <h4>3. Ejecución (Acción)</h4>
+                    <p>Se implementan las soluciones o proyectos diseñados (ej. creación de una red comunitaria, escuela de padres, campaña de salud). Aquí se produce la intervención directa en la realidad.</p>
+                </div>
+                <div class="timeline-step">
+                    <h4>4. Evaluación y Sistematización (Reflexión)</h4>
+                    <p>Se valora continuamente si las acciones lograron el impacto deseado. Se sistematizan las experiencias, se construyen nuevos saberes y, si es necesario, se re-diagnostica, reiniciando la espiral.</p>
+                </div>
+            </div>
+
+            <button class="accordion-content">El Rol del Psicólogo en la IAP</button>
+            <div class="panel-content">
+                <p>En el marco de la investigación cualitativa comunitaria, el profesional de la psicología asume un papel diferente:</p>
+                <ul>
+                    <li><strong>No es el "Dueño del saber":</strong> Se sitúa en un plano de horizontalidad (simetría) respecto a la comunidad. Valora el conocimiento empírico y ancestral local tanto como el conocimiento académico.</li>
+                    <li><strong>Es un Facilitador / Catalizador:</strong> Su labor es brindar herramientas metodológicas y espacios para que la comunidad se exprese, reflexione y organice sus propias estrategias de cambio.</li>
+                    <li><strong>Compromiso Ético-Político:</strong> Trabaja desde la empatía y la solidaridad, promoviendo el bienestar y la defensa de los derechos humanos de las poblaciones vulnerables.</li>
+                </ul>
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 40px;">4. Recurso Audiovisual de Apoyo</h3>
+            <p style="margin-bottom: 20px;">Observa este documental histórico sobre el Dr. Orlando Fals Borda y la fundamentación epistemológica de la IAP en Colombia. Te brindará el contexto necesario para entender la dimensión social de nuestra disciplina:</p>
+            
+            <div class="videos-container">
+                <div class="video-wrapper">
+                    <!-- Orlando Fals Borda: Investigación acción participativa (UPN) -->
+                    <iframe src="https://www.youtube.com/embed/op6qVGOGinU?rel=0" title="Orlando Fals Borda: Investigación Acción Participativa" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="activity-box" style="border-color: var(--cuc-red); background: linear-gradient(135deg, #fffafa 0%, #fff0f0 100%);">
+                <h3 style="color: var(--cuc-red); margin-bottom: 10px;"><i class="fas fa-file-signature"></i> Actividad Evaluativa: Sumativa Corte 1</h3>
+                <p><strong>Dinámica de Trabajo: Construcción Teórica</strong></p>
+                
+                <ol style="margin-left: 20px; line-height: 1.8; color: #444; margin-bottom: 25px;">
+                    <li><strong>Parte 1 (Encuadre):</strong> El docente presentará la dinámica de evaluación, explicando los lineamientos de la rúbrica del Corte 1.</li>
+                    <li><strong>Parte 2 (Selección del Problema):</strong> Con base en el caso <em>Víctimas del Conflicto</em> (descrito abajo), identificarán un problema de investigación psicosocial específico que deseen abordar (desde el perdón, la resiliencia, el trauma, etc.).</li>
+                    <li><strong>Parte 3 (Búsqueda Teórica):</strong> Empleando las bases de datos de la Universidad (EBSCO, Scopus, etc.), rastrearán referentes teóricos (artículos científicos, teorías psicológicas) que permitan fundamentar y comprender el problema elegido.</li>
+                    <li><strong>Entregable (Trabajo Independiente):</strong> Como producto de esta semana de evaluación, deberán redactar un documento analítico breve (según rúbrica) articulando el problema escogido y los referentes teóricos hallados.</li>
+                </ol>
+
+                <div class="case-card" style="border-color: var(--cuc-red);">
+                    <h4 class="case-title" style="color: var(--cuc-dark);"><i class="fas fa-dove"></i> Caso de la Rúbrica</h4>
+                    <div style="background-color: var(--white); padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center;">
+                        <h2 style="color: #7a0f12; margin-bottom: 15px; font-size: 1.8rem;">Víctimas del conflicto</h2>
+                        <p style="font-size: 1.2rem; margin-bottom: 15px; color: #333;">Enfoque: Resiliencia y perdón.</p>
+                        <p style="font-size: 1.15rem; color: var(--cuc-dark); font-weight: bold; line-height: 1.5;">
+                            Pregunta: ¿Existe relación entre los factores personales de resiliencia y la disposición a perdonar a exvictimarios, en mujeres adultas víctimas radicadas en el Atlántico?
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+    </footer>
+
+    <script>
+        // Script para los acordeones dinámicos
+        var acc = document.getElementsByClassName("accordion-content");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active-acc");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+    </script>
+</body>
+</html>
