@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase 3 - Desarrollo Psicosocial y Modelo Ecológico</title>
+    <title>Clase 3 - Desarrollo Psicosocial y Ecológico</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -12,9 +12,9 @@
             --cuc-dark: #1a1a1a;
             --cuc-gray: #f4f4f4;
             --white: #ffffff;
-            --cuc-gold: #cba052;
             --soft-red: #ffebeb;
             --soft-green: #e8f5e9;
+            --cuc-gold: #cba052;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -85,7 +85,7 @@
         }
         
         .class-header-card::after {
-            content: '\f2b9'; /* FontAwesome address-book icon for identity */
+            content: '\f2b9'; /* ID Card icon */
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
             position: absolute;
@@ -115,12 +115,8 @@
             margin-bottom: 40px;
         }
         
-        @media screen and (max-width: 1024px) {
-            .class-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media screen and (max-width: 768px) {
-            .class-grid { grid-template-columns: 1fr; }
-        }
+        @media screen and (max-width: 1024px) { .class-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media screen and (max-width: 768px) { .class-grid { grid-template-columns: 1fr; } }
 
         .detail-card {
             background: white;
@@ -157,56 +153,60 @@
         .theorist-panels { flex: 2.5; min-width: 300px; background: white; padding: 40px; }
         .t-panel { display: none; animation: fadeIn 0.5s ease; }
         .t-panel.active { display: block; }
-        .t-panel h4 { color: var(--cuc-dark); font-size: 1.8rem; margin-bottom: 25px; }
-        .t-panel h4 span { color: var(--cuc-red); }
+        .t-panel h4 { color: var(--cuc-dark); font-size: 1.8rem; margin-bottom: 25px; border-bottom: 2px dashed #eee; padding-bottom: 10px; }
+        .t-panel h4 span { color: var(--cuc-red); font-size: 1.2rem; display: block; margin-top: 5px;}
         
         .t-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 25px; }
         .t-card { background: var(--cuc-gray); padding: 25px; border-radius: 10px; border-top: 4px solid var(--cuc-gold); box-shadow: 0 4px 6px rgba(0,0,0,0.03); }
         .t-card h5 { color: var(--cuc-red); margin-bottom: 12px; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
-        .t-card p { font-size: 0.95rem; color: #555; }
+        .t-card p { font-size: 0.95rem; color: #444; line-height: 1.6; }
+        .highlight-box { background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin-top: 15px; font-size: 0.9rem; color: #664d03; border-radius: 4px; }
 
-        .videos-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-
-        .workshop-container { background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; margin-top: 40px; border: 1px solid #ddd; }
-        .workshop-header { background: linear-gradient(135deg, var(--cuc-dark), #333); color: white; padding: 30px; text-align: center; }
-        .workshop-header h3 { color: var(--cuc-gold); font-size: 1.8rem; margin-bottom: 10px; }
-        .workshop-body { padding: 40px; }
-        
-        .step-box { display: flex; margin-bottom: 30px; background: #fafafa; border-radius: 10px; border-left: 5px solid var(--cuc-red); box-shadow: 0 3px 10px rgba(0,0,0,0.03); transition: transform 0.3s; }
-        .step-box:hover { transform: translateX(10px); }
-        .step-num { flex: 0 0 80px; background: var(--cuc-red); color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 900; border-radius: 10px 0 0 10px; }
-        .step-content { padding: 25px; flex: 1; }
-        .step-content h4 { color: var(--cuc-dark); margin-bottom: 15px; font-size: 1.3rem; }
-        
-        .task-list { list-style: none; padding: 0; margin-bottom: 0; }
-        .task-list li { position: relative; padding-left: 30px; margin-bottom: 12px; color: #555; }
-        .task-list li i { position: absolute; left: 0; top: 3px; color: var(--cuc-gold); font-size: 1.1rem; }
-        
-        .eco-canvas { margin-top: 30px; border: 2px dashed #ccc; padding: 30px; border-radius: 15px; background: #fdfdfd; }
-        
-        .history-container { margin-bottom: 20px; }
+        .history-container { margin-bottom: 40px; }
         .history-item { background-color: var(--white); border: 1px solid #ddd; border-left: 5px solid var(--cuc-gold); margin-bottom: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .history-header { padding: 15px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: var(--cuc-dark); transition: background-color 0.3s; }
+        .history-header { padding: 15px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: var(--cuc-dark); transition: background-color 0.3s; font-size: 1.1rem; }
         .history-header:hover { background-color: var(--cuc-gray); }
         .history-header i { transition: transform 0.3s; }
-        .history-content { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease; background-color: #fafafa; color: #555; font-size: 0.95rem; }
-        .history-item.open .history-content { padding: 15px 20px; max-height: 800px; border-top: 1px solid #eee; }
+        .history-content { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease; background-color: #fafafa; color: #444; font-size: 0.95rem; }
+        .history-item.open .history-content { padding: 20px; max-height: 1000px; border-top: 1px solid #eee; }
         .history-item.open .history-header i { transform: rotate(180deg); }
 
         .rp-box { padding: 15px; border-radius: 8px; margin-top: 15px; margin-bottom: 10px; }
         .rp-box.risk { background-color: var(--soft-red); border-left: 4px solid var(--cuc-red); }
         .rp-box.protect { background-color: var(--soft-green); border-left: 4px solid #4CAF50; }
-        .rp-box h5 { margin-bottom: 8px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
+        .rp-box h5 { margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
         .rp-box.risk h5 { color: var(--cuc-red); }
         .rp-box.protect h5 { color: #2e7d32; }
-        .rp-box ul { padding-left: 20px; }
+        .rp-box ul { padding-left: 20px; line-height: 1.6; }
+        .rp-box li { margin-bottom: 8px; }
+
+        .workshop-container { background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); overflow: hidden; margin-top: 50px; border: 2px solid #eee; }
+        .workshop-header { background: linear-gradient(135deg, var(--cuc-dark), #333); color: white; padding: 30px 40px; text-align: center; position: relative; }
+        .workshop-header h3 { color: var(--cuc-gold); font-size: 2rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 15px; }
+        .workshop-header p { font-size: 1.1rem; opacity: 0.9; max-width: 800px; margin: 0 auto; }
+        .workshop-body { padding: 40px; background-color: #fafafa; }
+        
+        .step-box { display: flex; margin-bottom: 30px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: transform 0.3s; border: 1px solid #eaeaea; }
+        .step-box:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .step-num { flex: 0 0 100px; background: var(--cuc-red); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px 0 0 12px; padding: 20px; }
+        .step-num span { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; opacity: 0.8; }
+        .step-num strong { font-size: 3rem; line-height: 1; }
+        .step-content { padding: 30px; flex: 1; }
+        .step-content h4 { color: var(--cuc-dark); margin-bottom: 15px; font-size: 1.4rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px;}
+        
+        .task-list { list-style: none; padding: 0; margin-bottom: 0; }
+        .task-list li { position: relative; padding-left: 35px; margin-bottom: 15px; color: #444; font-size: 1.05rem; line-height: 1.6; }
+        .task-list li i { position: absolute; left: 0; top: 4px; color: var(--cuc-gold); font-size: 1.3rem; }
+        
+        .case-study { background-color: #f8f9fa; border-left: 4px solid var(--cuc-dark); padding: 20px; margin-bottom: 20px; border-radius: 0 8px 8px 0; font-style: italic;}
+
+        .videos-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
         footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
-
         @media screen and (max-width: 900px) { .qr-code { display: none; } }
-        @media screen and (max-width: 600px) { .step-box { flex-direction: column; } .step-num { border-radius: 10px 10px 0 0; padding: 15px; } }
+        @media screen and (max-width: 600px) { .step-box { flex-direction: column; } .step-num { border-radius: 12px 12px 0 0; padding: 15px; flex-direction: row; gap: 10px; align-items: baseline; } .step-num strong { font-size: 2rem; } }
     </style>
 </head>
 <body>
@@ -246,30 +246,31 @@
         
         <div class="class-header-card">
             <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 1 • Sesión 3</span>
-            <h1>Desarrollo Psicosocial y Modelo Ecológico</h1>
+            <h1>Desarrollo Psicosocial y Articulación Ecológica</h1>
             <div class="class-indicator">
                 <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
-                Articula las teorías del desarrollo psicosocial (identidad) con el modelo ecológico de Bronfenbrenner para establecer relaciones entre los factores de riesgo/protección en los sistemas del entorno.
+                Articula las teorías del desarrollo adolescente (Identidad, Pares, Familia) con el modelo ecológico para establecer relaciones rigurosas entre los factores de riesgo y protección.
             </div>
         </div>
 
         <div class="class-grid">
             <div class="detail-card">
                 <h3><i class="fas fa-book-open"></i> Saberes</h3>
-                <p>Temas centrales de la sesión:</p>
+                <p>Temáticas a profundidad:</p>
                 <ul>
-                    <li>Identidad (Erikson) y Estados de Identidad (Marcia).</li>
-                    <li>Autoconcepto y relaciones (Familia y pares).</li>
-                    <li>Articulación Ecológica: Factores de Riesgo y Protección.</li>
+                    <li><strong>Identidad:</strong> Conflicto de Erikson y Estados de Marcia.</li>
+                    <li><strong>Transición Relacional:</strong> Dinámica familiar (Individuación) e influencia de pares.</li>
+                    <li><strong>Modelo Ecológico:</strong> Riesgos vs. Protección.</li>
                 </ul>
             </div>
 
             <div class="detail-card" style="border-top-color: #2196F3;">
-                <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
-                <p><strong>Actividad en aula:</strong></p>
+                <h3 style="color: #2196F3;"><i class="fas fa-desktop"></i> Asincrónico</h3>
+                <p><strong>Actividad de hoy:</strong></p>
                 <ul>
-                    <li>Taller de análisis de identidad y género.</li>
-                    <li><strong>Construcción guiada</strong> del mapa ecológico de cinco niveles (Bronfenbrenner).</li>
+                    <li>Revisión del material interactivo.</li>
+                    <li>Visualización de recursos.</li>
+                    <li><strong>Taller de Análisis Psicosocial:</strong> Desarrollo autónomo de viñetas clínicas.</li>
                 </ul>
             </div>
 
@@ -277,290 +278,325 @@
                 <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
                 <p><strong>Preparación:</strong></p>
                 <ul>
-                    <li>Rastreo y organización de factores de riesgo y protección.</li>
-                    <li>Aplicación preliminar de variables al <strong>Caso de Estudio</strong>.</li>
+                    <li>Estudio de los 4 estados de Identidad (Marcia).</li>
+                    <li>Lectura sobre los niveles de Bronfenbrenner.</li>
+                    <li>Organización del equipo de trabajo.</li>
                 </ul>
             </div>
 
             <div class="detail-card" style="border-top-color: #4CAF50;">
                 <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
-                <p><strong>Estrategias:</strong></p>
+                <p><strong>Estrategias formativas:</strong></p>
                 <ul>
-                    <li>Valoración del <strong>organizador gráfico</strong> (mapa ecológico) en construcción.</li>
-                    <li><strong>Instrumento:</strong> Rúbrica Formativa.</li>
+                    <li>Desarrollo argumentativo del taller asincrónico.</li>
+                    <li>Precisión en el uso del vocabulario técnico.</li>
+                    <li><strong>Instrumento:</strong> Rúbrica de análisis teórico.</li>
                 </ul>
             </div>
         </div>
 
         <div class="theme-section">
-            <h2 class="theme-title"><i class="fas fa-fingerprint"></i> Desarrollo Temático: La Búsqueda del "Yo"</h2>
-            
-            <h3 class="theme-subtitle">1. La Identidad en la Adolescencia</h3>
-            <p style="margin-bottom: 25px;">La tarea central de la adolescencia es resolver la confusión de roles. Interactúa con las pestañas para explorar cómo Erikson define esta crisis y cómo James Marcia la clasifica en cuatro estados basados en la exploración y el compromiso.</p>
+            <h2 class="theme-title"><i class="fas fa-fingerprint"></i> Eje Temático 1: La Compleja Búsqueda de la Identidad</h2>
+            <p style="margin-bottom: 25px; font-size: 1.1rem; color: #444;">La adolescencia es el laboratorio psicológico donde se forja el "Yo". Navega por las siguientes pestañas para explorar de forma ampliada cómo la psicología evolutiva entiende esta profunda reconfiguración interna.</p>
             
             <div class="theorist-dashboard">
                 <div class="theorist-tabs">
-                    <button class="t-tab active" onclick="openTheorist(event, 't-erikson')">El Conflicto (Erikson) <i class="fas fa-chevron-right"></i></button>
-                    <button class="t-tab" onclick="openTheorist(event, 't-marcia1')">Difusión y Exclusión (Marcia) <i class="fas fa-chevron-right"></i></button>
-                    <button class="t-tab" onclick="openTheorist(event, 't-marcia2')">Moratoria y Logro (Marcia) <i class="fas fa-chevron-right"></i></button>
-                    <button class="t-tab" onclick="openTheorist(event, 't-relaciones')">Familia y Pares <i class="fas fa-chevron-right"></i></button>
+                    <button class="t-tab active" onclick="openTheorist(event, 't-erikson')">Erikson: El Gran Conflicto <i class="fas fa-chevron-right"></i></button>
+                    <button class="t-tab" onclick="openTheorist(event, 't-marcia')">Marcia: Estados de Identidad <i class="fas fa-chevron-right"></i></button>
+                    <button class="t-tab" onclick="openTheorist(event, 't-familia')">La Familia y el Desapego <i class="fas fa-chevron-right"></i></button>
+                    <button class="t-tab" onclick="openTheorist(event, 't-pares')">El Grupo de Pares <i class="fas fa-chevron-right"></i></button>
                 </div>
                 
                 <div class="theorist-panels">
                     
+                    <!-- Erikson Panel -->
                     <div id="t-erikson" class="t-panel active">
-                        <h4>Identidad vs. Confusión de Roles <span>(Erik Erikson)</span></h4>
-                        <p>Según la teoría psicosocial de Erikson, la adolescencia es el escenario de la quinta crisis normativa. El joven se enfrenta a la pregunta fundamental: <strong>"¿Quién soy yo y hacia dónde voy?"</strong></p>
+                        <h4>Identidad vs. Confusión de Roles <span>Teoría del Desarrollo Psicosocial (Erik Erikson)</span></h4>
+                        <p style="margin-bottom: 15px;">Para Erikson, la adolescencia representa la <strong>quinta crisis normativa</strong> del ciclo vital. Es el momento en que el individuo deja de ser el niño que sus padres moldearon y debe decidir, de forma autónoma, quién será en la sociedad adulta.</p>
+                        
+                        <p style="margin-bottom: 15px;">La tarea central es integrar las experiencias del pasado (lo que fui), las capacidades presentes (lo que soy) y las expectativas futuras (lo que deseo ser) en un sentido unificado y coherente del "yo". Esto implica tres dimensiones cruciales: la elección de una ocupación, la adopción de valores ideológicos, y el desarrollo de una identidad sexual satisfactoria.</p>
+
+                        <div class="t-grid">
+                            <div class="t-card">
+                                <h5><i class="fas fa-check-circle" style="color: #4CAF50;"></i> Resolución Exitosa: Fidelidad</h5>
+                                <p>Si el adolescente logra resolver la crisis, desarrolla la virtud de la <strong>fidelidad</strong>: la capacidad de mantener lealtades a ideales y valores, y de confiar en los demás, sabiendo quién es sin perderse en el grupo.</p>
+                            </div>
+                            <div class="t-card">
+                                <h5><i class="fas fa-exclamation-triangle" style="color: var(--cuc-red);"></i> Fracaso: Confusión de Roles</h5>
+                                <p>Si no se logra integrar el yo, el adolescente cae en la confusión. Esto se manifiesta en la incapacidad prolongada para elegir una carrera, el aislamiento social, la intolerancia dogmática hacia los que son diferentes, o la adopción de "identidades negativas" (ej. unirse a pandillas para tener al menos *alguna* identidad definida).</p>
+                            </div>
+                        </div>
+                        <div class="highlight-box">
+                            <strong>Nota Clínica:</strong> Erikson introdujo el concepto de <em>"Moratoria Psicosocial"</em>, un periodo de "tiempo libre" que la sociedad otorga al joven (generalmente durante la universidad o los últimos años de escuela) para explorar roles y compromisos de forma segura antes de asumir responsabilidades adultas definitivas.
+                        </div>
+                    </div>
+
+                    <!-- Marcia Panel -->
+                    <div id="t-marcia" class="t-panel">
+                        <h4>Los Cuatro Estados de Identidad <span>El modelo empírico de James Marcia</span></h4>
+                        <p style="margin-bottom: 15px;">Basándose en Erikson, Marcia diseñó entrevistas para medir la identidad empíricamente. Determinó que la identidad no es un "todo o nada", sino que depende de la combinación de dos variables:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px; color: #444;">
+                            <li><strong>Crisis (Exploración):</strong> Período de toma de decisiones consciente, evaluando alternativas ideológicas o vocacionales de forma activa.</li>
+                            <li><strong>Compromiso:</strong> Inversión personal firme y asunción de responsabilidades en una ocupación o sistema de creencias.</li>
+                        </ul>
+
+                        <div class="t-grid">
+                            <div class="t-card">
+                                <h5>1. Difusión de Identidad</h5>
+                                <p style="font-weight: bold; color: #777; font-size: 0.85rem; text-transform: uppercase;">Sin Exploración / Sin Compromiso</p>
+                                <p style="margin-top: 10px;">El joven no está considerando opciones ni ha asumido compromisos. Se muestra apático, evita tomar decisiones y tiende a tener baja autoestima y escaso sentido de dirección. <em>Ej: "No sé qué estudiar y la verdad no me importa pensarlo ahora".</em></p>
+                            </div>
+                            <div class="t-card">
+                                <h5>2. Exclusión (Foreclosure)</h5>
+                                <p style="font-weight: bold; color: var(--cuc-red); font-size: 0.85rem; text-transform: uppercase;">Sin Exploración / Con Compromiso</p>
+                                <p style="margin-top: 10px;">El joven asumió compromisos firmes, pero <strong>sin cuestionar ni explorar</strong> por sí mismo. Aceptó ciegamente los planes que sus padres o la cultura le impusieron. Son obedientes pero carecen de autonomía profunda. <em>Ej: "Estudio abogacía porque mi papá y mi abuelo son abogados, es lo que me toca".</em></p>
+                            </div>
+                            <div class="t-card">
+                                <h5>3. Moratoria</h5>
+                                <p style="font-weight: bold; color: #FF9800; font-size: 0.85rem; text-transform: uppercase;">Con Exploración activa / Sin Compromiso</p>
+                                <p style="margin-top: 10px;">Están en plena "crisis". Investigan intensa y ansiosamente múltiples alternativas (carreras, religiones, estilos de vida) pero aún no se deciden. Es una fase caótica pero <strong>necesaria y saludable</strong> para el desarrollo. <em>Ej: "Ayer quería ser músico, hoy leo sobre filosofía; necesito descubrir qué me apasiona realmente".</em></p>
+                            </div>
+                            <div class="t-card">
+                                <h5>4. Consecución (Logro)</h5>
+                                <p style="font-weight: bold; color: #4CAF50; font-size: 0.85rem; text-transform: uppercase;">Con Exploración previa / Con Compromiso</p>
+                                <p style="margin-top: 10px;">El estado más sano. Tras haber atravesado una crisis de exploración (moratoria), el joven tomó decisiones 100% personales y firmes sobre su vocación e ideología. Demuestran alta resiliencia y seguridad. <em>Ej: "Tras evaluar varias opciones y discutir con mi familia, decidí firmemente dedicarme a la psicología clínica".</em></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Familia Panel -->
+                    <div id="t-familia" class="t-panel">
+                        <h4>Transición Familiar e Individuación <span>El microsistema primordial en reestructuración</span></h4>
+                        <p style="margin-bottom: 15px;">La adolescencia exige que la familia pase de un sistema jerárquico de control total (niñez) a un sistema más igualitario de cooperación. Este proceso se llama <strong>Individuación</strong>: la búsqueda del adolescente por desarrollar su autonomía psicológica y emocional sin romper los vínculos afectivos con los padres.</p>
                         
                         <div class="t-grid">
+                            <div class="t-card">
+                                <h5><i class="fas fa-fire-alt"></i> El Conflicto Normativo</h5>
+                                <p>Las discusiones menores aumentan (horarios, ropa, tareas). Lejos de ser "patológico", un nivel moderado de conflicto es el mecanismo psicológico mediante el cual el adolescente ensaya la argumentación, la negociación y delimita su propio espacio emocional frente a la autoridad.</p>
+                            </div>
+                            <div class="t-card">
+                                <h5><i class="fas fa-shield-alt" style="color: #4CAF50;"></i> Estilos de Crianza (Baumrind)</h5>
+                                <p>El estilo <strong>Autoritativo (Democrático)</strong> es el factor protector más fuerte. Los padres autoritativos establecen límites firmes y claros, pero mantienen una comunicación cálida, validan las emociones del joven y permiten la negociación progresiva de responsabilidades.</p>
+                            </div>
                             <div class="t-card" style="grid-column: span 2;">
-                                <h5><i class="fas fa-balance-scale"></i> Resolución de la Crisis</h5>
-                                <p>Una resolución exitosa implica integrar las experiencias del pasado, las capacidades presentes y las expectativas futuras en un sentido coherente del "yo". Esto se logra a través de la elección de una ocupación, la adopción de valores y el desarrollo de una identidad sexual satisfactoria.</p>
-                                <p style="margin-top: 10px;">Si la crisis no se resuelve, el adolescente cae en la <strong>Confusión de Roles</strong>, caracterizada por la incapacidad de elegir una carrera, el aislamiento o la adopción de identidades negativas (rebelión destructiva).</p>
+                                <h5><i class="fas fa-exclamation-circle" style="color: var(--cuc-red);"></i> El Riesgo de los Extremos</h5>
+                                <p>Los padres <strong>Autoritarios</strong> (alto control, baja calidez) fuerzan al adolescente hacia el estado de <em>Exclusión</em> (sumisión) o hacia la rebelión destructiva. Por otro lado, los padres <strong>Permisivos/Negligentes</strong> (bajo control) dificultan que el joven estructure su identidad, dejándolo a la deriva en un estado de <em>Difusión</em>.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div id="t-marcia1" class="t-panel">
-                        <h4>Estados de Identidad - Parte 1 <span>(James Marcia)</span></h4>
-                        <p>Basado en Erikson, Marcia propuso que la identidad se evalúa en función de dos variables: <strong>Crisis (Exploración)</strong> y <strong>Compromiso</strong>.</p>
+                    <!-- Pares Panel -->
+                    <div id="t-pares" class="t-panel">
+                        <h4>El Poder del Grupo de Pares <span>El nuevo centro de gravedad psicosocial</span></h4>
+                        <p style="margin-bottom: 15px;">A medida que el adolescente se distancia emocionalmente de sus padres, el grupo de iguales se convierte en su principal ecosistema afectivo. El grupo proporciona un "escenario seguro" lejos de la vigilancia adulta para ensayar identidades, roles sexuales e intimidad emocional.</p>
                         
                         <div class="t-grid">
                             <div class="t-card">
-                                <h5><i class="fas fa-wind"></i> 1. Difusión de Identidad</h5>
-                                <p style="font-weight: bold; color: var(--cuc-red); font-size: 0.85rem; text-transform: uppercase;">Sin Crisis / Sin Compromiso</p>
-                                <p style="margin-top: 10px;">El adolescente no ha considerado seriamente opciones (no explora) ni ha asumido compromisos vocacionales o ideológicos. Suele dejarse llevar por el momento, mostrando desinterés por el futuro o apatía.</p>
+                                <h5><i class="fas fa-users"></i> Evolución de la Amistad</h5>
+                                <p>En la infancia, un amigo es "alguien con quien jugar". En la adolescencia, la amistad requiere <strong>intimidad psicológica y lealtad</strong>. Las amistades íntimas permiten compartir las vulnerabilidades y reducir la ansiedad de la "audiencia imaginaria" (Elkind).</p>
                             </div>
                             <div class="t-card">
-                                <h5><i class="fas fa-lock"></i> 2. Exclusión (Foreclosure)</h5>
-                                <p style="font-weight: bold; color: var(--cuc-red); font-size: 0.85rem; text-transform: uppercase;">Sin Crisis / Con Compromiso</p>
-                                <p style="margin-top: 10px;">El joven ha asumido compromisos firmes, pero <strong>sin haber explorado</strong> por sí mismo. Acepta pasivamente la identidad o profesión que sus padres o figuras de autoridad han elegido para él, evitando la crisis.</p>
+                                <h5><i class="fas fa-magnet"></i> La Presión de Grupo</h5>
+                                <p>Alcanza su pico entre los 13 y 15 años. Debido a la inmadurez de las funciones ejecutivas y a la hiperactividad de la amígdala (como vimos en el Modelo Dual del cerebro), el adolescente es biológicamente vulnerable a priorizar la validación social inmediata por encima de la evaluación lógica del riesgo.</p>
                             </div>
                         </div>
-                    </div>
-
-                    <div id="t-marcia2" class="t-panel">
-                        <h4>Estados de Identidad - Parte 2 <span>(James Marcia)</span></h4>
-                        
-                        <div class="t-grid">
-                            <div class="t-card">
-                                <h5><i class="fas fa-search"></i> 3. Moratoria</h5>
-                                <p style="font-weight: bold; color: var(--cuc-red); font-size: 0.85rem; text-transform: uppercase;">Con Crisis / Sin Compromiso</p>
-                                <p style="margin-top: 10px;">El adolescente está en plena crisis activa. Explora intensamente diversas opciones (carreras, religiones, estilos de vida), pero aún no ha tomado una decisión definitiva. Es un estado de "pausa" saludable y necesaria.</p>
-                            </div>
-                            <div class="t-card">
-                                <h5><i class="fas fa-check-circle" style="color: #4CAF50;"></i> 4. Consecución (Logro)</h5>
-                                <p style="font-weight: bold; color: #4CAF50; font-size: 0.85rem; text-transform: uppercase;">Con Crisis / Con Compromiso</p>
-                                <p style="margin-top: 10px;">Tras un periodo de exploración consciente y crisis (moratoria), el adolescente toma decisiones firmes y personales sobre su vocación e ideología, logrando una identidad autónoma y segura.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="t-relaciones" class="t-panel">
-                        <h4>Transición Relacional <span>(Familia y Pares)</span></h4>
-                        <p>La búsqueda de identidad genera una reconfiguración drástica en el microsistema social del adolescente.</p>
-                        
-                        <div class="t-grid">
-                            <div class="t-card">
-                                <h5><i class="fas fa-home"></i> Dinámica Familiar</h5>
-                                <p>Ocurre un proceso de <strong>individuación</strong>. Aumentan los conflictos normativos con los padres al buscar autonomía. El estilo de crianza <em>autoritativo</em> (democrático, con afecto y límites claros) es el factor protector más efectivo en esta transición.</p>
-                            </div>
-                            <div class="t-card">
-                                <h5><i class="fas fa-users"></i> Grupo de Pares</h5>
-                                <p>Se convierten en la principal fuente de validación emocional. Proporcionan un escenario seguro para ensayar nuevos roles lejos de la mirada adulta, aunque la susceptibilidad a la presión grupal alcanza su punto máximo debido al neurodesarrollo temprano (amígdala).</p>
-                            </div>
+                        <div class="highlight-box">
+                            <strong>El Efecto Espejo:</strong> Los adolescentes no eligen amigos al azar. Tienden a agruparse con personas que comparten sus mismos valores y antecedentes (homofilia). Por lo tanto, el grupo de pares a menudo *refuerza* las pautas culturales y valores que los adolescentes ya traen de su microsistema familiar o macrosistema cultural.
                         </div>
                     </div>
 
                 </div>
             </div>
+        </div>
 
-            <h3 class="theme-subtitle">2. Recurso Audiovisual</h3>
-            <div class="videos-container" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto 30px;">
-                <div class="video-wrapper">
-                    <!-- Video sobre Identidad y Erikson -->
-                    <iframe src="https://www.youtube.com/embed/aYCBdZLCDBQ?rel=0" title="Desarrollo Psicosocial Erikson" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <h3 class="theme-subtitle" style="text-align: center; margin-top: 40px;">Recurso Audiovisual</h3>
+        <p style="text-align: center; margin-bottom: 20px;">Análisis integral del desarrollo adolescente:</p>
+        
+        <div class="videos-container" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto 30px;">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/5deSkroXJio?rel=0" title="Recurso Audiovisual" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="workshop-container">
+            <div class="workshop-header">
+                <h3><i class="fas fa-laptop-house"></i> Laboratorio de Análisis Psicosocial</h3>
+                <p>Identidad y Entorno (Taller Asincrónico)</p>
+                <div style="background: rgba(255,255,255,0.1); display: inline-block; padding: 5px 15px; border-radius: 20px; margin-top: 15px; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.2);">
+                    <i class="fas fa-users"></i> Grupos de máximo 3 estudiantes (o individual). Entregable independiente.
                 </div>
             </div>
-
-            <!-- INICIO DEL TALLER PRESENCIAL -->
-            <div class="workshop-container">
-                <div class="workshop-header">
-                    <h3><i class="fas fa-tools"></i> Taller Presencial: Cartografía de la Identidad y el Ecosistema</h3>
-                    <p style="font-size: 1.1rem; opacity: 0.9; margin: 0;">Análisis del caso, construcción guiada y preparación para el ABP</p>
-                </div>
-                
-                <div class="workshop-body">
-                    <p style="margin-bottom: 30px; font-size: 1.1rem; color: #444;"><strong>Dinámica de la sesión:</strong> Organícense en sus subgrupos de ABP. Desarrollaremos este taller interactivo en tres fases secuenciales, aplicando los postulados de Erikson, Marcia y Bronfenbrenner al caso de estudio asignado.</p>
-
-                    <!-- FASE 1 -->
-                    <div class="step-box">
-                        <div class="step-num">1</div>
-                        <div class="step-content">
-                            <h4>Fase 1: Diagnóstico de Identidad, Género y Vocación</h4>
-                            <p style="margin-bottom: 15px;">Antes de mapear el entorno ecológico, debemos comprender el estado psicosocial interno del protagonista de nuestro caso.</p>
-                            <ul class="task-list">
-                                <li><i class="fas fa-check-circle"></i> <strong>Evaluación de Identidad:</strong> Discutan y sustenten en qué "Estado de Identidad" (Marcia) se encuentra el sujeto. ¿Evidencia una crisis activa? ¿Ha establecido compromisos firmes?</li>
-                                <li><i class="fas fa-check-circle"></i> <strong>Mandatos de Género:</strong> Analicen cómo los roles de género impuestos por su familia o cultura limitan/facilitan su exploración.</li>
-                                <li><i class="fas fa-check-circle"></i> <strong>Tensión Relacional:</strong> Describan un conflicto normativo evidenciado entre la búsqueda de autonomía familiar y la presión de sus pares.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- FASE 2 -->
-                    <div class="step-box" style="border-left-color: var(--cuc-gold);">
-                        <div class="step-num" style="background: var(--cuc-gold);">2</div>
-                        <div class="step-content">
-                            <h4>Fase 2: Construcción Guiada del Mapa Ecológico</h4>
-                            <p style="margin-bottom: 15px;">El objetivo central de la Entrega ABP 1. Clasifiquen sistemáticamente los eventos de la historia de vida del sujeto en los 5 niveles ambientales, identificando el riesgo y la protección.</p>
-                            <ul class="task-list">
-                                <li><i class="fas fa-search-location"></i> <strong>Rastreo Sistemático:</strong> Extraigan evidencias textuales del caso.</li>
-                                <li><i class="fas fa-balance-scale"></i> <strong>Clasificación:</strong> Identifiquen al menos un <strong>Factor de Riesgo</strong> (vulnerabilidad) y un <strong>Factor Protector</strong> en cada nivel.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- ACORDEÓN ECOLÓGICO DENTRO DE LA FASE 2 -->
-                    <div class="eco-canvas">
-                        <h4 style="color: var(--cuc-red); margin-bottom: 25px; font-size: 1.4rem; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 15px;"><i class="fas fa-sitemap"></i> Guía Clínica: Clasificación de Riesgo y Protección</h4>
-
-                        <div class="history-container">
-                            <div class="history-item" onclick="toggleHistory(this)">
-                                <div class="history-header"><span>1. Microsistema (Entorno Inmediato)</span><i class="fas fa-chevron-down"></i></div>
-                                <div class="history-content">
-                                    <p style="margin-bottom: 10px; margin-top: 15px;">Interacciones directas cara a cara (Familia, escuela, pares, barrio).</p>
-                                    <div class="rp-box risk">
-                                        <h5><i class="fas fa-exclamation-triangle"></i> Factores de Riesgo Clínico</h5>
-                                        <ul>
-                                            <li>Violencia intrafamiliar, pautas de crianza negligentes o autoritarias.</li>
-                                            <li>Bullying escolar o rechazo por parte del grupo de pares.</li>
-                                            <li>Consumo de sustancias dentro del hogar.</li>
-                                        </ul>
-                                    </div>
-                                    <div class="rp-box protect">
-                                        <h5><i class="fas fa-shield-alt"></i> Factores Protectores</h5>
-                                        <ul>
-                                            <li>Estilo de crianza democrático (apoyo emocional + límites claros).</li>
-                                            <li>Apego seguro con al menos un cuidador primario.</li>
-                                            <li>Red de amigos prosociales e inclusión escolar.</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="history-item" onclick="toggleHistory(this)">
-                                <div class="history-header"><span>2. Mesosistema (Interconexiones)</span><i class="fas fa-chevron-down"></i></div>
-                                <div class="history-content">
-                                    <p style="margin-bottom: 10px; margin-top: 15px;">Relación y comunicación entre dos o más microsistemas.</p>
-                                    <div class="rp-box risk">
-                                        <h5><i class="fas fa-exclamation-triangle"></i> Factores de Riesgo Clínico</h5>
-                                        <ul>
-                                            <li>Desconexión o conflicto abierto entre los padres y la escuela.</li>
-                                            <li>Choque de valores entre el hogar (conservador) y el grupo de amigos.</li>
-                                        </ul>
-                                    </div>
-                                    <div class="rp-box protect">
-                                        <h5><i class="fas fa-shield-alt"></i> Factores Protectores</h5>
-                                        <ul>
-                                            <li>Alta participación de los padres en las actividades académicas.</li>
-                                            <li>Coherencia normativa entre la escuela, la familia y el barrio.</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="history-item" onclick="toggleHistory(this)">
-                                <div class="history-header"><span>3. Exosistema (Impacto Indirecto)</span><i class="fas fa-chevron-down"></i></div>
-                                <div class="history-content">
-                                    <p style="margin-bottom: 10px; margin-top: 15px;">Entornos donde el adolescente no participa directamente, pero cuyas decisiones le afectan.</p>
-                                    <div class="rp-box risk">
-                                        <h5><i class="fas fa-exclamation-triangle"></i> Factores de Riesgo Clínico</h5>
-                                        <ul>
-                                            <li>Estrés laboral agudo, desempleo prolongado o bajos salarios de los padres.</li>
-                                            <li>Falta de infraestructura de salud, parques o seguridad comunitaria.</li>
-                                        </ul>
-                                    </div>
-                                    <div class="rp-box protect">
-                                        <h5><i class="fas fa-shield-alt"></i> Factores Protectores</h5>
-                                        <ul>
-                                            <li>Políticas laborales de los padres que permiten tiempo en familia.</li>
-                                            <li>Programas gubernamentales de subsidio o apoyo psicosocial local.</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="history-item" onclick="toggleHistory(this)">
-                                <div class="history-header"><span>4. Macrosistema (Cultura y Valores)</span><i class="fas fa-chevron-down"></i></div>
-                                <div class="history-content">
-                                    <p style="margin-bottom: 10px; margin-top: 15px;">Ideologías, leyes, modelos económicos y patrones culturales de la sociedad.</p>
-                                    <div class="rp-box risk">
-                                        <h5><i class="fas fa-exclamation-triangle"></i> Factores de Riesgo Clínico</h5>
-                                        <ul>
-                                            <li>Pobreza estructural, racismo sistémico o discriminación de género.</li>
-                                            <li>Normalización cultural de la violencia o el consumo de alcohol.</li>
-                                            <li>Estándares irreales de belleza promovidos en redes sociales globales.</li>
-                                        </ul>
-                                    </div>
-                                    <div class="rp-box protect">
-                                        <h5><i class="fas fa-shield-alt"></i> Factores Protectores</h5>
-                                        <ul>
-                                            <li>Leyes sólidas de protección de derechos humanos y de infancia.</li>
-                                            <li>Culturas que valoran y financian la educación pública equitativa.</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="history-item" onclick="toggleHistory(this)">
-                                <div class="history-header"><span>5. Cronosistema (Tiempo e Historia)</span><i class="fas fa-chevron-down"></i></div>
-                                <div class="history-content">
-                                    <p style="margin-bottom: 10px; margin-top: 15px;">Dimensión temporal: momento biográfico del evento y época sociohistórica.</p>
-                                    <div class="rp-box risk">
-                                        <h5><i class="fas fa-exclamation-triangle"></i> Factores de Riesgo Clínico</h5>
-                                        <ul>
-                                            <li>Eventos traumáticos no normativos (muerte temprana de un padre).</li>
-                                            <li>Crecer durante una guerra, una pandemia global o crisis económica severa.</li>
-                                        </ul>
-                                    </div>
-                                    <div class="rp-box protect">
-                                        <h5><i class="fas fa-shield-alt"></i> Factores Protectores</h5>
-                                        <ul>
-                                            <li>Transiciones de vida estables y "a tiempo" (reloj social).</li>
-                                            <li>Avances históricos en medicina y conectividad accesibles.</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- Cierre eco-canvas -->
-
-                    <!-- FASE 3 -->
-                    <div class="step-box" style="border-left-color: #4CAF50; margin-top: 40px; margin-bottom: 0;">
-                        <div class="step-num" style="background: #4CAF50;">3</div>
-                        <div class="step-content">
-                            <h4>Fase 3: Cierre y Evaluación Formativa</h4>
-                            <ul class="task-list">
-                                <li><i class="fas fa-paint-brush"></i> <strong>Borrador Visual:</strong> En papel o herramienta digital (Miro, Canva), diseñen el esquema preliminar de su Mapa Ecológico integrando las fases 1 y 2.</li>
-                                <li><i class="fas fa-comments"></i> <strong>Socialización:</strong> Un representante presentará el hallazgo más crítico del Microsistema y cómo este es influenciado por el Macrosistema.</li>
-                                <li><i class="fas fa-clipboard-check"></i> <strong>Evaluación:</strong> El docente aplicará la <em>Rúbrica de Avance</em>, brindando retroalimentación directa antes de la entrega formal.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div> <!-- Cierre workshop-body -->
-            </div> <!-- Cierre workshop-container -->
             
-        </div> <!-- Cierre theme-section -->
+            <div class="workshop-body">
+                <p style="font-size: 1.15rem; color: #444; margin-bottom: 40px; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">
+                    <strong>Dinámica de la sesión:</strong> Al ser una clase asincrónica, deberán resolver este laboratorio de manera autónoma. Analizaremos dos casos prácticos utilizando exclusivamente la teoría de esta sesión. Documenten sus respuestas y envíenlas según las indicaciones del docente en la plataforma.
+                </p>
 
-    </div> <!-- Cierre class-view -->
+                <!-- Workshop Step 1 -->
+                <div class="step-box">
+                    <div class="step-num">
+                        <span>Caso</span>
+                        <strong>1</strong>
+                    </div>
+                    <div class="step-content">
+                        <h4>Los Estados de Identidad (James Marcia)</h4>
+                        
+                        <div class="case-study">
+                            "Andrés (16 años) ha estado muy ansioso últimamente. Sus padres quieren que estudie ingeniería en la universidad local para continuar el negocio familiar. Sin embargo, Andrés ha estado leyendo mucho sobre arte contemporáneo, asiste a exposiciones y piensa que le gustaría ser curador de arte, aunque aún no se decide. Pasa horas buscando programas académicos en internet, discute con sus padres sobre el futuro y dice: 'Necesito más tiempo, no estoy seguro de qué es lo que realmente me apasiona'."
+                        </div>
+
+                        <p style="margin-bottom: 15px; font-weight: bold; color: var(--cuc-dark);">Desarrollen en su documento:</p>
+                        <ul class="task-list">
+                            <li><i class="fas fa-search"></i> <strong>Clasificación:</strong> Identifiquen en cuál de los 4 estados de James Marcia se encuentra Andrés.</li>
+                            <li><i class="fas fa-pen-nib"></i> <strong>Argumentación:</strong> Justifiquen su elección basándose en las dos dimensiones del modelo de Marcia: ¿Hay evidencia de *Crisis/Exploración*? ¿Hay evidencia de *Compromiso*? Expliquen cómo se observan (o no) en el texto.</li>
+                            <li><i class="fas fa-lightbulb"></i> <strong>Proyección:</strong> Según la teoría, ¿es este un estado patológico o normativo? ¿Qué debería suceder para que Andrés alcance la "Consecución de Identidad"?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Accordion for Bronfenbrenner reference -->
+                <div style="background: #fff; border: 2px dashed #ddd; padding: 30px; border-radius: 12px; margin-bottom: 30px; margin-top: 10px;">
+                    <h4 style="color: var(--cuc-red); margin-bottom: 20px; font-size: 1.3rem; text-align: center;"><i class="fas fa-book-reader"></i> Guía Rápida para el Caso 2: El Modelo Ecológico</h4>
+                    <p style="text-align: center; margin-bottom: 20px; color: #555;">Consulten esta estructura para resolver el análisis multinivel.</p>
+                    
+                    <div class="history-container" style="margin-bottom: 0;">
+                        <div class="history-item" onclick="toggleHistory(this)">
+                            <div class="history-header"><span>1. Microsistema (Entorno Inmediato)</span><i class="fas fa-chevron-down"></i></div>
+                            <div class="history-content">
+                                <p style="margin-bottom: 10px; margin-top: 15px;">Interacciones directas, cara a cara y cotidianas (Familia, escuela, grupo íntimo de pares, barrio).</p>
+                                <div class="rp-box risk">
+                                    <h5><i class="fas fa-exclamation-triangle"></i> Ejemplos de Riesgo</h5>
+                                    <ul>
+                                        <li>Pautas de crianza negligentes, permisivas o altamente autoritarias.</li>
+                                        <li>Bullying escolar constante o rechazo del grupo.</li>
+                                    </ul>
+                                </div>
+                                <div class="rp-box protect">
+                                    <h5><i class="fas fa-shield-alt"></i> Ejemplos de Protección</h5>
+                                    <ul>
+                                        <li>Estilo de crianza democrático/autoritativo (apoyo emocional + límites).</li>
+                                        <li>Red de amigos prosociales que validan positivamente al adolescente.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="history-item" onclick="toggleHistory(this)">
+                            <div class="history-header"><span>2. Mesosistema (Interconexiones)</span><i class="fas fa-chevron-down"></i></div>
+                            <div class="history-content">
+                                <p style="margin-bottom: 10px; margin-top: 15px;">La relación directa y la comunicación entre dos o más microsistemas del adolescente.</p>
+                                <div class="rp-box risk">
+                                    <h5><i class="fas fa-exclamation-triangle"></i> Ejemplos de Riesgo</h5>
+                                    <ul>
+                                        <li>Conflicto abierto o falta total de comunicación entre los padres y los profesores del colegio.</li>
+                                        <li>Choque moral severo entre los valores enseñados en casa y los valores del grupo de pares.</li>
+                                    </ul>
+                                </div>
+                                <div class="rp-box protect">
+                                    <h5><i class="fas fa-shield-alt"></i> Ejemplos de Protección</h5>
+                                    <ul>
+                                        <li>Alta participación y apoyo de los padres en las actividades académicas o deportivas.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="history-item" onclick="toggleHistory(this)">
+                            <div class="history-header"><span>3. Exosistema (Impacto Indirecto)</span><i class="fas fa-chevron-down"></i></div>
+                            <div class="history-content">
+                                <p style="margin-bottom: 10px; margin-top: 15px;">Entornos donde el adolescente <strong>no participa directamente</strong>, pero donde se toman decisiones que afectan su microsistema.</p>
+                                <div class="rp-box risk">
+                                    <h5><i class="fas fa-exclamation-triangle"></i> Ejemplos de Riesgo</h5>
+                                    <ul>
+                                        <li>Ambiente laboral tóxico de los padres que genera estrés severo y desempleo.</li>
+                                        <li>Falta de presupuesto de la alcaldía local para crear parques o centros culturales.</li>
+                                    </ul>
+                                </div>
+                                <div class="rp-box protect">
+                                    <h5><i class="fas fa-shield-alt"></i> Ejemplos de Protección</h5>
+                                    <ul>
+                                        <li>Políticas laborales de la empresa de los padres que permiten flexibilidad de horarios y tiempo en familia.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="history-item" onclick="toggleHistory(this)">
+                            <div class="history-header"><span>4. Macrosistema (Cultura y Creencias)</span><i class="fas fa-chevron-down"></i></div>
+                            <div class="history-content">
+                                <p style="margin-bottom: 10px; margin-top: 15px;">Ideologías dominantes, leyes nacionales, modelos económicos y patrones culturales invisibles que envuelven a la sociedad.</p>
+                                <div class="rp-box risk">
+                                    <h5><i class="fas fa-exclamation-triangle"></i> Ejemplos de Riesgo</h5>
+                                    <ul>
+                                        <li>Pobreza estructural, racismo institucional o cultura del "machismo" violento.</li>
+                                        <li>Estándares globalizados irreales de perfección corporal promovidos masivamente en internet.</li>
+                                    </ul>
+                                </div>
+                                <div class="rp-box protect">
+                                    <h5><i class="fas fa-shield-alt"></i> Ejemplos de Protección</h5>
+                                    <ul>
+                                        <li>Leyes estatales sólidas de protección de derechos humanos y salud mental gratuita.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="history-item" onclick="toggleHistory(this)">
+                            <div class="history-header"><span>5. Cronosistema (Tiempo e Historia)</span><i class="fas fa-chevron-down"></i></div>
+                            <div class="history-content">
+                                <p style="margin-bottom: 10px; margin-top: 15px;">La dimensión temporal: el impacto del momento biográfico exacto de un evento y el contexto sociohistórico general.</p>
+                                <div class="rp-box risk">
+                                    <h5><i class="fas fa-exclamation-triangle"></i> Ejemplos de Riesgo</h5>
+                                    <ul>
+                                        <li>Eventos "fuera de tiempo" (ej. fallecimiento traumático de un progenitor en plena pubertad temprana).</li>
+                                        <li>Atravesar la adolescencia durante una guerra civil o una pandemia global con encierro forzado.</li>
+                                    </ul>
+                                </div>
+                                <div class="rp-box protect">
+                                    <h5><i class="fas fa-shield-alt"></i> Ejemplos de Protección</h5>
+                                    <ul>
+                                        <li>Estabilidad histórica y transiciones de vida normativas y predecibles.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workshop Step 2 -->
+                <div class="step-box" style="border-left: 4px solid var(--cuc-gold); margin-bottom: 0;">
+                    <div class="step-num" style="background: var(--cuc-gold);">
+                        <span>Caso</span>
+                        <strong>2</strong>
+                    </div>
+                    <div class="step-content">
+                        <h4>Mapeo Ecológico (Urie Bronfenbrenner)</h4>
+                        
+                        <div class="case-study">
+                            "Sofía (15 años) vive en un barrio con altos índices de violencia. Sus padres trabajan largas jornadas en una fábrica con políticas estrictas que no les permiten asistir a las reuniones escolares. Sofía ha comenzado a aislarse en el colegio y sus profesores, molestos por la ausencia de los padres, la han etiquetado como 'problemática', ignorándola en clase. A pesar de esto, Sofía asiste todos los sábados a un grupo de teatro comunitario gratuito apoyado por una ONG internacional, donde el director del teatro la motiva constantemente y ha descubierto que tiene un gran talento."
+                        </div>
+
+                        <p style="margin-bottom: 15px; font-weight: bold; color: var(--cuc-dark);">Desarrollen en su documento:</p>
+                        <ul class="task-list">
+                            <li><i class="fas fa-traffic-light"></i> <strong>Identificación de Riesgos:</strong> Extraigan del caso un (1) factor de riesgo evidente y clasifíquenlo indicando exactamente a qué sistema pertenece (Micro, Meso, Exo o Macro). Expliquen brevemente por qué.</li>
+                            <li><i class="fas fa-shield-alt"></i> <strong>Identificación de Protección:</strong> Extraigan del caso un (1) factor protector y clasifíquenlo en el sistema correspondiente.</li>
+                            <li><i class="fas fa-project-diagram"></i> <strong>Análisis de Interacción:</strong> Describan la disfunción en el <em>Mesosistema</em> que se evidencia en el texto y cómo esto está afectando a Sofía.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 
     <footer>
         <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p>Material diseñado para uso exclusivo académico.</p>
     </footer>
 
     <script>
-        // Función para las pestañas de teóricos (Identidad)
+        // Función interactiva para las pestañas de Identidad (Erikson/Marcia)
         function openTheorist(evt, theoristId) {
             var i, panels, tabs;
             panels = document.getElementsByClassName("t-panel");
@@ -575,7 +611,7 @@
             evt.currentTarget.classList.add("active");
         }
 
-        // Función para el acordeón del Mapa Ecológico
+        // Función interactiva para el acordeón del Modelo Ecológico
         function toggleHistory(element) {
             var allItems = document.querySelectorAll('.history-item');
             allItems.forEach(function(item) {
