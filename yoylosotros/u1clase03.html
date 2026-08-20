@@ -178,6 +178,11 @@
         .step-content h4 { color: var(--cuc-dark); margin-bottom: 5px; font-size: 1.2rem;}
         .step-content p { color: #555; font-size: 1rem; line-height: 1.5; }
 
+        .cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; margin-top: 15px; }
+        .case-card { background: #fdfbfb; border: 1px solid #eee; border-left: 4px solid var(--purple); padding: 15px; border-radius: 8px; font-size: 0.9rem; transition: 0.3s; }
+        .case-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(103, 58, 183, 0.15); border-left-color: var(--cuc-gold); background: white;}
+        .case-title { color: var(--purple); font-weight: 900; margin-bottom: 8px; font-size: 1.05rem; border-bottom: 1px dashed #ddd; padding-bottom: 5px;}
+
         footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
 
         @media screen and (max-width: 1024px) {
@@ -431,13 +436,40 @@
             <div class="workshop-box">
                 <h3 style="color: var(--purple); margin-bottom: 15px; font-size: 1.6rem;"><i class="fas fa-cogs"></i> Taller Psicosocial: Mapeando la Desviación</h3>
                 
-                <p style="margin-bottom: 25px; color: #444; font-size: 1.1rem; border-bottom: 1px solid #ddd; padding-bottom: 15px;"><strong>Dinámica de Trabajo:</strong> Individual, en parejas o máximo tríos (3 personas). Deberán resolver los puntos y <strong>entregar un informe escrito al docente</strong> al finalizar la clase.</p>
+                <p style="margin-bottom: 25px; color: #444; font-size: 1.1rem; border-bottom: 1px solid #ddd; padding-bottom: 15px;"><strong>Dinámica Asincrónica:</strong> Trabajo individual, en parejas o máximo tríos (3 personas). Deberán resolver los puntos basados en un caso y <strong>subir el informe escrito a la plataforma Moodle</strong>.</p>
                 
                 <div class="workshop-step">
                     <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h4>Asignación del Caso</h4>
-                        <p>El docente les asignará (o proyectará) un caso clínico-social breve de una persona que presenta "Conducta Desviada" (Ej. Un joven que abandona sus estudios para unirse a una pandilla, o una persona que sufre el síndrome del aislamiento severo o Hikikomori).</p>
+                    <div class="step-content" style="width: 100%;">
+                        <h4>Menú de Selección de Caso</h4>
+                        <p>Como esta sesión es asincrónica, tu equipo deberá elegir <strong>SÓLO UNO</strong> de los siguientes 5 casos para desarrollar todo el análisis de los puntos posteriores:</p>
+                        
+                        <div class="cases-grid">
+                            <div class="case-card">
+                                <div class="case-title">Caso 1: El "Hikikomori" Local</div>
+                                <p>Joven de 19 años que lleva 2 años encerrado en su cuarto interactuando solo a través de videojuegos. Sufrió acoso escolar crónico. Sus padres, ausentes por exceso de trabajo, evitan el conflicto y le llevan la comida a la puerta sin exigirle interacción.</p>
+                            </div>
+                            
+                            <div class="case-card">
+                                <div class="case-title">Caso 2: La Pandilla (Pares)</div>
+                                <p>Adolescente de 15 años de un hogar altamente funcional y amoroso. Tras mudarse a un nuevo barrio, comienza a cometer pequeños hurtos y actos de vandalismo exclusivamente para ser aceptada y validada por el grupo de chicos populares de su nueva escuela.</p>
+                            </div>
+
+                            <div class="case-card">
+                                <div class="case-title">Caso 3: Dismorfia Digital</div>
+                                <p>Universitario de 21 años que gastó el dinero de su matrícula en cirugías extremas y esteroides ilegales. Su familia y amigos intentan detenerlo, pero su percepción de la realidad está totalmente moldeada por algoritmos de comunidades extremas de "fitness" en redes sociales.</p>
+                            </div>
+
+                            <div class="case-card">
+                                <div class="case-title">Caso 4: Institucionalización</div>
+                                <p>Hombre de 35 años que cumplió una condena de 5 años. Dentro de prisión, asimiló códigos estrictos de supervivencia. Al salir en libertad, es incapaz de adaptarse a normas civiles (empleo formal, horarios), por lo que delinque intencionalmente para "volver a casa" (la cárcel).</p>
+                            </div>
+
+                            <div class="case-card">
+                                <div class="case-title">Caso 5: La Secta Coercitiva</div>
+                                <p>Mujer de 25 años que abandona su carrera y corta todo lazo con su familia tras unirse a un grupo religioso extremista (secta). El líder del grupo le ha enseñado que el mundo exterior es "impuro" y que solo obedeciendo ciegamente las reglas del grupo alcanzará la salvación.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
