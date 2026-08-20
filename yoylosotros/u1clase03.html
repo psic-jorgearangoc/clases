@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 3 - Yo y los Otros</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --cuc-gold: #cba052;
+            --purple: #673AB7; /* Color temático para la Clase 3 */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+        .header-logo img { max-height: 80px; }
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; margin-bottom: 5px;}
+        .prof-info { font-size: 0.9rem; color: #555; }
+        .prof-info strong, .contact-label { color: var(--cuc-red); font-weight: 900; }
+        .qr-code img { max-height: 70px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; transition: transform 0.3s; }
+        .qr-code img:hover { transform: scale(1.1); border-color: var(--cuc-red); }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
+
+        .class-view {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-back {
+            background-color: var(--white); color: var(--cuc-dark); padding: 10px 20px; border-radius: 25px;
+            text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px;
+            transition: 0.3s; border: 2px solid #ddd; font-size: 1rem;
+        }
+        .btn-back:hover { background-color: var(--cuc-gray); border-color: var(--cuc-red); transform: translateX(-5px); }
+
+        .class-header-card {
+            background: linear-gradient(135deg, var(--purple), #4527A0);
+            color: white; padding: 40px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative; overflow: hidden;
+        }
+        
+        .class-header-card::after {
+            content: '\f500'; 
+            font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; right: -20px; bottom: -30px;
+            font-size: 10rem; color: rgba(255,255,255,0.1);
+        }
+
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        
+        .class-indicator {
+            background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-top: 15px;
+            font-size: 1.05rem; border-left: 4px solid var(--cuc-gold); position: relative; z-index: 2;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .detail-card {
+            background: white; border: 1px solid #eee; padding: 25px; border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--cuc-red); transition: transform 0.3s;
+        }
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .theme-section {
+            background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px; border-top: 4px solid var(--purple);
+        }
+
+        .theme-title { color: var(--purple); margin-bottom: 25px; font-size: 1.8rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .theme-subtitle { color: var(--cuc-dark); margin: 25px 0 15px; font-size: 1.3rem; }
+        .concept-box { background-color: var(--cuc-gray); padding: 20px; border-left: 4px solid var(--purple); border-radius: 0 10px 10px 0; margin-bottom: 20px; font-style: italic; }
+
+        .rich-agent-card {
+            background: #fff; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 30px;
+            overflow: hidden; border-left: 6px solid var(--purple); display: flex; flex-direction: column;
+            border: 1px solid #eee; border-left: 6px solid var(--purple);
+        }
+        .rich-agent-header {
+            background: #f8f9fa; padding: 20px 30px; display: flex; align-items: center; gap: 20px; border-bottom: 1px solid #eee;
+        }
+        .rich-agent-header i { font-size: 2.5rem; color: var(--purple); }
+        .rich-agent-header h4 { font-size: 1.6rem; color: var(--cuc-dark); }
+        .rich-agent-body {
+            padding: 30px; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px;
+        }
+        .agent-concept { padding-right: 20px; border-right: 2px dashed #ddd; }
+        .agent-concept p { margin-bottom: 15px; color: #444; text-align: justify;}
+        .agent-case {
+            background: #f9f0ff; padding: 25px; border-radius: 10px; border: 1px solid rgba(103, 58, 183, 0.2);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+        }
+        .agent-case h5 { color: var(--purple); margin-bottom: 15px; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;}
+        .agent-case p { color: #555; font-size: 0.95rem; font-style: italic;}
+
+        .flip-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 20px; margin-bottom: 40px;
+        }
+        .flip-card {
+            background-color: transparent; width: 100%; height: 350px; perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative; width: 100%; height: 100%; text-align: center;
+            transition: transform 0.8s; transform-style: preserve-3d;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 15px;
+        }
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden;
+            border-radius: 15px; padding: 30px; display: flex; flex-direction: column; justify-content: center;
+        }
+        .flip-card-front {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7); color: var(--cuc-dark); border: 2px solid #ddd; align-items: center;
+        }
+        .flip-card-front i { font-size: 4rem; color: var(--purple); margin-bottom: 20px; }
+        .flip-card-front h4 { font-size: 1.5rem; margin-bottom: 10px; color: var(--purple); }
+        .flip-card-front p { font-size: 1rem; color: #555; }
+        
+        .flip-card-back {
+            background-color: var(--purple); color: white; transform: rotateY(180deg); text-align: left;
+        }
+        .flip-card-back h4 { font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px;}
+        .flip-card-back ul { padding-left: 20px; }
+        .flip-card-back li { margin-bottom: 15px; font-size: 0.95rem; line-height: 1.4; }
+        .flip-card-back li strong { color: #ffeb3b; }
+
+        .single-video-container { 
+            max-width: 800px; margin: 0 auto 40px auto; 
+        }
+        .video-wrapper { 
+            position: relative; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+        }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        .workshop-box { 
+            background: #ffffff; border: 2px solid var(--purple); border-radius: 15px; padding: 40px; margin-top: 40px; 
+            box-shadow: 0 15px 30px rgba(103, 58, 183, 0.1); position: relative;
+        }
+        .workshop-box::before {
+            content: 'TALLER EN CLASE'; position: absolute; top: -15px; left: 35px; background: var(--purple);
+            color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; letter-spacing: 1px;
+        }
+        .workshop-step { display: flex; align-items: flex-start; margin-bottom: 25px; }
+        .step-number {
+            background-color: var(--cuc-gray); color: var(--purple); font-weight: 900; width: 40px; height: 40px;
+            display: flex; justify-content: center; align-items: center; border-radius: 50%; margin-right: 20px; flex-shrink: 0;
+            border: 2px solid var(--purple); font-size: 1.2rem;
+        }
+        .step-content h4 { color: var(--cuc-dark); margin-bottom: 5px; font-size: 1.2rem;}
+        .step-content p { color: #555; font-size: 1rem; line-height: 1.5; }
+
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
+
+        @media screen and (max-width: 1024px) {
+            .class-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media screen and (max-width: 900px) {
+            header { flex-direction: column; gap: 15px; }
+            .qr-code { display: none; }
+            .header-info { order: 3; }
+            .header-logo { order: 2; }
+            .class-grid { grid-template-columns: 1fr; }
+            .rich-agent-body { grid-template-columns: 1fr; }
+            .agent-concept { border-right: none; padding-right: 0; border-bottom: 2px dashed #ddd; padding-bottom: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/yoylosotros/u1clase03.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://via.placeholder.com/200x80/ffffff/A3161A?text=LOGO+CUC'">
+        </div>
+
+        <div class="header-info">
+            <div class="course-title">Yo y los Otros:<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">De la identidad a la relación</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com
+                </small>
+            </div>
+        </div>
+
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/yoylosotros/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa del Curso
+        </a>
+        
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: #ffeb3b;">Unidad 1 • Semana 3</span>
+            <h1>Socialización y Conducta Desviada</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Analiza los procesos de socialización y la conducta desviada como pautas de comportamiento habituales.
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <ul>
+                    <li>Naturaleza social del ser humano: la norma social.</li>
+                    <li>La socialización: conceptos, agentes sociales, tipos y niveles.</li>
+                    <li>Procesos que dificultan una sana socialización (Conducta desviada).</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: var(--purple);">
+                <h3 style="color: var(--purple);"><i class="fas fa-users"></i> Presencial</h3>
+                <ul>
+                    <li>Conversatorio interactivo y plenaria teórica.</li>
+                    <li><strong>Taller práctico en clase:</strong> Análisis psico-social de un caso (Máx. 3 personas).</li>
+                    <li>Análisis grupal de conductas disruptivas y su etiología.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <ul>
+                    <li>Lectura crítica sobre: El ser humano en sociedad: socialización y conducta desviada.</li>
+                    <li>Revisión sistemática de casos de estudio propuestos en plataforma Moodle.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <ul>
+                    <li>Valoración de la argumentación en el taller escrito.</li>
+                    <li>Evaluación sumativa con rúbrica de la Unidad 1.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2 class="theme-title"><i class="fas fa-project-diagram"></i> Desarrollo Temático: Adaptándonos al Mundo</h2>
+            
+            <h3 class="theme-subtitle">1. La Naturaleza Social y la Norma</h3>
+            <p style="margin-bottom: 20px;">Nacer humanos no garantiza comportarnos como humanos. La <strong>socialización</strong> es el proceso bidireccional mediante el cual internalizamos las normas, valores y la cultura de nuestra sociedad, forjando nuestra personalidad y haciéndonos aptos para convivir en grupo.</p>
+            
+            <h3 class="theme-subtitle" style="margin-top: 30px;">2. Agentes de Socialización (Análisis Profundo)</h3>
+            <p style="margin-bottom: 25px;">No nos socializamos en el vacío. Existen instituciones y grupos (agentes) que moldean activamente nuestras pautas culturales. Exploremos a detalle los más influyentes:</p>
+            
+            <div class="rich-agent-card">
+                <div class="rich-agent-header">
+                    <i class="fas fa-home"></i>
+                    <h4>La Familia (Agente Primario)</h4>
+                </div>
+                <div class="rich-agent-body">
+                    <div class="agent-concept">
+                        <p>Es el primer y más crucial contacto del individuo con el mundo social. No opera de manera formal, sino a través de un <strong>fuerte vínculo afectivo</strong>. Proporciona el lenguaje primario, la identidad de base (género, clase social, etnia) y las primeras brújulas morales de lo que es "bueno" y "malo".</p>
+                        <p>Su influencia es tan profunda que sienta las bases de la personalidad que los demás agentes tendrán que modificar o sobre las cuales deberán construir.</p>
+                    </div>
+                    <div class="agent-case">
+                        <h5><i class="fas fa-microscope"></i> Mini-Caso de Observación</h5>
+                        <p>Un niño derrama jugo en la mesa. Si los padres reaccionan gritando y golpeando, el niño asimila que la violencia es el mecanismo normal para resolver errores. Si los padres le enseñan a limpiar explicándole el descuido, el niño internaliza la responsabilidad y la reparación del daño como norma social.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rich-agent-card">
+                <div class="rich-agent-header">
+                    <i class="fas fa-school"></i>
+                    <h4>La Escuela (Agente Formal)</h4>
+                </div>
+                <div class="rich-agent-body">
+                    <div class="agent-concept">
+                        <p>Es la primera introducción del niño al <strong>orden institucional burocrático</strong>. A diferencia de la familia, aquí el niño ya no es el centro de atención afectiva, sino un miembro más que debe seguir reglas impersonales.</p>
+                        <p>La escuela no solo enseña matemáticas o historia, transmite el "currículo oculto": obediencia a la autoridad no parental, cumplimiento de horarios, competencia, patriotismo y el rol cívico.</p>
+                    </div>
+                    <div class="agent-case">
+                        <h5><i class="fas fa-microscope"></i> Mini-Caso de Observación</h5>
+                        <p>Una niña de 5 años acostumbrada a ir al baño o comer cuando quería en casa, se enfrenta al entorno escolar. Aprende que para hablar debe levantar la mano y para salir debe pedir permiso. Este choque cultural le enseña la "postergación de la gratificación" vital para vivir en la sociedad adulta.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rich-agent-card">
+                <div class="rich-agent-header">
+                    <i class="fas fa-user-friends"></i>
+                    <h4>Los Grupos de Pares (Amigos)</h4>
+                </div>
+                <div class="rich-agent-body">
+                    <div class="agent-concept">
+                        <p>Son grupos de personas de la misma edad e intereses. Su importancia estalla en la adolescencia. Proporcionan el primer entorno de <strong>relaciones horizontales</strong> (sin adultos mandando), permitiendo experimentar con la independencia.</p>
+                        <p>Aquí se establecen las subculturas, jergas, modas y la presión grupal. Las normas de los pares a menudo pueden entrar en conflicto directo con las normas familiares o escolares.</p>
+                    </div>
+                    <div class="agent-case">
+                        <h5><i class="fas fa-microscope"></i> Mini-Caso de Observación</h5>
+                        <p>Un adolescente criado en un hogar altamente conservador comienza a usar vocabulario rebelde y a vestirse con estética punk/rockera. Aunque en casa es castigado, la necesidad de "Pertenencia" y validación social por parte de su grupo de amigos supera el miedo a la sanción familiar.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rich-agent-card">
+                <div class="rich-agent-header">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h4>Medios de Comunicación y Redes Sociales</h4>
+                </div>
+                <div class="rich-agent-body">
+                    <div class="agent-concept">
+                        <p>Anteriormente dominados por la TV, hoy liderados por el algoritmo de las redes sociales. Este agente transmite <strong>modelos y estereotipos globales</strong> casi sin filtro. Moldean qué significa tener éxito, qué es la belleza y cómo debemos relacionarnos.</p>
+                        <p>Generan relaciones parasociales (sentir cercanía con un influencer que no nos conoce) e influyen masivamente en el consumo y la actitud política moderna.</p>
+                    </div>
+                    <div class="agent-case">
+                        <h5><i class="fas fa-microscope"></i> Mini-Caso de Observación</h5>
+                        <p>Una joven desarrolla un trastorno de la conducta alimentaria (TCA) no por exigencias de sus padres o escuela, sino tras meses de consumir contenido algorítmico en TikTok e Instagram que glorifica ciertos estándares físicos inalcanzables, alterando su percepción de "normalidad".</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 50px;">3. Tipos de Socialización (Gira para ver ejemplos)</h3>
+            <p>El proceso de hacernos miembros de una sociedad no termina en la niñez. Abarca toda nuestra vida en diferentes niveles:</p>
+            
+            <div class="flip-grid">
+                <!-- Fase Primaria -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-child"></i>
+                            <h4>Socialización Primaria</h4>
+                            <p>Ocurre en la infancia. Alta carga emocional. Se asimila el mundo base.</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4><i class="fas fa-check-circle"></i> Ejemplos en Acción:</h4>
+                            <ul>
+                                <li><strong>Lenguaje:</strong> Aprender la lengua materna y gestos básicos (sonreír, fruncir el ceño).</li>
+                                <li><strong>Higiene y Tabúes:</strong> Interiorizar que no se puede andar desnudo en la calle o aprender a usar los cubiertos en la mesa.</li>
+                                <li><strong>Valores Base:</strong> Aprender que "robar está mal" porque los padres lo reprenden fuertemente, generando culpa inicial.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Fase Secundaria -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-briefcase"></i>
+                            <h4>Socialización Secundaria</h4>
+                            <p>Procesos posteriores. Inducen al individuo a nuevos sectores y roles formales.</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4><i class="fas fa-check-circle"></i> Ejemplos en Acción:</h4>
+                            <ul>
+                                <li><strong>Mundo Universitario:</strong> Entrar a la CUC, aprender la jerga de los pasillos, usar Moodle y tratar a los profesores.</li>
+                                <li><strong>Mundo Laboral:</strong> Conseguir el primer empleo y adaptarse a la "cultura corporativa" (horarios, correos formales, uniformes).</li>
+                                <li><strong>Nuevos Círculos:</strong> Unirse a un club deportivo o religioso y aprender sus normas específicas.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fase Terciaria -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-sync"></i>
+                            <h4>Resocialización (Terciaria)</h4>
+                            <p>Proceso drástico de desaprendizaje y reaprendizaje por cambio de entorno.</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4><i class="fas fa-check-circle"></i> Ejemplos en Acción:</h4>
+                            <ul>
+                                <li><strong>Migración:</strong> Mudarse de Latinoamérica a Japón y tener que olvidar normas de contacto físico para aprender el respeto silencioso.</li>
+                                <li><strong>Instituciones Totales:</strong> Entrar a una prisión militar donde tu identidad previa se borra y debes aprender códigos estrictos de supervivencia.</li>
+                                <li><strong>Rehabilitación:</strong> Salir de una secta coercitiva y reaprender a tomar decisiones autónomas.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 40px;">4. La Conducta Desviada</h3>
+            <div class="concept-box">
+                ¿Qué pasa cuando la socialización "falla"? La <strong>conducta desviada</strong> es cualquier comportamiento que transgrede las normas institucionalizadas de una sociedad. No necesariamente es un delito (como la criminalidad), a veces es simplemente romper una convención social. Depende del contexto histórico y cultural: lo que era desviado hace 50 años (ej. tatuajes en el rostro en ciertos trabajos) puede ser normal hoy. El sociólogo Howard Becker, con su <em>Teoría del Etiquetamiento</em>, afirma que el acto en sí no es desviado, sino la etiqueta que la sociedad con poder le pone al infractor.
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 40px;">5. Recurso Audiovisual Explicativo</h3>
+            <p style="margin-bottom: 20px;">Antes de ir al taller, repasemos de forma visual cómo operan estos agentes y grupos sociales (primarios, secundarios y terciarios) en la conformación de nuestra identidad:</p>
+            <div class="single-video-container">
+                <div class="video-wrapper">
+                    <!-- Video sobre los procesos y grupos de socialización -->
+                    <iframe src="https://www.youtube.com/embed/72r2124SM0w" title="Video Complementario de Socialización" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="workshop-box">
+                <h3 style="color: var(--purple); margin-bottom: 15px; font-size: 1.6rem;"><i class="fas fa-cogs"></i> Taller Psicosocial: Mapeando la Desviación</h3>
+                
+                <p style="margin-bottom: 25px; color: #444; font-size: 1.1rem; border-bottom: 1px solid #ddd; padding-bottom: 15px;"><strong>Dinámica de Trabajo:</strong> Individual, en parejas o máximo tríos (3 personas). Deberán resolver los puntos y <strong>entregar un informe escrito al docente</strong> al finalizar la clase.</p>
+                
+                <div class="workshop-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Asignación del Caso</h4>
+                        <p>El docente les asignará (o proyectará) un caso clínico-social breve de una persona que presenta "Conducta Desviada" (Ej. Un joven que abandona sus estudios para unirse a una pandilla, o una persona que sufre el síndrome del aislamiento severo o Hikikomori).</p>
+                    </div>
+                </div>
+
+                <div class="workshop-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Diagnóstico de Agentes</h4>
+                        <p>Deberán identificar en el caso: ¿Cuáles agentes de socialización intervinieron? Detallen específicamente dónde estuvo la falla o la "influencia contradictoria". (Ej. ¿La familia fue negligente? ¿Los pares ejercieron presión negativa? ¿Hubo influencia de los medios o redes sociales?). Utilicen la estructura vista hoy para explicarlo.</p>
+                    </div>
+                </div>
+
+                <div class="workshop-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Clasificación de la Socialización</h4>
+                        <p>Argumenten teóricamente: ¿El problema del individuo radica en una <strong>Socialización Primaria</strong> deficiente (no asimiló las normas morales básicas en su niñez) o es un fracaso en la <strong>Socialización Secundaria</strong> (no logró adaptarse a un nuevo rol en la adolescencia/adultez)? Justifiquen su respuesta.</p>
+                    </div>
+                </div>
+
+                <div class="workshop-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Relatividad de la Norma</h4>
+                        <p>Escriban en su informe: ¿Por qué la conducta de esta persona es considerada "desviada" en nuestro contexto cultural colombiano/latinoamericano actual? ¿Creen que en otra época o cultura este mismo comportamiento hubiese sido aceptado o ignorado?</p>
+                    </div>
+                </div>
+
+                <div class="workshop-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Propuesta de Resocialización</h4>
+                        <p>Diseñen una estrategia breve de <strong>Resocialización (Terciaria)</strong>. ¿A qué institución o nuevo contexto enviarían a este individuo para generar un proceso de desaprendizaje y reaprendizaje de normas constructivas? Justifiquen su propuesta desde el rol del psicólogo.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+    </footer>
+
+</body>
+</html>
