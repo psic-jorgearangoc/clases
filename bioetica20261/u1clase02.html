@@ -30,6 +30,7 @@
             line-height: 1.6;
         }
 
+        /* --- HEADER / BANNER --- */
         header {
             background-color: var(--white);
             border-bottom: 4px solid var(--cuc-red);
@@ -102,6 +103,7 @@
             font-weight: 900;
         }
 
+        /* --- NAVEGACIÓN --- */
         .nav-bar {
             background-color: var(--cuc-gray);
             padding: 15px 20px;
@@ -137,6 +139,7 @@
             margin-left: 5px;
         }
 
+        /* --- CONTENIDO GENERAL --- */
         .container {
             max-width: 1100px;
             margin: 40px auto;
@@ -161,6 +164,8 @@
             margin: 0 auto;
         }
 
+        /* */
+        /* --- FILÓSOFOS: BLOQUES DETALLADOS --- */
         .philosopher-section {
             margin-bottom: 60px;
             background: #fff;
@@ -236,6 +241,7 @@
             padding: 20px;
             border-radius: 10px;
             border-left: 4px solid #ccc;
+            height: 100%;
         }
 
         .example-badge {
@@ -249,6 +255,8 @@
             font-weight: bold;
         }
 
+        /* */
+        /* --- INTERACTIVO ARISTÓTELES --- */
         .golden-mean-container {
             background: white;
             padding: 40px;
@@ -256,6 +264,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             margin-bottom: 60px;
             text-align: center;
+            border-top: 5px solid var(--greek-gold);
         }
 
         .slider-wrapper {
@@ -266,9 +275,9 @@
         }
 
         .mean-line {
-            height: 6px;
+            height: 8px;
             background: linear-gradient(90deg, #e74c3c, #2ecc71, #e74c3c);
-            border-radius: 3px;
+            border-radius: 4px;
             position: relative;
         }
 
@@ -281,14 +290,15 @@
         }
 
         .node {
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             background: white;
             border: 4px solid var(--cuc-dark);
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .node:hover, .node.active {
@@ -299,9 +309,9 @@
         .node.active::after {
             content: '';
             position: absolute;
-            top: -10px; left: 50%;
+            top: -12px; left: 50%;
             transform: translateX(-50%);
-            border-width: 8px;
+            border-width: 10px;
             border-style: solid;
             border-color: var(--cuc-red) transparent transparent transparent;
         }
@@ -324,8 +334,10 @@
             flex-direction: column;
             justify-content: center;
             border: 2px dashed var(--cuc-red);
+            transition: all 0.3s ease;
         }
 
+        /* --- VIDEO Y TALLER --- */
         .video-section {
             text-align: center;
             margin-bottom: 60px;
@@ -372,6 +384,7 @@
             align-items: center;
             gap: 10px;
             box-shadow: 0 4px 10px rgba(163, 22, 26, 0.4);
+            white-space: nowrap;
         }
 
         .workshop-meta {
@@ -416,6 +429,7 @@
             .header-info { order: 2; width: 100%; margin-bottom: 15px;}
             .qr-code { order: 3; width: 45%; margin: 0 auto;}
             .node-labels span { font-size: 0.8rem; text-align: center; width: 33%;}
+            .workshop-badge { font-size: 1rem; padding: 8px 20px;}
         }
     </style>
 </head>
@@ -464,6 +478,7 @@
             <p>De la introspección socrática a la felicidad aristotélica. ¿Cómo los cimientos de la filosofía occidental estructuran hoy nuestra práctica, la psicoterapia y la concepción de la salud mental?</p>
         </div>
 
+        <!-- Sócrates -->
         <div class="philosopher-section socrates">
             <div class="phil-header">
                 <div class="phil-icon"><i class="fas fa-question"></i></div>
@@ -476,25 +491,26 @@
                 <div class="phil-theory">
                     <h3><i class="fas fa-book-open"></i> Postulado Filosófico</h3>
                     <div class="phil-box">
-                        <p><strong>Intelectualismo Moral:</strong> Sócrates creía que nadie hace el mal de forma voluntaria; el mal es producto de la <em>ignorancia</em>. Quien conoce el bien, actuará bien.</p>
-                        <p style="margin-top: 10px;"><strong>La Mayéutica:</strong> Su método no consistía en dar respuestas, sino en hacer preguntas incómodas y profundas para que el interlocutor "diera a luz" a su propia verdad, reconociendo primero su ignorancia.</p>
+                        <p><strong>Intelectualismo Moral:</strong> Sócrates afirmaba que nadie hace el mal de forma voluntaria; el mal es un subproducto de la <em>ignorancia</em>. Quien verdaderamente conoce el bien, actuará en consecuencia.</p>
+                        <p style="margin-top: 10px;"><strong>La Mayéutica:</strong> Su método pedagógico no dictaba respuestas. Consistía en hacer preguntas inquisitivas para que el interlocutor reconociera sus contradicciones (ironía socrática) y luego "diera a luz" a su propia verdad.</p>
                     </div>
                 </div>
                 <div class="phil-psych">
                     <h3><i class="fas fa-brain"></i> Aplicación en Psicología</h3>
-                    <div class="phil-box" style="border-left-color: var(--cuc-red);">
-                        <span class="example-badge">Terapia Cognitivo-Conductual</span>
-                        <p>El <strong>Diálogo Socrático</strong> es una técnica fundamental hoy en día. El psicólogo no le dice al paciente "tu pensamiento es irracional". En su lugar, hace preguntas estratégicas:</p>
+                    <div class="phil-box" style="border-left-color: #2980b9;">
+                        <span class="example-badge">Terapia Cognitivo-Conductual (TCC)</span>
+                        <p>El <strong>Diálogo Socrático</strong> es el núcleo de la reestructuración cognitiva moderna. El terapeuta no impone visiones ni juzga, sino que utiliza preguntas estratégicas para cuestionar esquemas desadaptativos:</p>
                         <ul style="margin-left: 20px; margin-top: 10px; font-size: 0.9rem; color: #444;">
-                            <li><em>"¿Qué evidencia tienes de que todos te odian?"</em></li>
-                            <li><em>"¿Qué es lo peor que podría pasar si fallas?"</em></li>
+                            <li><em>"¿Qué evidencia concreta tienes de que todos te están juzgando?"</em></li>
+                            <li><em>"¿Qué es lo peor que podría pasar y cómo lo manejarías?"</em></li>
                         </ul>
-                        <p style="margin-top: 10px; font-size: 0.9rem;">El paciente, al igual que los alumnos de Sócrates, descubre por sí mismo las distorsiones en su pensamiento.</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">El paciente descubre por sí mismo las distorsiones, logrando un <em>insight</em> más duradero que si se le diera la respuesta directamente.</p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Platón -->
         <div class="philosopher-section plato">
             <div class="phil-header">
                 <div class="phil-icon"><i class="fas fa-horse-head"></i></div>
@@ -507,42 +523,47 @@
                 <div class="phil-theory">
                     <h3><i class="fas fa-book-open"></i> Postulado Filosófico</h3>
                     <div class="phil-box">
-                        <p><strong>El Mito del Carro Alado:</strong> Platón divide el alma en tres partes:</p>
+                        <p><strong>El Mito del Carro Alado:</strong> Platón alegoriza el alma dividiéndola en tres partes en constante tensión:</p>
                         <ul style="margin-left: 20px; font-size: 0.95rem; margin-top: 5px;">
-                            <li><strong>Racional (Auriga):</strong> Conduce el carro. Busca la verdad (Virtud: Prudencia).</li>
-                            <li><strong>Irascible (Caballo Blanco):</strong> Emociones nobles, coraje (Virtud: Fortaleza).</li>
-                            <li><strong>Apetitiva (Caballo Negro):</strong> Deseos bajos, pasiones (Virtud: Templanza).</li>
+                            <li><strong>Racional (Auriga):</strong> El conductor que busca la verdad y guía (Virtud: Prudencia).</li>
+                            <li><strong>Irascible (Caballo Blanco):</strong> Emociones nobles, honor, coraje (Virtud: Fortaleza).</li>
+                            <li><strong>Apetitiva (Caballo Negro):</strong> Deseos bajos, impulsos, pasiones corporales (Virtud: Templanza).</li>
                         </ul>
-                        <p style="margin-top: 10px;">La <strong>Justicia</strong> (salud del alma) se logra cuando la razón domina a los caballos.</p>
+                        <p style="margin-top: 10px;">La <strong>Justicia</strong> (la salud) ocurre solo cuando la razón domina a los caballos.</p>
                     </div>
                 </div>
                 <div class="phil-psych">
                     <h3><i class="fas fa-brain"></i> Aplicación en Psicología</h3>
-                    <div class="phil-box" style="border-left-color: var(--cuc-red);">
+                    <div class="phil-box" style="border-left-color: #8e44ad;">
                         <span class="example-badge">Psicoanálisis & Autorregulación</span>
-                        <p>El modelo platónico es el precursor directo del modelo estructural de <strong>Sigmund Freud</strong>:</p>
+                        <p>El modelo tripartito de Platón es el ancestro conceptual directo del <strong>modelo estructural de Freud</strong>:</p>
                         <ul style="margin-left: 20px; font-size: 0.9rem; margin-top: 5px; color: #444;">
-                            <li>El Caballo Negro = <em>El Ello (Id)</em> - Impulsos básicos.</li>
-                            <li>El Auriga (Razón) = <em>El Yo (Ego)</em> - Mediador racional.</li>
-                            <li>El Caballo Blanco = <em>El Superyó</em> - Ideales y moral.</li>
+                            <li>Caballo Negro = <em>El Ello (Id)</em> - Búsqueda de placer inmediato.</li>
+                            <li>Auriga (Razón) = <em>El Yo (Ego)</em> - Mediador racional con la realidad.</li>
+                            <li>Caballo Blanco = <em>El Superyó</em> - Ideales, moral y culpa.</li>
                         </ul>
-                        <p style="margin-top: 10px; font-size: 0.9rem;">En la clínica moderna, esto se traduce en el trabajo de <strong>autorregulación emocional</strong>: ayudar al paciente a que su corteza prefrontal (razón) regule su amígdala (impulsos/miedos).</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">En la clínica actual, esto representa la lucha del paciente por la <strong>autorregulación emocional</strong>: fortalecer la función ejecutiva (Auriga prefrontal) para no ser arrastrado por impulsos ciegos (Caballos límbicos).</p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Aristóteles & Justo Medio -->
         <div class="golden-mean-container">
-            <h2>Aristóteles y la Psicología del Justo Medio</h2>
-            <p style="color: #666; margin-bottom: 20px;">Aristóteles planteó que el propósito humano es la <strong>Eudaimonía</strong> (Felicidad / Florecimiento humano). Para alcanzarla, se debe practicar la virtud, la cual siempre es el punto medio exacto entre dos vicios (el exceso y el defecto).</p>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px;">
+                <i class="fas fa-balance-scale" style="font-size: 2.5rem; color: var(--greek-gold);"></i>
+                <h2 style="font-size: 2.2rem; color: var(--cuc-dark);">Aristóteles (384–322 a. C.)</h2>
+            </div>
+            <p style="color: #666; margin-bottom: 25px; font-size: 1.1rem; max-width: 800px; margin-inline: auto;">Para Aristóteles, el fin supremo es la <strong>Eudaimonía</strong> (Felicidad / Florecimiento personal). Para alcanzarla, se debe practicar la virtud a través del hábito. La virtud siempre es el punto medio exacto racional entre dos vicios (el exceso y el defecto).</p>
             
-            <p style="font-weight: bold; color: var(--cuc-red);">Selecciona un escenario psicológico para ver el análisis Aristotélico:</p>
-
-            <select id="scenario-select" onchange="updateMean()" style="padding: 10px; font-size: 1rem; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 20px; width: 100%; max-width: 400px; cursor: pointer;">
-                <option value="autoestima">Gestión de la Autoestima</option>
-                <option value="miedo">Afrontamiento del Miedo / Ansiedad</option>
-                <option value="trabajo">Dedicación Laboral / Académica</option>
-            </select>
+            <div style="background: #f9f9f9; padding: 20px; border-radius: 10px; display: inline-block; margin-bottom: 30px; border: 1px solid #ddd;">
+                <p style="font-weight: bold; color: var(--cuc-red); margin-bottom: 10px;">Simulador Clínico Aristotélico</p>
+                <select id="scenario-select" onchange="updateMean()" style="padding: 12px; font-size: 1.1rem; border-radius: 8px; border: 2px solid var(--cuc-dark); width: 100%; min-width: 300px; cursor: pointer; font-family: inherit;">
+                    <option value="miedo">Regulación del Miedo / Ansiedad</option>
+                    <option value="autoestima">Percepción de Sí Mismo (Autoestima)</option>
+                    <option value="trabajo">Dedicación y Propósito Vital</option>
+                </select>
+            </div>
 
             <div class="slider-wrapper">
                 <div class="mean-line"></div>
@@ -552,53 +573,54 @@
                     <div class="node" id="node-exceso" onclick="selectNode('exceso')"></div>
                 </div>
                 <div class="node-labels">
-                    <span style="text-align: left;">Vicio por Defecto<br><small id="label-defecto" style="color:var(--cuc-red);font-weight:900;">Autodesprecio</small></span>
-                    <span style="text-align: center; color: #27ae60;">Virtud (Justo Medio)<br><small id="label-virtud" style="color:var(--cuc-dark);font-weight:900;font-size:1rem;">Amor Propio Sano</small></span>
-                    <span style="text-align: right;">Vicio por Exceso<br><small id="label-exceso" style="color:var(--cuc-red);font-weight:900;">Narcisismo</small></span>
+                    <span style="text-align: left;">Vicio por Defecto<br><small id="label-defecto" style="color:var(--cuc-red);font-weight:900;font-size: 0.9rem;">Temeridad / Impulsividad</small></span>
+                    <span style="text-align: center; color: #27ae60;">Virtud (Justo Medio)<br><small id="label-virtud" style="color:var(--cuc-dark);font-weight:900;font-size:1.1rem;">Afrontamiento / Valentía</small></span>
+                    <span style="text-align: right;">Vicio por Exceso<br><small id="label-exceso" style="color:var(--cuc-red);font-weight:900;font-size: 0.9rem;">Ansiedad / Evitación</small></span>
                 </div>
             </div>
 
             <div id="dynamic-explanation" class="dynamic-content-box">
-                <h4 style="color: var(--cuc-dark); margin-bottom: 10px;" id="exp-title">El Justo Medio: Amor Propio Sano</h4>
-                <p id="exp-text">El paciente reconoce su valor y capacidades de forma realista, aceptando sus fallas sin castigarse. Es el estado óptimo de salud mental según la Psicología Humanista.</p>
+                <h4 style="font-size: 1.3rem; margin-bottom: 10px;" id="exp-title">La Virtud: Afrontamiento Sano</h4>
+                <p id="exp-text" style="font-size: 1.05rem;">El paciente siente el miedo normal ante una amenaza real, pero utiliza sus recursos cognitivos para afrontar la situación de manera adaptativa, en lugar de paralizarse.</p>
             </div>
         </div>
 
+        <!-- VIDEO -->
         <div class="video-section">
-            <h2 style="margin-bottom: 15px;"><i class="fab fa-youtube" style="color: red;"></i> Síntesis: De Grecia a la Ética Moderna</h2>
-            <p style="margin-bottom: 20px; font-size: 1.1rem; color: #555;">Observa este resumen para consolidar cómo el pensamiento de estos tres maestros sentó las bases de nuestra deontología actual.</p>
+            <h2 style="margin-bottom: 15px;"><i class="fab fa-youtube" style="color: red;"></i> Síntesis: Historia de la Ética</h2>
+            <p style="margin-bottom: 20px; font-size: 1.1rem; color: #555;">Visualiza este resumen para consolidar la evolución del pensamiento ético desde la Antigüedad, fundamentando nuestro quehacer bioético hoy.</p>
             <div class="video-container">
-                <!-- Se incluye un video genérico de Filosofía Griega. Puedes cambiar el código de YouTube en el src -->
-                <iframe src="https://www.youtube.com/embed/5F6-p_qKzWw" title="Filosofía Griega" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/KEl0s5NZbh4" title="La historia de la ética" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
 
+        <!-- TALLER ASINCRÓNICO -->
         <div class="workshop-box">
             <div class="workshop-badge"><i class="fas fa-laptop-house"></i> Taller Asincrónico Evaluativo</div>
             
-            <h3 style="text-align: center; color: var(--cuc-dark); font-size: 1.6rem; margin-top: 15px;">Dilema Clínico a la luz de los Griegos</h3>
+            <h3 style="text-align: center; color: var(--cuc-dark); font-size: 1.6rem; margin-top: 15px;">Dilemas Clínicos a la luz de los Clásicos</h3>
             
             <div class="workshop-meta">
                 <span class="meta-item"><i class="fas fa-user-friends"></i> Modalidad: Individual o Parejas (MÁXIMO 2 PERSONAS - Sin excepciones)</span>
                 <span class="meta-item"><i class="fas fa-file-pdf"></i> Formato: PDF (Normas APA)</span>
-                <span class="meta-item"><i class="fas fa-cloud-upload-alt"></i> Entrega: Moodle</span>
+                <span class="meta-item"><i class="fab fa-microsoft"></i> Entrega: Plataforma Teams</span>
             </div>
 
-            <p style="margin-bottom: 15px;"><strong>Instrucciones:</strong> Analicen el siguiente caso clínico y respondan las preguntas basándose estrictamente en las teorías de Sócrates, Platón y Aristóteles explicadas en esta clase.</p>
+            <p style="margin-bottom: 15px;"><strong>Instrucciones:</strong> Analicen el siguiente caso clínico. Deberán responder a las tres preguntas formuladas, fundamentando su análisis exclusivamente en los modelos éticos de Sócrates, Platón y Aristóteles vistos en esta clase.</p>
             
             <div class="workshop-case">
                 <strong>Caso Clínico: "El Ejecutivo Agotado"</strong><br><br>
-                Carlos es un paciente de 40 años, gerente de una multinacional. Acude a terapia con signos de Burnout severo. Relata: <em>"Trabajo 16 horas diarias. Sé que estoy destruyendo mi matrimonio y mi salud (ya tuve un preinfarto), pero el deseo de ganar más dinero y el miedo irracional a parecer 'débil' ante mis jefes son más fuertes que yo. No puedo parar, aunque sé que está mal."</em> Carlos se niega a reducir su carga laboral y le exige al psicólogo que solo le enseñe "técnicas de relajación rápida" para seguir trabajando a ese ritmo sin colapsar.
+                Carlos es un gerente de 40 años que acude a terapia por un cuadro de Burnout. Relata: <em>"Trabajo 15 horas diarias. Sé que estoy destruyendo mi salud (ya tuve un preinfarto) y mi familia me abandonó, pero el deseo de ganar más dinero y el miedo irracional a parecer 'débil' ante la junta directiva me dominan. No puedo parar, aunque sé racionalmente que está mal."</em> Carlos se niega a cambiar su estilo de vida; le exige al psicólogo que le enseñe "técnicas rápidas para suprimir el estrés" y poder seguir trabajando al mismo ritmo.
             </div>
 
-            <ol style="margin-left: 20px; line-height: 1.8; color: #333;">
-                <li><strong>Desde Platón:</strong> Expliquen la crisis de Carlos utilizando el "Mito del Carro Alado". ¿Qué está ocurriendo con su Auriga (Razón) y sus caballos (Apetito por dinero / Irascible por miedo al fracaso)?</li>
-                <li><strong>Desde Aristóteles:</strong> Según la teoría del Justo Medio, ¿en qué vicio (exceso o defecto) se encuentra Carlos respecto a la dedicación laboral? ¿Cuál sería la virtud que debe alcanzar y cómo se relaciona esto con la meta terapéutica (Eudaimonía)?</li>
-                <li><strong>Desde Sócrates (Rol del Psicólogo):</strong> Si ustedes fueran el psicólogo, ¿por qué éticamente NO deberían simplemente enseñarle a relajarse para que siga explotándose? Formulen <strong>3 preguntas socráticas (Mayéutica)</strong> que le harían en consulta para que él mismo descubra la irracionalidad de su conducta.</li>
+            <ol style="margin-left: 20px; line-height: 1.8; color: #333; font-size: 1.05rem;">
+                <li><strong>Desde Platón:</strong> Expliquen la crisis de Carlos utilizando el "Mito del Carro Alado". ¿Qué está ocurriendo específicamente con su <em>Auriga</em> y con sus caballos?</li>
+                <li><strong>Desde Aristóteles:</strong> Según la teoría del Justo Medio, ¿en qué vicio (exceso o defecto) se encuentra Carlos respecto a su relación con el trabajo y el descanso? ¿Qué le falta para alcanzar la Eudaimonía?</li>
+                <li><strong>Desde Sócrates (Rol Profesional):</strong> Si ustedes fueran el psicólogo, ¿por qué éticamente no deberían simplemente darle la técnica para suprimir el estrés y ya? Formulen <strong>tres (3) preguntas basadas en la Mayéutica</strong> que le harían a Carlos para que él mismo descubra la contradicción de sus actos.</li>
             </ol>
             
-            <p style="text-align: center; margin-top: 30px; font-weight: bold; color: var(--cuc-red);">
-                Recuerden: La filosofía no es teoría muerta, es la base de su criterio clínico. ¡Éxitos!
+            <p style="text-align: center; margin-top: 30px; font-weight: bold; color: var(--cuc-red); padding: 15px; background: var(--soft-red); border-radius: 8px;">
+                La filosofía clásica no es historia antigua; es la base de tu criterio deontológico frente al paciente. ¡Mucho éxito en el análisis!
             </p>
         </div>
 
@@ -606,71 +628,72 @@
 
     <footer>
         <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
-        <p>Material diseñado por Mg. Jorge Arango para uso exclusivo académico.</p>
+        <p>Diseño y Adaptación Curricular: Mg. Jorge Arango para uso exclusivo académico.</p>
     </footer>
 
     <script>
-        // Datos para la interactividad de Aristóteles
+        // Datos interactivos para el simulador del Justo Medio de Aristóteles
         const meanData = {
+            miedo: {
+                labels: ["Temeridad / Impulsividad", "Afrontamiento / Valentía", "Ansiedad / Evitación"],
+                desc: [
+                    { title: "El Defecto (del miedo): Temeridad", text: "Ausencia patológica de miedo. El paciente toma riesgos innecesarios, poniéndose en peligro (conductas de riesgo, adicciones) por no evaluar racionalmente las amenazas de la realidad." },
+                    { title: "La Virtud: Afrontamiento Sano", text: "El paciente siente el miedo normal ante una amenaza real, pero utiliza sus recursos cognitivos y volitivos para afrontar la situación de manera adaptativa, en lugar de paralizarse." },
+                    { title: "El Exceso: Ansiedad Patológica", text: "El miedo domina la psique frente a estímulos irreales o exagerados (Fobias, Pánico). Genera evitación constante, limitando severamente el desarrollo vital del individuo." }
+                ]
+            },
             autoestima: {
                 labels: ["Autodesprecio", "Amor Propio Sano", "Narcisismo"],
                 desc: [
-                    { title: "El Defecto: Autodesprecio", text: "El paciente minimiza sus logros, se culpa excesivamente y siente que no merece ser amado. Presente en cuadros depresivos." },
-                    { title: "La Virtud: Amor Propio Sano", text: "El paciente reconoce su valor y capacidades de forma realista, aceptando sus fallas sin castigarse. Estado óptimo de salud mental." },
-                    { title: "El Exceso: Narcisismo", text: "El paciente tiene una autoimagen inflada, carece de empatía y exige admiración constante, desconectándose de la realidad de sus errores." }
-                ]
-            },
-            miedo: {
-                labels: ["Temeridad / Impulsividad", "Valentía / Afrontamiento", "Cobardía / Evitación"],
-                desc: [
-                    { title: "El Defecto (del miedo): Temeridad", text: "Ausencia patológica de miedo. El paciente toma riesgos innecesarios, se pone en peligro (adicciones, conductas de riesgo) sin medir consecuencias." },
-                    { title: "La Virtud: Afrontamiento Sano", text: "El paciente siente el miedo normal ante una amenaza, pero utiliza sus recursos racionales para afrontar la situación de manera adaptativa." },
-                    { title: "El Exceso: Ansiedad / Evitación", text: "El miedo domina y paraliza al sujeto (fobias, pánico). Evita constantemente las situaciones, limitando severamente su desarrollo vital." }
+                    { title: "El Defecto: Autodesprecio", text: "El paciente minimiza o niega sus capacidades, se culpa excesivamente y siente que no es merecedor de bienestar. Factor subyacente en trastornos del estado de ánimo." },
+                    { title: "La Virtud: Amor Propio Realista", text: "Reconocimiento objetivo de las propias virtudes y áreas de mejora. El paciente se acepta sin requerir validación extrema externa. Es el pilar de la salud mental humanista." },
+                    { title: "El Exceso: Narcisismo / Soberbia", text: "Autoimagen inflada y grandiosa. El paciente carece de empatía y exige admiración incondicional, perdiendo la conexión con la realidad de sus límites humanos." }
                 ]
             },
             trabajo: {
-                labels: ["Apatía / Pereza", "Dedicación Equilibrada", "Workaholic (Adicción)"],
+                labels: ["Apatía / Pereza Crónica", "Dedicación Equilibrada", "Workaholic (Burnout)"],
                 desc: [
-                    { title: "El Defecto: Apatía", text: "Falta de propósito, desmotivación crónica, incapacidad para sostener el esfuerzo necesario para su desarrollo personal." },
-                    { title: "La Virtud: Dedicación Equilibrada", text: "Compromiso con sus metas laborales/académicas, pero manteniendo límites sanos para el descanso, la familia y el autocuidado." },
-                    { title: "El Exceso: Adicción al Trabajo", text: "El individuo sacrifica su salud (Burnout), relaciones y bienestar por la compulsión a producir o por el miedo al fracaso." }
+                    { title: "El Defecto: Apatía Crónica", text: "Falta de sentido, abulia y desmotivación. El individuo es incapaz de sostener el esfuerzo necesario para su desarrollo personal y social." },
+                    { title: "La Virtud: Dedicación y Propósito", text: "Compromiso vital con las metas y la comunidad, pero manteniendo límites claros y sanos para el descanso, la conexión familiar y el autocuidado bio-psico-social." },
+                    { title: "El Exceso: Adicción al Trabajo", text: "Como en el caso de Carlos: el individuo sacrifica su salud biopsicosocial por compulsión productiva, perdiendo el balance fundamental para la verdadera Eudaimonía." }
                 ]
             }
         };
 
-        let currentScenario = 'autoestima';
+        let currentScenario = 'miedo';
         let currentNode = 'virtud';
 
         function updateMean() {
             currentScenario = document.getElementById('scenario-select').value;
             
-            // Actualizar Etiquetas
+            // Actualizar textos de los labels
             document.getElementById('label-defecto').innerText = meanData[currentScenario].labels[0];
             document.getElementById('label-virtud').innerText = meanData[currentScenario].labels[1];
             document.getElementById('label-exceso').innerText = meanData[currentScenario].labels[2];
             
-            // Forzar actualización al nodo activo actual
+            // Refrescar la vista forzando el clic en el nodo actualmente seleccionado
             selectNode(currentNode);
         }
 
         function selectNode(nodeType) {
             currentNode = nodeType;
             
-            // UI Update
+            // Limpiar clases 'active' de todos los nodos
             document.getElementById('node-defecto').classList.remove('active');
             document.getElementById('node-virtud').classList.remove('active');
             document.getElementById('node-exceso').classList.remove('active');
             
+            // Activar el nodo clickeado
             document.getElementById(`node-${nodeType}`).classList.add('active');
 
-            // Content Update
+            // Actualizar contenido dinámico
             let dataIndex = nodeType === 'defecto' ? 0 : (nodeType === 'virtud' ? 1 : 2);
             let content = meanData[currentScenario].desc[dataIndex];
             
             document.getElementById('exp-title').innerText = content.title;
             document.getElementById('exp-text').innerText = content.text;
             
-            // Color feedback
+            // Feedback visual de color (Verde para la virtud, rojo para el vicio)
             const box = document.getElementById('dynamic-explanation');
             if(nodeType === 'virtud') {
                 box.style.borderColor = "#27ae60";
@@ -682,6 +705,11 @@
                 document.getElementById('exp-title').style.color = "var(--cuc-red)";
             }
         }
+        
+        // Inicializar el estado visual al cargar la página
+        window.onload = function() {
+            updateMean();
+        };
     </script>
 </body>
 </html>
