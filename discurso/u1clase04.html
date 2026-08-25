@@ -166,7 +166,7 @@
 
         .flip-card {
             background-color: transparent;
-            height: 280px; /* Un poco más alto para contenido teórico amplio */
+            height: 380px; 
             perspective: 1000px;
             cursor: pointer;
         }
@@ -223,6 +223,14 @@
             color: white;
             transform: rotateY(180deg);
             font-size: 0.95rem;
+            text-align: left;
+            padding: 25px;
+            overflow-y: auto; 
+        }
+        
+        .flip-card-back p {
+             line-height: 1.4;
+             margin-bottom: 10px;
         }
 
         .timeline-box {
@@ -315,6 +323,17 @@
         .panel-content ul {
             padding-left: 20px;
         }
+        
+        .example-box {
+            background-color: #fdfdfd;
+            border: 1px solid #e0e0e0;
+            border-left: 4px solid var(--cuc-gold);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+            font-size: 0.95rem;
+            color: #333; 
+        }
 
         .videos-container {
             display: grid;
@@ -344,6 +363,24 @@
             border-radius: 15px;
             padding: 30px;
             margin-top: 30px;
+        }
+
+        .case-card {
+            background: #fff;
+            border: 2px solid var(--cuc-gold);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .case-title {
+            color: var(--cuc-red);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
@@ -450,7 +487,7 @@
             <p style="margin-bottom: 25px;">Por ejemplo: En lugar de investigar el "Duelo" aplicando las 5 etapas de Kübler-Ross a un grupo de personas, un investigador usando Teoría Fundada entraría al campo sin preconcepciones teóricas rígidas, entrevistaría a las personas, y dejaría que los datos le dicten cómo ese grupo específico construye, transita y supera (o no) su propia versión del duelo.</p>
 
             <h3 class="theme-subtitle" style="margin-top: 40px;">2. Pilares Metodológicos de la Teoría Fundada</h3>
-            <p style="margin-bottom: 20px;">Pasa el cursor sobre las tarjetas para comprender los procedimientos exclusivos que hacen que este diseño sea tan riguroso y particular:</p>
+            <p style="margin-bottom: 20px;">Pasa el cursor sobre las tarjetas para comprender los procedimientos exclusivos que hacen que este diseño sea tan riguroso y particular. Integraremos ejemplos basados en nuestro caso de estudio: <strong>Víctimas del conflicto (Resiliencia y perdón en mujeres del Atlántico)</strong>.</p>
             
             <div class="authors-grid">
                 <div class="flip-card">
@@ -462,7 +499,10 @@
                         </div>
                         <div class="flip-card-back">
                             <h4 style="margin-bottom: 8px;">Muestreo No Probabilístico</h4>
-                            <p>En la TF, no seleccionamos una muestra por tamaño o demografía desde el inicio. El investigador recolecta datos, los analiza de inmediato y ese análisis le dicta qué datos recopilar a continuación y de quién, con el único fin de desarrollar la teoría emergente.</p>
+                            <p>En la TF, no seleccionamos una muestra estática desde el inicio. El investigador recolecta datos, los analiza de inmediato y ese análisis le dicta qué datos recopilar a continuación y de quién, para nutrir la teoría emergente.</p>
+                            <div class="example-box">
+                                <strong style="color: var(--cuc-dark);">Ejemplo en el Caso:</strong> Tras entrevistar a 5 mujeres, notamos que aquellas que sufrieron "desplazamiento forzado" narran la resiliencia diferente a las que sufrieron "pérdida de familiares". El muestreo teórico nos indica buscar deliberadamente a 5 mujeres más de cada tipo para comparar estas categorías emergentes.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -476,7 +516,10 @@
                         </div>
                         <div class="flip-card-back">
                             <h4 style="margin-bottom: 8px;">Comparación Iterativa</h4>
-                            <p>El investigador está constantemente comparando incidente con incidente, dato con dato, categoría con categoría. Si un entrevistado dice "sentí culpa", se compara con otro que dijo "me sentí responsable". Así se van descubriendo los patrones subyacentes.</p>
+                            <p>El investigador está constantemente comparando incidente con incidente, dato con dato, categoría con categoría. Así se van descubriendo los patrones subyacentes y las dimensiones de un concepto.</p>
+                            <div class="example-box">
+                                <strong style="color: var(--cuc-dark);">Ejemplo en el Caso:</strong> Comparamos la afirmación de María: "Perdoné para tener paz mental" con la de Carmen: "Perdoné porque Dios lo manda". Al compararlas, surge una nueva categoría: "Motivaciones intrínsecas vs. extrínsecas para el perdón".
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -490,7 +533,10 @@
                         </div>
                         <div class="flip-card-back">
                             <h4 style="margin-bottom: 8px;">El Límite del Dato</h4>
-                            <p>El investigador deja de recolectar información (deja de hacer entrevistas u observaciones) en el momento exacto en que los nuevos datos ya no aportan información novedosa ni propiedades nuevas a las categorías teóricas ya construidas. ¡El tema está saturado!</p>
+                            <p>Se deja de recolectar información en el momento exacto en que los nuevos datos ya no aportan información novedosa ni propiedades nuevas a las categorías teóricas ya construidas. ¡El tema está saturado!</p>
+                             <div class="example-box">
+                                <strong style="color: var(--cuc-dark);">Ejemplo en el Caso:</strong> Llevamos 18 entrevistas a mujeres del Atlántico. Al analizar las entrevistas 16, 17 y 18, notamos que los relatos sobre cómo construyen la resiliencia repiten exactamente los mismos patrones ya codificados ("apoyo familiar", "fe religiosa", "trabajo comunitario"). Se alcanzó la saturación.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -499,58 +545,113 @@
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
                             <i class="fas fa-project-diagram"></i>
-                            <h4>Codificación (Strauss & Corbin)</h4>
+                            <h4>Codificación</h4>
                             <p>De la palabra al concepto</p>
                         </div>
                         <div class="flip-card-back">
                             <h4 style="margin-bottom: 8px;">El Proceso Analítico</h4>
-                            <p>Los datos (transcripciones) se desarman en pedazos. Se sigue un proceso de 3 pasos: <strong>Codificación Abierta</strong> (identificar conceptos), <strong>Axial</strong> (relacionar conceptos en categorías) y <strong>Selectiva</strong> (elegir una categoría central que integre toda la teoría).</p>
+                            <p>Los datos se desarman en pedazos para conceptualizarlos. Se sigue un proceso sistemático: Codificación Abierta (identificar conceptos), Axial (relacionar en categorías) y Selectiva (elegir una categoría central).</p>
+                             <div class="example-box">
+                                <strong style="color: var(--cuc-dark);">Ejemplo en el Caso:</strong> Transformar la frase "Lloré mucho, pero tuve que sacar a mis hijos adelante vendiendo arepas" en un código abstracto aplicable a la teoría: "Agencia económica como motor de resiliencia post-trauma".
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <h3 class="theme-subtitle" style="margin-top: 40px;">3. Profundizando: El Proceso de Codificación (Strauss & Corbin)</h3>
-            <p style="margin-bottom: 20px;">El análisis de datos en la Teoría Fundada es un proceso de abstracción progresiva. Se comienza con las palabras literales de los participantes y se termina con una teoría conceptual:</p>
+            <p style="margin-bottom: 20px;">El análisis de datos en la Teoría Fundada es un proceso de abstracción progresiva. Se comienza con las palabras literales de los participantes y se termina con una teoría conceptual. Veamos su aplicación en el caso de las Mujeres Víctimas:</p>
 
             <button class="accordion-content">1. Codificación Abierta (El Desarme)</button>
             <div class="panel-content">
-                <p>Es el proceso analítico por medio del cual se identifican los conceptos y se descubren en los datos sus propiedades y dimensiones.</p>
+                <p>Es el proceso analítico por medio del cual se identifican los conceptos y se descubren en los datos sus propiedades y dimensiones. Se trata de "abrir" el texto, separándolo línea por línea o párrafo por párrafo.</p>
                 <ul>
-                    <li>El investigador lee el texto línea por línea y se pregunta: <em>¿Qué representa este fragmento de información?</em></li>
-                    <li>Se asignan "códigos" o etiquetas conceptuales iniciales. (Ej. Si el participante dice "no podía dormir pensando en las deudas", el código podría ser "Ansiedad Económica").</li>
+                    <li>El investigador se pregunta constantemente: <em>¿Qué representa este fragmento de información? ¿De qué nos está hablando este dato?</em></li>
+                    <li>Se asignan "códigos" o etiquetas conceptuales iniciales (sustantivos o gerundios).</li>
                 </ul>
+                <div class="example-box">
+                    <strong style="color: var(--cuc-dark);">Aplicación al Caso:</strong><br>
+                    <strong>Dato Crudo (Transcripción):</strong> "Yo no podía dormir pensando en encontrármelo en la calle, me daba terror salir a comprar el mercado."<br>
+                    <strong>Código Abierto Asignado:</strong> Ansiedad por Re-victimización. / Restricción de la movilidad por miedo.
+                </div>
             </div>
 
             <button class="accordion-content">2. Codificación Axial (La Reconstrucción)</button>
             <div class="panel-content">
-                <p>Es el proceso de relacionar las categorías a sus subcategorías, enlazando los códigos que se "desarmaron" en la etapa anterior en torno al "eje" de una categoría.</p>
+                <p>Es el proceso de relacionar las categorías (códigos agrupados) a sus subcategorías. Consiste en enlazar los conceptos que se "desarmaron" en la etapa anterior en torno al "eje" de una categoría más grande explicativa.</p>
                 <ul>
-                    <li>Se buscan respuestas a preguntas como: ¿por qué, cómo, dónde, cuándo, con qué resultados?</li>
-                    <li>Se arma un "Paradigma Codificado": <em>Condiciones Causales -> Fenómeno -> Contexto -> Estrategias de Acción -> Consecuencias.</em></li>
+                    <li>Se busca establecer relaciones lógicas respondiendo a: ¿por qué ocurre esto, cómo, dónde, cuándo, con qué resultados?</li>
+                    <li>Se utiliza un "Paradigma Codificado": <em>Condiciones Causales -> Fenómeno -> Contexto -> Estrategias de Acción -> Consecuencias.</em></li>
                 </ul>
+                 <div class="example-box">
+                    <strong style="color: var(--cuc-dark);">Aplicación al Caso:</strong><br>
+                    Tomamos los códigos abiertos: "Ansiedad por Re-victimización", "Restricción de movilidad" y "Desconfianza hacia los vecinos".<br>
+                    <strong>Categoría Axial (Eje):</strong> Estrategias Defensivas Post-trauma.<br>
+                    <em>Relación:</em> Las víctimas desarrollan (fenómeno) Estrategias Defensivas Post-trauma en contextos de vecindad cercana a exvictimarios (contexto), lo que dificulta el proceso de perdón (consecuencia).
+                </div>
             </div>
             
             <button class="accordion-content">3. Codificación Selectiva (La Teoría Final)</button>
             <div class="panel-content">
-                <p>Es el proceso de integrar y refinar la teoría. El investigador selecciona una <strong>Categoría Central (Core Category)</strong>.</p>
+                <p>Es el proceso final de integrar y refinar la teoría. El investigador debe seleccionar una <strong>Categoría Central (Core Category)</strong>, el "sol" alrededor del cual orbitan todos los demás "planetas" (categorías).</p>
                 <ul>
-                    <li>Esta categoría central debe ser analítica y tener la capacidad de agrupar y explicar a todas las demás categorías formadas.</li>
-                    <li>A partir de esta categoría central, se redacta la historia analítica o modelo teórico final que explica el fenómeno estudiado de manera integral.</li>
+                    <li>La Categoría Central debe aparecer frecuentemente en los datos, ser lógica, analítica y tener la capacidad de agrupar y explicar a todas las demás categorías formadas.</li>
+                    <li>A partir de ella, se redacta la historia analítica o modelo teórico final.</li>
                 </ul>
+                <div class="example-box">
+                    <strong style="color: var(--cuc-dark);">Aplicación al Caso:</strong><br>
+                    De todo el estudio emerge una Categoría Central: <strong>"Reconstrucción del Sentido de Seguridad Ontológica"</strong>.<br>
+                    <strong>Teoría Fundada (Narrativa final):</strong> "La disposición a perdonar a exvictimarios en mujeres adultas del Atlántico está mediada por su capacidad de reconstruir su sentido de seguridad ontológica. Factores de resiliencia como la independencia económica y las redes de apoyo comunitario (Condiciones) facilitan esta reconstrucción, permitiendo transitar de estrategias defensivas hacia la disposición al perdón (Proceso)."
+                </div>
             </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 40px;">4. Evolución de la Teoría Fundada: Glaser vs. Strauss & Corbin</h3>
+            <p style="margin-bottom: 20px;">Es importante notar que, tras su creación en 1967, los dos fundadores tomaron caminos distintos, creando dos "escuelas" o enfoques dentro de la TF que abordan el papel del investigador y la teoría previa de manera diferente:</p>
+            
+            <button class="accordion-content">El Enfoque Glaseriano (TF Clásica / Emergente)</button>
+            <div class="panel-content">
+                 <p>Barney Glaser se mantuvo fiel al espíritu inductivo radical original. Sostenía que el investigador debe entrar al campo como una <em>"pizarra en blanco" (tabula rasa)</em>, evitando realizar revisiones exhaustivas de la literatura antes de recolectar datos.</p>
+                 <ul>
+                     <li><strong>Objetivo:</strong> Evitar "forzar" los datos en teorías preexistentes.</li>
+                     <li><strong>Proceso:</strong> Es altamente flexible. La teoría debe "emerger" casi intuitivamente a través de la comparación constante constante, sin seguir paradigmas de codificación preestablecidos (como el paradigma causal de Strauss).</li>
+                 </ul>
+                 <div class="example-box">
+                    <strong style="color: var(--cuc-dark);">En nuestro Caso (Glaser):</strong> El investigador iría a entrevistar a las mujeres del Atlántico sin haber leído teorías sobre "Resiliencia" (como las de Cyrulnik) o "Perdón", para que la definición de lo que es superar el trauma surja única y exclusivamente de la voz de las mujeres, descubriendo conceptos totalmente nuevos y no contaminados por la academia previa.
+                </div>
+            </div>
+            
+            <button class="accordion-content">El Enfoque Straussiano (TF Sistemática)</button>
+            <div class="panel-content">
+                 <p>Anselm Strauss, trabajando luego con Juliet Corbin (1990), desarrolló un enfoque más estructurado, pragmático y procedimental. Reconocieron que ningún investigador entra al campo "vacío" de conocimientos; todos tenemos marcos teóricos de referencia.</p>
+                 <ul>
+                     <li><strong>Objetivo:</strong> Generar teoría de manera sistemática y verificable.</li>
+                     <li><strong>Proceso:</strong> Establecieron los pasos rígidos de codificación (Abierta, Axial, Selectiva). Permiten el uso de la literatura previa para "sensibilizar" al investigador (Sensibilidad Teórica), siempre que los datos finales manden sobre la teoría previa.</li>
+                 </ul>
+                 <div class="example-box">
+                    <strong style="color: var(--cuc-dark);">En nuestro Caso (Strauss & Corbin):</strong> El investigador revisa literatura sobre Resiliencia y Trauma para entender qué buscar y formular mejores preguntas (Sensibilidad Teórica). Luego, al analizar las entrevistas con las mujeres, aplica rigurosamente la codificación abierta, axial y selectiva, creando un modelo estructurado de causas, contextos y consecuencias. Este es el enfoque más utilizado hoy en tesis universitarias.
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 40px;">5. ¿Cuándo elegir Teoría Fundamentada?</h3>
+            <p style="margin-bottom: 20px;">Como futuros investigadores, deben saber que no todas las preguntas requieren o soportan un diseño de Teoría Fundada. Se justifica su uso cuando:</p>
+            
+            <ul style="margin-left: 20px; line-height: 1.8; margin-bottom: 25px; color: #444;">
+                 <li><strong>Ausencia de Teoría:</strong> El fenómeno es tan nuevo, el contexto es tan específico, o el grupo poblacional ha sido tan marginado, que las teorías actuales existentes (generalmente hechas en contextos de clase media y occidentales) no logran explicar su realidad adecuadamente. <em>(Ej. ¿Cómo se construye el liderazgo en pandillas juveniles del sur del Atlántico en 2026?)</em>.</li>
+                 <li><strong>Énfasis en el "Proceso" (La Acción en el tiempo):</strong> No buscamos solo describir una experiencia estática en un momento dado (para eso usaríamos Fenomenología), sino que queremos entender el desarrollo, los cambios y las etapas de una acción a lo largo del tiempo. <em>(Ej. El "proceso" de perdonar, el "proceso" de duelo, el "proceso" de construcción de resiliencia)</em>.</li>
+                 <li><strong>Necesidad de un Modelo Explicativo:</strong> El objetivo final de la investigación debe ser crear un diagrama, un modelo conceptual o un conjunto de proposiciones que expliquen "por qué" y "cómo" sucede el fenómeno estudiado, aportando conocimiento nuevo a la Psicología.</li>
+            </ul>
 
             <div class="activity-box" style="border-color: var(--cuc-red); background: linear-gradient(135deg, #fffafa 0%, #fff0f0 100%); margin-top: 50px;">
                 <h3 style="color: var(--cuc-red); margin-bottom: 10px;"><i class="fas fa-pencil-ruler"></i> Actividad Práctica: "La Pregunta y sus Lentes"</h3>
                 <p><strong>Dinámica de Trabajo: Comparación de Diseños</strong></p>
                 
-                <p style="margin-bottom: 15px; color: #444;">El objetivo de esta sesión es comprender que <strong>un mismo problema social puede investigarse desde diferentes enfoques cualitativos</strong>, y que el diseño que elijamos cambiará el tipo de conocimiento que vamos a obtener.</p>
+                <p style="margin-bottom: 15px; color: #444;">El objetivo de esta sesión es comprender que <strong>un mismo problema social puede investigarse desde diferentes enfoques cualitativos</strong>, y que el diseño que elijamos cambiará el tipo de conocimiento que vamos a obtener y el objetivo de la investigación.</p>
 
                 <ol style="margin-left: 20px; line-height: 1.8; color: #444; margin-bottom: 25px;">
-                    <li><strong>Formulación:</strong> De manera individual (o en los grupos base), formulen una (1) pregunta de investigación psicosocial que sea de su interés.</li>
-                    <li><strong>Abordaje 1 (Teoría Fundada):</strong> Analicen cómo se investigaría esa pregunta utilizando el diseño de <em>Teoría Fundamentada</em>. ¿Cuál sería el objetivo? (Ej. "Construir un modelo explicativo sobre el proceso de...").</li>
-                    <li><strong>Abordaje 2 (Otro Diseño):</strong> Elijan un segundo diseño cualitativo (ej. <em>Fenomenología</em> o <em>IAP</em>) y expliquen cómo cambiaría la forma de investigar esa misma pregunta. ¿Cuál sería el objetivo ahora? (Ej. "Describir la experiencia vivida de...").</li>
-                    <li><strong>Entregable (Trabajo Independiente):</strong> Deben consolidar este ejercicio analítico en un documento breve (según los criterios de la rúbrica), justificando epistemológicamente la coherencia entre la pregunta y cada uno de los diseños elegidos.</li>
+                    <li><strong>Formulación:</strong> De manera individual (o en los grupos base), formulen una (1) pregunta de investigación psicosocial que sea de su interés, enfocada en una población específica.</li>
+                    <li><strong>Abordaje 1 (Teoría Fundada):</strong> Analicen cómo se investigaría esa pregunta utilizando el diseño de <em>Teoría Fundamentada</em>. ¿Cuál sería el objetivo general? (Ej. "Construir un modelo explicativo sobre el proceso de..."). ¿Qué buscarían los datos?</li>
+                    <li><strong>Abordaje 2 (Otro Diseño):</strong> Elijan un segundo diseño cualitativo visto en clases anteriores (ej. <em>Fenomenología</em> o <em>IAP</em>) y expliquen cómo cambiaría la forma de investigar esa misma pregunta. ¿Cuál sería el nuevo objetivo general? (Ej. "Describir la esencia de la experiencia vivida de...").</li>
+                    <li><strong>Entregable (Trabajo Independiente):</strong> Deben consolidar este ejercicio analítico en un documento breve (según los criterios de la rúbrica), justificando epistemológicamente la coherencia entre la pregunta, el fenómeno y cada uno de los diseños elegidos.</li>
                 </ol>
 
             </div>
@@ -563,7 +664,7 @@
     </footer>
 
     <script>
-        // Script para los acordeones dinámicos del proceso de codificación
+        // Script para los acordeones dinámicos
         var acc = document.getElementsByClassName("accordion-content");
         var i;
 
