@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 4 - Trayectorias y Proyecto de Vida (ABP)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --soft-red: #ffebeb;
+            --soft-green: #e8f5e9;
+            --cuc-gold: #cba052;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-logo img { max-height: 80px; }
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; }
+        .prof-info { font-size: 0.9rem; color: #555; }
+        
+        .qr-code img { max-height: 70px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
+
+        .class-view {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-back {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .btn-back:hover {
+            background-color: var(--cuc-gray);
+            border-color: var(--cuc-red);
+            transform: translateX(-5px);
+        }
+
+        .class-header-card {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .class-header-card::after {
+            content: '\f279'; /* Map icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-size: 10rem;
+            color: rgba(255,255,255,0.1);
+        }
+
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        
+        .class-indicator {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 1.05rem;
+            border-left: 4px solid var(--cuc-gold);
+            position: relative;
+            z-index: 2;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        @media screen and (max-width: 1024px) { .class-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media screen and (max-width: 768px) { .class-grid { grid-template-columns: 1fr; } }
+
+        .detail-card {
+            background: white;
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--cuc-red);
+            transition: transform 0.3s;
+        }
+
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .theme-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-top: 4px solid var(--cuc-dark);
+        }
+
+        .theme-title { color: var(--cuc-red); margin-bottom: 25px; font-size: 1.8rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .theme-subtitle { color: var(--cuc-dark); margin: 25px 0 15px; font-size: 1.3rem; }
+
+        /* Interactive Pillars for Proyecto de Vida */
+        .pillars-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .pillar {
+            flex: 1;
+            min-width: 250px;
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 5px solid transparent;
+        }
+        .pillar:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .pillar i { font-size: 3rem; margin-bottom: 20px; transition: 0.4s; }
+        .pillar:hover i { transform: scale(1.1); }
+        .pillar h4 { font-size: 1.3rem; margin-bottom: 15px; color: var(--cuc-dark); }
+        .pillar p { font-size: 0.95rem; color: #555; }
+        
+        .p-vocacional { border-bottom-color: #2196F3; }
+        .p-vocacional i { color: #2196F3; }
+        .p-social { border-bottom-color: #4CAF50; }
+        .p-social i { color: #4CAF50; }
+        .p-etico { border-bottom-color: #FF9800; }
+        .p-etico i { color: #FF9800; }
+
+        /* Map Integration Interactive Section */
+        .integration-board { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 40px; border-radius: 15px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 1px solid #ddd; }
+        .int-menu { flex: 1; min-width: 250px; background: var(--cuc-dark); padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .int-btn { background: rgba(255,255,255,0.05); color: #ccc; border: 1px solid rgba(255,255,255,0.1); padding: 15px 20px; text-align: left; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 1.05rem; font-weight: bold; display: flex; align-items: center; gap: 12px; }
+        .int-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+        .int-btn.active { background: var(--cuc-gold); color: var(--cuc-dark); border-color: var(--cuc-gold); transform: translateX(8px); box-shadow: -5px 5px 15px rgba(0,0,0,0.2); }
+        .int-display { flex: 2.5; min-width: 300px; padding: 40px; background: #fff; }
+        .int-content { display: none; animation: fadeInRight 0.4s ease; }
+        .int-content.active { display: block; }
+        .int-content h4 { color: var(--cuc-red); font-size: 1.8rem; margin-bottom: 15px; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .int-content p { color: #444; font-size: 1.05rem; line-height: 1.7; margin-bottom: 15px; }
+        
+        .theory-tag { display: inline-block; padding: 5px 12px; background: #e3f2fd; color: #1565c0; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 15px; border: 1px solid #bbdefb;}
+        
+        @keyframes fadeInRight { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* Workshop Design */
+        .workshop-container { background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); overflow: hidden; margin-top: 50px; border: 2px solid #eee; }
+        .workshop-header { background: linear-gradient(135deg, var(--cuc-dark), #333); color: white; padding: 30px 40px; text-align: center; position: relative; }
+        .workshop-header h3 { color: var(--cuc-gold); font-size: 2rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 15px; }
+        .workshop-header p { font-size: 1.1rem; opacity: 0.9; max-width: 800px; margin: 0 auto; }
+        .workshop-body { padding: 40px; background-color: #fafafa; }
+        
+        .step-box { display: flex; margin-bottom: 30px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: transform 0.3s; border: 1px solid #eaeaea; }
+        .step-box:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .step-num { flex: 0 0 120px; background: var(--cuc-red); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px 0 0 12px; padding: 20px; text-align: center;}
+        .step-num span { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; opacity: 0.8; }
+        .step-num strong { font-size: 2.5rem; line-height: 1.2; }
+        .step-content { padding: 30px; flex: 1; }
+        .step-content h4 { color: var(--cuc-dark); margin-bottom: 15px; font-size: 1.4rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px;}
+        
+        .checklist { list-style: none; padding: 0; }
+        .checklist li { position: relative; padding-left: 35px; margin-bottom: 15px; color: #444; font-size: 1.05rem; }
+        .checklist li i { position: absolute; left: 0; top: 4px; color: #4CAF50; font-size: 1.3rem; }
+
+        .rubric-alert { background-color: #fff3cd; border: 1px solid #ffecb5; padding: 20px; border-radius: 10px; margin-top: 20px; color: #664d03; display: flex; gap: 15px; align-items: flex-start; }
+        .rubric-alert i { font-size: 2rem; color: #ffc107; }
+
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
+        @media screen and (max-width: 600px) { .step-box { flex-direction: column; } .step-num { border-radius: 12px 12px 0 0; padding: 15px; flex-direction: row; gap: 10px; align-items: baseline; } .step-num strong { font-size: 2rem; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/adolescencia/u1clase04.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://placehold.co/200x80/ffffff/a3161a?text=CUC'">
+        </div>
+
+        <div class="header-info">
+            <div class="course-title">De la Adolescencia al Envejecer:<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Desarrollo en la Segunda Mitad del Ciclo Vital</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com
+                </small>
+            </div>
+        </div>
+
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/adolescencia/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa del Curso
+        </a>
+        
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 1 • Sesión 4</span>
+            <h1>Trayectorias, Proyecto de Vida y Cierre ABP</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Aplica los referentes en el análisis de una trayectoria de desarrollo, elaborando un mapa ecológico multinivel (ABP – Entrega 1).
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <p>Conceptos de cierre:</p>
+                <ul>
+                    <li>Trayectorias de vida.</li>
+                    <li>Participación social.</li>
+                    <li>Proyecto de vida adolescente.</li>
+                    <li>Integración del Mapa Ecológico.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #2196F3;">
+                <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
+                <p><strong>Actividad en aula:</strong></p>
+                <ul>
+                    <li>Construcción final del mapa multinivel.</li>
+                    <li><strong>Fase CONOCER:</strong> Socialización del primer avance del ABP longitudinal.</li>
+                    <li>Discusión integradora.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <p><strong>Preparación (Entregable):</strong></p>
+                <ul>
+                    <li>Elaboración formal del <strong>Mapa Ecológico Multinivel</strong> basado en el caso asignado.</li>
+                    <li>Alineación con la rúbrica.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <p><strong>Estrategias (30% total):</strong></p>
+                <ul>
+                    <li><strong>ABP Entrega 1:</strong> Valoración mediante Rúbrica (10%).</li>
+                    <li>Retroalimentación de notas.</li>
+                    <li><strong>Prueba PBE:</strong> Evaluación de ciclo básico (20%).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2 class="theme-title"><i class="fas fa-route"></i> Desarrollo Temático: El Proyecto de Vida</h2>
+            <p style="margin-bottom: 30px; font-size: 1.1rem; color: #444;">La adolescencia culmina con la proyección del sujeto hacia el mundo adulto. El "Proyecto de Vida" no es un simple cronograma, sino la articulación de la identidad (Erikson) con las posibilidades que ofrece el entorno (Bronfenbrenner). Se sostiene en tres pilares fundamentales:</p>
+            
+            <div class="pillars-container">
+                <div class="pillar p-vocacional">
+                    <i class="fas fa-briefcase"></i>
+                    <h4>Vocacional / Ocupacional</h4>
+                    <p>La transición de la <em>moratoria</em> al <em>compromiso</em> (Marcia). Implica la elección de una carrera o labor que no solo brinde sustento, sino que resuene con el autoconcepto y las habilidades desarrolladas durante la pubertad.</p>
+                </div>
+                <div class="pillar p-social">
+                    <i class="fas fa-hands-helping"></i>
+                    <h4>Participación y Ciudadanía</h4>
+                    <p>El adolescente abandona el egocentrismo (Elkind) para insertarse en el macrosistema. Implica asumir un rol activo en la sociedad, desarrollando redes de apoyo más allá de la familia nuclear.</p>
+                </div>
+                <div class="pillar p-etico">
+                    <i class="fas fa-balance-scale"></i>
+                    <h4>Ético y Relacional</h4>
+                    <p>Alcanzar el nivel <em>Convencional</em> o <em>Postconvencional</em> (Kohlberg). Definir los valores innegociables, el estilo de vida deseado y la forma en que se estructurarán las futuras relaciones de intimidad.</p>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 50px;"><i class="fas fa-puzzle-piece"></i> Guía de Integración Teórica (Para el Mapa Ecológico)</h3>
+            <p style="margin-bottom: 25px; font-size: 1.1rem; color: #444;">Para lograr una evaluación "Excelente" en su entrega del ABP, el mapa ecológico no puede ser solo un listado de cosas. Debe <strong>articular</strong> la teoría psicológica con el ambiente. Explora el panel interactivo para ver cómo integrar a los autores en cada nivel de Bronfenbrenner:</p>
+            
+            <div class="integration-board">
+                <div class="int-menu">
+                    <button class="int-btn active" onclick="openInt(event, 'i-micro')"><i class="fas fa-home"></i> Nivel Microsistema</button>
+                    <button class="int-btn" onclick="openInt(event, 'i-meso')"><i class="fas fa-project-diagram"></i> Nivel Mesosistema</button>
+                    <button class="int-btn" onclick="openInt(event, 'i-exo')"><i class="fas fa-city"></i> Nivel Exosistema</button>
+                    <button class="int-btn" onclick="openInt(event, 'i-macro')"><i class="fas fa-globe"></i> Macro y Crono</button>
+                </div>
+                <div class="int-display">
+                    
+                    <div id="i-micro" class="int-content active">
+                        <h4>Integración en el Microsistema</h4>
+                        <span class="theory-tag">Identidad de Erikson</span> <span class="theory-tag">Pares y Familia</span> <span class="theory-tag">Elkind</span>
+                        <p>Al graficar el Microsistema de tu caso, no solo pongas "La mamá pelea". Analízalo psicológicamente.</p>
+                        <p><strong>Ejemplo de articulación:</strong> "El estilo de crianza autoritario de los padres (Microsistema - Riesgo) está forzando a la adolescente a un estado de <em>Exclusión de Identidad (Marcia)</em>, impidiendo su moratoria normativa. Simultáneamente, el rechazo de sus compañeros agrava su <em>Audiencia Imaginaria (Elkind)</em>, generándole severa ansiedad social".</p>
+                    </div>
+
+                    <div id="i-meso" class="int-content">
+                        <h4>Integración en el Mesosistema</h4>
+                        <span class="theory-tag">Socialización</span> <span class="theory-tag">Kohlberg</span>
+                        <p>El Mesosistema evalúa el choque o la sinergia entre dos microsistemas. Es el escenario principal del conflicto moral.</p>
+                        <p><strong>Ejemplo de articulación:</strong> "Se evidencia una disfunción mesosistémica (Riesgo) por el choque de valores entre las reglas religiosas rígidas del hogar y las conductas de consumo del grupo de pares. Esto genera en el joven un dilema <em>Preconvencional (Kohlberg)</em>, donde miente a la familia solo para evitar el castigo, sin haber interiorizado una norma ética real".</p>
+                    </div>
+
+                    <div id="i-exo" class="int-content">
+                        <h4>Integración en el Exosistema</h4>
+                        <span class="theory-tag">Neurodesarrollo (Estrés indirecto)</span>
+                        <p>¿Cómo afecta al adolescente algo en lo que él no participa? Aquí evaluamos el trabajo de los padres o las políticas institucionales de la escuela/barrio.</p>
+                        <p><strong>Ejemplo de articulación:</strong> "El ambiente laboral tóxico y los recortes de personal en la empresa del padre (Exosistema - Riesgo) elevan el cortisol en el hogar. Este estrés indirecto disminuye la calidad del acompañamiento, dejando al adolescente biológicamente vulnerable a las conductas de riesgo impulsadas por su <em>Sistema Socioemocional inmaduro (Steinberg)</em>".</p>
+                    </div>
+
+                    <div id="i-macro" class="int-content">
+                        <h4>Macrosistema y Cronosistema</h4>
+                        <span class="theory-tag">Género (APA)</span> <span class="theory-tag">Curso de vida</span>
+                        <p>Aquí integramos los mandatos culturales pesados y el momento histórico exacto en que ocurren los eventos.</p>
+                        <p><strong>Ejemplo de articulación (Macro):</strong> "La cultura machista de la región penaliza la <em>Expresión de Género (APA)</em> del adolescente, actuando como un riesgo estructural que fomenta el bullying sistémico".</p>
+                        <p><strong>Ejemplo de articulación (Crono):</strong> "El abandono del hogar por parte de la madre ocurrió coincidiendo exactamente con la <em>menarquia y el pico puberal (Tanner)</em> de la joven. Este cruce temporal (Cronosistema) agravó el impacto traumático".</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="workshop-container">
+            <div class="workshop-header">
+                <h3><i class="fas fa-clipboard-check"></i> Fase CONOCER: Entrega 1 del ABP</h3>
+                <p>Construcción y Socialización del Mapa Ecológico Multinivel</p>
+                <div style="background: rgba(255,255,255,0.1); display: inline-block; padding: 5px 15px; border-radius: 20px; margin-top: 15px; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.2);">
+                    <i class="fas fa-gavel"></i> Ponderación: 10% del CIA (Sustentado mediante Rúbrica)
+                </div>
+            </div>
+            
+            <div class="workshop-body">
+                <p style="font-size: 1.15rem; color: #444; margin-bottom: 30px; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">
+                    <strong>El momento ha llegado.</strong> Durante las últimas tres semanas hemos estudiado la biología, la cognición y el entorno social. Hoy deben integrar todos estos saberes en la resolución del caso práctico asignado, elaborando el diagnóstico inicial de la trayectoria de vida.
+                </p>
+
+                <div class="step-box">
+                    <div class="step-num">
+                        <span>Paso</span>
+                        <strong>1</strong>
+                    </div>
+                    <div class="step-content">
+                        <h4>El Organizador Gráfico (Mapa Ecológico)</h4>
+                        <p style="margin-bottom: 15px; color: #555;">Deben diseñar un mapa visual (pueden usar Canva, Miro, PowerPoint) que represente concéntricamente los 5 niveles del modelo de Urie Bronfenbrenner. Dentro de este mapa deben:</p>
+                        <ul class="checklist">
+                            <li><i class="fas fa-check-circle"></i> Ubicar de forma precisa los <strong>Factores de Riesgo</strong> (marcados en rojo o con un símbolo claro) extraídos del caso.</li>
+                            <li><i class="fas fa-check-circle"></i> Ubicar de forma precisa los <strong>Factores Protectores</strong> (marcados en verde o con otro símbolo) extraídos del caso.</li>
+                            <li><i class="fas fa-check-circle"></i> Asegurarse de que no haya niveles vacíos. Si el caso no lo dice explícitamente, deduzcan el Macrosistema y el Cronosistema de acuerdo al contexto de la historia.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-num" style="background: var(--cuc-gold);">
+                        <span>Paso</span>
+                        <strong>2</strong>
+                    </div>
+                    <div class="step-content">
+                        <h4>Análisis Escrito (Articulación Teórica)</h4>
+                        <p style="margin-bottom: 15px; color: #555;">Acompañando al gráfico, deben entregar un texto analítico (no descriptivo). En este documento deben responder justificadamente:</p>
+                        <ul class="checklist">
+                            <li><i class="fas fa-check-circle"></i> <strong>Disfunción Mesosistémica:</strong> Expliquen la principal falla de conexión entre microsistemas que está afectando al protagonista.</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Articulación Psicológica:</strong> Mencionen e integren a la explicación al menos DOS teorías vistas (ej. Estado de Moratoria de Marcia, Audiencia Imaginaria de Elkind, Desarrollo Cognitivo de Piaget, Modelo Dual de Steinberg). <em>(Referencia el panel interactivo superior para ejemplos).</em></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="step-box" style="margin-bottom: 0; border-left: 4px solid var(--cuc-dark);">
+                    <div class="step-num" style="background: var(--cuc-dark);">
+                        <span>Paso</span>
+                        <strong>3</strong>
+                    </div>
+                    <div class="step-content">
+                        <h4>Socialización y Discusión</h4>
+                        <p style="margin-bottom: 15px; color: #555;">Durante la sesión presencial:</p>
+                        <ul class="checklist">
+                            <li><i class="fas fa-check-circle"></i> Cada grupo proyectará su mapa y defenderá su diagnóstico ecológico frente al docente y compañeros.</li>
+                            <li><i class="fas fa-check-circle"></i> El tono de la exposición debe ser profesional, clínico y preventivo (no emitir juicios morales como "la mamá es mala" o "el joven es rebelde", sino usar vocabulario técnico: "pautas negligentes", "búsqueda de moratoria").</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="rubric-alert">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <h4 style="margin-bottom: 5px; color: #664d03; font-size: 1.2rem;">¡Atención a la Rúbrica!</h4>
+                        <p style="margin: 0; font-size: 0.95rem;">Su entrega será calificada mediante la <strong>Rúbrica de la Unidad 1</strong>. Asegúrense de revisar los criterios de "Excelente" (4.6 - 5.0) correspondientes a los Indicadores 3 y 4 antes de subir su documento final a Moodle. Una excelente ortografía y el uso impecable del lenguaje técnico son obligatorios.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p>Material diseñado para uso exclusivo académico.</p>
+    </footer>
+
+    <script>
+        // Función interactiva para el panel de integración teórica (ABP)
+        function openInt(evt, intId) {
+            var i, content, btns;
+            content = document.getElementsByClassName("int-content");
+            for (i = 0; i < content.length; i++) {
+                content[i].classList.remove("active");
+            }
+            btns = document.getElementsByClassName("int-btn");
+            for (i = 0; i < btns.length; i++) {
+                btns[i].classList.remove("active");
+            }
+            document.getElementById(intId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>
