@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 9 - Yo y los Otros</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --cuc-red: #A3161A; --cuc-dark: #1a1a1a; --cuc-gray: #f4f4f4; --white: #ffffff; --cuc-gold: #cba052; --rose: #E91E63; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+
+        header { background-color: var(--white); border-bottom: 4px solid var(--cuc-red); padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; text-align: center; }
+        .qr-code img { max-height: 80px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; transition: transform 0.3s; }
+        .qr-code img:hover { transform: scale(1.1); border-color: var(--cuc-red); }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; text-transform: uppercase; font-weight: bold; }
+        .header-logo img { max-height: 90px; background-color: transparent; }
+        .header-info { text-align: center; max-width: 600px; }
+        .course-title { color: var(--cuc-red); font-size: 1.8rem; font-weight: 900; text-transform: uppercase; margin-bottom: 5px; line-height: 1.1; }
+        .prof-info { font-size: 0.95rem; color: #333; }
+        .prof-info strong, .contact-label { color: var(--cuc-red); font-weight: 900; }
+
+        .class-view { max-width: 1200px; margin: 40px auto; padding: 0 20px; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-back { background-color: var(--white); color: var(--cuc-dark); padding: 10px 20px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; transition: 0.3s; border: 2px solid #ddd; font-size: 1rem; }
+        .btn-back:hover { background-color: var(--cuc-gray); border-color: var(--cuc-red); transform: translateX(-5px); }
+
+        .class-header-card { background: linear-gradient(135deg, var(--rose), #C2185B); color: white; padding: 40px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+        .class-header-card::after { content: '\f004'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; right: -20px; bottom: -30px; font-size: 10rem; color: rgba(255,255,255,0.1); }
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        .class-indicator { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-top: 15px; font-size: 1.05rem; border-left: 4px solid var(--cuc-gold); position: relative; z-index: 2; }
+
+        .class-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
+        .detail-card { background: white; border: 1px solid #eee; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--cuc-red); transition: transform 0.3s; }
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.2rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .theme-section { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 40px; border-top: 4px solid var(--rose); }
+        .theme-title { color: var(--rose); margin-bottom: 25px; font-size: 1.8rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .theme-subtitle { color: var(--cuc-dark); margin: 25px 0 15px; font-size: 1.3rem; }
+        .concept-box { background-color: #FCE4EC; padding: 20px; border-left: 4px solid var(--rose); border-radius: 0 10px 10px 0; margin-bottom: 20px; font-style: italic; }
+
+        .triangle-container { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; margin: 30px 0; }
+        .t-node { flex: 1; min-width: 250px; text-align: center; padding: 25px; background: #fff; border-radius: 10px; border: 2px solid #ddd; box-shadow: 0 5px 10px rgba(0,0,0,0.05); transition: 0.3s; cursor: pointer; }
+        .t-node:hover { background: var(--rose); color: white; transform: scale(1.05); border-color: var(--rose); box-shadow: 0 10px 20px rgba(233, 30, 99, 0.2); }
+        .t-node i { font-size: 3rem; color: var(--rose); margin-bottom: 15px; transition: 0.3s; }
+        .t-node:hover i { color: white; }
+        .t-node h4 { font-size: 1.3rem; margin-bottom: 10px; }
+        .t-node p { font-size: 0.95rem; color: #555; transition: 0.3s; }
+        .t-node:hover p { color: #f0f0f0; }
+
+        .videos-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        .activity-box { background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); border: 2px dashed var(--rose); border-radius: 15px; padding: 30px; margin-top: 30px; }
+
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
+        @media screen and (max-width: 1024px) { .class-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media screen and (max-width: 900px) { header { flex-direction: column; gap: 15px; } .qr-code { display: none; } .header-info { order: 3; } .header-logo { order: 2; } .class-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/yoylosotros/u3clase09.html" alt="QR Clase">
+            <span class="qr-label">Ir a Clase 9</span>
+        </div>
+        <div class="header-logo"><img src="logocuc.png" alt="Logo Universidad de la Costa"></div>
+        <div class="header-info">
+            <div class="course-title">Yo y los Otros:<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">De la identidad a la relación</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br> Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small><span class="contact-label">WhatsApp:</span> 3233796547 | <span class="contact-label">IG:</span> jorge.arangoc | <span class="contact-label">Web:</span> www.jorgearangoc.com</small>
+            </div>
+        </div>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/yoylosotros/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa
+        </a>
+        
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: #ffeb3b;">Unidad 3 • Semana 11</span>
+            <h1>Atracción Interpersonal y Prosocialidad</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Identifica autores, postulados y aspectos relevantes de la atracción interpersonal y la necesidad de afiliación que tiene el ser humano como ser social.
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <ul>
+                    <li>Necesidad de afiliación (Baumeister, Bowlby).</li>
+                    <li>Atracción física, proximidad, similitud, reciprocidad.</li>
+                    <li>Modelos de atracción interpersonal (Byrne, Sternberg).</li>
+                    <li>Conducta Prosocial (Altruismo).</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: var(--rose);">
+                <h3 style="color: var(--rose);"><i class="fas fa-users"></i> Presencial</h3>
+                <ul>
+                    <li>Construcción participativa del "Mapa Vivo".</li>
+                    <li>Análisis reflexivo grupal sobre los componentes de la atracción y la prosocialidad.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <ul>
+                    <li>Lectura crítica.</li>
+                    <li>Construcción de un mapa conceptual <strong>individual</strong> sobre la atracción interpersonal y prosocialidad.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <ul>
+                    <li>Valoración de la socialización en el mapa vivo (Rúbrica).</li>
+                    <li>Evaluación sumativa (Ítems y rúbrica).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2 class="theme-title"><i class="fas fa-magnet"></i> Desarrollo Temático: ¿Por qué nos atraemos?</h2>
+            
+            <h3 class="theme-subtitle">1. La Necesidad de Afiliación</h3>
+            <p>La psicología evolutiva (y teóricos como John Bowlby con el apego) postulan que el deseo de establecer conexiones emocionales y afiliarnos a grupos no es una preferencia, sino un imperativo de supervivencia. Baumeister y Leary propusieron la "hipótesis de la necesidad de pertenencia", sugiriendo que tenemos un impulso fundamental para formar relaciones significativas; cuando se frustra, sufrimos daños psicológicos y físicos.</p>
+            
+            <div class="concept-box">
+                <strong>Predictores de la Atracción:</strong> Nos atraen aquellos que están cerca físicamente (<em>Efecto de mera exposición/Proximidad</em>), quienes se parecen a nosotros en valores y actitudes (<em>Similitud</em>), y quienes nos demuestran aprecio (<em>Reciprocidad</em>).
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 40px;">2. Teoría Triangular del Amor (Robert Sternberg)</h3>
+            <p style="margin-bottom: 20px;">Sternberg revolucionó la forma de entender las relaciones íntimas al plantear que el amor completo ("Amor Consumado") requiere el equilibrio de tres componentes. Pasa el ratón sobre cada pilar:</p>
+            
+            <div class="triangle-container">
+                <div class="t-node">
+                    <i class="fas fa-user-friends"></i>
+                    <h4>Intimidad</h4>
+                    <p>Es el componente emocional. Sentimientos de cercanía, vínculo, confianza plena y el deseo de promover el bienestar del ser amado.</p>
+                </div>
+                <div class="t-node">
+                    <i class="fas fa-fire"></i>
+                    <h4>Pasión</h4>
+                    <p>Es el componente motivacional. El impulso intenso, la atracción física, el deseo sexual y la necesidad de estar unido al otro de forma constante.</p>
+                </div>
+                <div class="t-node">
+                    <i class="fas fa-ring"></i>
+                    <h4>Compromiso</h4>
+                    <p>Es el componente cognitivo. La decisión consciente a corto plazo de amar a alguien, y a largo plazo, la voluntad de mantener ese amor superando obstáculos.</p>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle">3. Conducta Prosocial y Altruismo</h3>
+            <p>La prosocialidad abarca cualquier comportamiento que beneficia a otros. El <em>altruismo</em> es un tipo específico de conducta prosocial motivada puramente por el deseo de ayudar a quien lo necesita, incluso a expensas de uno mismo, sin esperar recompensa externa.</p>
+
+            <h3 class="theme-subtitle">Recurso Audiovisual</h3>
+            <div class="videos-container">
+                <div class="video-wrapper">
+                    <!-- Video sobre Atracción o Efecto Espectador -->
+                    <iframe src="https://www.youtube.com/embed/VonNpi8IvbM" title="Conducta Prosocial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3 style="color: var(--rose); margin-bottom: 10px;"><i class="fas fa-map-marked-alt"></i> Actividad en Aula: Mapa Vivo</h3>
+                <p><strong>Dinámica:</strong> Representación grupal física.</p>
+                <p style="margin-top: 15px; margin-bottom: 5px;"><strong>Instrucciones:</strong></p>
+                <ol style="margin-left: 20px; line-height: 1.8; color: #444;">
+                    <li>Basados en sus mapas conceptuales individuales, transformaremos el aula en un "espacio cartográfico humano".</li>
+                    <li>Los estudiantes se agruparán representando los diferentes conceptos (Ej: Proximidad, Similitud, Intimidad, Altruismo).</li>
+                    <li>Mediante desplazamiento físico o conexiones (hilos/cintas), deberán argumentar cómo su concepto se relaciona y afecta a los otros nodos en la dinámica de las relaciones reales.</li>
+                    <li>Se evaluará la solidez de los argumentos expuestos para justificar las conexiones.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+    </footer>
+</body>
+</html>
