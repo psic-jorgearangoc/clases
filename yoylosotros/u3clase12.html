@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 12 - Yo y los Otros</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --cuc-red: #A3161A; --cuc-dark: #1a1a1a; --cuc-gray: #f4f4f4; --white: #ffffff; --cuc-gold: #cba052; --teal: #00796B; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+
+        header { background-color: var(--white); border-bottom: 4px solid var(--cuc-red); padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; text-align: center; }
+        .qr-code img { max-height: 80px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; transition: transform 0.3s; }
+        .qr-code img:hover { transform: scale(1.1); border-color: var(--cuc-red); }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; text-transform: uppercase; font-weight: bold; }
+        .header-logo img { max-height: 90px; background-color: transparent; }
+        .header-info { text-align: center; max-width: 600px; }
+        .course-title { color: var(--cuc-red); font-size: 1.8rem; font-weight: 900; text-transform: uppercase; margin-bottom: 5px; line-height: 1.1; }
+        .prof-info { font-size: 0.95rem; color: #333; }
+        .prof-info strong, .contact-label { color: var(--cuc-red); font-weight: 900; }
+
+        .class-view { max-width: 1200px; margin: 40px auto; padding: 0 20px; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-back { background-color: var(--white); color: var(--cuc-dark); padding: 10px 20px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; transition: 0.3s; border: 2px solid #ddd; font-size: 1rem; }
+        .btn-back:hover { background-color: var(--cuc-gray); border-color: var(--cuc-red); transform: translateX(-5px); }
+
+        .class-header-card { background: linear-gradient(135deg, var(--teal), #004D40); color: white; padding: 40px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+        .class-header-card::after { content: '\f0c3'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; right: -20px; bottom: -30px; font-size: 10rem; color: rgba(255,255,255,0.1); }
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        .class-indicator { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-top: 15px; font-size: 1.05rem; border-left: 4px solid var(--cuc-gold); position: relative; z-index: 2; }
+
+        .class-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
+        .detail-card { background: white; border: 1px solid #eee; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--cuc-red); transition: transform 0.3s; }
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.2rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .theme-section { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 40px; border-top: 4px solid var(--teal); }
+        .theme-title { color: var(--teal); margin-bottom: 25px; font-size: 1.8rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .theme-subtitle { color: var(--cuc-dark); margin: 25px 0 15px; font-size: 1.3rem; }
+        .concept-box { background-color: #E0F2F1; padding: 20px; border-left: 4px solid var(--teal); border-radius: 0 10px 10px 0; margin-bottom: 30px; font-style: italic; }
+
+        .integration-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
+        .i-node { background: var(--white); border: 2px solid var(--cuc-gray); padding: 20px; border-radius: 10px; text-align: center; }
+        .i-node i { font-size: 2.5rem; color: var(--teal); margin-bottom: 10px; }
+        .i-node h4 { color: var(--cuc-dark); margin-bottom: 5px; }
+        .i-node p { font-size: 0.85rem; color: #666; }
+
+        .videos-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        .activity-box { background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); border: 2px dashed var(--teal); border-radius: 15px; padding: 30px; margin-top: 30px; }
+
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
+        @media screen and (max-width: 1024px) { .class-grid { grid-template-columns: repeat(2, 1fr); } .integration-grid { grid-template-columns: 1fr; } }
+        @media screen and (max-width: 900px) { header { flex-direction: column; gap: 15px; } .qr-code { display: none; } .header-info { order: 3; } .header-logo { order: 2; } .class-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/yoylosotros/u3clase12.html" alt="QR Clase">
+            <span class="qr-label">Ir a Clase 12</span>
+        </div>
+        <div class="header-logo"><img src="logocuc.png" alt="Logo Universidad de la Costa"></div>
+        <div class="header-info">
+            <div class="course-title">Yo y los Otros:<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">De la identidad a la relación</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br> Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small><span class="contact-label">WhatsApp:</span> 3233796547 | <span class="contact-label">IG:</span> jorge.arangoc | <span class="contact-label">Web:</span> www.jorgearangoc.com</small>
+            </div>
+        </div>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/yoylosotros/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa
+        </a>
+        
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: #ffeb3b;">Unidad 3 • Semanas 14 y 15</span>
+            <h1>Laboratorio Social e Integración</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Aplica en estudios de caso las diferentes teorías que sustentan la atracción, prosocialidad, influencia y agresión para explicar la naturaleza social humana.
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <ul>
+                    <li>Laboratorio social: "El vínculo humano en contexto".</li>
+                    <li>Análisis psicosocial de un fenómeno contemporáneo.</li>
+                    <li>Integración temática de las Unidades 1, 2 y 3.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: var(--teal);">
+                <h3 style="color: var(--teal);"><i class="fas fa-users"></i> Presencial</h3>
+                <ul>
+                    <li>Feria/Taller de simulación sobre los temas vistos.</li>
+                    <li>Exposición de las propuestas de laboratorio implementadas por los grupos.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <ul>
+                    <li>Lectura crítica e investigación metodológica.</li>
+                    <li>Creación de los laboratorios sociales (diseño, ejecución empírica y recopilación de resultados).</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <ul>
+                    <li>Evaluación sumativa de todo el ciclo mediante la Rúbrica Final de la Unidad 3.</li>
+                    <li>Preparación de cierre de semestre.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2 class="theme-title"><i class="fas fa-microscope"></i> Desarrollo Temático: La Psicología Social en Acción</h2>
+            
+            <h3 class="theme-subtitle">Integrando los Hilos del Curso</h3>
+            <p style="margin-bottom: 20px;">A lo largo de este semestre hemos recorrido un viaje fascinante. Hemos analizado el comportamiento humano no como entes aislados, sino a través del poderoso lente de la interacción social.</p>
+
+            <div class="integration-grid">
+                <div class="i-node">
+                    <i class="fas fa-user-circle"></i>
+                    <h4>Unidad 1: El Yo Social</h4>
+                    <p>Comprendimos cómo la sociedad moldea nuestra identidad, autoconcepto y los procesos de socialización primaria y secundaria.</p>
+                </div>
+                <div class="i-node">
+                    <i class="fas fa-eye"></i>
+                    <h4>Unidad 2: Percepción Social</h4>
+                    <p>Descubrimos los atajos (heurísticos) y sesgos que usa nuestro cerebro para formarse impresiones rápidas y juzgar a los demás.</p>
+                </div>
+                <div class="i-node">
+                    <i class="fas fa-people-arrows"></i>
+                    <h4>Unidad 3: Interdependencia</h4>
+                    <p>Analizamos las fuerzas que nos unen (atracción, influencia, altruismo) y las que nos separan (agresión, prejuicio).</p>
+                </div>
+            </div>
+
+            <div class="concept-box">
+                "No hay nada tan práctico como una buena teoría." - <strong>Kurt Lewin</strong>. (Hoy aplicaremos este principio para cerrar el ciclo).
+            </div>
+
+            <h3 class="theme-subtitle">Recurso Audiovisual</h3>
+            <div class="videos-container">
+                <div class="video-wrapper">
+                    <!-- Video sobre la importancia de la Psicología Social en la actualidad -->
+                    <iframe src="https://www.youtube.com/embed/cdn7ChQNq0o" title="Importancia de la Psicología Social" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3 style="color: var(--teal); margin-bottom: 10px;"><i class="fas fa-flask"></i> Actividad en Aula: Feria de Laboratorios Sociales Finales</h3>
+                <p><strong>Dinámica:</strong> Exposición de proyectos integradores de investigación.</p>
+                <p style="margin-top: 15px; margin-bottom: 5px;"><strong>Instrucciones para los Grupos:</strong></p>
+                <ol style="margin-left: 20px; line-height: 1.8; color: #444;">
+                    <li>Cada grupo presentará su experimento o "Laboratorio Social" final diseñado en el trabajo independiente.</li>
+                    <li>Deberán justificar su diseño integrando obligatoriamente conceptos de las <strong>tres unidades</strong>. Por ejemplo, demostrar mediante el experimento cómo un <em>sesgo de percepción (U2)</em> influye en una <em>conducta agresiva (U3)</em> debido a la <em>socialización de género (U1)</em> del sujeto.</li>
+                    <li>Mostrarán las evidencias de su simulación o implementación real y las conclusiones a las que llegaron sobre el comportamiento humano.</li>
+                    <li>Celebraremos el cierre del semestre evaluando la pertinencia, creatividad y rigor científico de cada entrega.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+    </footer>
+</body>
+</html>
