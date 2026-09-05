@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 11 - Yo y los Otros</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --cuc-red: #A3161A; --cuc-dark: #1a1a1a; --cuc-gray: #f4f4f4; --white: #ffffff; --cuc-gold: #cba052; --crimson: #D32F2F; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+
+        header { background-color: var(--white); border-bottom: 4px solid var(--cuc-red); padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; text-align: center; }
+        .qr-code img { max-height: 80px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; transition: transform 0.3s; }
+        .qr-code img:hover { transform: scale(1.1); border-color: var(--cuc-red); }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; text-transform: uppercase; font-weight: bold; }
+        .header-logo img { max-height: 90px; background-color: transparent; }
+        .header-info { text-align: center; max-width: 600px; }
+        .course-title { color: var(--cuc-red); font-size: 1.8rem; font-weight: 900; text-transform: uppercase; margin-bottom: 5px; line-height: 1.1; }
+        .prof-info { font-size: 0.95rem; color: #333; }
+        .prof-info strong, .contact-label { color: var(--cuc-red); font-weight: 900; }
+
+        .class-view { max-width: 1200px; margin: 40px auto; padding: 0 20px; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-back { background-color: var(--white); color: var(--cuc-dark); padding: 10px 20px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; transition: 0.3s; border: 2px solid #ddd; font-size: 1rem; }
+        .btn-back:hover { background-color: var(--cuc-gray); border-color: var(--cuc-red); transform: translateX(-5px); }
+
+        .class-header-card { background: linear-gradient(135deg, var(--crimson), #b71c1c); color: white; padding: 40px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+        .class-header-card::after { content: '\f0e3'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; right: -20px; bottom: -30px; font-size: 10rem; color: rgba(255,255,255,0.1); }
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        .class-indicator { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-top: 15px; font-size: 1.05rem; border-left: 4px solid var(--cuc-gold); position: relative; z-index: 2; }
+
+        .class-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
+        .detail-card { background: white; border: 1px solid #eee; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--cuc-red); transition: transform 0.3s; }
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.2rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .theme-section { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 40px; border-top: 4px solid var(--crimson); }
+        .theme-title { color: var(--crimson); margin-bottom: 25px; font-size: 1.8rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .theme-subtitle { color: var(--cuc-dark); margin: 25px 0 15px; font-size: 1.3rem; }
+        .concept-box { background-color: #FFEBEE; padding: 20px; border-left: 4px solid var(--crimson); border-radius: 0 10px 10px 0; margin-bottom: 20px; font-style: italic; }
+
+        .aggression-types { display: flex; flex-wrap: wrap; gap: 25px; margin-bottom: 40px; }
+        .a-type { flex: 1; min-width: 250px; background: #fff; border: 1px solid #ddd; padding: 30px; border-radius: 10px; text-align: center; box-shadow: 0 5px 10px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .a-type:hover { transform: translateY(-5px); border-color: var(--crimson); }
+        .a-type i { font-size: 3rem; margin-bottom: 15px; }
+        .a-type h4 { color: var(--cuc-dark); font-size: 1.4rem; margin-bottom: 15px; }
+        .a-type p { font-size: 0.95rem; color: #555; text-align: justify;}
+
+        .videos-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        .activity-box { background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); border: 2px dashed var(--crimson); border-radius: 15px; padding: 30px; margin-top: 30px; }
+
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
+        @media screen and (max-width: 1024px) { .class-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media screen and (max-width: 900px) { header { flex-direction: column; gap: 15px; } .qr-code { display: none; } .header-info { order: 3; } .header-logo { order: 2; } .class-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/yoylosotros/u3clase11.html" alt="QR Clase">
+            <span class="qr-label">Ir a Clase 11</span>
+        </div>
+        <div class="header-logo"><img src="logocuc.png" alt="Logo Universidad de la Costa"></div>
+        <div class="header-info">
+            <div class="course-title">Yo y los Otros:<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">De la identidad a la relación</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br> Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small><span class="contact-label">WhatsApp:</span> 3233796547 | <span class="contact-label">IG:</span> jorge.arangoc | <span class="contact-label">Web:</span> www.jorgearangoc.com</small>
+            </div>
+        </div>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/yoylosotros/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa
+        </a>
+        
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: #ffeb3b;">Unidad 3 • Semana 13</span>
+            <h1>Agresión y Personalidad</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Analiza las teorías de la agresividad y las facetas de este fenómeno psicológico y su relación con los rasgos de la personalidad.
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <ul>
+                    <li>Diferencias entre violencia y agresión.</li>
+                    <li>Agresión Instrumental vs. Emocional.</li>
+                    <li>Teorías: Frustración-Agresión, Aprendizaje Social (Bandura), Neurobiología.</li>
+                    <li>Relación con personalidad (Impulsividad, baja empatía).</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: var(--crimson);">
+                <h3 style="color: var(--crimson);"><i class="fas fa-users"></i> Presencial</h3>
+                <ul>
+                    <li>Taller en pequeños grupos: Estudio de caso de la vida real.</li>
+                    <li>Socialización y debate de los saberes construidos sobre la etiología del caso.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <ul>
+                    <li>Elaboración de un estudio de casos sobre la agresión (En fichas individuales).</li>
+                    <li>Lectura crítica de modelos teóricos.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <ul>
+                    <li>Valoración de la argumentación en el estudio de caso.</li>
+                    <li>Evaluación sumativa Unidad 3.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2 class="theme-title"><i class="fas fa-fire-alt"></i> Desarrollo Temático: La Naturaleza de la Agresión</h2>
+            
+            <h3 class="theme-subtitle">1. Tipos de Agresión</h3>
+            <p style="margin-bottom: 20px;">En psicología social, la agresión se define como cualquier comportamiento intencional que busca causar daño físico o psicológico a otro individuo que no desea sufrirlo. Es fundamental distinguir sus dos vertientes principales:</p>
+
+            <div class="aggression-types">
+                <div class="a-type" style="border-top: 5px solid var(--crimson);">
+                    <i class="fas fa-bolt" style="color: var(--crimson);"></i>
+                    <h4>Agresión Emocional (Hostil)</h4>
+                    <p>Surge impulsivamente de emociones intensas como la ira. Su objetivo primario y final es infligir dolor en respuesta a una provocación, insulto o frustración. No es premeditada. <em>Ej: Golpear a alguien durante una acalorada discusión de tránsito.</em></p>
+                </div>
+                <div class="a-type" style="border-top: 5px solid #1976D2;">
+                    <i class="fas fa-chess-knight" style="color: #1976D2;"></i>
+                    <h4>Agresión Instrumental</h4>
+                    <p>Es calculada, fría y premeditada. Se utiliza la agresión como un "instrumento" o medio para alcanzar un objetivo ulterior (dinero, poder, territorio, estatus), y no necesariamente está motivada por la ira. <em>Ej: Un sicario que asesina por dinero, o un robo a mano armada.</em></p>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle">2. Teorías Clave del Comportamiento Agresivo</h3>
+            <ul style="margin-left: 20px; line-height: 1.8; color: #444; margin-bottom: 25px;">
+                <li><strong>Aprendizaje Social (Bandura):</strong> No nacemos con un instinto destructivo. Aprendemos a ser agresivos observando a modelos (padres, cultura, medios, videojuegos) y notando que, a menudo, la agresión es recompensada. (Demostrado en el famoso experimento del Muñeco Bobo).</li>
+                <li><strong>Hipótesis de Frustración-Agresión (Dollard & Miller):</strong> Postula que la frustración (el bloqueo en el camino hacia una meta) siempre aumenta la instigación a la agresión, aunque a veces el daño se desplaza hacia un blanco más seguro ("chivo expiatorio") en lugar de hacia la fuente de frustración original.</li>
+                <li><strong>Factores de Personalidad:</strong> La psicología moderna relaciona la agresión frecuente con rasgos como la alta impulsividad, la baja empatía, y el narcisismo (que lleva a reaccionar violentamente ante críticas al ego inflado).</li>
+            </ul>
+
+            <h3 class="theme-subtitle">Recurso Audiovisual</h3>
+            <div class="videos-container">
+                <div class="video-wrapper">
+                    <!-- Video sobre el Experimento del Muñeco Bobo de Bandura -->
+                    <iframe src="https://www.youtube.com/embed/zVJj2-0G-jM" title="Experimento Muñeco Bobo Bandura" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3 style="color: var(--crimson); margin-bottom: 10px;"><i class="fas fa-user-secret"></i> Actividad en Aula: Perfilación Psicosocial</h3>
+                <p><strong>Dinámica:</strong> Trabajo de perfilación en pequeños grupos.</p>
+                <p style="margin-top: 15px; margin-bottom: 5px;"><strong>Instrucciones:</strong></p>
+                <ol style="margin-left: 20px; line-height: 1.8; color: #444;">
+                    <li>A partir de las fichas individuales trabajadas en el tiempo independiente, el grupo elegirá y consolidará <strong>un caso real</strong> de conducta agresiva (criminal o civil).</li>
+                    <li>Deberán clasificar y argumentar el tipo de agresión (Instrumental vs. Emocional).</li>
+                    <li>Sustentar la etiología del comportamiento: ¿Qué factores de personalidad (impulsividad, narcisismo) y socioculturales (aprendizaje, frustración) facilitaron la conducta según la evidencia del caso?</li>
+                    <li>Socialización en plenaria para evaluar la integración teórica.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+    </footer>
+</body>
+</html>
