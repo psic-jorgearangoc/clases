@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 6 - Yo y los Otros</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --cuc-red: #A3161A; --cuc-dark: #1a1a1a; --cuc-gray: #f4f4f4; --white: #ffffff; --cuc-gold: #cba052; --purple: #9C27B0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+
+        header { background-color: var(--white); border-bottom: 4px solid var(--cuc-red); padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; text-align: center; }
+        .qr-code img { max-height: 80px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; transition: transform 0.3s; }
+        .qr-code img:hover { transform: scale(1.1); border-color: var(--cuc-red); }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; text-transform: uppercase; font-weight: bold; }
+        .header-logo img { max-height: 90px; background-color: transparent; }
+        .header-info { text-align: center; max-width: 600px; }
+        .course-title { color: var(--cuc-red); font-size: 1.8rem; font-weight: 900; text-transform: uppercase; margin-bottom: 5px; line-height: 1.1; }
+        .prof-info { font-size: 0.95rem; color: #333; }
+        .prof-info strong, .contact-label { color: var(--cuc-red); font-weight: 900; }
+
+        .class-view { max-width: 1200px; margin: 40px auto; padding: 0 20px; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-back { background-color: var(--white); color: var(--cuc-dark); padding: 10px 20px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; transition: 0.3s; border: 2px solid #ddd; font-size: 1rem; }
+        .btn-back:hover { background-color: var(--cuc-gray); border-color: var(--cuc-red); transform: translateX(-5px); }
+
+        .class-header-card { background: linear-gradient(135deg, var(--purple), #4a148c); color: white; padding: 40px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+        .class-header-card::after { content: '\f0e8'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; right: -20px; bottom: -30px; font-size: 10rem; color: rgba(255,255,255,0.1); }
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        .class-indicator { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-top: 15px; font-size: 1.05rem; border-left: 4px solid var(--cuc-gold); position: relative; z-index: 2; }
+
+        .class-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
+        .detail-card { background: white; border: 1px solid #eee; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--cuc-red); transition: transform 0.3s; }
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .theme-section { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 40px; border-top: 4px solid var(--purple); }
+        .theme-title { color: var(--purple); margin-bottom: 25px; font-size: 1.8rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .theme-subtitle { color: var(--cuc-dark); margin: 25px 0 15px; font-size: 1.3rem; }
+        .concept-box { background-color: #f3e5f5; padding: 20px; border-left: 4px solid var(--purple); border-radius: 0 10px 10px 0; margin-bottom: 20px; font-style: italic; }
+
+        .schema-container { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 30px; }
+        .schema-item { flex: 1; min-width: 250px; background: #fff; border: 1px solid #ddd; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; transition: 0.3s; }
+        .schema-item:hover { transform: translateY(-5px); border-color: var(--purple); box-shadow: 0 10px 20px rgba(156, 39, 176, 0.1); }
+        .schema-item i { font-size: 3rem; color: var(--purple); margin-bottom: 15px; }
+        .schema-item h4 { font-size: 1.3rem; margin-bottom: 10px; color: var(--cuc-dark); }
+        .schema-item p { font-size: 0.95rem; color: #555; text-align: left; }
+
+        .heuristics-list { list-style: none; padding: 0; }
+        .heuristics-list li { background: #fff; border: 1px solid #eee; margin-bottom: 15px; padding: 20px; border-radius: 8px; border-left: 4px solid var(--purple); }
+        .heuristics-list li h4 { color: var(--purple); margin-bottom: 5px; }
+
+        .videos-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        
+        .activity-box { background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); border: 2px dashed var(--purple); border-radius: 15px; padding: 30px; margin-top: 30px; }
+
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
+        @media screen and (max-width: 1024px) { .class-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media screen and (max-width: 900px) { header { flex-direction: column; gap: 15px; } .qr-code { display: none; } .header-info { order: 3; } .header-logo { order: 2; } .class-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/yoylosotros/u2clase06.html" alt="QR Clase">
+            <span class="qr-label">Ir a Clase 6</span>
+        </div>
+        <div class="header-logo"><img src="logocuc.png" alt="Logo Universidad de la Costa"></div>
+        <div class="header-info">
+            <div class="course-title">Yo y los Otros:<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">De la identidad a la relación</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br> Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small><span class="contact-label">WhatsApp:</span> 3233796547 | <span class="contact-label">IG:</span> jorge.arangoc | <span class="contact-label">Web:</span> www.jorgearangoc.com</small>
+            </div>
+        </div>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/yoylosotros/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa
+        </a>
+        
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: #ffeb3b;">Unidad 2 • Semana 7</span>
+            <h1>Cognición Social</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Comprende los postulados relevantes que sustenta la cognición social y las operaciones mentales que subyacen a las interacciones sociales.
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <ul>
+                    <li>Definición de Cognición Social.</li>
+                    <li>Esquemas sociales, estereotipos y scripts.</li>
+                    <li>Heurísticos/sesgos cognitivos.</li>
+                    <li>Influencia de la cognición en la interacción social.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: var(--purple);">
+                <h3 style="color: var(--purple);"><i class="fas fa-users"></i> Presencial</h3>
+                <ul>
+                    <li>Exposición en pequeños grupos / panel o juego de roles.</li>
+                    <li>Aplicación de los juegos evaluativos diseñados.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <ul>
+                    <li>Elaboración de juegos evaluativos para aplicar en clase sobre temas de cognición social.</li>
+                    <li>Construcción de ficha explicativa del juego.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <ul>
+                    <li>Valoración de la argumentación escrita en fichas explicativas.</li>
+                    <li>Evaluación sumativa (Ítems y rúbrica).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2 class="theme-title"><i class="fas fa-brain"></i> Desarrollo Temático: Atajos de la Mente</h2>
+            
+            <h3 class="theme-subtitle">1. ¿Qué es la Cognición Social?</h3>
+            <p>Es la manera en que analizamos, recordamos y utilizamos la información sobre el mundo social. Nos enfrentamos a un entorno abrumador en información (estímulos visuales, conversaciones, intenciones). Para no colapsar, el cerebro humano es un "avaro cognitivo": busca procesar la mayor cantidad de información con el menor esfuerzo posible.</p>
+            
+            <h3 class="theme-subtitle" style="margin-top:30px;">2. Estructuras Mentales Clave</h3>
+            <div class="schema-container">
+                <div class="schema-item">
+                    <i class="fas fa-cubes"></i>
+                    <h4>Esquemas</h4>
+                    <p>Son marcos mentales que contienen el conocimiento general sobre un tema. Nos permiten organizar la información rápidamente. Si ves a alguien con estetoscopio, tu <em>esquema</em> de "médico" se activa y asumes que tiene conocimientos de salud.</p>
+                </div>
+                <div class="schema-item">
+                    <i class="fas fa-users"></i>
+                    <h4>Estereotipos</h4>
+                    <p>Son esquemas aplicados rígidamente a grupos sociales. Creencias generalizadas (positivas o negativas) de que todos los miembros de un grupo comparten ciertas características, ignorando la diversidad individual.</p>
+                </div>
+                <div class="schema-item">
+                    <i class="fas fa-film"></i>
+                    <h4>Scripts (Guiones)</h4>
+                    <p>Son esquemas sobre secuencias de eventos. Es el "guión" de cómo deben suceder las cosas. Por ejemplo, el <em>script</em> de "ir a cine" incluye comprar boleto, comprar palomitas, sentarse a oscuras y no hablar.</p>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle">3. Heurísticos: Los Atajos Peligrosos</h3>
+            <p style="margin-bottom: 20px;">Los heurísticos son reglas prácticas y rápidas para tomar decisiones. Generalmente funcionan bien, pero pueden llevar a sesgos (errores) importantes en nuestro juicio social:</p>
+            
+            <ul class="heuristics-list">
+                <li>
+                    <h4><i class="fas fa-clone"></i> Heurístico de Representatividad</h4>
+                    <p>Juzgar la probabilidad de que algo o alguien pertenezca a una categoría fijándose en cuánto se parece al prototipo o estereotipo típico de esa categoría, ignorando la estadística real. (Ej: Creer que una persona tímida es bibliotecario en lugar de vendedor, aunque haya estadísticamente muchos más vendedores).</p>
+                </li>
+                <li>
+                    <h4><i class="fas fa-bolt"></i> Heurístico de Disponibilidad</h4>
+                    <p>Juzgar la frecuencia o probabilidad de un evento basándose en la facilidad con la que nos vienen a la mente ejemplos de ese evento. (Ej: Temer más morir en un ataque de tiburón que por un accidente de tránsito, porque los ataques de tiburón son más recordados por las películas y noticias).</p>
+                </li>
+                <li>
+                    <h4><i class="fas fa-anchor"></i> Heurístico de Anclaje y Ajuste</h4>
+                    <p>Tomar decisiones a partir de un valor inicial ("ancla") y luego hacer ajustes, los cuales suelen ser insuficientes. El ancla influye fuertemente en el resultado final. (Ej: Si el precio inicial de un carro usado es altísimo, cualquier rebaja parece una "ganga", aunque siga siendo costoso).</p>
+                </li>
+            </ul>
+
+            <h3 class="theme-subtitle">Recurso Audiovisual</h3>
+            <div class="videos-container">
+                <div class="video-wrapper">
+                    <!-- Video sobre Sesgos Cognitivos / Heurísticos -->
+                    <iframe src="https://www.youtube.com/embed/wXJ1G0mIqVs" title="Sesgos Cognitivos" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3 style="color: var(--purple); margin-bottom: 10px;"><i class="fas fa-gamepad"></i> Actividad en Aula: Gamificación del Conocimiento</h3>
+                <p><strong>Dinámica:</strong> Exposición de juegos y roles.</p>
+                <p style="margin-top: 15px; margin-bottom: 5px;"><strong>Instrucciones:</strong></p>
+                <ol style="margin-left: 20px; line-height: 1.8; color: #444;">
+                    <li>Cada grupo asume el rol de diseñador instruccional y dirigirá al resto de la clase en el <strong>juego evaluativo</strong> (digital o físico) que elaboraron.</li>
+                    <li>Antes de iniciar el juego, deberán entregar o presentar su <strong>Ficha de Explicación</strong> justificando cómo su juego evalúa correctamente los conceptos de cognición (esquemas, heurísticos).</li>
+                    <li>La clase completa participará, poniendo a prueba sus propios procesos de cognición social en tiempo real.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+    </footer>
+</body>
+</html>
