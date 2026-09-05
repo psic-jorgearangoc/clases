@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 6 - Diseños Longitudinales | Eureka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --soft-red: #ffebeb;
+            --blue-accent: #2b78e4;
+            --green-accent: #2e7d32;
+            --orange-accent: #e65100;
+            --cuc-gold: #cba052;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* --- HEADER / BANNER CON QR --- */
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .qr-code img {
+            max-height: 80px;
+            border: 2px solid var(--cuc-gray);
+            border-radius: 5px;
+            padding: 2px;
+            transition: transform 0.3s;
+        }
+
+        .qr-code img:hover {
+            transform: scale(1.1);
+            border-color: var(--cuc-red);
+        }
+
+        .qr-label {
+            display: block;
+            font-size: 0.6rem;
+            color: #666;
+            margin-top: 3px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .header-logo img {
+            max-height: 90px;
+            background-color: transparent; 
+        }
+
+        .header-info {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .course-title {
+            color: var(--cuc-red);
+            font-size: 1.6rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            line-height: 1.1;
+        }
+
+        .prof-info {
+            font-size: 0.90rem;
+            color: #333;
+        }
+
+        .prof-info strong {
+            color: var(--cuc-red);
+        }
+
+        .contact-label {
+            color: var(--cuc-red);
+            font-weight: 900;
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .top-nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn-return {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-return:hover {
+            background-color: var(--cuc-red);
+            transform: translateX(-5px);
+            box-shadow: 0 6px 12px rgba(163, 22, 26, 0.2);
+        }
+
+        /* --- ESTILOS DEL DESARROLLO DE LA CLASE --- */
+        .class-content-wrapper {
+            background-color: #fbfbfb;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--cuc-red);
+            margin-bottom: 50px;
+        }
+
+        .class-header-card {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .class-header-card::after {
+            content: '\f0c0';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-size: 10rem;
+            color: rgba(255,255,255,0.1);
+        }
+
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        
+        .class-indicator {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 1.05rem;
+            border-left: 4px solid var(--cuc-gold);
+            position: relative;
+            z-index: 2;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        @media screen and (max-width: 1024px) {
+            .class-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media screen and (max-width: 768px) {
+            .class-grid { grid-template-columns: 1fr; }
+        }
+
+        .detail-card {
+            background: white;
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--cuc-red);
+            transition: transform 0.3s;
+        }
+
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .class-badge {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #e0f7fa;
+            color: #006064;
+            border: 1px solid #00acc1;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .topic-section {
+            margin-bottom: 50px;
+        }
+
+        .topic-title {
+            color: var(--cuc-dark);
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--cuc-gray);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .topic-title i {
+            color: var(--cuc-red);
+        }
+
+        /* FLIP CARDS (Tipos de Diseños Longitudinales) */
+        .flip-card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .flip-card {
+            background-color: transparent;
+            height: 320px;
+            perspective: 1000px;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 12px;
+        }
+        
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+        
+        .flip-card-front {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            border: 2px solid var(--cuc-gray);
+            border-bottom: 5px solid var(--cuc-red);
+        }
+        
+        .flip-card-front i {
+            font-size: 3rem;
+            color: var(--cuc-red);
+            margin-bottom: 15px;
+        }
+        
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            transform: rotateY(180deg);
+            text-align: left;
+        }
+        
+        .flip-card-back h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 5px;
+            color: var(--cuc-gold);
+        }
+
+        .flip-card-back p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* CONCEPT BOXES */
+        .concept-box {
+            background: white;
+            border-left: 5px solid var(--cuc-red);
+            padding: 25px;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .concept-box h4 {
+            color: var(--cuc-dark);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ACORDEON */
+        .accordion {
+            background-color: #f9f9f9;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            transition: 0.4s;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        .active, .accordion:hover {
+            background-color: #eee;
+            color: var(--cuc-red);
+        }
+
+        .accordion:after {
+            content: '\002B';
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2212";
+        }
+
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            border-left: 4px solid var(--cuc-red);
+            margin-bottom: 10px;
+        }
+
+        .panel p { margin: 15px 0; line-height: 1.7; color: #444; }
+        .panel ul { margin-left: 20px; color: #555; }
+        .panel li { margin-bottom: 10px; }
+
+        /* VIDEOS */
+        .videos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+
+        /* ACTIVITY BOX */
+        .activity-box {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            border: 2px dashed var(--cuc-gold);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        /* RESPONSIVE */
+        @media screen and (max-width: 900px) {
+            header {
+                position: relative;
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+            .course-title { font-size: 1.3rem; }
+            .class-content-wrapper { padding: 25px 15px; }
+            .header-logo img { max-height: 70px; }
+            .qr-code { display: none; }
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background-color: var(--cuc-red);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/eureka/u2clase06.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://placehold.co/200x80/ffffff/A3161A?text=CUC+Logo'">
+        </div>
+
+        <div class="header-info">
+            <div class="course-title">Eureka:<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Descubriendo Algo Nuevo</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com
+                </small>
+            </div>
+        </div>
+
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="top-nav-buttons">
+            <a href="https://clases.jorgearangoc.com/eureka/u1clase00.html" class="btn-return">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+        </div>
+
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 2 • Sesión 6</span>
+            <h1>Diseños No Experimentales: El Enfoque Longitudinal</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Comprende las diferencias y semejanzas entre los diferentes diseños no experimentales (transversales vs. longitudinales).
+            </div>
+        </div>
+
+        <!-- CUADRÍCULA SYLLABUS -->
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <p><strong>Temas centrales:</strong></p>
+                <ul>
+                    <li>Concepto de diseño de investigación longitudinal.</li>
+                    <li>Tipos: Tendencia (trend), Evolución de grupo (cohorte) y Panel.</li>
+                    <li>Diferencias clave entre diseños transversales y longitudinales.</li>
+                    <li>Ventajas y desventajas de medir a través del tiempo.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #2196F3;">
+                <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
+                <p><strong>Trabajo directo (Sincrónico):</strong></p>
+                <ul>
+                    <li>Simposio de profundización sobre diseños longitudinales.</li>
+                    <li>Conversatorio interactivo sobre los artículos transversales revisados en la clase anterior.</li>
+                    <li>Análisis comparativo: Transversal vs. Longitudinal.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <p><strong>Trabajo Asincrónico:</strong></p>
+                <ul>
+                    <li>Lectura de artículos científicos que empleen diseños longitudinales.</li>
+                    <li>Preparación para el debate en clase comparando ambos enfoques no experimentales.</li>
+                    <li>Reflexión sobre la viabilidad de estos diseños en sus proyectos de aula.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <p><strong>Estrategias de medición:</strong></p>
+                <ul>
+                    <li><strong>Formativa:</strong> Participación activa y argumentada en el conversatorio sobre artículos.</li>
+                    <li><strong>Valoración:</strong> Evaluación de la calidad del análisis y la comprensión de las diferencias metodológicas.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- DESARROLLO DE LA CLASE 6                   -->
+        <!-- ========================================== -->
+        <div class="class-content-wrapper">
+            
+            <div style="text-align: center;">
+                <span class="class-badge"><i class="fas fa-clock"></i> Duración: 3 Horas (Presencial) + Trabajo Independiente</span>
+            </div>
+            
+            <h2 class="topic-title" style="border: none; margin-bottom: 5px; font-size: 2.2rem;">Desarrollo Temático</h2>
+            <p style="text-align: center; color: #555; font-size: 1.1rem; margin-bottom: 40px;">El paso del tiempo en la investigación: De la fotografía a la película.</p>
+
+            <!-- 1. El Concepto de Diseño Longitudinal -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-hourglass-half"></i> 1. ¿Qué es un Diseño Longitudinal?</h2>
+                
+                <div class="concept-box">
+                    <h4><i class="fas fa-quote-left" style="color: var(--cuc-red);"></i> Medición a través del tiempo</h4>
+                    <p style="font-size: 1.05rem; color: #444;">A diferencia de los diseños transversales que toman una "fotografía" en un momento único, los estudios longitudinales recolectan datos en <strong>diferentes puntos del tiempo</strong>, para realizar inferencias acerca del cambio, sus determinantes y consecuencias (Hernández Sampieri et al., 2014).</p>
+                    <p style="margin-top: 10px; font-size: 0.95rem; color: #666;">Son ideales para analizar cómo evolucionan los fenómenos psicológicos o sociales a lo largo de los años o meses. Siguen siendo <em>no experimentales</em> porque el investigador observa el cambio natural, sin manipular variables intencionalmente.</p>
+                </div>
+            </div>
+
+            <!-- 2. Tipos de Diseños Longitudinales -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-project-diagram"></i> 2. Tipos de Diseños Longitudinales</h2>
+                <p style="margin-bottom: 20px;">Dependiendo de la población o muestra específica que se evalúe en cada tiempo, los diseños longitudinales se dividen en tres categorías principales:</p>
+                
+                <div class="flip-card-container">
+                    
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <i class="fas fa-chart-line"></i>
+                                <h3 style="font-size: 1.3rem;">Diseños de Tendencia (Trend)</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <h4>La Población General</h4>
+                                <p>Analizan cambios al paso del tiempo en variables o sus relaciones dentro de alguna población en general.</p>
+                                <h4 style="margin-top: 10px;">Característica Clave</h4>
+                                <p>La población es la misma, pero los individuos evaluados en cada tiempo (T1, T2, T3) pueden ser diferentes. Ej: Medir la actitud hacia el aborto en Colombia cada 5 años encuestando a personas diferentes cada vez.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <i class="fas fa-users"></i>
+                                <h3 style="font-size: 1.3rem;">Diseños de Evolución de Grupo (Cohorte)</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <h4>Subpoblación Específica</h4>
+                                <p>Examinan cambios a través del tiempo en subpoblaciones o grupos específicos (cohortes). Suelen estar unidos por una característica temporal común.</p>
+                                <h4 style="margin-top: 10px;">Característica Clave</h4>
+                                <p>Ej: Estudiar el nivel de estrés de las personas nacidas en el año 2000. Se toman muestras de esa subpoblación en T1, T2 y T3. Los individuos específicos pueden variar, pero siempre pertenecen a esa cohorte.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <i class="fas fa-user-friends"></i>
+                                <h3 style="font-size: 1.3rem;">Diseños Panel</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <h4>Los Mismos Individuos</h4>
+                                <p>Son similares a los de tendencia y evolución de grupo, pero con una diferencia fundamental.</p>
+                                <h4 style="margin-top: 10px;">Característica Clave</h4>
+                                <p>El <strong>mismo grupo exacto de participantes</strong> es medido en todos los tiempos (T1, T2, T3). Ej: Evaluar el desarrollo cognitivo de 50 niños específicos cada año durante 10 años. Si alguien abandona (mortandad), afecta el estudio.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Comparación: Transversal vs. Longitudinal -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-balance-scale"></i> 3. Transversal vs. Longitudinal</h2>
+                <p style="margin-bottom: 20px;">¿Cuándo elegir uno u otro? La elección depende del objetivo del estudio y de los recursos disponibles. Analicemos las diferencias clave:</p>
+                
+                <div style="overflow-x:auto;">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Característica</th>
+                                <th>Diseño Transversal</th>
+                                <th>Diseño Longitudinal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Dimensión Temporal</strong></td>
+                                <td>Un solo momento, recolección única de datos.</td>
+                                <td>Múltiples momentos, recolección a lo largo del tiempo.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Objetivo Principal</strong></td>
+                                <td>Describir variables o analizar su relación en un instante dado.</td>
+                                <td>Analizar el cambio a través del tiempo, su evolución y posibles predictores temporales.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Costo y Tiempo</strong></td>
+                                <td>Generalmente más rápidos y económicos de realizar.</td>
+                                <td>Requieren mayor inversión de tiempo, dinero y esfuerzo organizativo.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Riesgos</strong></td>
+                                <td>Menor riesgo de pérdida de participantes. Dificultad para establecer dirección temporal (causa-efecto).</td>
+                                <td>Alto riesgo de "mortandad experimental" (participantes abandonan). Mejor para ver secuencias temporales.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 4. Recursos Audiovisuales (Seleccionados) -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-video"></i> 4. Recursos Audiovisuales de Apoyo</h2>
+                <p style="margin-bottom: 20px;">Observaremos estos videos para complementar la explicación de los diseños longitudinales y su comparación con los transversales.</p>
+                
+                <div class="videos-container">
+                    <div class="video-wrapper">
+                        <!-- Video on Longitudinal Designs -->
+                        <iframe src="https://www.youtube.com/embed/9G0z_JjZz1k" title="Diseños Longitudinales" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-wrapper">
+                        <!-- Video on Transversal vs Longitudinal -->
+                        <iframe src="https://www.youtube.com/embed/9N4_j1j59Jc" title="Estudios transversales y longitudinales" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Actividades de Aprendizaje -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-tasks"></i> 5. Actividades de la Sesión</h2>
+                
+                <div class="activity-box">
+                    <h3 style="color: var(--cuc-dark); margin-bottom: 15px;"><i class="fas fa-users-cog"></i> Actividad en Aula: Conversatorio y Análisis de Casos</h3>
+                    <p><strong>Dinámica Grupal (Tiempo Estimado: 2 Horas):</strong></p>
+                    <ol style="margin-left: 20px; line-height: 1.8; color: #444; margin-bottom: 20px;">
+                        <li><strong>Socialización (Conversatorio):</strong> Retomaremos las "Fichas Narrativas" elaboradas como trabajo independiente la semana pasada. Cada grupo expondrá brevemente el artículo transversal que analizó.</li>
+                        <li><strong>Re-diseño Metodológico:</strong> Con el artículo transversal presentado, el grupo deberá proponer: <em>¿Cómo se habría diseñado ese mismo estudio si los investigadores hubieran optado por un enfoque longitudinal de Panel? ¿Qué habrían tenido que cambiar?</em></li>
+                        <li><strong>Análisis de Viabilidad (ABP):</strong> Reflexionen sobre su propio proyecto (ABP). ¿Es viable plantear un diseño longitudinal para su investigación en el transcurso de este semestre? Discutan las implicaciones de tiempo y recursos.</li>
+                    </ol>
+
+                    <hr style="border: 0; border-top: 1px dashed #ccc; margin: 20px 0;">
+
+                    <h3 style="color: var(--cuc-red); margin-bottom: 15px;"><i class="fas fa-home"></i> Trabajo Independiente (Asincrónico)</h3>
+                    <p><strong>Preparación para la próxima sesión:</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8; color: #444;">
+                        <li>Inicien la lectura del Capítulo 7 de Hernández Sampieri sobre <strong>Diseños Experimentales</strong>.</li>
+                        <li>Identifiquen las diferencias fundamentales entre "observar" un fenómeno (diseños no experimentales) y "manipular" variables (diseños experimentales).</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p>Asignatura: Electiva en Ciencia, Tecnología e Innovación (Eureka)</p>
+    </footer>
+    
+    <script>
+        // Funcionalidad para el acordeón
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+    </script>
+</body>
+</html>

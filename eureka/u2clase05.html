@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 5 - Diseños Cuantitativos y Transversales | Eureka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --soft-red: #ffebeb;
+            --blue-accent: #2b78e4;
+            --green-accent: #2e7d32;
+            --orange-accent: #e65100;
+            --cuc-gold: #cba052;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* --- HEADER / BANNER CON QR --- */
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .qr-code img {
+            max-height: 80px;
+            border: 2px solid var(--cuc-gray);
+            border-radius: 5px;
+            padding: 2px;
+            transition: transform 0.3s;
+        }
+
+        .qr-code img:hover {
+            transform: scale(1.1);
+            border-color: var(--cuc-red);
+        }
+
+        .qr-label {
+            display: block;
+            font-size: 0.6rem;
+            color: #666;
+            margin-top: 3px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .header-logo img {
+            max-height: 90px;
+            background-color: transparent; 
+        }
+
+        .header-info {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .course-title {
+            color: var(--cuc-red);
+            font-size: 1.6rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            line-height: 1.1;
+        }
+
+        .prof-info {
+            font-size: 0.90rem;
+            color: #333;
+        }
+
+        .prof-info strong {
+            color: var(--cuc-red);
+        }
+
+        .contact-label {
+            color: var(--cuc-red);
+            font-weight: 900;
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .top-nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn-return {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-return:hover {
+            background-color: var(--cuc-red);
+            transform: translateX(-5px);
+            box-shadow: 0 6px 12px rgba(163, 22, 26, 0.2);
+        }
+
+        /* --- ESTILOS DEL DESARROLLO DE LA CLASE --- */
+        .class-content-wrapper {
+            background-color: #fbfbfb;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--cuc-red);
+            margin-bottom: 50px;
+        }
+
+        .class-header-card {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .class-header-card::after {
+            content: '\f0c0';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-size: 10rem;
+            color: rgba(255,255,255,0.1);
+        }
+
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        
+        .class-indicator {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 1.05rem;
+            border-left: 4px solid var(--cuc-gold);
+            position: relative;
+            z-index: 2;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        @media screen and (max-width: 1024px) {
+            .class-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media screen and (max-width: 768px) {
+            .class-grid { grid-template-columns: 1fr; }
+        }
+
+        .detail-card {
+            background: white;
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--cuc-red);
+            transition: transform 0.3s;
+        }
+
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .class-badge {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #e0f7fa;
+            color: #006064;
+            border: 1px solid #00acc1;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .topic-section {
+            margin-bottom: 50px;
+        }
+
+        .topic-title {
+            color: var(--cuc-dark);
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--cuc-gray);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .topic-title i {
+            color: var(--cuc-red);
+        }
+
+        /* FLIP CARDS (Tipos de Diseños Transversales) */
+        .flip-card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .flip-card {
+            background-color: transparent;
+            height: 300px;
+            perspective: 1000px;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 12px;
+        }
+        
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+        
+        .flip-card-front {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            border: 2px solid var(--cuc-gray);
+            border-bottom: 5px solid var(--cuc-red);
+        }
+        
+        .flip-card-front i {
+            font-size: 3rem;
+            color: var(--cuc-red);
+            margin-bottom: 15px;
+        }
+        
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            transform: rotateY(180deg);
+            text-align: left;
+        }
+        
+        .flip-card-back h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 5px;
+            color: var(--cuc-gold);
+        }
+
+        .flip-card-back p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* CONCEPT BOXES */
+        .concept-box {
+            background: white;
+            border-left: 5px solid var(--cuc-red);
+            padding: 25px;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .concept-box h4 {
+            color: var(--cuc-dark);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ACORDEON */
+        .accordion {
+            background-color: #f9f9f9;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            transition: 0.4s;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        .active, .accordion:hover {
+            background-color: #eee;
+            color: var(--cuc-red);
+        }
+
+        .accordion:after {
+            content: '\002B';
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2212";
+        }
+
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            border-left: 4px solid var(--cuc-red);
+            margin-bottom: 10px;
+        }
+
+        .panel p { margin: 15px 0; line-height: 1.7; color: #444; }
+        .panel ul { margin-left: 20px; color: #555; }
+        .panel li { margin-bottom: 10px; }
+
+        /* VIDEOS */
+        .videos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+
+        /* ACTIVITY BOX */
+        .activity-box {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            border: 2px dashed var(--cuc-gold);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        /* RESPONSIVE */
+        @media screen and (max-width: 900px) {
+            header {
+                position: relative;
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+            .course-title { font-size: 1.3rem; }
+            .class-content-wrapper { padding: 25px 15px; }
+            .header-logo img { max-height: 70px; }
+            .qr-code { display: none; }
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--cuc-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/eureka/u2clase05.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://placehold.co/200x80/ffffff/A3161A?text=CUC+Logo'">
+        </div>
+
+        <div class="header-info">
+            <div class="course-title">Eureka:<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Descubriendo Algo Nuevo</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com
+                </small>
+            </div>
+        </div>
+
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="top-nav-buttons">
+            <a href="https://clases.jorgearangoc.com/eureka/u1clase00.html" class="btn-return">
+                <i class="fas fa-arrow-left"></i> Volver a la Guía Temática
+            </a>
+        </div>
+
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 2 • Sesión 5</span>
+            <h1>Diseños Cuantitativos y Transversales</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Reconoce los tipos de diseños en investigación cuantitativa, comprendiendo profundamente los modelos transversales.
+            </div>
+        </div>
+
+        <!-- CUADRÍCULA SYLLABUS -->
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <p><strong>Temas centrales:</strong></p>
+                <ul>
+                    <li>Concepto general de Diseño de Investigación.</li>
+                    <li>Clasificación: Experimentales vs. No Experimentales.</li>
+                    <li>Investigación No Experimental Transversal (Transeccional).</li>
+                    <li>Tipos: Exploratorios, Descriptivos y Correlacionales.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #2196F3;">
+                <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
+                <p><strong>Trabajo directo (Sincrónico):</strong></p>
+                <ul>
+                    <li>Simposio de profundización sobre diseños transversales.</li>
+                    <li>Presentación de casos prácticos de investigación en el aula.</li>
+                    <li>Debate sobre aplicabilidad de diseños según la pregunta problema.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <p><strong>Trabajo Asincrónico:</strong></p>
+                <ul>
+                    <li>Lectura del libro guía (Hernández Sampieri, Cap. 7).</li>
+                    <li>Lectura de artículos científicos transversales.</li>
+                    <li><strong>Entregable:</strong> Elaboración de una ficha narrativa de un artículo revisado.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <p><strong>Estrategias de medición:</strong></p>
+                <ul>
+                    <li><strong>Formativa:</strong> Evaluación de saberes previos y simposio.</li>
+                    <li><strong>Sumativa:</strong> Prueba de conocimientos aplicada mediante herramientas como Kahoot! o Quizizz al finalizar.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- DESARROLLO DE LA CLASE 5                   -->
+        <!-- ========================================== -->
+        <div class="class-content-wrapper">
+            
+            <div style="text-align: center;">
+                <span class="class-badge"><i class="fas fa-clock"></i> Duración: 3 Horas (Presencial) + Trabajo Independiente</span>
+            </div>
+            
+            <h2 class="topic-title" style="border: none; margin-bottom: 5px; font-size: 2.2rem;">Desarrollo Temático</h2>
+            <p style="text-align: center; color: #555; font-size: 1.1rem; margin-bottom: 40px;">El plano arquitectónico de nuestra investigación: ¿Cómo responderemos la pregunta?</p>
+
+            <!-- 1. El Concepto de Diseño -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-drafting-compass"></i> 1. ¿Qué es un Diseño de Investigación?</h2>
+                
+                <div class="concept-box">
+                    <h4><i class="fas fa-quote-left" style="color: var(--cuc-red);"></i> Definición según Hernández Sampieri (2014)</h4>
+                    <p style="font-size: 1.05rem; color: #444;">El término diseño se refiere al <strong>plan o estrategia</strong> concebida para obtener la información que se desea con el fin de responder al planteamiento del problema.</p>
+                    <p style="margin-top: 10px; font-size: 0.95rem; color: #666;">Si el diseño está concebido cuidadosamente, el producto final de un estudio (sus resultados) tendrá mayores posibilidades de éxito para generar conocimiento válido. En el enfoque cuantitativo, el investigador utiliza su diseño para analizar la certeza de las hipótesis formuladas o aportar evidencia respecto de los lineamientos de la investigación.</p>
+                </div>
+            </div>
+
+            <!-- 2. Clasificación General -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-sitemap"></i> 2. Clasificación General de los Diseños Cuantitativos</h2>
+                <p style="margin-bottom: 20px;">En la ruta cuantitativa, la gran bifurcación inicial determina si el investigador "manipulará" o no la realidad que está estudiando. Despliega para conocer la diferencia fundamental:</p>
+
+                <button class="accordion"><i class="fas fa-vial" style="margin-right: 10px;"></i> Investigación Experimental</button>
+                <div class="panel">
+                    <p>Son estudios donde el investigador <strong>manipula intencionalmente</strong> una o más variables independientes (causas) para analizar las consecuencias que la manipulación tiene sobre una o más variables dependientes (efectos), dentro de una situación de control estricto.</p>
+                    <p><em>Ejemplo: Administrar una nueva terapia cognitiva a un grupo (manipulación) y compararla con un grupo que no la recibe, para ver quién reduce más la ansiedad.</em></p>
+                    <p><strong>Subtipos (Los veremos a fondo en la Semana 8):</strong> Pre-experimentos, Experimentos Puros y Cuasi-experimentos.</p>
+                </div>
+
+                <button class="accordion"><i class="fas fa-binoculars" style="margin-right: 10px;"></i> Investigación No Experimental (El foco de hoy)</button>
+                <div class="panel">
+                    <p>Son estudios que se realizan <strong>sin la manipulación deliberada</strong> de variables y en los que solo se observan los fenómenos en su ambiente natural para analizarlos. No hay condiciones o estímulos a los cuales se expongan los participantes por parte del investigador.</p>
+                    <p><em>Ejemplo: Aplicar una encuesta a 200 estudiantes para medir su nivel actual de estrés por los exámenes. El estrés ya existe, el investigador solo lo mide, no lo provoca.</em></p>
+                    <p><strong>Subtipos:</strong> Se dividen por su dimensión temporal en <strong>Transversales</strong> (un solo momento) y <strong>Longitudinales</strong> (a través del tiempo).</p>
+                </div>
+            </div>
+
+            <!-- 3. Diseños Transversales -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-camera"></i> 3. Diseños No Experimentales Transversales (Transeccionales)</h2>
+                <p style="margin-bottom: 20px;">Los diseños de investigación transversal recolectan datos en <strong>un solo momento, en un tiempo único</strong>. Su propósito es describir variables y analizar su incidencia e interrelación en un momento dado. Es como <em>tomar una fotografía</em> del fenómeno.</p>
+                <p style="margin-bottom: 20px; font-weight: bold; color: var(--cuc-red);">Existen tres tipos principales de diseños transversales:</p>
+                
+                <div class="flip-card-container">
+                    
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <i class="fas fa-search-location"></i>
+                                <h3 style="font-size: 1.3rem;">Transversal Exploratorio</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <h4>Propósito</h4>
+                                <p>Comenzar a conocer una variable o un conjunto de variables, una comunidad, un contexto, un evento, una situación. Se trata de una exploración inicial en un momento específico.</p>
+                                <h4 style="margin-top: 15px;">Cuándo se usa</h4>
+                                <p>Por lo general, se aplican a problemas de investigación nuevos o poco conocidos, o para sondear si es posible realizar un estudio más profundo.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <i class="fas fa-chart-pie"></i>
+                                <h3 style="font-size: 1.3rem;">Transversal Descriptivo</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <h4>Propósito</h4>
+                                <p>Indagar la incidencia de las modalidades o niveles de una o más variables en una población. Consiste en ubicar en una variable a un grupo de personas y proporcionar su descripción.</p>
+                                <h4 style="margin-top: 15px;">Ejemplo</h4>
+                                <p>Ubicar a un grupo de 100 empleados y describir su nivel de "satisfacción laboral" y su "rango salarial" hoy. Se reportan los porcentajes y promedios absolutos.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <i class="fas fa-project-diagram"></i>
+                                <h3 style="font-size: 1.3rem;">Transversal Correlacional/Causal</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <h4>Propósito</h4>
+                                <p>Describir relaciones entre dos o más categorías, conceptos o variables en un momento determinado. En estos diseños, lo que se mide es la <strong>relación estadística</strong>.</p>
+                                <h4 style="margin-top: 15px;">Ejemplo</h4>
+                                <p>Estudiar si en un grupo de adolescentes, el número de horas en redes sociales (Variable 1) se correlaciona estadísticamente con el nivel de ansiedad social (Variable 2) medido en el mismo día.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Recursos Audiovisuales (Seleccionados) -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-video"></i> 4. Recursos Audiovisuales de Apoyo</h2>
+                <p style="margin-bottom: 20px;">Observaremos estos videos en el simposio presencial para consolidar la estructura del diseño de investigación cuantitativa, enfocándonos en su aplicación a la recolección de datos sin manipulación.</p>
+                
+                <div class="videos-container">
+                    <!-- Video 1: Generalidades del Diseño -->
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/iwPsmNASGow?rel=0" title="Diseños de Investigación Cuantitativa" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <!-- Video 2: Enfoque específico en Transversales -->
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/ZklH9aYGqZE?rel=0" title="Diseños Transversales: Definición y ejemplos" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Actividades de Aprendizaje -->
+            <div class="topic-section">
+                <h2 class="topic-title"><i class="fas fa-tasks"></i> 5. Actividades de la Sesión</h2>
+                
+                <div class="activity-box">
+                    <h3 style="color: var(--cuc-dark); margin-bottom: 15px;"><i class="fas fa-users-cog"></i> Actividad en Aula: Simposio y Debate ABP</h3>
+                    <p><strong>Dinámica Grupal (Tiempo Estimado: 1.5 Horas):</strong></p>
+                    <ol style="margin-left: 20px; line-height: 1.8; color: #444; margin-bottom: 20px;">
+                        <li><strong>Análisis de Casos:</strong> El docente presentará 3 escenarios hipotéticos de investigación en psicología clínica, organizacional y educativa. Cada grupo deberá debatir e identificar qué tipo de diseño transversal se ajusta a cada escenario y argumentar el porqué.</li>
+                        <li><strong>Vinculación ABP:</strong> Reúnanse con su equipo de investigación del semestre. Revisen la pregunta problema que formularon en la Semana 2. Discutan: ¿Su estudio requerirá medir variables en un solo momento (Transversal)? ¿Será solo descriptivo o buscará relacionar variables (Correlacional)? </li>
+                        <li><strong>Cierre Formativo:</strong> Al finalizar la sesión presencial, se realizará una prueba rápida mediante la plataforma <strong>Quizizz o Kahoot!</strong> para medir la apropiación de los conceptos expuestos.</li>
+                    </ol>
+
+                    <hr style="border: 0; border-top: 1px dashed #ccc; margin: 20px 0;">
+
+                    <h3 style="color: var(--cuc-red); margin-bottom: 15px;"><i class="fas fa-home"></i> Trabajo Independiente (Asincrónico)</h3>
+                    <p><strong>Entregable de la semana: Ficha Narrativa</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8; color: #444;">
+                        <li>Diríjanse a las bases de datos de la CUC (Science Direct, Scopus).</li>
+                        <li>Busquen <strong>un (1) artículo científico</strong> del área de psicología que haya utilizado explícitamente un <strong>diseño no experimental transversal</strong> (ya sea descriptivo o correlacional).</li>
+                        <li>Elaboren una "Ficha Narrativa" (Máximo 2 páginas) donde detallen: 
+                            <br>a) Título y autores.
+                            <br>b) ¿Por qué el estudio es no experimental?
+                            <br>c) ¿Cómo se evidencia que es transversal? (Describan el proceso de recolección temporal).
+                            <br>d) Conclusiones principales del estudio.</li>
+                        <li>Esta ficha servirá como insumo para el conversatorio de la Clase 6 (Diseños Longitudinales).</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p>Asignatura: Electiva en Ciencia, Tecnología e Innovación (Eureka)</p>
+    </footer>
+    
+    <script>
+        // Funcionalidad para el acordeón
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+    </script>
+</body>
+</html>
