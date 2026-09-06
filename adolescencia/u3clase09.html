@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 9 - Perspectivas de la Vejez y Cognición</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --cuc-gold: #cba052;
+            --cuc-blue: #2c3e50;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+        header { background-color: var(--white); border-bottom: 4px solid var(--cuc-red); padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; text-align: center; }
+        .header-logo img { max-height: 80px; }
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; }
+        .prof-info { font-size: 0.9rem; color: #555; }
+        .qr-code img { max-height: 70px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
+        .class-view { max-width: 1200px; margin: 40px auto; padding: 0 20px; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .btn-back { background-color: var(--white); color: var(--cuc-dark); padding: 10px 20px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; transition: 0.3s; border: 2px solid #ddd; font-size: 1rem; }
+        .btn-back:hover { background-color: var(--cuc-gray); border-color: var(--cuc-red); transform: translateX(-5px); }
+        
+        .class-header-card { background: linear-gradient(135deg, var(--cuc-red), #7a0f12); color: white; padding: 40px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+        .class-header-card::after { content: '\f2bd'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; right: -20px; bottom: -30px; font-size: 10rem; color: rgba(255,255,255,0.05); }
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        .class-indicator { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-top: 15px; font-size: 1.05rem; border-left: 4px solid var(--cuc-gold); position: relative; z-index: 2; }
+        
+        .class-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
+        @media screen and (max-width: 1024px) { .class-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media screen and (max-width: 768px) { .class-grid { grid-template-columns: 1fr; } }
+        .detail-card { background: white; border: 1px solid #eee; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--cuc-red); transition: transform 0.3s; }
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+        
+        /* Interactive Tabs Styling */
+        .interactive-container { background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); overflow: hidden; margin-bottom: 40px; display: flex; flex-direction: column; }
+        .tab-buttons { display: flex; background: var(--cuc-blue); overflow-x: auto; }
+        .tab-btn { flex: 1; padding: 20px; background: none; border: none; color: #fff; font-size: 1.05rem; font-weight: bold; cursor: pointer; transition: 0.3s; opacity: 0.7; display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 160px; }
+        .tab-btn:hover { opacity: 1; background: rgba(255,255,255,0.1); }
+        .tab-btn.active { opacity: 1; background: var(--cuc-red); border-bottom: 4px solid var(--cuc-gold); }
+        .tab-btn i { font-size: 1.8rem; }
+        .tab-content { display: none; padding: 40px; animation: fadeIn 0.5s ease; background: #fff; }
+        .tab-content.active { display: block; }
+        .tab-content h3 { color: var(--cuc-red); font-size: 1.8rem; margin-bottom: 20px; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .tab-content p { font-size: 1.1rem; color: #444; margin-bottom: 15px; line-height: 1.8; }
+        
+        .theory-box { background: #fdfbfb; border: 1px solid #ddd; padding: 25px; border-radius: 10px; margin-top: 20px; border-left: 5px solid var(--cuc-gold); }
+        .theory-box h4 { color: var(--cuc-dark); margin-bottom: 10px; font-size: 1.3rem; }
+        .theory-box ul { margin-left: 20px; color: #555; line-height: 1.7; }
+        
+        .video-container { text-align: center; margin: 40px 0; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; max-width: 900px; margin: 0 auto; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 4px solid #fff; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        
+        .activity-box { background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); border: 2px dashed var(--cuc-gold); border-radius: 15px; padding: 40px; margin-top: 30px; }
+        
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
+        @media screen and (max-width: 900px) { .qr-code { display: none; } .tab-buttons { flex-direction: column; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/adolescencia/u3clase09.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+        <div class="header-logo"><img src="logocuc.png" alt="Logo CUC"></div>
+        <div class="header-info">
+            <div class="course-title">De la Adolescencia al Envejecer<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Ciclo Vital II</span></div>
+            <div class="prof-info"><strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br><small><span class="contact-label">WhatsApp:</span> 3233796547 | <span class="contact-label">Web:</span> www.jorgearangoc.com</small></div>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/adolescencia/u1clase00.html" class="btn-back"><i class="fas fa-arrow-left"></i> Volver al Mapa del Curso</a>
+        
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 3 • Sesión 1 (Semana 11)</span>
+            <h1>Perspectivas de la Vejez y Cognición</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Identifica y define los referentes de la vejez, los cambios cognoscitivos del envejecimiento, la reserva cognitiva y la inteligencia, diferenciando el edadismo como factor macrosistémico.
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <ul>
+                    <li>Construcción histórica de la vejez.</li>
+                    <li>Edadismo y envejecimiento poblacional.</li>
+                    <li>Cognición: Velocidad de procesamiento (Salthouse).</li>
+                    <li>Reserva cognitiva (Stern) y Sabiduría (Baltes).</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #2196F3;">
+                <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
+                <ul>
+                    <li>Seminario sobre edadismo y demografía.</li>
+                    <li>Análisis de casos de envejecimiento cognitivo.</li>
+                    <li>Debates grupales teóricos.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <ul>
+                    <li>Rastreo teórico de factores protectores (OMS).</li>
+                    <li>Búsqueda bibliográfica de herramientas y test cognitivos.</li>
+                    <li>Lectura de Livingston et al. sobre demencia.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <ul>
+                    <li>Formativa: Valoración del rastreo teórico.</li>
+                    <li>Participación en debates sobre edadismo.</li>
+                    <li>Instrumento: Lista de chequeo.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="interactive-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="openTab(event, 'tab1')"><i class="fas fa-user-clock"></i> Edadismo y Demografía</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab2')"><i class="fas fa-brain"></i> Cognición (Salthouse)</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab3')"><i class="fas fa-shield-virus"></i> Reserva Cognitiva (Stern)</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab4')"><i class="fas fa-lightbulb"></i> La Sabiduría (Baltes)</button>
+            </div>
+
+            <!-- Tab 1 -->
+            <div id="tab1" class="tab-content active">
+                <h3>El Edadismo (Ageism) y el Contexto Demográfico</h3>
+                <p>El mundo enfrenta un fenómeno demográfico sin precedentes: la inversión de la pirámide poblacional. Vivimos más, pero la calidad de esos años está fuertemente mediada por el Macrosistema cultural.</p>
+                <div class="theory-box">
+                    <h4><i class="fas fa-exclamation-triangle" style="color: var(--cuc-red);"></i> El Edadismo (Ageism)</h4>
+                    <p>Término acuñado por Robert Butler, se refiere a los estereotipos (cómo pensamos), los prejuicios (cómo sentimos) y la discriminación (cómo actuamos) hacia las personas en función de su edad cronológica.</p>
+                    <ul>
+                        <li><strong>Impacto Clínico:</strong> El edadismo institucionalizado (ej. negación de empleos o seguros médicos) genera estrés crónico. Más aún, el <em>edadismo auto-dirigido</em> (cuando el adulto mayor internaliza que "es un estorbo") se correlaciona con un declive cognitivo más acelerado y menor esperanza de vida.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tab 2 -->
+            <div id="tab2" class="tab-content">
+                <h3>Envejecimiento Cognitivo (T. Salthouse)</h3>
+                <p>Timothy Salthouse propuso una de las explicaciones más robustas sobre el declive cognitivo normativo (no patológico): <strong>La Teoría de la Velocidad de Procesamiento</strong>.</p>
+                <div class="theory-box">
+                    <h4>El Cerebro se "Ralentiza"</h4>
+                    <p>Salthouse demostró que con el envejecimiento se produce una reducción generalizada en la velocidad con la que el sistema nervioso central ejecuta operaciones cognitivas. Esta lentitud afecta:</p>
+                    <ul>
+                        <li><strong>Mecanismo de Tiempo Limitado:</strong> Las operaciones tempranas se hacen tan lentas que no dejan tiempo para ejecutar operaciones posteriores complejas.</li>
+                        <li><strong>Mecanismo de Simultaneidad:</strong> La información procesada al principio decae o se olvida antes de que la información final esté lista para ser integrada.</li>
+                        <li><strong>Conclusión:</strong> Los adultos mayores pueden resolver problemas complejos y mantener alta su inteligencia cristalizada, pero necesitan <em>más tiempo</em> para procesar nueva información fluida.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tab 3 -->
+            <div id="tab3" class="tab-content">
+                <h3>Reserva Cognitiva (Yaakov Stern)</h3>
+                <p>Si dos personas tienen el mismo nivel de daño cerebral por Alzheimer, ¿por qué una presenta demencia severa y la otra sigue funcionando normalmente? La respuesta de Yaakov Stern es la <strong>Reserva Cognitiva</strong>.</p>
+                <div class="theory-box">
+                    <h4>Software vs. Hardware</h4>
+                    <p>A diferencia de la reserva cerebral (tener un cerebro físicamente más grande, el "hardware"), la reserva cognitiva es el "software". Es la capacidad del cerebro para improvisar y encontrar rutas neuronales alternativas para resolver un problema cuando la ruta original está dañada.</p>
+                    <ul>
+                        <li><strong>Factores que construyen la reserva (Livingston / OMS):</strong> Altos niveles de educación en etapas tempranas, trabajos cognitivamente exigentes, bilingüismo, lectura constante, alta participación social y actividad física.</li>
+                        <li><strong>Impacto:</strong> Una alta reserva cognitiva no evita la enfermedad patológica, pero retrasa enormemente la aparición de sus <em>síntomas clínicos</em>, permitiendo una mayor independencia.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tab 4 -->
+            <div id="tab4" class="tab-content">
+                <h3>La Sabiduría (Paul Baltes)</h3>
+                <p>Mientras Salthouse documenta el declive de la inteligencia mecánica (fluida), Paul Baltes y el <em>Max Planck Institute</em> proponen que el envejecimiento también trae ganancias extraordinarias en la pragmática cognitiva: <strong>La Sabiduría</strong>.</p>
+                <div class="theory-box">
+                    <h4>Experticia en la Pragmática Fundamental de la Vida</h4>
+                    <p>Baltes define la sabiduría no como ser simplemente "inteligente", sino como un sistema de conocimiento experto sobre el significado de la vida y cómo conducirse en ella. Incluye:</p>
+                    <ul>
+                        <li>Conocimiento factual rico sobre la naturaleza humana y las relaciones.</li>
+                        <li>Conocimiento procedimental sobre cómo manejar conflictos, dar consejos y tomar decisiones ante la incertidumbre.</li>
+                        <li><strong>Relativismo de los Valores:</strong> Comprender que las verdades varían entre culturas (pensamiento posformal extremo).</li>
+                        <li><strong>Reconocimiento de la Incertidumbre:</strong> Aceptar que el futuro es impredecible y no existe una solución perfecta para los dilemas humanos.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="video-container">
+            <h2 style="color: var(--cuc-red); margin-bottom: 20px;">Recurso Audiovisual: Terminemos con el Edadismo</h2>
+            <p style="margin-bottom: 20px; font-size: 1.1rem; max-width: 800px; margin-left: auto; margin-right: auto;">Ashton Applewhite nos presenta un impactante análisis sobre cómo los prejuicios de edad limitan el potencial de la adultez tardía, convirtiendo un logro demográfico en una narrativa de terror macrosistémico.</p>
+            <div class="video-wrapper">
+                <!-- Ashton Applewhite TED Talk: Let's end ageism -->
+                <iframe src="https://www.youtube.com/embed/WfjzkO6_DEI?rel=0" title="Terminemos con el edadismo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="activity-box">
+            <h3 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-search-plus"></i> Actividad Autónoma: Rastreo de Factores Protectores</h3>
+            <p style="font-size: 1.1rem; margin-bottom: 20px; color: #444;">Preparación para el seminario y enriquecimiento de las bases teóricas de su historia clínica (ABP).</p>
+            <ol style="margin-left: 20px; font-size: 1.1rem; line-height: 1.8; color: #333;">
+                <li>Consulten los informes de la <strong>OMS (Década del Envejecimiento Saludable)</strong> y el consenso de <strong>Livingston et al. (The Lancet Commission on dementia prevention)</strong>.</li>
+                <li>Identifiquen y listen al menos cinco (5) factores de riesgo modificables que aceleran el deterioro cognitivo.</li>
+                <li>Describan cómo intervenciones en el Exosistema (políticas de salud pública, diseño de ciudades) pueden potenciar la "Reserva Cognitiva" (Stern) de los individuos desde edades tempranas.</li>
+            </ol>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+    </footer>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; tabcontent[i].classList.remove("active"); }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.className += " active";
+        }
+    </script>
+</body>
+</html>

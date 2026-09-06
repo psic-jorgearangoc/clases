@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 7 - Trayectorias de Vida y Anamnesis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --cuc-gold: #cba052;
+            --cuc-blue: #2c3e50;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+        header {
+            background-color: var(--white); border-bottom: 4px solid var(--cuc-red); padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; text-align: center;
+        }
+        .header-logo img { max-height: 80px; }
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; }
+        .prof-info { font-size: 0.9rem; color: #555; }
+        .qr-code img { max-height: 70px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
+        .class-view { max-width: 1200px; margin: 40px auto; padding: 0 20px; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .btn-back { background-color: var(--white); color: var(--cuc-dark); padding: 10px 20px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; transition: 0.3s; border: 2px solid #ddd; font-size: 1rem; }
+        .btn-back:hover { background-color: var(--cuc-gray); border-color: var(--cuc-red); transform: translateX(-5px); }
+        .class-header-card { background: linear-gradient(135deg, var(--cuc-red), #7a0f12); color: white; padding: 40px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+        .class-header-card::after { content: '\f0f2'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; right: -20px; bottom: -30px; font-size: 10rem; color: rgba(255,255,255,0.05); }
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        .class-indicator { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin-top: 15px; font-size: 1.05rem; border-left: 4px solid var(--cuc-gold); position: relative; z-index: 2; }
+        .class-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
+        @media screen and (max-width: 1024px) { .class-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media screen and (max-width: 768px) { .class-grid { grid-template-columns: 1fr; } }
+        .detail-card { background: white; border: 1px solid #eee; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--cuc-red); transition: transform 0.3s; }
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+        
+        /* Interactive Tabs Styling */
+        .interactive-container { background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); overflow: hidden; margin-bottom: 40px; display: flex; flex-direction: column; }
+        .tab-buttons { display: flex; background: var(--cuc-blue); overflow-x: auto; }
+        .tab-btn { flex: 1; padding: 20px; background: none; border: none; color: #fff; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; opacity: 0.7; display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 150px; }
+        .tab-btn:hover { opacity: 1; background: rgba(255,255,255,0.1); }
+        .tab-btn.active { opacity: 1; background: var(--cuc-red); border-bottom: 4px solid var(--cuc-gold); }
+        .tab-btn i { font-size: 1.8rem; }
+        .tab-content { display: none; padding: 40px; animation: fadeIn 0.5s ease; background: #fff; }
+        .tab-content.active { display: block; }
+        .tab-content h3 { color: var(--cuc-red); font-size: 1.8rem; margin-bottom: 20px; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .tab-content p { font-size: 1.1rem; color: #444; margin-bottom: 15px; line-height: 1.8; }
+        .concept-highlight { background: #f8f9fa; border-left: 4px solid var(--cuc-gold); padding: 20px; margin: 20px 0; border-radius: 0 10px 10px 0; }
+        
+        .video-container { text-align: center; margin: 40px 0; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; max-width: 900px; margin: 0 auto; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 4px solid #fff; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        
+        .activity-box { background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); border: 2px dashed var(--cuc-gold); border-radius: 15px; padding: 40px; margin-top: 30px; text-align: left; }
+        .activity-step { background: #fff; padding: 25px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid var(--cuc-red); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .activity-step h4 { color: var(--cuc-dark); font-size: 1.2rem; margin-bottom: 10px; }
+        
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
+        @media screen and (max-width: 900px) { .qr-code { display: none; } .tab-buttons { flex-direction: column; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/adolescencia/u2clase07.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa">
+        </div>
+        <div class="header-info">
+            <div class="course-title">De la Adolescencia al Envejecer<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Ciclo Vital II</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small><span class="contact-label">WhatsApp:</span> 3233796547 | <span class="contact-label">IG:</span> jorge.arangoc | <span class="contact-label">Web:</span> www.jorgearangoc.com</small>
+            </div>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/adolescencia/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa del Curso
+        </a>
+        
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 2 • Sesión 3 (Semana 8)</span>
+            <h1>Trayectorias de Vida y Anamnesis</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Articula el pensamiento posformal y los modelos psicosociales con la trayectoria de vida analizada, estableciendo relaciones entre eventos vitales, contexto y desarrollo.
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <ul>
+                    <li>Desarrollo ocupacional y vocación.</li>
+                    <li>Trayectoria profesional y transiciones (Elder).</li>
+                    <li>Fundamentos de la historia clínica.</li>
+                    <li>Estructura de la Anamnesis (antecedentes).</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #2196F3;">
+                <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
+                <ul>
+                    <li>Análisis del Curso de Vida.</li>
+                    <li>Taller de entrevista biográfica.</li>
+                    <li>Construcción guiada de la historia clínica.</li>
+                    <li>Rastreo de red social familiar y laboral.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <ul>
+                    <li>Rastreo biográfico del caso (ABP).</li>
+                    <li>Elaboración formal de la Anamnesis.</li>
+                    <li>Redacción de antecedentes laborales.</li>
+                    <li>Preparación del documento clínico.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <ul>
+                    <li>Formativa: Revisión de borradores clínicos.</li>
+                    <li>Participación en construcción de genogramas base.</li>
+                    <li>Articulación de la teoría con la historia.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="interactive-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="openTab(event, 'tab1')"><i class="fas fa-briefcase"></i> Desarrollo Ocupacional</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab2')"><i class="fas fa-route"></i> Trayectoria de Vida</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab3')"><i class="fas fa-file-medical-alt"></i> La Anamnesis</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab4')"><i class="fas fa-project-diagram"></i> Redes y Contexto</button>
+            </div>
+
+            <div id="tab1" class="tab-content active">
+                <h3>Desarrollo Ocupacional en la Adultez</h3>
+                <p>El trabajo no es solo un medio de subsistencia; en la adultez temprana e intermedia, se convierte en un pilar fundamental para la resolución de la crisis de <strong>Generatividad vs. Estancamiento</strong> y para la validación de la identidad. La elección ocupacional define roles, redes sociales, rutinas y estatus, afectando profundamente el reloj social y el bienestar psicológico.</p>
+                
+                <div class="concept-highlight">
+                    <strong>La Teoría de Donald Super:</strong> Super conceptualiza el desarrollo profesional como un proceso continuo que abarca toda la vida. En la adultez temprana enfrentamos la etapa de <em>Establecimiento</em> (encontrar un nicho y estabilizarse), mientras que en la adultez intermedia entramos en el <em>Mantenimiento</em> (conservar la posición, actualizar competencias frente a los más jóvenes) y, a veces, la reevaluación o cambio de carrera.
+                </div>
+                
+                <p>Actualmente, el concepto de "trayectoria profesional lineal" ha desaparecido. Los adultos modernos experimentan transiciones laterales, reciclaje profesional (aprendizaje permanente fundamentado en la neuroplasticidad) y enfrentan el conflicto trabajo-familia, un estresor clave en la adultez intermedia que exige altos niveles de <strong>pensamiento posformal</strong> para tolerar las demandas contradictorias.</p>
+            </div>
+
+            <div id="tab2" class="tab-content">
+                <h3>El Curso de Vida (Glen Elder)</h3>
+                <p>La perspectiva del "Life Course" de Glen Elder es vital para construir una historia clínica retrospectiva. No podemos evaluar el desarrollo de un individuo sin comprender cómo el <strong>tiempo histórico y el lugar</strong> moldearon sus opciones. Esta teoría postula que el desarrollo humano está incrustado en trayectorias sociodemográficas y tiempos históricos específicos.</p>
+                
+                <ul style="margin-left: 20px; font-size: 1.1rem; color: #444; line-height: 1.8;">
+                    <li><strong>Vidas Interconectadas:</strong> El desarrollo del adulto está indisolublemente ligado a sus redes sociales y familiares (ej. la enfermedad de un padre en la adultez emergente puede truncar una trayectoria educativa).</li>
+                    <li><strong>Transiciones:</strong> Cambios de rol normativos (ej. primer empleo, matrimonio, primer hijo) o no normativos (ej. despido a los 45 años, viudez temprana).</li>
+                    <li><strong>Puntos de Inflexión (Turning Points):</strong> Momentos cruciales donde la trayectoria de vida cambia de dirección de manera significativa. En la historia clínica, identificar estos puntos es vital para entender la génesis de la salud o la patología actual.</li>
+                </ul>
+            </div>
+
+            <div id="tab3" class="tab-content">
+                <h3>Estructura de la Anamnesis Retrospectiva</h3>
+                <p>La anamnesis es el núcleo de la historia clínica en psicología. Es la recopilación sistemática y cronológica de los datos biográficos, médicos y psicosociales del paciente. Para nuestro proyecto longitudinal (ABP), la anamnesis debe leerse <em>en retrospectiva</em>, buscando los factores sistémicos que Bronfenbrenner postula.</p>
+                
+                <div class="concept-highlight">
+                    <h4 style="color: var(--cuc-red); margin-bottom: 10px;">Componentes Clave:</h4>
+                    <ul style="margin-left: 20px; color: #333;">
+                        <li><strong>Datos de Identificación y Motivo de Consulta Histórico:</strong> ¿Quién es el sujeto? ¿Qué detonó la crisis?</li>
+                        <li><strong>Historia Familiar (Genograma narrativo):</strong> Estructura familiar de origen, estilos de crianza (autoritario, permisivo), dinámicas de apego, antecedentes de salud física y mental en la familia.</li>
+                        <li><strong>Historia Personal por Etapas:</strong> Desarrollo temprano, escolaridad (rendimiento, socialización), adolescencia (conductas de riesgo, identidad) y adultez temprana (consolidación laboral, intimidad).</li>
+                    </ul>
+                </div>
+                <p>El error más común es hacer un relato literario o sensacionalista. La anamnesis clínica es <strong>objetiva, descriptiva y fundamentada</strong>. Evita juicios de valor ("tuvo una infancia horrible"); utiliza hechos ("experimentó pobreza extrema y ausencia parental, identificados como factores de riesgo macrosistémicos").</p>
+            </div>
+
+            <div id="tab4" class="tab-content">
+                <h3>Evaluación de Redes y Contexto</h3>
+                <p>Articular los modelos psicosociales con la vida real implica evaluar el tejido social del individuo. El bienestar en la adultez (como lo plantea Carol Ryff) depende en gran medida del "Dominio del entorno" y las "Relaciones Positivas".</p>
+                
+                <p>Al construir los antecedentes de tu caso, debes mapear:</p>
+                <ul style="margin-left: 20px; font-size: 1.1rem; color: #444; line-height: 1.8;">
+                    <li><strong>Apoyo Instrumental vs. Emocional:</strong> ¿El adulto cuenta con ayuda práctica (dinero, cuidado de hijos) y validación emocional?</li>
+                    <li><strong>El Cronosistema Laboral:</strong> ¿Cómo impactó una crisis económica nacional (macro) en el cierre de la empresa donde trabajaba (exo), afectando su rol de proveedor (micro) y generando una crisis de generatividad?</li>
+                    <li><strong>Reloj Social:</strong> Evalúa si los eventos estresantes del caso ocurrieron "fuera de tiempo" (off-time, como una enfermedad grave a los 30 años), lo cual genera mayores crisis adaptativas según Neugarten.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="video-container">
+            <h2 style="color: var(--cuc-red); margin-bottom: 20px;">Recurso Audiovisual: El Estudio de Harvard sobre el Desarrollo Adulto</h2>
+            <p style="margin-bottom: 20px; font-size: 1.1rem; max-width: 800px; margin-left: auto; margin-right: auto;">Robert Waldinger dirige el estudio longitudinal más largo de la historia sobre el desarrollo adulto. Escucha atentamente cuáles son los factores reales que determinan una trayectoria de vida saludable y feliz a lo largo de las décadas.</p>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/8KkKuTCFvzI?rel=0" title="¿Qué hace una buena vida? Lecciones del estudio más largo sobre la felicidad" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="activity-box">
+            <h3 style="color: var(--cuc-dark); margin-bottom: 20px;"><i class="fas fa-edit"></i> Actividad en Clase: Construcción Guiada de la Anamnesis (Parte 1)</h3>
+            <p style="font-size: 1.1rem; margin-bottom: 25px;">Esta actividad práctica los preparará directamente para la Entrega 2 de su ABP. Organizaremos la información del caso asignado utilizando un rigor clínico y cronológico.</p>
+            
+            <div class="activity-step">
+                <h4>Fase 1: Extracción Biográfica Objetiva</h4>
+                <p>Revisen el material de su caso de estudio. Extraigan <strong>únicamente los hechos comprobables</strong> (fechas, eventos normativos y no normativos, enfermedades, cambios de residencia). Filtren toda narrativa subjetiva o dramática de la historia.</p>
+            </div>
+            
+            <div class="activity-step">
+                <h4>Fase 2: Estructuración del Eje Familiar y Laboral</h4>
+                <p>Redacten dos párrafos clínicos separados. Uno que describa la composición de la familia de origen y las pautas de crianza recibidas, y otro que describa la trayectoria educativa y laboral del sujeto hasta la adultez intermedia. Identifiquen explícitamente un "Punto de Inflexión" (turning point) laboral.</p>
+            </div>
+            
+            <div class="activity-step">
+                <h4>Fase 3: Revisión de Pares (Control de Calidad)</h4>
+                <p>Intercambien su borrador de anamnesis con otro grupo. El grupo revisor debe actuar como "Auditor Clínico", marcando con rojo cualquier frase que suene a juicio de valor (ej. "el paciente era perezoso") y sugiriendo el término psicológico correcto (ej. "el paciente presentaba dificultades en el establecimiento de metas vocacionales, reflejando un estado de difusión de identidad").</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p>Material diseñado para la asignatura "De la Adolescencia al Envejecer".</p>
+    </footer>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.className += " active";
+        }
+    </script>
+</body>
+</html>

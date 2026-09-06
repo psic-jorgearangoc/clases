@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 8 - Formulación Clínica y Puntos de Quiebre</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --cuc-gold: #cba052;
+            --cuc-green: #27ae60;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+        header {
+            background-color: var(--white); border-bottom: 4px solid var(--cuc-red); padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; text-align: center;
+        }
+        .header-logo img { max-height: 80px; }
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; }
+        .prof-info { font-size: 0.9rem; color: #555; }
+        .qr-code img { max-height: 70px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
+        .class-view { max-width: 1200px; margin: 40px auto; padding: 0 20px; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .btn-back { background-color: var(--white); color: var(--cuc-dark); padding: 10px 20px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; transition: 0.3s; border: 2px solid #ddd; font-size: 1rem; }
+        .btn-back:hover { background-color: var(--cuc-gray); border-color: var(--cuc-red); transform: translateX(-5px); }
+        .class-header-card { background: linear-gradient(135deg, var(--cuc-red), #5a090b); color: white; padding: 40px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.15); position: relative; overflow: hidden; border-left: 8px solid var(--cuc-gold); }
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        .class-indicator { background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px; margin-top: 15px; font-size: 1.05rem; border-left: 4px solid var(--white); position: relative; z-index: 2; }
+        
+        .timeline-abp { position: relative; max-width: 900px; margin: 50px auto; }
+        .timeline-abp::after { content: ''; position: absolute; width: 6px; background-color: var(--cuc-gold); top: 0; bottom: 0; left: 50%; margin-left: -3px; border-radius: 5px; }
+        .tl-container { padding: 10px 40px; position: relative; background-color: inherit; width: 50%; }
+        .tl-left { left: 0; } .tl-right { left: 50%; }
+        .tl-container::after { content: ''; position: absolute; width: 25px; height: 25px; right: -13px; background-color: white; border: 4px solid var(--cuc-red); top: 15px; border-radius: 50%; z-index: 1; }
+        .tl-right::after { left: -13px; }
+        .tl-content { padding: 25px; background-color: white; position: relative; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border-top: 4px solid var(--cuc-red); transition: 0.3s; }
+        .tl-content:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .tl-content h2 { color: var(--cuc-red); font-size: 1.4rem; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;}
+        .tl-content p { font-size: 1.05rem; color: #444; margin-bottom: 10px; }
+        
+        .alert-box { background-color: #fff3cd; color: #856404; border-left: 5px solid #ffeeba; padding: 20px; margin: 40px 0; border-radius: 5px; font-size: 1.1rem; }
+        .alert-box strong { color: #533f03; }
+
+        .video-container { text-align: center; margin: 40px 0; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; max-width: 900px; margin: 0 auto; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 4px solid #fff; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        .activity-box { background: #fff; border: 2px solid var(--cuc-dark); border-radius: 15px; padding: 40px; margin-top: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
+        @media screen and (max-width: 900px) { 
+            .qr-code { display: none; } 
+            .timeline-abp::after { left: 31px; }
+            .tl-container { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .tl-container::after { left: 15px; }
+            .tl-right { left: 0%; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/adolescencia/u2clase08.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa">
+        </div>
+        <div class="header-info">
+            <div class="course-title">De la Adolescencia al Envejecer<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Ciclo Vital II</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small><span class="contact-label">WhatsApp:</span> 3233796547 | <span class="contact-label">IG:</span> jorge.arangoc | <span class="contact-label">Web:</span> www.jorgearangoc.com</small>
+            </div>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/adolescencia/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa del Curso
+        </a>
+        
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 2 • Sesión 4 (Semana 9)</span>
+            <h1>Formulación Clínica y Puntos de Quiebre</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Aplica los referentes en la construcción de una historia clínica retrospectiva (anamnesis y formulación clínica), identificando puntos de quiebre donde una intervención pudo modificar el curso (ABP – Entrega 2).
+            </div>
+        </div>
+
+        <div class="alert-box">
+            <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem; float: left; margin-right: 15px; margin-top: 5px;"></i>
+            <strong>¡Atención Clínica! Evita el Sensacionalismo:</strong><br>
+            La Formulación Clínica no es una novela policíaca. El psicólogo no debe emitir juicios morales sobre las acciones del individuo, ni debe glorificar la violencia o victimizar en exceso. El objetivo es construir <strong>hipótesis etiológicas fundamentadas en la evidencia</strong>, explicando "el porqué" del desarrollo patológico o resiliente utilizando el modelo ecológico y las teorías del ciclo vital.
+        </div>
+
+        <h2 style="text-align: center; color: var(--cuc-dark); margin-top: 50px; font-size: 2rem;">Ruta de la Formulación Clínica Retrospectiva</h2>
+        
+        <div class="timeline-abp">
+            <div class="tl-container tl-left">
+                <div class="tl-content">
+                    <h2>1. Hipótesis Explicativas (El Origen)</h2>
+                    <p>Con base en la anamnesis de la clase anterior, la formulación debe establecer hipótesis claras. ¿Qué factores del <em>Microsistema</em> (ej. negligencia parental) interactuaron con el <em>Macrosistema</em> (ej. cultura de violencia) para generar la difusión de la identidad en la adolescencia?</p>
+                    <p style="color: var(--cuc-red); font-size: 0.95rem; font-weight: bold;"><i class="fas fa-check-circle"></i> Integra aquí a Erikson, Bronfenbrenner y Marcia.</p>
+                </div>
+            </div>
+            
+            <div class="tl-container tl-right">
+                <div class="tl-content">
+                    <h2>2. Modelos Psicosociales del Adulto</h2>
+                    <p>Evalúa el estado actual del individuo en su adultez. ¿Logró el pensamiento posformal? ¿Cómo resolvió la crisis de Intimidad vs. Aislamiento o Generatividad vs. Estancamiento? ¿Se presentaron eventos "off-time" (fuera de tiempo normativo)?</p>
+                    <p style="color: var(--cuc-red); font-size: 0.95rem; font-weight: bold;"><i class="fas fa-check-circle"></i> Integra a Neugarten (Reloj Social) y Sternberg (Teoría del Amor).</p>
+                </div>
+            </div>
+            
+            <div class="tl-container tl-left">
+                <div class="tl-content">
+                    <h2>3. Identificación de Puntos de Quiebre</h2>
+                    <p>Aquí radica el corazón de la perspectiva preventiva del ABP. Señala momentos exactos en el <strong>Cronosistema</strong> donde la trayectoria se desvió negativamente (ej. deserción escolar a los 14 años, primer contacto con sustancias).</p>
+                    <p style="color: var(--cuc-red); font-size: 0.95rem; font-weight: bold;"><i class="fas fa-check-circle"></i> Identifica el <em>Turning Point</em> según la teoría del Curso de Vida (Elder).</p>
+                </div>
+            </div>
+            
+            <div class="tl-container tl-right">
+                <div class="tl-content" style="border-top-color: var(--cuc-gold);">
+                    <h2 style="color: var(--cuc-gold);">4. Intervenciones Retrospectivas (Pre-hecho)</h2>
+                    <p>Respondan a la pregunta crítica del ABP: <em>¿Qué acciones preventivas (psicológicas, sociales o de política pública) se debieron implementar ANTES de que el problema escalara?</em> Propongan intervenciones primarias en los microsistemas (familia/escuela) y exosistemas (programas comunitarios).</p>
+                    <p style="color: var(--cuc-red); font-size: 0.95rem; font-weight: bold;"><i class="fas fa-check-circle"></i> Este es el núcleo evaluativo de la Entrega 2.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="video-container">
+            <h2 style="color: var(--cuc-red); margin-bottom: 20px;">Refuerzo Metodológico: La Historia Clínica Psicológica</h2>
+            <p style="margin-bottom: 20px; font-size: 1.1rem; max-width: 800px; margin-left: auto; margin-right: auto;">Para garantizar el rigor de tu entrega, observa los elementos formales que estructuran una formulación clínica psicológica, separando el motivo de consulta de la evaluación de hipótesis.</p>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/Kj_19XQ1Q0k?rel=0" title="Historia Clínica Psicológica" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="activity-box">
+            <h3 style="color: var(--cuc-red); margin-bottom: 20px; font-size: 1.8rem;"><i class="fas fa-project-diagram"></i> Mesa Redonda: Fase "ANALIZAR" (ABP Entrega 2)</h3>
+            <p style="font-size: 1.15rem; margin-bottom: 20px;">Nos prepararemos para la sustentación y entrega del <strong>Documento Clínico Retrospectivo</strong>.</p>
+            
+            <ol style="margin-left: 20px; font-size: 1.1rem; line-height: 1.8; color: #444;">
+                <li><strong>Revisión del Documento:</strong> Los grupos se reúnen para consolidar la Anamnesis (Clase 7) y redactar formalmente la Formulación Clínica siguiendo la ruta de 4 pasos descrita arriba.</li>
+                <li><strong>Filtro de Objetividad:</strong> Eliminen adjetivos calificativos innecesarios. Reemplacen palabras como "malo", "terrible" o "triste" por conceptos técnicos: <em>"factor de riesgo psicosocial", "déficit en apoyo emocional", "estancamiento", "crisis no resuelta"</em>.</li>
+                <li><strong>Mesa Redonda de Puntos de Quiebre:</strong> Cada grupo dispondrá de 5 minutos para exponer ante la clase cuál fue el punto de quiebre crítico de su caso y <strong>cuál habría sido la intervención preventiva primaria exacta</strong> que habría modificado ese curso de vida.</li>
+            </ol>
+            
+            <div style="background: var(--cuc-gray); padding: 20px; margin-top: 30px; border-radius: 8px; border-left: 5px solid var(--cuc-dark);">
+                <strong>Cierre de la Unidad 2:</strong> Al finalizar esta semana, se realizará la Evaluación PBE (20%) y la calificación del documento final del ABP Entrega 2 (10%). Asegúrense de subir el archivo en formato PDF a la plataforma Moodle con norma APA 7ma edición.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p>Material diseñado para la asignatura "De la Adolescencia al Envejecer".</p>
+    </footer>
+</body>
+</html>

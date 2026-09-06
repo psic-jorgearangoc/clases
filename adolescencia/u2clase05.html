@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 5 - Adultez Emergente y Cognición</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --cuc-gold: #cba052;
+            --soft-blue: #e3f2fd;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+        .header-logo img { max-height: 80px; }
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; }
+        .prof-info { font-size: 0.9rem; color: #555; }
+        
+        .qr-code img { max-height: 70px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
+
+        .class-view {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-back {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .btn-back:hover {
+            background-color: var(--cuc-gray);
+            border-color: var(--cuc-red);
+            transform: translateX(-5px);
+        }
+
+        .class-header-card {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .class-header-card::after {
+            content: '\f508'; /* Briefcase/Adulthood icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-size: 10rem;
+            color: rgba(255,255,255,0.1);
+        }
+
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        
+        .class-indicator {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 1.05rem;
+            border-left: 4px solid var(--cuc-gold);
+            position: relative;
+            z-index: 2;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        @media screen and (max-width: 1024px) {
+            .class-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media screen and (max-width: 768px) {
+            .class-grid { grid-template-columns: 1fr; }
+            .authors-grid { grid-template-columns: 1fr; }
+        }
+
+        .detail-card {
+            background: white;
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--cuc-red);
+            transition: transform 0.3s;
+        }
+
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .theme-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-top: 4px solid var(--cuc-dark);
+        }
+
+        .theme-title { color: var(--cuc-red); margin-bottom: 25px; font-size: 1.8rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .theme-subtitle { color: var(--cuc-dark); margin: 25px 0 15px; font-size: 1.3rem; }
+
+        .authors-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin-bottom: 40px; }
+        .flip-card { background-color: transparent; height: 320px; perspective: 1000px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s; transform-style: preserve-3d; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 15px; padding: 30px; display: flex; flex-direction: column; justify-content: center; }
+        .flip-card-front { background-color: var(--white); border: 2px solid var(--cuc-gray); align-items: center;}
+        .flip-card-front i { font-size: 3.5rem; color: var(--cuc-gold); margin-bottom: 15px; }
+        .flip-card-front h4 { color: var(--cuc-red); font-size: 1.6rem; margin-bottom: 10px; }
+        .flip-card-back { background: linear-gradient(135deg, var(--cuc-dark), #333); color: white; transform: rotateY(180deg); text-align: left; }
+        .flip-card-back h4 { color: var(--cuc-gold); margin-bottom: 15px; font-size: 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px;}
+        .flip-card-back p { font-size: 0.95rem; line-height: 1.6; opacity: 0.9; }
+
+        .cog-dashboard { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 40px; border-radius: 15px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 1px solid #ddd; }
+        .cog-tabs { flex: 1; min-width: 250px; background: #f8f9fa; border-right: 1px solid #ddd; }
+        .c-tab { width: 100%; text-align: left; padding: 25px 20px; background: none; border: none; border-bottom: 1px solid #ddd; font-size: 1.05rem; font-weight: bold; color: #555; cursor: pointer; transition: 0.3s; display: flex; justify-content: space-between; align-items: center; }
+        .c-tab:hover { background: #eee; color: var(--cuc-dark); }
+        .c-tab.active { background: white; color: var(--cuc-red); border-left: 5px solid var(--cuc-red); box-shadow: inset 5px 0 10px rgba(0,0,0,0.02); }
+        .cog-panels { flex: 2.5; min-width: 300px; background: white; padding: 40px; }
+        .c-panel { display: none; animation: fadeIn 0.5s ease; }
+        .c-panel.active { display: block; }
+        .c-panel h4 { color: var(--cuc-dark); font-size: 1.8rem; margin-bottom: 25px; border-bottom: 2px dashed #eee; padding-bottom: 10px; }
+        .c-panel h4 span { color: var(--cuc-red); font-size: 1.2rem; display: block; margin-top: 5px;}
+        
+        .c-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 25px; }
+        .c-card { background: var(--cuc-gray); padding: 25px; border-radius: 10px; border-top: 4px solid var(--cuc-gold); }
+        .c-card h5 { color: var(--cuc-red); margin-bottom: 12px; font-size: 1.1rem; }
+        .c-card p { font-size: 0.95rem; color: #444; line-height: 1.6; }
+
+        .videos-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        .activity-box { background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); border: 2px dashed var(--cuc-gold); border-radius: 15px; padding: 30px; margin-top: 30px; }
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
+        @media screen and (max-width: 900px) { .qr-code { display: none; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/adolescencia/u2clase05.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+        <div class="header-logo"><img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://placehold.co/200x80/ffffff/a3161a?text=CUC'"></div>
+        <div class="header-info">
+            <div class="course-title">De la Adolescencia al Envejecer:<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Desarrollo en la Segunda Mitad del Ciclo Vital</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | <span class="contact-label">Web:</span> www.jorgearangoc.com
+                </small>
+            </div>
+        </div>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/adolescencia/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa del Curso
+        </a>
+        
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 2 • Sesión 5</span>
+            <h1>Adultez Emergente y Pensamiento Posformal</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Identifica y define los referentes teórico-conceptuales de la adultez temprana e intermedia (pensamiento posformal y transiciones vitales).
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <ul>
+                    <li>Construcción histórica de la adultez.</li>
+                    <li>Adultez emergente (Jeffrey Arnett).</li>
+                    <li>Curso de vida (Glen Elder).</li>
+                    <li>Cognición adulta: Schaie, Labouvie-Vief, Sinnott, Cattell.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #2196F3;">
+                <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
+                <ul>
+                    <li>Seminario sobre adultez emergente y curso de vida.</li>
+                    <li>Seminario de desarrollo cognoscitivo adulto.</li>
+                    <li>Debate sobre adultocentrismo.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <ul>
+                    <li>Lectura: Pensamiento Posformal.</li>
+                    <li><strong>Rastreo Teórico:</strong> Elaboración de esquema sobre los modelos cognoscitivos de la adultez.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <ul>
+                    <li>Valoración del rastreo teórico.</li>
+                    <li>Participación en el seminario.</li>
+                    <li><strong>Instrumento:</strong> Rúbrica de producciones.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2 class="theme-title"><i class="fas fa-hourglass-start"></i> 1. Transiciones Vitales: ¿Cuándo se es adulto?</h2>
+            <p style="margin-bottom: 25px; font-size: 1.1rem; color: #444;">Históricamente, la adultez se definía por marcadores estandarizados (casarse, tener hijos, conseguir trabajo fijo a los 21 años). Hoy, los cambios socioeconómicos han reconfigurado radicalmente este mapa vital.</p>
+            
+            <div class="authors-grid">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-door-open"></i>
+                            <h4>La Adultez Emergente</h4>
+                            <p style="font-weight: bold; color: #777;">Jeffrey Arnett</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4>El Nuevo Horizonte (18 a 29 años)</h4>
+                            <p>Arnett propuso que en las sociedades industrializadas modernas, la transición a la adultez ya no es inmediata tras la adolescencia. Creó el concepto de "Adultez Emergente", caracterizada por:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>La exploración incesante de la identidad.</li>
+                                <li>La inestabilidad (residencial, laboral, amorosa).</li>
+                                <li>El sentimiento de "estar en el medio" (no soy adolescente, pero no me siento 100% adulto).</li>
+                                <li>Múltiples posibilidades de vida.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-route"></i>
+                            <h4>El Curso de Vida</h4>
+                            <p style="font-weight: bold; color: #777;">Glen Elder Jr.</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4>Tiempo, Historia y Contexto</h4>
+                            <p>Elder rechaza que el desarrollo sea una simple maduración biológica. Su teoría del Curso de Vida (Life Course) postula que nuestro desarrollo está dictado por:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li><strong>Tiempo histórico:</strong> Nacer en pandemia, guerra o crisis moldea tu adultez.</li>
+                                <li><strong>Timing (El reloj social):</strong> El impacto de un evento depende de <em>cuándo</em> ocurre (ej. ser padre a los 16 vs. a los 35).</li>
+                                <li><strong>Vidas interconectadas:</strong> Tu trayectoria vital está amarrada a las decisiones y crisis de tu red de apoyo (familia).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 40px;"><i class="fas fa-brain"></i> 2. Cognición Adulta: Más allá de Piaget</h3>
+            <p style="margin-bottom: 25px; font-size: 1.1rem; color: #444;">Piaget creía que el desarrollo cognitivo culminaba con las "Operaciones Formales" en la adolescencia. Sin embargo, los psicólogos del desarrollo adulto demostraron que el cerebro maduro adquiere nuevas y complejas formas de procesamiento.</p>
+            
+            <div class="cog-dashboard">
+                <div class="cog-tabs">
+                    <button class="c-tab active" onclick="openCog(event, 'c-posformal')">El Pensamiento Posformal <i class="fas fa-chevron-right"></i></button>
+                    <button class="c-tab" onclick="openCog(event, 'c-schaie')">Etapas de K. Warner Schaie <i class="fas fa-chevron-right"></i></button>
+                    <button class="c-tab" onclick="openCog(event, 'c-inteligencia')">Inteligencia Fluida y Cristalizada <i class="fas fa-chevron-right"></i></button>
+                </div>
+                
+                <div class="cog-panels">
+                    
+                    <div id="c-posformal" class="c-panel active">
+                        <h4>Pensamiento Posformal <span>Labouvie-Vief y Sinnott</span></h4>
+                        <p style="margin-bottom: 15px;">Mientras el adolescente es absolutista y busca la "respuesta lógica perfecta", el adulto desarrolla un pensamiento <strong>dialéctico y relativista</strong> para enfrentar el caos del mundo real.</p>
+                        <div class="c-grid">
+                            <div class="c-card">
+                                <h5><i class="fas fa-balance-scale"></i> Subjetividad y Relativismo</h5>
+                                <p>El adulto comprende que el conocimiento no es absoluto. La verdad depende del contexto y de la perspectiva del observador. (Ej. Lo que es "justo" laboralmente varía según el rol que ocupes).</p>
+                            </div>
+                            <div class="c-card">
+                                <h5><i class="fas fa-yin-yang"></i> Tolerancia a la Contradicción</h5>
+                                <p>Capacidad para sostener dos ideas opuestas simultáneamente sin angustia, reconociendo que la vida (y las relaciones de pareja) están llenas de ambigüedades e imperfecciones.</p>
+                            </div>
+                            <div class="c-card" style="grid-column: span 2;">
+                                <h5><i class="fas fa-heartbeat"></i> Integración Emocional (Labouvie-Vief)</h5>
+                                <p>El adulto maduro no separa la lógica fría de la emoción. Utiliza sus intuiciones, experiencias pasadas y empatía para tomar decisiones cognitivas complejas en entornos laborales y familiares.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="c-schaie" class="c-panel">
+                        <h4>Modelo del Desarrollo Cognitivo <span>K. Warner Schaie</span></h4>
+                        <p style="margin-bottom: 15px;">Schaie analizó <em>cómo usamos</em> la inteligencia a lo largo del tiempo, no solo <em>cuánta</em> tenemos. Propuso que pasamos de adquirir conocimiento a aplicarlo y, finalmente, a darle significado.</p>
+                        <div class="c-grid">
+                            <div class="c-card">
+                                <h5>1. Adquisición (Niñez/Adolescencia)</h5>
+                                <p>Aprender por el simple hecho de aprender y prepararse para la vida. Acumulación de conocimientos y habilidades.</p>
+                            </div>
+                            <div class="c-card">
+                                <h5>2. Logro (Adultez Temprana)</h5>
+                                <p>El conocimiento se usa para alcanzar metas personales: conseguir un trabajo, establecer una familia, ganar autonomía (20s-30s).</p>
+                            </div>
+                            <div class="c-card">
+                                <h5>3. Responsabilidad y Ejecutiva (Media)</h5>
+                                <p>Usar la mente para resolver problemas prácticos asociados a las responsabilidades hacia otros (hijos, empleados). La etapa <em>Ejecutiva</em> se da si lideras grandes organizaciones (30s-60s).</p>
+                            </div>
+                            <div class="c-card">
+                                <h5>4. Reorganizadora / Reintegrativa (Tardía)</h5>
+                                <p>Tras la jubilación, la energía cognitiva se invierte solo en tareas que tienen un profundo significado personal, descartando lo irrelevante.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="c-inteligencia" class="c-panel">
+                        <h4>Modelo Dual de la Inteligencia <span>Cattell y Horn</span></h4>
+                        <p style="margin-bottom: 15px;">¿Nos volvemos menos inteligentes al envejecer? La respuesta depende de <em>qué tipo</em> de inteligencia evaluamos. Cattell y Horn demostraron trayectorias divergentes en el cerebro adulto:</p>
+                        <div class="c-grid">
+                            <div class="c-card" style="border-top-color: #2196F3;">
+                                <h5 style="color: #2196F3;"><i class="fas fa-water"></i> Inteligencia Fluida</h5>
+                                <p>Es la capacidad para procesar información nueva, resolver problemas inéditos, razonar de forma abstracta y la velocidad de procesamiento (el "hardware" del cerebro). <strong>Suele alcanzar su punto máximo en la adultez temprana y comienza un leve declive fisiológico en la adultez media.</strong></p>
+                            </div>
+                            <div class="c-card" style="border-top-color: #4CAF50;">
+                                <h5 style="color: #4CAF50;"><i class="fas fa-gem"></i> Inteligencia Cristalizada</h5>
+                                <p>Es el conocimiento acumulado a lo largo de la vida, el vocabulario, la experticia profesional y el juicio social (el "software"). <strong>Esta inteligencia no decae; por el contrario, tiende a aumentar o mantenerse estable hasta edades muy avanzadas.</strong> Compensa las caídas de la inteligencia fluida.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle"><i class="fas fa-video"></i> 3. Recurso Audiovisual</h3>
+            <div class="videos-container" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto;">
+                <div class="video-wrapper">
+                    <!-- Real TEDx talk by Jeffrey Arnett on Emerging Adulthood -->
+                    <iframe src="https://www.youtube.com/embed/fv8KpQY0m6o" title="Why does it take so long to grow up today? | Jeffrey Jensen Arnett" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-tasks"></i> Actividad Autónoma: Seminario Cognoscitivo</h3>
+                <p><strong>Dinámica:</strong> Trabajo Independiente de Rastreo Teórico.</p>
+                <ol style="margin-left: 20px; line-height: 1.8; color: #444; margin-top: 15px;">
+                    <li>Basados en las lecturas de la Unidad 2, elaboren un <strong>esquema integrador</strong> que contraste el Pensamiento Formal de Piaget con el Pensamiento Posformal de Labouvie-Vief.</li>
+                    <li>Sustenten con un ejemplo práctico de la vida laboral cómo un individuo en la "Etapa de Logro" de Schaie usaría predominantemente la Inteligencia Fluida, versus un individuo en la "Etapa Ejecutiva" usando Inteligencia Cristalizada.</li>
+                    <li>Preparen su sustentación para la retroalimentación en el Seminario Presencial.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+    </footer>
+
+    <script>
+        function openCog(evt, tabId) {
+            var i, panels, tabs;
+            panels = document.getElementsByClassName("c-panel");
+            for (i = 0; i < panels.length; i++) {
+                panels[i].classList.remove("active");
+            }
+            tabs = document.getElementsByClassName("c-tab");
+            for (i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>

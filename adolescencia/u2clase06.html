@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 6 - Desarrollo Psicosocial Adulto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --cuc-gold: #cba052;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+        .header-logo img { max-height: 80px; }
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; }
+        .prof-info { font-size: 0.9rem; color: #555; }
+        
+        .qr-code img { max-height: 70px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
+
+        .class-view {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-back {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+        }
+        .btn-back:hover { background-color: var(--cuc-gray); border-color: var(--cuc-red); transform: translateX(-5px); }
+
+        .class-header-card {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .class-header-card::after {
+            content: '\f2b5'; /* Handshake/Connection icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-size: 10rem;
+            color: rgba(255,255,255,0.1);
+        }
+
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        
+        .class-indicator {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 1.05rem;
+            border-left: 4px solid var(--cuc-gold);
+            position: relative;
+            z-index: 2;
+        }
+
+        .class-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
+        @media screen and (max-width: 1024px) { .class-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media screen and (max-width: 768px) { .class-grid { grid-template-columns: 1fr; } }
+
+        .detail-card { background: white; border: 1px solid #eee; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--cuc-red); transition: transform 0.3s; }
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .theme-section { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 40px; border-top: 4px solid var(--cuc-dark); }
+        .theme-title { color: var(--cuc-red); margin-bottom: 25px; font-size: 1.8rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .theme-subtitle { color: var(--cuc-dark); margin: 25px 0 15px; font-size: 1.4rem; }
+
+        .biology-box { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 30px; }
+        .bio-card { flex: 1; min-width: 300px; background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 25px; border-left: 5px solid var(--cuc-gold); box-shadow: 0 4px 6px rgba(0,0,0,0.04); }
+        .bio-card h4 { color: var(--cuc-red); font-size: 1.3rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;}
+        .bio-card p { font-size: 1rem; color: #444; margin-bottom: 10px; line-height: 1.7; }
+        .bio-card ul { margin-left: 20px; color: #555; }
+        
+        .psy-dashboard { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 40px; border-radius: 15px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 1px solid #ddd; }
+        .psy-tabs { flex: 1; min-width: 250px; background: var(--cuc-dark); }
+        .p-tab { width: 100%; text-align: left; padding: 20px; background: none; border: none; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 1.05rem; font-weight: bold; color: #aaa; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 10px;}
+        .p-tab:hover { background: rgba(255,255,255,0.05); color: white; }
+        .p-tab.active { background: var(--cuc-red); color: white; border-left: 5px solid var(--cuc-gold); }
+        .psy-panels { flex: 2.5; min-width: 300px; background: white; padding: 40px; }
+        .p-panel { display: none; animation: fadeIn 0.4s ease; }
+        .p-panel.active { display: block; }
+        .p-panel h4 { color: var(--cuc-dark); font-size: 1.8rem; margin-bottom: 10px; }
+        .p-panel h5 { color: var(--cuc-red); font-size: 1.1rem; margin-bottom: 25px; border-bottom: 1px dashed #ccc; padding-bottom: 10px;}
+        
+        .triangle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; text-align: center; }
+        .tri-box { background: #fdfdfd; border: 1px solid #eee; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .tri-box i { font-size: 2rem; color: #e91e63; margin-bottom: 10px; display: block;}
+        
+        .model-list { list-style: none; padding: 0; margin-top: 20px;}
+        .model-list li { background: var(--cuc-gray); padding: 15px 20px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid var(--cuc-dark); }
+        .model-list strong { color: var(--cuc-red); font-size: 1.1rem; display: block; margin-bottom: 5px;}
+
+        .videos-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        .activity-box { background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); border: 2px dashed var(--cuc-gold); border-radius: 15px; padding: 30px; margin-top: 30px; }
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: #777; margin-top: 40px; }
+        @media screen and (max-width: 900px) { .qr-code { display: none; } .triangle-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/adolescencia/u2clase06.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+        <div class="header-logo"><img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://placehold.co/200x80/ffffff/a3161a?text=CUC'"></div>
+        <div class="header-info">
+            <div class="course-title">De la Adolescencia al Envejecer:<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Desarrollo en la Segunda Mitad del Ciclo Vital</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | <span class="contact-label">Web:</span> www.jorgearangoc.com
+                </small>
+            </div>
+        </div>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/adolescencia/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa del Curso
+        </a>
+        
+        <div class="class-header-card">
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Unidad 2 • Sesión 6</span>
+            <h1>Desarrollo Físico y Psicosocial en la Adultez</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Explica los cambios físicos y psicosociales de la adultez, diferenciando los modelos psicosociales y comprendiendo los eventos vitales "fuera de tiempo".
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <ul>
+                    <li>Salud física: Climaterio (menopausia y andropausia).</li>
+                    <li>Psicosocial (Erikson, Sternberg, McAdams).</li>
+                    <li>Modelos psicosociales (Neugarten).</li>
+                    <li>Bienestar Psicológico (Ryff, Diener).</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #2196F3;">
+                <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
+                <ul>
+                    <li>Discusión de casos sobre el "Reloj Social".</li>
+                    <li>Taller práctico de modelos tipológicos y de crisis.</li>
+                    <li>Debate sobre parentalidad y estilos de vida.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <ul>
+                    <li>Lectura de apoyo sobre Teoría Triangular del Amor.</li>
+                    <li><strong>Entregable:</strong> Cuadro comparativo de los modelos psicosociales de la adultez.</li>
+                </ul>
+            </div>
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <ul>
+                    <li>Valoración del cuadro comparativo (formativa).</li>
+                    <li>Sustentación de casos (Rúbrica).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2 class="theme-title"><i class="fas fa-heartbeat"></i> 1. El Cuerpo Adulto: De la Cima a la Transición</h2>
+            <p style="margin-bottom: 25px; font-size: 1.1rem; color: #444;">La adultez temprana representa el pico máximo de vitalidad, fuerza y eficiencia reproductiva. Sin embargo, al cruzar hacia la adultez intermedia (aprox. 40-65 años), inician procesos de senescencia primaria inevitables.</p>
+            
+            <div class="biology-box">
+                <div class="bio-card">
+                    <h4><i class="fas fa-venus"></i> El Climaterio Femenino (Menopausia)</h4>
+                    <p>Es la transición biológica donde la mujer cesa su etapa reproductiva. Ocurre típicamente entre los 45 y 55 años, marcado por la caída drástica de estrógeno y progesterona.</p>
+                    <ul>
+                        <li><strong>Impacto:</strong> Cese de la menstruación, sofocos, cambios en la densidad ósea (riesgo de osteoporosis) y posibles fluctuaciones del estado de ánimo.</li>
+                        <li><strong>Clínica:</strong> No debe patologizarse; es un evento normativo de la edad, aunque la terapia de reemplazo hormonal (TRH) es usada para síntomas severos.</li>
+                    </ul>
+                </div>
+                <div class="bio-card">
+                    <h4><i class="fas fa-mars"></i> El Climaterio Masculino (Andropausia)</h4>
+                    <p>A diferencia del cese abrupto femenino, los hombres experimentan una disminución gradual y continua de la testosterona a partir de los 30 años (aprox. 1% anual).</p>
+                    <ul>
+                        <li><strong>Impacto:</strong> Disminución de la masa muscular, menor energía, cambios en la respuesta sexual (disfunción eréctil potencial) y acumulación de grasa.</li>
+                        <li><strong>Clínica:</strong> La capacidad reproductiva (producción de esperma) no cesa, pero la viabilidad biológica disminuye paulatinamente.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 50px;"><i class="fas fa-puzzle-piece"></i> 2. Modelos Psicosociales del Adulto</h3>
+            <p style="margin-bottom: 25px; font-size: 1.1rem; color: #444;">Exploremos los marcos teóricos que explican cómo el adulto gestiona sus relaciones, sus expectativas de vida y su bienestar interno.</p>
+
+            <div class="psy-dashboard">
+                <div class="psy-tabs">
+                    <button class="p-tab active" onclick="openPsy(event, 'p-erikson')"><i class="fas fa-hands-helping"></i> Crisis de Erikson</button>
+                    <button class="p-tab" onclick="openPsy(event, 'p-sternberg')"><i class="fas fa-heart"></i> Teoría del Amor</button>
+                    <button class="p-tab" onclick="openPsy(event, 'p-neugarten')"><i class="fas fa-clock"></i> El Reloj Social</button>
+                    <button class="p-tab" onclick="openPsy(event, 'p-ryff')"><i class="fas fa-spa"></i> Bienestar (Ryff)</button>
+                </div>
+                
+                <div class="psy-panels">
+                    <!-- Erikson -->
+                    <div id="p-erikson" class="p-panel active">
+                        <h4>Las Dos Grandes Crisis de la Adultez</h4>
+                        <h5>Erik Erikson & Dan McAdams</h5>
+                        <p style="margin-bottom: 15px;">Tras consolidar la identidad, el adulto enfrenta dos tareas psicosociales formidables:</p>
+                        
+                        <div style="background: #fdfdfd; border-left: 4px solid #2196F3; padding: 15px; margin-bottom: 15px;">
+                            <strong style="color: #2196F3; font-size: 1.2rem;">Adultez Temprana: Intimidad vs. Aislamiento</strong>
+                            <p style="margin-top: 5px;">Capacidad de fusionar tu identidad con la de otra persona sin perderte a ti mismo. Exige sacrificio y compromiso (pareja, amistades profundas). Si falla, la persona se aísla emocionalmente.</p>
+                        </div>
+                        
+                        <div style="background: #fdfdfd; border-left: 4px solid #4CAF50; padding: 15px;">
+                            <strong style="color: #4CAF50; font-size: 1.2rem;">Adultez Media: Generatividad vs. Estancamiento</strong>
+                            <p style="margin-top: 5px;">El deseo de "dejar un legado" (hijos, arte, mentoría, empresa) para las futuras generaciones (McAdams lo llama el "mito de vida"). Si no se logra, el adulto cae en el estancamiento y la auto-absorción egoísta.</p>
+                        </div>
+                    </div>
+
+                    <!-- Sternberg -->
+                    <div id="p-sternberg" class="p-panel">
+                        <h4>Teoría Triangular del Amor</h4>
+                        <h5>Robert Sternberg</h5>
+                        <p>El amor no es un concepto unidimensional. Está compuesto por tres vértices que, al combinarse, generan distintos tipos de relaciones a lo largo de la adultez:</p>
+                        
+                        <div class="triangle-grid">
+                            <div class="tri-box">
+                                <i class="fas fa-fire"></i>
+                                <strong>Pasión</strong>
+                                <p style="font-size: 0.9rem; margin-top: 5px;">Atracción física, sexual y el deseo de unión impulsiva.</p>
+                            </div>
+                            <div class="tri-box">
+                                <i class="fas fa-comments"></i>
+                                <strong>Intimidad</strong>
+                                <p style="font-size: 0.9rem; margin-top: 5px;">Conexión emocional, confianza, comunicación y apoyo mutuo.</p>
+                            </div>
+                            <div class="tri-box">
+                                <i class="fas fa-ring"></i>
+                                <strong>Compromiso</strong>
+                                <p style="font-size: 0.9rem; margin-top: 5px;">Decisión cognitiva de mantener el amor a largo plazo, pese a los problemas.</p>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px; text-align: center; background: var(--soft-blue); padding: 10px; border-radius: 8px;">
+                            El amor ideal (que contiene los 3 elementos) se denomina <strong>Amor Consumado</strong>. Un matrimonio por conveniencia sin pasión ni intimidad es <strong>Amor Vacío</strong>.
+                        </div>
+                    </div>
+
+                    <!-- Neugarten -->
+                    <div id="p-neugarten" class="p-panel">
+                        <h4>Ocurrencia Oportuna de Eventos</h4>
+                        <h5>Bernice Neugarten (El Reloj Social)</h5>
+                        <p>La sociedad dicta un calendario normativo no escrito sobre *cuándo* deben ocurrir ciertos eventos (graduarse a los 22, casarse a los 28, tener hijos a los 30).</p>
+                        
+                        <ul class="model-list">
+                            <li>
+                                <strong>Eventos Normativos (On-time)</strong>
+                                Siguen el guion cultural. Generan adaptación social y respaldo.
+                            </li>
+                            <li>
+                                <strong>Eventos No Normativos (Off-time)</strong>
+                                Ocurren "fuera de tiempo" (ej. enviudar a los 30, ser padre por primera vez a los 60). Generan estrés extremo porque el individuo no cuenta con pares ni instituciones preparadas para apoyarlo.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Ryff -->
+                    <div id="p-ryff" class="p-panel">
+                        <h4>Modelo de Bienestar Psicológico</h4>
+                        <h5>Carol Ryff</h5>
+                        <p>Desafiando la idea de que el bienestar es solo "ser feliz" (hedonismo - Diener), Ryff propuso 6 dimensiones del bienestar eudaimónico que un adulto maduro debe conquistar:</p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                            <div style="background: #f4f4f4; padding: 10px; border-radius: 5px;"><strong>1. Autoaceptación:</strong> Actitud positiva hacia el sí mismo.</div>
+                            <div style="background: #f4f4f4; padding: 10px; border-radius: 5px;"><strong>2. Relaciones Positivas:</strong> Vínculos cálidos y empáticos.</div>
+                            <div style="background: #f4f4f4; padding: 10px; border-radius: 5px;"><strong>3. Autonomía:</strong> Resistencia a la presión social.</div>
+                            <div style="background: #f4f4f4; padding: 10px; border-radius: 5px;"><strong>4. Dominio del Entorno:</strong> Gestión eficaz de las demandas externas.</div>
+                            <div style="background: #f4f4f4; padding: 10px; border-radius: 5px;"><strong>5. Propósito en la Vida:</strong> Sensación de significado y dirección.</div>
+                            <div style="background: #f4f4f4; padding: 10px; border-radius: 5px;"><strong>6. Crecimiento Personal:</strong> Desarrollo continuo del potencial.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle"><i class="fas fa-video"></i> 3. Recurso Audiovisual</h3>
+            <div class="videos-container" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto;">
+                <div class="video-wrapper">
+                    <!-- Real Sternberg Triangular Theory explanation video -->
+                    <iframe src="https://www.youtube.com/embed/A1YhXJt4yR4" title="Triangular Theory of Love" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-table"></i> Actividad Autónoma: Taller Comparativo</h3>
+                <p><strong>Instrucciones para el Entregable:</strong></p>
+                <ol style="margin-left: 20px; line-height: 1.8; color: #444; margin-top: 15px;">
+                    <li>Construyan un <strong>Cuadro Comparativo</strong> evaluando un caso ficticio de un adulto de 45 años.</li>
+                    <li>Apliquen al caso la mirada de tres modelos distintos:
+                        <br>- Modelo de crisis normativa (Erikson).
+                        <br>- Modelo de ocurrencia oportuna / reloj social (Neugarten).
+                        <br>- Modelo de bienestar psicológico (Ryff).
+                    </li>
+                    <li>Sustenten en clase si los síntomas de estrés del paciente provienen de un estancamiento personal, de estar "off-time", o de un déficit en el dominio de su entorno.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+    </footer>
+
+    <script>
+        function openPsy(evt, tabId) {
+            var i, panels, tabs;
+            panels = document.getElementsByClassName("p-panel");
+            for (i = 0; i < panels.length; i++) {
+                panels[i].classList.remove("active");
+            }
+            tabs = document.getElementsByClassName("p-tab");
+            for (i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>
