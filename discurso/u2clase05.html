@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 6 - Discurso, Acción y Conocimiento</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --cuc-gold: #cba052;
+            --soft-red: #ffebeb;
+            --indigo-light: #e0e7ff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+        .header-logo img { max-height: 80px; }
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; margin-bottom: 5px; }
+        .prof-info { font-size: 0.9rem; color: #555; }
+        .contact-label { color: var(--cuc-red); font-weight: 900; }
+        
+        .qr-code img { max-height: 70px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
+
+        .class-view {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-back {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .btn-back:hover {
+            background-color: var(--cuc-gray);
+            border-color: var(--cuc-red);
+            transform: translateX(-5px);
+        }
+
+        .class-header-card {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .class-header-card::after {
+            content: '\f06e'; /* FontAwesome eye icon for observation */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-size: 10rem;
+            color: rgba(255,255,255,0.1);
+        }
+
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        
+        .class-indicator {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 1.05rem;
+            border-left: 4px solid var(--cuc-gold);
+            position: relative;
+            z-index: 2;
+        }
+
+        .unit-badge {
+            display: inline-block;
+            background-color: var(--cuc-gold);
+            color: var(--cuc-dark);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        @media screen and (max-width: 1024px) {
+            .class-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media screen and (max-width: 768px) {
+            .class-grid { grid-template-columns: 1fr; }
+            .authors-grid { grid-template-columns: 1fr; }
+        }
+
+        .detail-card {
+            background: white;
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--cuc-red);
+            transition: transform 0.3s;
+        }
+
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .theme-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-top: 4px solid var(--cuc-dark);
+        }
+
+        .theme-title { color: var(--cuc-red); margin-bottom: 25px; font-size: 1.8rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .theme-subtitle { color: var(--cuc-dark); margin: 35px 0 15px; font-size: 1.4rem; border-left: 4px solid var(--cuc-gold); padding-left: 10px; }
+
+        .concept-box {
+            background-color: var(--cuc-gray);
+            padding: 25px;
+            border-left: 5px solid var(--cuc-red);
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+            color: #333;
+        }
+
+        .authors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 300px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .flip-card-front {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            border: 2px solid var(--cuc-gray);
+        }
+
+        .flip-card-front h4 {
+            color: var(--cuc-red);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .flip-card-front i {
+            font-size: 3rem;
+            color: var(--cuc-gold);
+            margin-bottom: 20px;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 0.95rem;
+            text-align: left;
+            align-items: flex-start;
+        }
+
+        .flip-card-back h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 5px;
+            width: 100%;
+        }
+
+        .flip-card-back p {
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .accordion-content {
+            background-color: #f9f9f9;
+            color: #444;
+            cursor: pointer;
+            padding: 20px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            transition: 0.4s;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .active-acc, .accordion-content:hover {
+            background-color: var(--indigo-light);
+            color: var(--cuc-dark);
+            border-left: 4px solid var(--cuc-red);
+        }
+
+        .accordion-content:after {
+            content: '\f067'; /* Plus icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--cuc-red);
+            transition: 0.3s;
+        }
+
+        .active-acc:after {
+            content: "\f068"; /* Minus icon */
+        }
+
+        .panel-content {
+            padding: 0 20px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            border-left: 4px solid var(--cuc-red);
+            border-radius: 0 0 5px 5px;
+        }
+
+        .panel-content p {
+            margin: 20px 0;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .case-card {
+            background: #fff;
+            border: 2px solid var(--cuc-gold);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .case-title {
+            color: var(--cuc-red);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .videos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            border: 3px solid var(--cuc-gray);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            border: 2px dashed var(--cuc-gold);
+            border-radius: 15px;
+            padding: 35px;
+            margin-top: 40px;
+        }
+
+        footer { text-align: center; padding: 25px; font-size: 0.85rem; color: #777; margin-top: 50px; border-top: 1px solid #ddd; }
+
+        @media screen and (max-width: 900px) {
+            .qr-code { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/discurso/u2clase06.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://via.placeholder.com/150x50/ffffff/A3161A?text=CUC+Logo'">
+        </div>
+
+        <div class="header-info">
+            <div class="course-title">Discurso, Acción y Conocimiento<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Investigación Cualitativa en Psicología</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com
+                </small>
+            </div>
+        </div>
+
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/discurso/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa del Curso
+        </a>
+        
+        <div class="class-header-card">
+            <span class="unit-badge"><i class="fas fa-layer-group"></i> Unidad 2</span><br>
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Semana 6</span>
+            <h1>Técnicas e Instrumentos: La Observación</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Identifica los requisitos y aspectos éticos necesarios para el desarrollo de una investigación cualitativa. Comprende los fundamentos de la observación participante.
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <p>Ejes integradores de la sesión:</p>
+                <ul>
+                    <li>Técnicas e instrumentos de recolección cualitativa.</li>
+                    <li>La observación como herramienta científica.</li>
+                    <li>Ética y Reactividad del investigador.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #2196F3;">
+                <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
+                <p><strong>Actividades en aula:</strong></p>
+                <ul>
+                    <li>Control de lectura.</li>
+                    <li>Presentación magistral: La Observación.</li>
+                    <li>Construcción del glosario colaborativo.</li>
+                    <li>Mesa redonda sobre el rol ético del investigador.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <p><strong>Preparación asincrónica:</strong></p>
+                <ul>
+                    <li>Elaboración de una matriz/guía de observación.</li>
+                    <li>Observación preliminar de un contexto cotidiano.</li>
+                    <li>Análisis de video de interacción social.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <p><strong>Estrategia de evaluación:</strong></p>
+                <ul>
+                    <li><strong>Estrategia:</strong> Glosario colaborativo y reflexión ética.</li>
+                    <li><strong>Técnica:</strong> Mesa redonda.</li>
+                    <li><strong>Instrumento:</strong> Lista de chequeo formativa.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2 class="theme-title"><i class="fas fa-eye"></i> Desarrollo Temático: Más Allá de Mirar</h2>
+            
+            <p style="font-size: 1.1rem; margin-bottom: 20px; color: #444;">Iniciamos la <strong>Unidad 2</strong> entrando de lleno al "Trabajo de Campo". La investigación cualitativa no se hace desde un escritorio; exige que el investigador se inserte en el mundo que desea estudiar. La herramienta primordial para esto es la observación.</p>
+
+            <div class="concept-box">
+                <strong><i class="fas fa-quote-left" style="color: var(--cuc-gold); font-size: 1.5rem; margin-right: 10px;"></i>Observar no es solo ver.</strong> Es un acto deliberado, sistemático y estructurado de atención. En investigación cualitativa, observar implica decodificar significados: interpretar los gestos, los silencios, el uso del espacio físico y las dinámicas de poder que ocurren en un entorno natural.
+            </div>
+
+            <h3 class="theme-subtitle">1. Modalidades de la Observación</h3>
+            <p style="margin-bottom: 30px;">Dependiendo de la implicación del investigador y su relación con la comunidad, la observación se clasifica en diferentes tipos. Explora las tarjetas a continuación:</p>
+            
+            <div class="authors-grid">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-user-secret"></i>
+                            <h4>Grado de Participación</h4>
+                            <p>¿Qué tanto me involucro?</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4>Participante vs. No Participante</h4>
+                            <p><strong>Participante:</strong> El investigador se inserta en la dinámica del grupo. Interactúa, conversa y realiza actividades con la comunidad (Ej. Etnografía). Permite ganar <em>rapport</em> y comprender desde adentro.</p>
+                            <p><strong>No Participante:</strong> El investigador se mantiene al margen como espectador pasivo. No interviene en la escena (Ej. Cámara de Gesell o sentado en un parque anotando). Evita alterar la dinámica, pero pierde profundidad subjetiva.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-mask"></i>
+                            <h4>Grado de Ocultamiento</h4>
+                            <p>¿Saben que los observo?</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4>Abierta vs. Encubierta</h4>
+                            <p><strong>Abierta (Revelada):</strong> Los sujetos saben que son parte de una investigación y quién es el investigador. Es el deber ser ético (consentimiento informado).</p>
+                            <p><strong>Encubierta:</strong> Los sujetos ignoran que están siendo observados. Reduce drásticamente la "reactividad" (que actúen diferente por ser vistos), pero plantea graves dilemas éticos por invasión a la privacidad.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-clipboard-list"></i>
+                            <h4>Grado de Estructuración</h4>
+                            <p>¿Llevo un formato estricto?</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4>Sistemática vs. No Sistemática</h4>
+                            <p><strong>Sistemática:</strong> Utiliza una <em>Matriz de Observación</em> o guía preestablecida con categorías específicas de lo que se va a buscar (ej. contar cuántas veces ocurre una interacción o buscar roles específicos).</p>
+                            <p><strong>No Sistemática (Libre):</strong> Se entra al campo sin categorías rígidas, dejando que los datos emerjan libremente. Ideal para estudios exploratorios y Teoría Fundada inicial.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-video"></i>
+                            <h4>Medios de Registro</h4>
+                            <p>¿Cómo guardo el dato?</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4>Técnicos vs. Narrativos</h4>
+                            <p>Abarca desde el uso de grabadoras de audio, video y fotografías (que capturan la realidad exacta pero pueden intimidar), hasta el registro manual narrativo mediante libretas de notas, memorandums y el fundamental <strong>Diario de Campo</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-card">
+                <h4 class="case-title"><i class="fas fa-search-location"></i> Aplicación al Caso: Víctimas del conflicto</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <p style="margin-bottom: 10px;"><strong>Contexto:</strong> Recordamos que nuestro objetivo es comprender la relación entre resiliencia y perdón en mujeres adultas víctimas radicadas en el Atlántico.</p>
+                        <p style="margin-bottom: 10px;"><strong>Diseño de la Observación:</strong></p>
+                        <ul style="padding-left: 20px; color: #444;">
+                            <li><strong>Tipo:</strong> Observación Participante y Abierta.</li>
+                            <li><strong>Estrategia:</strong> Asistir a las reuniones de asociaciones comunitarias de mujeres tejedoras. El investigador se sienta con ellas, aprende a tejer (participación) mientras escucha y observa las dinámicas de apoyo mutuo (resiliencia en acción).</li>
+                            <li><strong>Matriz Preliminar (Qué observar):</strong> Liderazgo en el grupo, lenguaje verbal al referirse al pasado, manifestaciones de apoyo emocional frente a una crisis narrativa.</li>
+                        </ul>
+                    </div>
+                    <div style="flex: 1; min-width: 250px; background-color: var(--soft-red); padding: 20px; border-radius: 8px; border: 1px solid #f5c2c7;">
+                        <h5 style="color: var(--cuc-red); margin-bottom: 10px;"><i class="fas fa-exclamation-triangle"></i> Cuidado Metodológico</h5>
+                        <p style="font-size: 0.95rem; color: #555;">Si el investigador llega de traje de oficina, con una tabla de notas rígida y se sienta lejos, generará un muro de desconfianza. La clave de la observación participante es mimetizarse empáticamente con el contexto (ganar el Rapport) respetando siempre su cultura.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 50px;">2. Ética y Desafíos del Investigador Cualitativo</h3>
+            <p style="margin-bottom: 20px;">Entrar a la vida privada de una comunidad conlleva una inmensa responsabilidad. Analiza los siguientes dilemas comunes desplegando los paneles:</p>
+
+            <button class="accordion-content">
+                <span>El Efecto Reactividad (Efecto Hawthorne)</span>
+            </button>
+            <div class="panel-content">
+                <p><strong>El problema:</strong> Cuando las personas saben que un psicólogo las está observando, tienden a cambiar su comportamiento natural. Pueden actuar "mejor", ocultar sus verdaderas opiniones o decir lo que creen que el investigador quiere escuchar (Deseabilidad social).</p>
+                <p><strong>La Solución Cuali:</strong> El investigador debe pasar un tiempo prolongado en el campo. Con el tiempo (inmersión prolongada), las personas se acostumbran a su presencia y "bajan la guardia", volviendo a sus comportamientos auténticos. Además, se usa la triangulación de datos para verificar inconsistencias.</p>
+            </div>
+
+            <button class="accordion-content">
+                <span>Consentimiento Informado vs. Validez Ecológica</span>
+            </button>
+            <div class="panel-content">
+                <p><strong>El problema:</strong> La ética profesional (APA) exige que toda persona debe dar su consentimiento libre y firmado para ser investigada. Sin embargo, si informamos a un grupo de jóvenes que vamos a observar sus "dinámicas de agresión", inmediatamente dejarán de ser agresivos, destruyendo la validez ecológica (realismo) del estudio.</p>
+                <p><strong>La Solución Cuali:</strong> Es un debate constante. A veces se utilizan engaños parciales o se solicita el consentimiento <em>después</em> de la observación (debriefing). En el trabajo con comunidades vulnerables (como las víctimas), el consentimiento es <strong>inamovible y previo</strong>, respetando la autonomía, aunque cueste más trabajo ganar la confianza.</p>
+            </div>
+
+            <button class="accordion-content">
+                <span>Sesgo del Observador (Subjetividad)</span>
+            </button>
+            <div class="panel-content">
+                <p><strong>El problema:</strong> Vemos lo que queremos ver. Un investigador que cree firmemente que todas las víctimas son infelices, tenderá a ignorar las sonrisas y registrar solo los llantos. Nuestros propios valores filtran la realidad.</p>
+                <p><strong>La Solución Cuali:</strong> La Reflexividad. El investigador no pretende ser una máquina objetiva. En su diario de campo, debe escribir una "confesión metodológica", declarando sus sesgos y cómo se sintió al observar (ej. "hoy me sentí triste por el relato de María, debo cuidar no victimizarla en mi reporte"). Reconocer el sesgo es el primer paso para controlarlo.</p>
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 50px;">3. Videoteca Complementaria</h3>
+            <p style="margin-bottom: 20px;">Los siguientes videos abordan, desde la práctica docente y académica, cómo implementar la observación participante y sus diferencias sustanciales con otros métodos etnográficos:</p>
+            
+            <div class="videos-container">
+                <div class="video-wrapper">
+                    <!-- Real YouTube Video: Técnicas cualitativas de recopilación de datos: Observación participante -->
+                    <iframe src="https://www.youtube.com/embed/2TwrReG1Zlo?rel=0" title="Técnicas cualitativas de recopilación de datos: Observación participante" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-wrapper">
+                    <!-- Real YouTube Video: Diferencia entre observación participante y no participante -->
+                    <iframe src="https://www.youtube.com/embed/oKelaeuxp6Y?rel=0" title="Diferencia entre observación participante y no participante" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-edit"></i> Actividad Autónoma: La Matriz de Observación</h3>
+                <p style="color: #444; margin-bottom: 15px;">Para la próxima sesión práctica, deberás construir el andamiaje técnico (instrumento) para poder realizar una observación estructurada.</p>
+                
+                <ol style="margin-left: 20px; line-height: 1.8; color: #444;">
+                    <li><strong>Selecciona un Espacio:</strong> Elige un contexto cotidiano de acceso público (ej. la cafetería de la universidad, una plaza, un transporte público).</li>
+                    <li><strong>Define el Fenómeno:</strong> Elige una pequeña interacción social para observar (ej. "Uso del celular en parejas", "Interacciones de cortesía entre desconocidos").</li>
+                    <li><strong>Crea la Matriz:</strong> Diseña en Excel o Word una tabla (Matriz de Observación) que contenga columnas como: <em>Hora, Actor 1, Actor 2, Comportamiento Verbal, Lenguaje No Verbal, Contexto Físico</em>.</li>
+                    <li><strong>Ejecución (Trabajo Independiente):</strong> Realiza una observación <strong>no participante</strong> (sentado discretamente) durante 20 minutos, llenando tu matriz. Tráela a la próxima clase.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p style="margin-top: 5px;">Investigación Cualitativa Formativa</p>
+    </footer>
+
+    <script>
+        // Script para acordeones de la sección de ética
+        var acc = document.getElementsByClassName("accordion-content");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active-acc");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 7 - Discurso, Acción y Conocimiento</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --cuc-gold: #cba052;
+            --soft-red: #ffebeb;
+            --diary-bg: #fdfae5;
+            --diary-line: #94a3b8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+        .header-logo img { max-height: 80px; }
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; margin-bottom: 5px; }
+        .prof-info { font-size: 0.9rem; color: #555; }
+        .contact-label { color: var(--cuc-red); font-weight: 900; }
+        
+        .qr-code img { max-height: 70px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
+
+        .class-view {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-back {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .btn-back:hover {
+            background-color: var(--cuc-gray);
+            border-color: var(--cuc-red);
+            transform: translateX(-5px);
+        }
+
+        .class-header-card {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .class-header-card::after {
+            content: '\f02d'; /* FontAwesome book icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-size: 10rem;
+            color: rgba(255,255,255,0.1);
+        }
+
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        
+        .class-indicator {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 1.05rem;
+            border-left: 4px solid var(--cuc-gold);
+            position: relative;
+            z-index: 2;
+        }
+
+        .unit-badge {
+            display: inline-block;
+            background-color: var(--cuc-gold);
+            color: var(--cuc-dark);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        @media screen and (max-width: 1024px) {
+            .class-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media screen and (max-width: 768px) {
+            .class-grid { grid-template-columns: 1fr; }
+        }
+
+        .detail-card {
+            background: white;
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--cuc-red);
+            transition: transform 0.3s;
+        }
+
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .theme-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-top: 4px solid var(--cuc-dark);
+        }
+
+        .theme-title { color: var(--cuc-red); margin-bottom: 25px; font-size: 1.8rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .theme-subtitle { color: var(--cuc-dark); margin: 35px 0 15px; font-size: 1.4rem; border-left: 4px solid var(--cuc-gold); padding-left: 10px; }
+
+        .concept-box {
+            background-color: var(--cuc-gray);
+            padding: 25px;
+            border-left: 5px solid var(--cuc-red);
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+            color: #333;
+        }
+
+        .notebook-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .notebook-page {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--diary-bg);
+            border-radius: 5px 15px 15px 5px;
+            box-shadow: -5px 5px 15px rgba(0,0,0,0.1), inset 30px 0 30px rgba(0,0,0,0.05);
+            padding: 30px 40px 30px 60px;
+            position: relative;
+            background-image: 
+                linear-gradient(transparent 95%, var(--diary-line) 100%);
+            background-size: 100% 30px;
+            line-height: 30px;
+        }
+
+        /* Spiral binding effect */
+        .notebook-page::before {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0; left: 15px;
+            width: 20px;
+            background-image: radial-gradient(circle at 10px 15px, transparent 4px, #444 5px, #444 6px, transparent 7px);
+            background-size: 20px 30px;
+            border-right: 2px solid rgba(0,0,0,0.1);
+        }
+        
+        /* Red margin line */
+        .notebook-page::after {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0; left: 50px;
+            width: 2px;
+            background-color: rgba(200, 50, 50, 0.4);
+        }
+
+        .notebook-page h4 {
+            font-family: 'Roboto', sans-serif;
+            color: var(--cuc-red);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            background-color: var(--diary-bg); /* Cover lines behind title */
+            display: inline-block;
+            padding-right: 10px;
+        }
+
+        .handwriting {
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            color: #1e293b;
+            padding-top: 5px;
+        }
+
+        .hw-bad { color: #64748b; }
+        .hw-good { color: #0f172a; font-weight: bold;}
+        .hw-reflexive { color: #8b0000; font-weight: bold; } /* Red pen for reflections */
+
+        .note-toggle-btn {
+            background-color: var(--cuc-dark);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .note-toggle-btn:hover { background-color: var(--cuc-red); }
+
+        .info-pill {
+            display: inline-flex;
+            align-items: center;
+            background-color: #f1f5f9;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 0.95rem;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+        }
+        .info-pill i { color: var(--cuc-red); margin-right: 8px; }
+
+        .videos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            border: 3px solid var(--cuc-gray);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            border: 2px dashed var(--cuc-gold);
+            border-radius: 15px;
+            padding: 35px;
+            margin-top: 40px;
+        }
+
+        footer { text-align: center; padding: 25px; font-size: 0.85rem; color: #777; margin-top: 50px; border-top: 1px solid #ddd; }
+
+        @media screen and (max-width: 900px) {
+            .qr-code { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/discurso/u2clase07.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://via.placeholder.com/150x50/ffffff/A3161A?text=CUC+Logo'">
+        </div>
+
+        <div class="header-info">
+            <div class="course-title">Discurso, Acción y Conocimiento<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Investigación Cualitativa en Psicología</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com
+                </small>
+            </div>
+        </div>
+
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/discurso/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa del Curso
+        </a>
+        
+        <div class="class-header-card">
+            <span class="unit-badge"><i class="fas fa-layer-group"></i> Unidad 2</span><br>
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Semana 7</span>
+            <h1>Técnicas e Instrumentos: Diario de Campo</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Comprende los fundamentos, características y procedimientos del diario de campo, reconociendo su utilidad para la recolección de información cualitativa.
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <p>Ejes integradores de la sesión:</p>
+                <ul>
+                    <li>El diario de campo como instrumento central.</li>
+                    <li>Registros descriptivos vs. reflexivos.</li>
+                    <li>La "Descripción Densa" de Geertz.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #2196F3;">
+                <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
+                <p><strong>Actividades en aula:</strong></p>
+                <ul>
+                    <li>Control de lectura.</li>
+                    <li>Exposición: Diario de campo.</li>
+                    <li>Taller en clase: Elaboración de un diario de campo integrando registros.</li>
+                    <li>Salida de campo intrainstitucional.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <p><strong>Preparación asincrónica:</strong></p>
+                <ul>
+                    <li>Análisis de ejemplos de diarios de campo reales.</li>
+                    <li>Construcción de un registro reflexivo individual basado en la salida.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <p><strong>Estrategia de evaluación:</strong></p>
+                <ul>
+                    <li><strong>Estrategia:</strong> Diario derivado de la salida.</li>
+                    <li><strong>Técnica:</strong> Informe descriptivo/reflexivo.</li>
+                    <li><strong>Instrumento:</strong> Taller - Revisión de pares.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2 class="theme-title"><i class="fas fa-book"></i> Desarrollo Temático: El Laboratorio de Papel</h2>
+            
+            <p style="font-size: 1.1rem; margin-bottom: 20px; color: #444;">Si la observación es la técnica, <strong>el Diario de Campo es el instrumento</strong> donde esa observación cobra vida, se almacena y se convierte en <em>dato científico</em>. En investigación cualitativa, nuestra mente es frágil frente a la avalancha de estímulos sociales; el diario es nuestra extensión cognitiva.</p>
+
+            <div class="concept-box">
+                <strong>¿Qué NO es un diario de campo?</strong> No es un registro de asistencia, ni un listado frío de acciones mecánicas. Tampoco es el diario personal de un adolescente ("Hoy me sentí triste"). <br><br>
+                <strong>¿Qué SÍ es?</strong> Es un documento académico, sistemático y cronológico donde el investigador consigna descripciones profundas del entorno y las interacciones, entrelazadas con el análisis teórico preliminar y la reflexión metodológica in situ.
+            </div>
+
+            <h3 class="theme-subtitle">1. La Anatomía de una Nota de Campo</h3>
+            <p style="margin-bottom: 20px;">Un error de los investigadores novatos es mezclar <em>lo que vieron</em> con <em>lo que asumen</em> en un solo párrafo. El rigor cualitativo exige separar las notas en dos grandes categorías estructurales dentro de la misma página:</p>
+
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; margin-bottom: 30px;">
+                <span class="info-pill"><i class="fas fa-camera"></i> <strong>1. Notas Descriptivas (Lo Objetivo):</strong> El escenario, quién, qué, cómo, cuándo. Diálogos literales (entre comillas).</span>
+                <span class="info-pill"><i class="fas fa-brain"></i> <strong>2. Notas Reflexivas/Analíticas (Lo Subjetivo/Teórico):</strong> Interpretaciones emergentes, dudas, conexión con teorías, sesgos identificados.</span>
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 40px;">2. Simulador de Diario: La "Descripción Densa"</h3>
+            <p style="margin-bottom: 10px;">El antropólogo Clifford Geertz acuñó el término <strong>"Descripción Densa"</strong>. Un guiño de ojo puede ser un tic nervioso (descripción superficial) o una señal secreta entre cómplices (descripción densa). El diario debe capturar el <em>contexto</em> que da significado a la acción.</p>
+            <p style="margin-bottom: 20px; font-weight: bold; color: var(--cuc-red);">Haz clic en el botón de la libreta para transformar una observación pobre en una nota de campo con nivel científico, aplicada al caso de <em>Víctimas del conflicto</em>:</p>
+
+            <div class="notebook-container">
+                <!-- Bad Note Page -->
+                <div class="notebook-page" id="notebook-bad" style="display: block;">
+                    <h4><i class="fas fa-times-circle"></i> Registro Superficial</h4>
+                    <p class="handwriting hw-bad">24 de Octubre. 3:00 PM.<br>Llegué a la reunión de mujeres. Estaban tejiendo. Una mujer llamada Rosa se puso a llorar de repente. Las demás la abrazaron. Yo creo que estaba triste por el conflicto armado. Después tomaron tinto y se acabó la reunión.</p>
+                    <button class="note-toggle-btn" onclick="toggleNotebook()"><i class="fas fa-magic"></i> Convertir en Descripción Densa</button>
+                </div>
+
+                <!-- Good Note Page (Hidden initially) -->
+                <div class="notebook-page" id="notebook-good" style="display: none;">
+                    <h4><i class="fas fa-check-circle"></i> Diario de Campo - Registro Completo</h4>
+                    
+                    <p class="handwriting hw-good" style="font-size: 1.3rem; margin-bottom: 5px;">[Nota Descriptiva - El Fenómeno]</p>
+                    <p class="handwriting hw-good">24/Oct - 3:00 PM - Sede Comunitaria Usiacurí. <br>
+                    Círculo de 8 mujeres. Rosa (55 años) teje en silencio. De pronto, suelta la aguja, baja la mirada y comienza a sollozar sin sonido. Inmediatamente, Carmen, a su derecha, detiene su tejido, le rodea los hombros y le dice: "Mija, aquí estamos, ese dolor ya no camina solo". Las demás asienten en silencio absoluto durante 2 minutos.</p>
+                    
+                    <p class="handwriting hw-reflexive" style="font-size: 1.3rem; margin-top: 15px; margin-bottom: 5px; border-top: 1px dashed var(--diary-line);">[Nota Reflexiva/Teórica - Análisis en Rojo]</p>
+                    <p class="handwriting hw-reflexive">Este evento parece materializar la categoría de "Redes de Apoyo Sororo". El silencio del grupo no fue indiferencia, fue contención emocional. <br>
+                    *Nota Metodológica:* Sentí mucha impotencia al no poder intervenir clínicamente, pero recordé mi rol de observador participante. Debo preguntar en la entrevista a Carmen qué significa para ella la frase "el dolor ya no camina solo" en el proceso del perdón.</p>
+                    
+                    <button class="note-toggle-btn" onclick="toggleNotebook()"><i class="fas fa-undo"></i> Ver versión pobre</button>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 50px;">3. Reglas de Oro del Investigador de Campo</h3>
+            <ul style="padding-left: 20px; line-height: 1.8; color: #444; font-size: 1.05rem; margin-bottom: 30px;">
+                <li><strong>El tiempo apremia:</strong> Las notas de campo deben redactarse lo más pronto posible después de abandonar el sitio. Con cada hora que pasa, la memoria distorsiona los detalles, borra citas literales y "normaliza" cosas que en el momento parecieron extrañas.</li>
+                <li><strong>No confíes en tu memoria:</strong> Usa libretas pequeñas (de bolsillo) en el campo para anotar palabras clave (memos rápidos), y luego, al llegar a casa, "expande" esas notas en el diario formal (Word o físico).</li>
+                <li><strong>Organización:</strong> Todo diario debe tener fecha, hora, lugar, duración de la observación y un código de identificación para cruzar datos después en software como Atlas.ti.</li>
+            </ul>
+
+            <h3 class="theme-subtitle" style="margin-top: 50px;">4. Videoteca Complementaria</h3>
+            <p style="margin-bottom: 20px;">Observa detenidamente los siguientes recursos. El primero explica de forma muy visual la esencia del diario, y el segundo profundiza en la técnica de redacción y sistematización de los registros:</p>
+            
+            <div class="videos-container">
+                <div class="video-wrapper">
+                    <!-- Real YouTube Video: Diario de Campo corto -->
+                    <iframe src="https://www.youtube.com/embed/XqtAiqLXoDs?rel=0" title="DIARIO DE CAMPO" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-wrapper">
+                    <!-- Real YouTube Video: Cómo hacer un diario de campo -->
+                    <iframe src="https://www.youtube.com/embed/p939sGq4qtU?rel=0" title="¿Qué es y cómo hacer un DIARIO DE CAMPO?" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-walking"></i> Actividad en Aula: Salida de Campo Intrainstitucional</h3>
+                <p style="color: #444; margin-bottom: 15px;">Para poner a prueba nuestros sentidos y la técnica del Diario de Campo, abandonaremos temporalmente el aula.</p>
+                
+                <ol style="margin-left: 20px; line-height: 1.8; color: #444;">
+                    <li><strong>Preparación:</strong> Toma tu libreta de apuntes y asegúrate de tener claros los conceptos de "Descripción Densa" y separación de notas descriptivas/reflexivas.</li>
+                    <li><strong>Inmersión (30 mins):</strong> Nos dirigiremos a una zona concurrida de la universidad (Ej. Plazoleta, cafetería central o zonas de estudio). Elegirás una subcultura o dinámica visible (ej. grupos de estudio vs. grupos de ocio).</li>
+                    <li><strong>Registro In Situ:</strong> Realizarás notas rápidas y observaciones de detalles: lenguaje corporal, jerga, disposición del espacio.</li>
+                    <li><strong>Taller de Retorno:</strong> Al regresar al salón, tendrás 40 minutos para estructurar tu Diario de Campo formal en un formato entregable, expandiendo tus notas rápidas en descripciones densas. <em>Esta actividad será evaluada por pares.</em></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p style="margin-top: 5px;">Investigación Cualitativa Formativa</p>
+    </footer>
+
+    <script>
+        // Lógica para el simulador de cuaderno interactivo
+        function toggleNotebook() {
+            var badNote = document.getElementById('notebook-bad');
+            var goodNote = document.getElementById('notebook-good');
+            
+            if (badNote.style.display === 'block' || badNote.style.display === '') {
+                badNote.style.display = 'none';
+                goodNote.style.display = 'block';
+                // Añadir una pequeña animación de sacudida
+                goodNote.style.animation = 'none';
+                void goodNote.offsetWidth; // trigger reflow
+                goodNote.style.animation = 'fadeIn 0.5s ease';
+            } else {
+                goodNote.style.display = 'none';
+                badNote.style.display = 'block';
+                badNote.style.animation = 'none';
+                void badNote.offsetWidth;
+                badNote.style.animation = 'fadeIn 0.5s ease';
+            }
+        }
+    </script>
+</body>
+</html>
