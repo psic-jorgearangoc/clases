@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 12 - Discurso, Acción y Conocimiento</title>
+    <!-- Mismos estilos CSS que la Clase 11 -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --cuc-red: #A3161A; --cuc-dark: #1a1a1a; --cuc-gray: #f4f4f4; --white: #ffffff; --cuc-gold: #cba052; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: var(--white); color: var(--cuc-dark); line-height: 1.6; }
+        header { background-color: var(--white); border-bottom: 4px solid var(--cuc-red); padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; text-align: center; }
+        .qr-code img { max-height: 80px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; text-transform: uppercase; font-weight: bold; }
+        .header-logo img { max-height: 90px; }
+        .header-info { text-align: center; max-width: 600px; }
+        .course-title { color: var(--cuc-red); font-size: 1.8rem; font-weight: 900; text-transform: uppercase; margin-bottom: 5px; line-height: 1.1; }
+        .prof-info { font-size: 0.95rem; color: #333; }
+        .prof-info strong { color: var(--cuc-red); }
+        .contact-label { color: var(--cuc-red); font-weight: 900; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .class-header { background-color: var(--cuc-red); color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px; text-align: center; }
+        .class-header h1 { margin-bottom: 10px; font-size: 2rem; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: var(--white); border: 2px solid var(--cuc-gray); border-radius: 10px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .card h3 { color: var(--cuc-red); margin-bottom: 15px; border-bottom: 2px solid var(--cuc-gold); padding-bottom: 5px; }
+        .card ul { padding-left: 20px; }
+        .card ul li { margin-bottom: 10px; }
+        footer { background-color: var(--cuc-dark); color: var(--white); text-align: center; padding: 20px; margin-top: 50px; font-size: 0.8rem; }
+        .btn-back { display: inline-block; background-color: var(--cuc-dark); color: var(--white); padding: 10px 20px; border-radius: 25px; text-decoration: none; margin-bottom: 20px; transition: 0.3s; }
+        .btn-back:hover { background-color: var(--cuc-red); }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/DAyC/u3clase12.html" alt="QR Clase 12">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa">
+        </div>
+        <div class="header-info">
+            <div class="course-title">Discurso, Acción y Conocimiento[cite: 2]</div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo[cite: 4]<br>
+                Mg. Dirección de Proyectos - Certificado en PNL[cite: 4]<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com[cite: 4]
+                </small>
+            </div>
+        </div>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <a href="https://clases.jorgearangoc.com/DAyC/u1clase00.html" class="btn-back">⬅ Volver al Mapa de Navegación</a>
+        
+        <div class="class-header">
+            <h2>Unidad 3: Análisis Cualitativo de Datos[cite: 2]</h2>
+            <h1>Semana 12: Procesamiento de datos con IA[cite: 3]</h1>
+            <p><strong>Indicador de desempeño:</strong> Comprende las formas de realizar análisis de datos cualitativos utilizando IA[cite: 3].</p>
+        </div>
+
+        <div class="grid-container">
+            <div class="card">
+                <h3><i class="fas fa-robot"></i> Saberes Integradores</h3>
+                <ul>
+                    <li>Talleres de procesamiento de datos reales con el uso de la IA[cite: 3].</li>
+                    <li>Formas innovadoras de realizar análisis de datos cualitativos apoyados en tecnología[cite: 3].</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-users"></i> Trabajo Presencial</h3>
+                <ul>
+                    <li>Bienvenida y presentación del indicador a trabajar[cite: 3].</li>
+                    <li>Control de lectura acerca del análisis de datos cualitativos[cite: 3].</li>
+                    <li>Presentación magistral de la temática[cite: 3].</li>
+                    <li>Talleres prácticos de procesamiento de datos reales con el uso de la IA[cite: 3].</li>
+                    <li>Aprendizajes y compromisos para la próxima clase[cite: 3].</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-laptop-house"></i> Trabajo Independiente</h3>
+                <ul>
+                    <li>Lectura crítica sobre los textos sugeridos para la unidad[cite: 3].</li>
+                    <li>Organización del análisis cualitativo utilizando IA[cite: 3].</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-chart-line"></i> Estrategia de Evaluación</h3>
+                <ul>
+                    <li><strong>Estrategia:</strong> Taller en el aula con manejo de las IA para realizar análisis cualitativos[cite: 3].</li>
+                    <li><strong>Técnica:</strong> Elaboración de un informe[cite: 3].</li>
+                    <li><strong>Instrumento:</strong> Lista de chequeo[cite: 3].</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026[cite: 4]</p>
+        <p>Material diseñado para uso exclusivo académico[cite: 4].</p>
+    </footer>
+</body>
+</html>
