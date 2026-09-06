@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 11 - Discurso, Acción y Conocimiento</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --cuc-red: #A3161A;
+            --cuc-dark: #1a1a1a;
+            --cuc-gray: #f4f4f4;
+            --white: #ffffff;
+            --cuc-gold: #cba052;
+            --soft-red: #ffebeb;
+            --code-bg: #2d2d2d;
+            --code-text: #f8f8f2;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: #fafafa; color: var(--cuc-dark); line-height: 1.6; }
+
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--cuc-red);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+        .header-logo img { max-height: 80px; }
+        .course-title { color: var(--cuc-red); font-size: 1.6rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; margin-bottom: 5px; }
+        .prof-info { font-size: 0.9rem; color: #555; }
+        .contact-label { color: var(--cuc-red); font-weight: 900; }
+        
+        .qr-code img { max-height: 70px; border: 2px solid var(--cuc-gray); border-radius: 5px; padding: 2px; }
+        .qr-label { display: block; font-size: 0.6rem; color: #666; margin-top: 3px; font-weight: bold; text-transform: uppercase; }
+
+        .class-view {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-back {
+            background-color: var(--white);
+            color: var(--cuc-dark);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .btn-back:hover {
+            background-color: var(--cuc-gray);
+            border-color: var(--cuc-red);
+            transform: translateX(-5px);
+        }
+
+        .class-header-card {
+            background: linear-gradient(135deg, var(--cuc-red), #7a0f12);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .class-header-card::after {
+            content: '\f0e8'; /* Sitemap/Network icon for categorization */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-size: 10rem;
+            color: rgba(255,255,255,0.1);
+        }
+
+        .class-header-card h1 { font-size: 2.2rem; margin-bottom: 10px; position: relative; z-index: 2; }
+        
+        .class-indicator {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 1.05rem;
+            border-left: 4px solid var(--cuc-gold);
+            position: relative;
+            z-index: 2;
+        }
+
+        .unit-badge {
+            display: inline-block;
+            background-color: var(--cuc-gold);
+            color: var(--cuc-dark);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        @media screen and (max-width: 1024px) {
+            .class-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media screen and (max-width: 768px) {
+            .class-grid { grid-template-columns: 1fr; }
+        }
+
+        .detail-card {
+            background: white;
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--cuc-red);
+            transition: transform 0.3s;
+        }
+
+        .detail-card:hover { transform: translateY(-5px); }
+        .detail-card h3 { color: var(--cuc-red); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+        .detail-card ul { padding-left: 20px; margin-bottom: 15px; }
+        .detail-card li { margin-bottom: 8px; color: #444; font-size: 0.9rem;}
+
+        .theme-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-top: 4px solid var(--cuc-dark);
+        }
+
+        .theme-title { color: var(--cuc-red); margin-bottom: 25px; font-size: 1.8rem; border-bottom: 2px solid var(--cuc-gray); padding-bottom: 10px; }
+        .theme-subtitle { color: var(--cuc-dark); margin: 35px 0 15px; font-size: 1.4rem; border-left: 4px solid var(--cuc-gold); padding-left: 10px; }
+
+        .concept-box {
+            background-color: var(--cuc-gray);
+            padding: 25px;
+            border-left: 5px solid var(--cuc-red);
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+            color: #333;
+        }
+
+        .coding-demo {
+            background-color: var(--white);
+            border: 2px solid var(--cuc-gold);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .coding-text {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: #333;
+            padding: 20px;
+            background: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Coding Highlights */
+        .highlight-c1 { background-color: #ffd1dc; border-bottom: 2px solid #ff6b81; cursor: help; padding: 2px 5px; border-radius: 4px; }
+        .highlight-c2 { background-color: #d1ecf1; border-bottom: 2px solid #17a2b8; cursor: help; padding: 2px 5px; border-radius: 4px; }
+        .highlight-c3 { background-color: #d4edda; border-bottom: 2px solid #28a745; cursor: help; padding: 2px 5px; border-radius: 4px; }
+
+        /* Custom Tooltip */
+        .tooltip-custom {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip-custom .tooltiptext {
+            visibility: hidden;
+            width: 220px;
+            background-color: var(--cuc-dark);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -110px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.85rem;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .tooltip-custom .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--cuc-dark) transparent transparent transparent;
+        }
+        .tooltip-custom:hover .tooltiptext { visibility: visible; opacity: 1; }
+
+
+        .accordion-content {
+            background-color: #f9f9f9;
+            color: #444;
+            cursor: pointer;
+            padding: 20px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            transition: 0.4s;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .active-acc, .accordion-content:hover {
+            background-color: var(--soft-red);
+            color: var(--cuc-dark);
+            border-left: 4px solid var(--cuc-red);
+        }
+
+        .accordion-content:after {
+            content: '\f067'; /* Plus icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--cuc-red);
+            transition: 0.3s;
+        }
+
+        .active-acc:after {
+            content: "\f068"; /* Minus icon */
+        }
+
+        .panel-content {
+            padding: 0 20px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            border-left: 4px solid var(--cuc-red);
+            border-radius: 0 0 5px 5px;
+        }
+
+        .panel-content p {
+            margin: 20px 0;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .case-card {
+            background: #fff;
+            border: 2px solid var(--cuc-gold);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+        }
+
+        .case-title {
+            color: var(--cuc-red);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .videos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            border: 3px solid var(--cuc-gray);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            border: 2px dashed var(--cuc-red);
+            border-radius: 15px;
+            padding: 35px;
+            margin-top: 40px;
+        }
+
+        footer { text-align: center; padding: 25px; font-size: 0.85rem; color: #777; margin-top: 50px; border-top: 1px solid #ddd; }
+
+        @media screen and (max-width: 900px) {
+            .qr-code { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://clases.jorgearangoc.com/discurso/u3clase11.html" alt="QR Clase">
+            <span class="qr-label">Ir a esta Clase</span>
+        </div>
+
+        <div class="header-logo">
+            <img src="logocuc.png" alt="Logo Universidad de la Costa" onerror="this.src='https://via.placeholder.com/150x50/ffffff/A3161A?text=CUC+Logo'">
+        </div>
+
+        <div class="header-info">
+            <div class="course-title">Discurso, Acción y Conocimiento<br><span style="font-size: 1.2rem; font-weight: 700; color: #444;">Investigación Cualitativa en Psicología</span></div>
+            <div class="prof-info">
+                <strong>Docente:</strong> Jorge Arango Castaño - Psicólogo<br>
+                Mg. Dirección de Proyectos - Certificado en PNL<br>
+                <small>
+                    <span class="contact-label">WhatsApp:</span> 3233796547 | 
+                    <span class="contact-label">IG:</span> jorge.arangoc | 
+                    <span class="contact-label">Web:</span> www.jorgearangoc.com
+                </small>
+            </div>
+        </div>
+
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AArango%3BJorge%0AFN%3AJorge%20Arango%0ATITLE%3APsic%C3%B3logo%20-%20Docente%0ATEL%3BTYPE%3DCELL%3A3233796547%0AURL%3Awww.jorgearangoc.com%0ANOTE%3AIG%3A%20jorge.arangoc%0AEND%3AVCARD" alt="QR Contacto">
+            <span class="qr-label">Guardar Contacto</span>
+        </div>
+    </header>
+
+    <div class="class-view">
+        <a href="https://clases.jorgearangoc.com/discurso/u1clase00.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Mapa del Curso
+        </a>
+        
+        <div class="class-header-card">
+            <span class="unit-badge"><i class="fas fa-layer-group"></i> Unidad 3</span><br>
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; color: var(--cuc-gold);">Semana 11</span>
+            <h1>Análisis Cualitativo: Organización Categorial</h1>
+            <div class="class-indicator">
+                <strong><i class="fas fa-bullseye"></i> Indicador de Desempeño:</strong><br>
+                Identifica los pasos para realizar la organización categorial de los datos cualitativos (descripción, segmentación, interrelación y conceptualización).
+            </div>
+        </div>
+
+        <div class="class-grid">
+            <div class="detail-card">
+                <h3><i class="fas fa-book-open"></i> Saberes</h3>
+                <p>Ejes integradores de la sesión:</p>
+                <ul>
+                    <li>El caos de los datos: cómo pasar de cientos de páginas a conceptos claros.</li>
+                    <li>Codificación abierta, axial y selectiva.</li>
+                    <li>De los códigos a las categorías y familias.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #2196F3;">
+                <h3 style="color: #2196F3;"><i class="fas fa-users"></i> Presencial</h3>
+                <p><strong>Actividades en aula:</strong></p>
+                <ul>
+                    <li>Control de lectura sobre análisis de datos.</li>
+                    <li>Presentación magistral: El proceso de categorización y síntesis.</li>
+                    <li>Socialización de organizador gráfico.</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #FF9800;">
+                <h3 style="color: #FF9800;"><i class="fas fa-home"></i> Independiente</h3>
+                <p><strong>Preparación asincrónica:</strong></p>
+                <ul>
+                    <li>Lectura crítica sugerida para la Unidad 3.</li>
+                    <li><strong>Trabajo Práctico:</strong> Desarrollo de un ejercicio de codificación basado en la información recopilada en la Unidad 2 (entrevistas y grupos focales).</li>
+                </ul>
+            </div>
+
+            <div class="detail-card" style="border-top-color: #4CAF50;">
+                <h3 style="color: #4CAF50;"><i class="fas fa-clipboard-check"></i> Evaluación</h3>
+                <p><strong>Estrategia de evaluación:</strong></p>
+                <ul>
+                    <li><strong>Estrategia:</strong> Valoración de la elaboración y socialización del organizador gráfico.</li>
+                    <li><strong>Técnica:</strong> Conversatorio guiado.</li>
+                    <li><strong>Instrumento:</strong> Lista de chequeo (Formativa).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="theme-section">
+            <h2 class="theme-title"><i class="fas fa-filter"></i> Desarrollo Temático: Destilando el Significado</h2>
+            
+            <p style="font-size: 1.1rem; margin-bottom: 20px; color: #444;">Al finalizar la recolección de datos, el investigador cualitativo se enfrenta a un desafío abrumador: páginas y páginas de transcripciones, notas de campo y grabaciones. El análisis de datos no consiste en "resumir" esta información, sino en <strong>fragmentarla, conceptualizarla y reconstruirla</strong> de una forma nueva que ofrezca respuestas teóricas a la pregunta de investigación.</p>
+
+            <div class="concept-box">
+                <strong>¿Qué es Codificar?</strong> Es el proceso de asignar una "etiqueta" (un código) conceptual corta a un fragmento de texto (una cita) que captura el significado esencial de lo que el participante está diciendo o haciendo.
+            </div>
+
+            <h3 class="theme-subtitle">1. Los Pasos del Proceso Analítico (Categorización)</h3>
+            <p style="margin-bottom: 20px;">Despliega los siguientes paneles para entender el proceso lógico y sistemático propuesto por teóricos como Strauss y Corbin para organizar el caos discursivo:</p>
+
+            <button class="accordion-content">Paso 1: Inmersión y Descripción (Lectura Flotante)</button>
+            <div class="panel-content">
+                <p>Antes de codificar, el investigador debe "empaparse" de los datos. Se lee y relee la transcripción completa varias veces sin anotar nada, simplemente para captar el sentido global, el tono emocional y la estructura narrativa del relato.</p>
+            </div>
+
+            <button class="accordion-content">Paso 2: Segmentación y Codificación Abierta</button>
+            <div class="panel-content">
+                <p>Se empieza a <em>fragmentar</em> el texto. Se examina línea por línea o párrafo por párrafo. A cada unidad de significado relevante (cita) se le asigna un "Código Abierto".</p>
+                <p><strong>Ejemplo:</strong> Si el participante dice: <em>"Lloraba todas las noches, no quería comer ni hablar con nadie"</em>, el investigador asigna el código: <strong>[Aislamiento Depresivo]</strong>.</p>
+                <p>En esta etapa se generan decenas o cientos de códigos.</p>
+            </div>
+
+            <button class="accordion-content">Paso 3: Interrelación (Codificación Axial y Categorización)</button>
+            <div class="panel-content">
+                <p>Tener 150 códigos sueltos no sirve de mucho. Ahora el investigador busca patrones para <strong>agrupar códigos similares</strong> dentro de un "paraguas" más grande llamado <strong>Categoría</strong>.</p>
+                <p><strong>Ejemplo:</strong> Los códigos [Aislamiento Depresivo], [Insomnio recurrente] y [Ataques de pánico al salir] se agrupan en una categoría mayor llamada: <strong>[Sintomatología Post-Traumática]</strong>.</p>
+                <p>Aquí se establecen las relaciones entre el fenómeno, sus causas y sus consecuencias.</p>
+            </div>
+
+            <button class="accordion-content">Paso 4: Síntesis y Conceptualización (Categoría Central)</button>
+            <div class="panel-content">
+                <p>Es la cima de la abstracción teórica. El investigador integra todas las categorías descubiertas alrededor de una <strong>Categoría Central (Core Category)</strong> o "Familia de Categorías", que es la que explica el fenómeno principal y responde a la pregunta de investigación.</p>
+                <p>A partir de ella, se escribe el modelo teórico o la narrativa final (los resultados de la investigación).</p>
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 50px;">2. Laboratorio Interactivo de Codificación</h3>
+            <p style="margin-bottom: 15px;">Pon a prueba lo aprendido. En el siguiente fragmento de transcripción (basado en nuestro caso), pasa el cursor por encima del texto resaltado para descubrir qué <strong>Código</strong> asignó el investigador y a qué <strong>Categoría</strong> pertenece.</p>
+
+            <div class="case-card">
+                <h4 class="case-title"><i class="fas fa-search-location"></i> Caso: Víctimas del conflicto (Resiliencia y Perdón)</h4>
+                <div class="coding-demo">
+                    <p style="font-weight: bold; margin-bottom: 10px; color: var(--cuc-dark);">Entrevista #04 - Participante: "Rosa" (45 años, desplazada a Barranquilla).</p>
+                    
+                    <div class="coding-text">
+                        "Investigador: Rosa, me contabas que al principio fue muy duro llegar a la ciudad. ¿Cómo lograste salir adelante?<br><br>
+                        
+                        Rosa: Uy, doctor, es que al principio 
+                        <span class="tooltip-custom highlight-c1">
+                            yo sentía mucho rencor, una rabia por dentro que me estaba enfermando y no me dejaba dormir, odiaba a esa gente.
+                            <span class="tooltiptext"><strong>Código:</strong> Rencor somatizado<br><strong>Categoría:</strong> Obstáculos para el perdón</span>
+                        </span> 
+                        Pero luego me invitaron a la asociación de tejedoras aquí en el barrio. 
+                        
+                        <span class="tooltip-custom highlight-c2">
+                            Al sentarme a tejer con las otras mujeres, que habían pasado por lo mismo que yo, sentí que mi dolor era entendido, nos dábamos apoyo.
+                            <span class="tooltiptext"><strong>Código:</strong> Sororidad y empatía<br><strong>Categoría:</strong> Redes de apoyo (Factor Resiliente)</span>
+                        </span>
+                        
+                        Fue ahí cuando, gracias a ese apoyo, 
+                        <span class="tooltip-custom highlight-c3">
+                            me di cuenta de que no podía vivir con ese veneno, y empecé a perdonar, no por ellos, sino por mi propia paz mental para poder criar a mis hijos.
+                            <span class="tooltiptext"><strong>Código:</strong> Perdón como sanación personal<br><strong>Categoría:</strong> Disposición al perdón</span>
+                        </span>"
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="theme-subtitle" style="margin-top: 50px;">3. Videoteca Complementaria</h3>
+            <p style="margin-bottom: 20px;">Observa los siguientes recursos, que abordan de forma muy didáctica cómo realizar en la práctica la codificación y categorización de entrevistas, un paso esencial para tus entregables de fin de semestre:</p>
+            
+            <div class="videos-container">
+                <div class="video-wrapper">
+                    <!-- Categorizar y codificar entrevistas en Investigación -->
+                    <iframe src="https://www.youtube.com/embed/o8dPVEy7bpM?rel=0" title="Categorizar y codificar entrevistas en Investigación" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-wrapper">
+                    <!-- Análisis de datos en investigación cualitativa (TeoCom) -->
+                    <iframe src="https://www.youtube.com/embed/y0mgHXdVato?rel=0" title="Análisis de datos en investigación cualitativa" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="activity-box">
+                <h3 style="color: var(--cuc-dark); margin-bottom: 10px;"><i class="fas fa-sitemap"></i> Actividad Autónoma: Tu propio proceso analítico</h3>
+                <p style="color: #444; margin-bottom: 15px;"><strong>Del Dato Crudo al Código</strong></p>
+                
+                <p style="margin-bottom: 15px;">Para la próxima sesión práctica, deberás aplicar los pasos analíticos vistos hoy sobre los datos que tú mismo recolectaste en la Unidad 2.</p>
+
+                <ol style="margin-left: 20px; line-height: 1.8; color: #444;">
+                    <li><strong>Toma la Transcripción:</strong> Abre el documento de Word con la transcripción de los 5 minutos de la entrevista que aplicaste en la Semana 8.</li>
+                    <li><strong>Lectura Flotante:</strong> Lee el documento al menos tres veces para familiarizarte con el contenido.</li>
+                    <li><strong>Codificación Abierta:</strong> Utilizando la herramienta de "Comentarios" de Word (o resaltadores de colores si lo imprimes), selecciona al menos <strong>5 citas textuales (fragmentos)</strong> relevantes y asígnales un Código conceptual corto.</li>
+                    <li><strong>Categorización:</strong> En la parte final de tu documento, intenta agrupar esos 5 códigos en al menos <strong>2 Categorías Mayores</strong> que los engloben lógicamente.</li>
+                    <li>Lleva este avance a la próxima clase, donde veremos cómo la Inteligencia Artificial puede potenciar este proceso.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad de la Costa CUC - Programa de Psicología © 2026</p>
+        <p style="margin-top: 5px;">Investigación Cualitativa Formativa</p>
+    </footer>
+
+    <script>
+        // Script para acordeones
+        var acc = document.getElementsByClassName("accordion-content");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active-acc");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+    </script>
+</body>
+</html>
